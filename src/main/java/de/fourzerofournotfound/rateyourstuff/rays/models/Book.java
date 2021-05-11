@@ -14,18 +14,18 @@ import java.time.LocalDateTime;
 @Entity
 @RequiredArgsConstructor
 @Table(name = "Books")
-public class Book {
+public class Book extends Medium{
 
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long bookId;
+    //@Id
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    //private Long bookId;
 
     @Column(nullable = false)
     @ColumnDefault("CURRENT_TIMESTAMP()")
     private LocalDateTime createdAt;
 
-    @Column(nullable = true)
+    @Column
     @ColumnDefault("NULL ON UPDATE CURRENT_TIMESTAMP()")
     private LocalDateTime updatedAt;
 
@@ -38,15 +38,12 @@ public class Book {
     @Column
     private Boolean isPrint;
 
-    @Column
-    private List languages;
-
     @Column(nullable = false)
     private Integer numberOfPages;
 
-    @OneToOne
-    @JoinColumn(name = "mediumId", referencedColumnName = "mediumId")
-    private Medium medium;
+    //@OneToOne
+    //@JoinColumn(name = "mediumId", referencedColumnName = "mediumId")
+    //private Medium medium;
 
 
 }

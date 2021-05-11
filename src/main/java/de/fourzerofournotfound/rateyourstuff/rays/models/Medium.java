@@ -13,7 +13,8 @@ import java.util.Set;
 @Entity
 @RequiredArgsConstructor
 @Table(name = "Media")
-public class Medium {
+@Inheritance(strategy = InheritanceType.JOINED)
+public abstract class Medium {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,7 +24,7 @@ public class Medium {
     @ColumnDefault("CURRENT_TIMESTAMP()")
     private LocalDateTime createdAt;
 
-    @Column(nullable = true)
+    @Column
     @ColumnDefault("NULL ON UPDATE CURRENT_TIMESTAMP()")
     private LocalDateTime updatedAt;
 

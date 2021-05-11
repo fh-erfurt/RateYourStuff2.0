@@ -22,4 +22,7 @@ public class Network {
 
     @OneToMany (mappedBy = "network")
     private List<Series> series;
+
+    @OneToMany (mappedBy = "network")
+    private List<Movie> movies;
 }

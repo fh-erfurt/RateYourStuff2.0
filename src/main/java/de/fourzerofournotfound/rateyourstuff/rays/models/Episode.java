@@ -14,25 +14,19 @@ import java.util.Set;
 @Entity
 @RequiredArgsConstructor
 @Table(name = "Episodes")
-public class Episode {
+public class Episode extends Medium {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long episodeId;
+    //@Id
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    //private Long episodeId;
 
     @Column(nullable = false)
     @ColumnDefault("CURRENT_TIMESTAMP()")
     private LocalDateTime createdAt;
 
-    @Column(nullable = true)
+    @Column
     @ColumnDefault("NULL ON UPDATE CURRENT_TIMESTAMP()")
     private LocalDateTime updatedAt;
-
-    @Column(length = 250)
-    private String episodeTitle;
-
-    @Column(length = 2000)
-    private String episodeDescription;
 
     @Column
     private Integer episodeNumber;

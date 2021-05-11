@@ -23,7 +23,7 @@ public class Season {
     @ColumnDefault("CURRENT_TIMESTAMP()")
     private LocalDateTime createdAt;
 
-    @Column(nullable = true)
+    @Column
     @ColumnDefault("NULL ON UPDATE CURRENT_TIMESTAMP()")
     private LocalDateTime updatedAt;
 
@@ -34,8 +34,8 @@ public class Season {
     private String seasonTitle;
 
     @ManyToOne
-    @JoinColumn(name = "seriesId", referencedColumnName = "seriesId")
-    private Series series;
+    @JoinColumn(name = "mediumId", referencedColumnName = "mediumId")
+    private Medium medium;
 
     @OneToMany (mappedBy = "season")
     private Set<Episode> episodes;

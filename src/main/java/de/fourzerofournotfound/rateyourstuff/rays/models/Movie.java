@@ -13,24 +13,36 @@ import java.time.LocalDateTime;
 @Entity
 @RequiredArgsConstructor
 @Table(name = "Movies")
-public class Movie {
+public class Movie extends Medium{
 
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long movieId;
+    //@Id
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    //private Long movieId;
 
     @Column(nullable = false)
     @ColumnDefault("CURRENT_TIMESTAMP()")
     private LocalDateTime createdAt;
 
-    @Column(nullable = true)
+    @Column
     @ColumnDefault("NULL ON UPDATE CURRENT_TIMESTAMP()")
     private LocalDateTime updatedAt;
 
+    @Column
+    private Integer length;
 
-    @OneToOne
-    @JoinColumn(name = "mediumId", referencedColumnName = "mediumId")
-    private Medium medium;
+    @Column
+    private Integer ageRestriction;
+
+    @ManyToOne
+    @JoinColumn(name = "networkId", referencedColumnName = "networkId")
+    private Network network;
+
+
+
+
+    //@OneToOne
+    //@JoinColumn(name = "mediumId", referencedColumnName = "mediumId")
+    //private Medium medium;
 
 }

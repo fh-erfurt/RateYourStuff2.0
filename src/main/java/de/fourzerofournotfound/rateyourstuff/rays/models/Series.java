@@ -15,23 +15,23 @@ import java.util.Set;
 @Entity
 @RequiredArgsConstructor
 @Table(name = "Series")
-public class Series {
+public class Series extends Medium{
 
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long seriesId;
+    //@Id
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    //private Long seriesId;
 
     @Column(nullable = false)
     @ColumnDefault("CURRENT_TIMESTAMP()")
     private LocalDateTime createdAt;
 
-    @Column(nullable = true)
+    @Column
     @ColumnDefault("NULL ON UPDATE CURRENT_TIMESTAMP()")
     private LocalDateTime updatedAt;
 
 
-    @Column(nullable = true)
+    @Column
     private Integer averageLength;
 
     //TODO: a single network can have multiple series, thus network should be an extra table
@@ -51,13 +51,10 @@ public class Series {
     @Column(nullable = false)
     private Boolean isCompleted;
 
-    @OneToOne
-    @JoinColumn(name = "mediumId", referencedColumnName = "mediumId")
-    private Medium medium;
+    //@OneToOne
+    //@JoinColumn(name = "mediumId", referencedColumnName = "mediumId")
+    //private Medium medium;
 
-    @OneToMany (mappedBy = "series")
+    @OneToMany (mappedBy = "medium")
     private Set<Season> seasons;
-
-
-
 }
