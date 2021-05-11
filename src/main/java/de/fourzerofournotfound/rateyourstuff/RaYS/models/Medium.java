@@ -50,5 +50,8 @@ public class Medium {
 
     @ManyToMany(mappedBy = "media")
     Set<Genre> genres;
+
+    @ManyToMany(mappedBy = "media")
+    Set<Language> languages;
 }
 
