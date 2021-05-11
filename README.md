@@ -38,6 +38,7 @@ Nun existiert schone eine größere Menge an Portalen, die sich mit der Bewertun
 - Filme
 - Serien
 - Videospiele
+- "Magazine"
 
 Benutzer können Medien mit unterschiedlichen Kriterien bewerten. 
 Für jedes Medium gibt es eine allgemeine Bewertung, die durch die Bewertungskriterien bestimmt wird. Benutzer können ihren Fortschritt auf verschiedenen Medientypen teilen. Jedes Medium hat einen eigenen Kommentarbereich. Darüber hinaus ist eine Art Mediensammlung geplant, um Medien logisch zu gruppieren.
