@@ -1,14 +1,17 @@
 package de.fourzerofournotfound.rateyourstuff.RaYS.models;
 
 import lombok.Data;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
 @Entity
 @RequiredArgsConstructor
 @Table(name = "Users")
