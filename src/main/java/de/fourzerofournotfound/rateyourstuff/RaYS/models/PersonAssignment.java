@@ -6,21 +6,17 @@ import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
-import java.sql.Date;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Getter
 @Setter
 @Entity
 @RequiredArgsConstructor
-@Table(name = "Persons")
-
-public class Person {
-
+@Table(name="PersonAssignments")
+public class PersonAssignment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long personId;
+    private Long personAssignmentId;
 
     @Column(nullable = false)
     @ColumnDefault("CURRENT_TIMESTAMP()")
@@ -30,15 +26,25 @@ public class Person {
     @ColumnDefault("NULL ON UPDATE CURRENT_TIMESTAMP()")
     private LocalDateTime updatedAt;
 
-    @Column (length=250)
-    private String firstName;
-
-    @Column (length=250)
-    private String lastName;
+    @Column
+    private Boolean isActor;
 
     @Column
-    private Date birthDate;
+    private Boolean isDirector;
 
-    @OneToMany (mappedBy = "person")
-    private List<PersonAssignment> personAssignments;
+    @Column
+    private Boolean isProducer;
+
+    @Column
+    private Boolean isAuthor;
+
+    @ManyToOne
+    @JoinColumn(name = "personId", referencedColumnName = "personId")
+    private Person person;
+
+    @ManyToOne
+    @JoinColumn(name = "mediumId", referencedColumnName = "mediumId")
+    private Medium medium;
+
+
 }

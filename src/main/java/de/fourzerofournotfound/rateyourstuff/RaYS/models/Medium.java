@@ -6,6 +6,7 @@ import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -56,5 +57,8 @@ public class Medium {
 
     @ManyToMany(mappedBy = "media")
     Set<Platform> platforms;
+
+    @OneToMany (mappedBy = "medium")
+    private List<PersonAssignment> personAssignments;
 }
 
