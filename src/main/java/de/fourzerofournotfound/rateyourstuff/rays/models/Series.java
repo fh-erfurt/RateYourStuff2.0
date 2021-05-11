@@ -1,4 +1,4 @@
-package de.fourzerofournotfound.rateyourstuff.RaYS.models;
+package de.fourzerofournotfound.rateyourstuff.rays.models;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -7,18 +7,20 @@ import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
 @Entity
 @RequiredArgsConstructor
 @Table(name = "Series")
-public class Serie {
+public class Series {
 
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long serieId;
+    private Long seriesId;
 
     @Column(nullable = false)
     @ColumnDefault("CURRENT_TIMESTAMP()")
@@ -28,23 +30,20 @@ public class Serie {
     @ColumnDefault("NULL ON UPDATE CURRENT_TIMESTAMP()")
     private LocalDateTime updatedAt;
 
+
     @Column(nullable = true)
-    private Integer avarageLength;
+    private Integer averageLength;
 
-    @Column(nullable = false)
-    private String network;
+    //TODO: a single network can have multiple series, thus network should be an extra table
+    //@Column(nullable = false)
+    //private String network;
+    @ManyToOne
+    @JoinColumn(name = "networkId", referencedColumnName = "networkId")
+    private Network network;
 
-//    @Column
-//    private Person directors;
-//
-//    @Column(nullable = false)
-//    private List<String> languages;
-//
-//   @Column
-//    private List<String> plattforms;
-
-    @Column(nullable = false)
-    private String highestResolution;
+    //TODO: it does not really make sense to have a highest resolution. An aspect ratio would be more fitting
+    //@Column(nullable = false)
+    //private String highestResolution;
 
     @Column(nullable = false)
     private Integer ageRestriction;
@@ -55,5 +54,10 @@ public class Serie {
     @OneToOne
     @JoinColumn(name = "mediumId", referencedColumnName = "mediumId")
     private Medium medium;
+
+    @OneToMany (mappedBy = "series")
+    private Set<Season> seasons;
+
+
 
 }

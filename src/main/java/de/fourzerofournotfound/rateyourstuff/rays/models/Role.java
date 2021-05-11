@@ -1,37 +1,36 @@
-package de.fourzerofournotfound.rateyourstuff.RaYS.models;
+package de.fourzerofournotfound.rateyourstuff.rays.models;
 
 
-import lombok.Getter;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Set;
+import java.util.List;
 
-@Getter
-@Setter
+@Data
 @Entity
 @RequiredArgsConstructor
-@Table(name = "Languages")
+@Table(name = "Roles")
+public class Role {
 
-public class Language {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long languageId;
+    private Long roleId;
 
     @Column(nullable = false)
     @ColumnDefault("CURRENT_TIMESTAMP()")
     private LocalDateTime createdAt;
 
-    @Column
+    @Column(nullable = true)
     @ColumnDefault("NULL ON UPDATE CURRENT_TIMESTAMP()")
     private LocalDateTime updatedAt;
 
-    @Column(length = 200)
-    private String language;
+    @Column(nullable = false)
+    private String roleName;
 
-    @ManyToMany
-    Set<Medium> media;
+    @OneToMany(mappedBy = "role")
+    private List<LoginRole> loginRoles;
+
 }

@@ -1,4 +1,4 @@
-package de.fourzerofournotfound.rateyourstuff.RaYS.models;
+package de.fourzerofournotfound.rateyourstuff.rays.models;
 
 
 import lombok.Data;

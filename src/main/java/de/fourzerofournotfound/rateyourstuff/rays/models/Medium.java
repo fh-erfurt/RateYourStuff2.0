@@ -1,4 +1,4 @@
-package de.fourzerofournotfound.rateyourstuff.RaYS.models;
+package de.fourzerofournotfound.rateyourstuff.rays.models;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -38,7 +38,7 @@ public class Medium {
 
 
     @OneToMany(mappedBy = "medium")
-    private Set<Raiting> mediumRatings;
+    private Set<Rating> mediumRatings;
 
     @OneToMany(mappedBy = "medium")
     private Set<Progress> progresses;

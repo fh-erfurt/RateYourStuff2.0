@@ -1,36 +1,37 @@
-package de.fourzerofournotfound.rateyourstuff.RaYS.models;
+package de.fourzerofournotfound.rateyourstuff.rays.models;
 
-import lombok.Getter;
+
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Set;
 
-@Getter
-@Setter
+@Data
 @Entity
 @RequiredArgsConstructor
-@Table(name = "Platforms")
-public class Platform {
+@Table(name = "LoginRoles")
+public class LoginRole {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long plattformId;
+    private Long loginRoleId;
 
     @Column(nullable = false)
     @ColumnDefault("CURRENT_TIMESTAMP()")
     private LocalDateTime createdAt;
 
-    @Column
+    @Column(nullable = true)
     @ColumnDefault("NULL ON UPDATE CURRENT_TIMESTAMP()")
     private LocalDateTime updatedAt;
 
-    @Column (length = 250)
-    private String platformTitel;
+    @ManyToOne
+    @JoinColumn(name = "loginID", referencedColumnName = "loginID")
+    private Login login;
 
-    @ManyToMany
-    Set<Medium> media;
+    @ManyToOne
+    @JoinColumn(name = "roleId", referencedColumnName = "roleId")
+    private Role role;
 
 }

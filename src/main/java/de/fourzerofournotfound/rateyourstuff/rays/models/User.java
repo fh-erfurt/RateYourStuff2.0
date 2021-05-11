@@ -1,6 +1,5 @@
-package de.fourzerofournotfound.rateyourstuff.RaYS.models;
+package de.fourzerofournotfound.rateyourstuff.rays.models;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -49,7 +48,7 @@ public class User {
     private Login login;
 
     @OneToMany(mappedBy = "user")
-    private Set<Raiting> userRatings;
+    private Set<Rating> userRatings;
 
     @OneToMany(mappedBy = "user")
     private Set<Comment> comments;

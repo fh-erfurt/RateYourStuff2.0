@@ -1,25 +1,23 @@
-package de.fourzerofournotfound.rateyourstuff.RaYS.models;
+package de.fourzerofournotfound.rateyourstuff.rays.models;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.mapping.List;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Getter
 @Setter
 @Entity
 @RequiredArgsConstructor
-@Table(name = "Books")
-public class Book {
-
-
+@Table(name="seasons")
+public class Season {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long bookId;
+    private Long seasonId;
 
     @Column(nullable = false)
     @ColumnDefault("CURRENT_TIMESTAMP()")
@@ -29,24 +27,18 @@ public class Book {
     @ColumnDefault("NULL ON UPDATE CURRENT_TIMESTAMP()")
     private LocalDateTime updatedAt;
 
-    @Column(nullable = false)
-    private String isbn;
-
     @Column
-    private Boolean isEBook;
+    private Integer seasonNumber;
 
-    @Column
-    private Boolean isPrint;
+    @Column(length=250)
+    private String seasonTitle;
 
-    @Column
-    private List languages;
+    @ManyToOne
+    @JoinColumn(name = "seriesId", referencedColumnName = "seriesId")
+    private Series series;
 
-    @Column(nullable = false)
-    private Integer numberOfPages;
-
-    @OneToOne
-    @JoinColumn(name = "mediumId", referencedColumnName = "mediumId")
-    private Medium medium;
+    @OneToMany (mappedBy = "season")
+    private Set<Episode> episodes;
 
 
 }

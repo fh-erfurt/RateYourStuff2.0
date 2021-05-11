@@ -1,4 +1,4 @@
-package de.fourzerofournotfound.rateyourstuff.RaYS;
+package de.fourzerofournotfound.rateyourstuff.rays;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

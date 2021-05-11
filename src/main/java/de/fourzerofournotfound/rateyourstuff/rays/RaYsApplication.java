@@ -1,4 +1,4 @@
-package de.fourzerofournotfound.rateyourstuff.RaYS;
+package de.fourzerofournotfound.rateyourstuff.rays;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
