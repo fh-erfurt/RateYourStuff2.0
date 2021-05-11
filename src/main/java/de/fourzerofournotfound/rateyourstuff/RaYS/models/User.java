@@ -6,6 +6,7 @@ import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Data
 @Entity
@@ -39,5 +40,24 @@ public class User {
 
     @Column(length = 45, nullable = false)
     private String gender;
+
+    @OneToOne
+    @JoinColumn(name = "login_Id", referencedColumnName = "loginId")
+    private Login login;
+
+    @OneToMany(mappedBy = "user")
+    private Set<Raiting> userRatings;
+
+    @OneToMany(mappedBy = "user")
+    private Set<Comment> comments;
+
+    @OneToMany(mappedBy = "user")
+    private Set<Progress> progresses;
+
+    @OneToMany(mappedBy = "user")
+    private Set<Collection> collections;
+
+    @ManyToMany
+    private Set<User> friendList;
 
 }
