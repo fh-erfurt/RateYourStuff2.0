@@ -6,6 +6,10 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
+/**
+ * This Interface will require methods for manipulating user storage
+ */
+
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
