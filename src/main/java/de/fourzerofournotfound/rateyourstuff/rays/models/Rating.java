@@ -1,25 +1,21 @@
-package de.fourzerofournotfound.rateyourstuff.RaYS.models;
+package de.fourzerofournotfound.rateyourstuff.rays.models;
 
-import lombok.Getter;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.mapping.List;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Getter
-@Setter
+@Data
 @Entity
 @RequiredArgsConstructor
-@Table(name = "Books")
-public class Book {
-
+@Table(name = "Ratings")
+public class Rating {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long bookId;
+    private Long ratingId;
 
     @Column(nullable = false)
     @ColumnDefault("CURRENT_TIMESTAMP()")
@@ -30,23 +26,22 @@ public class Book {
     private LocalDateTime updatedAt;
 
     @Column(nullable = false)
-    private String isbn;
-
-    @Column
-    private Boolean isEBook;
-
-    @Column
-    private Boolean isPrint;
-
-    @Column
-    private List languages;
+    private Integer minimumPoints;
 
     @Column(nullable = false)
-    private Integer numberOfPages;
+    private Integer maximumPoints;
 
-    @OneToOne
+    @Column(nullable = false)
+    private Integer givenPoints;
+
+    @Column(length = 10000)
+    private String desscription;
+
+    @ManyToOne
+    @JoinColumn(name = "userId", referencedColumnName = "userId")
+    private User user;
+
+    @ManyToOne
     @JoinColumn(name = "mediumId", referencedColumnName = "mediumId")
     private Medium medium;
-
-
 }

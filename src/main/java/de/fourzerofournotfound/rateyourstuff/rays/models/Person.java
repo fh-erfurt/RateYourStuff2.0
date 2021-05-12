@@ -1,4 +1,4 @@
-package de.fourzerofournotfound.rateyourstuff.RaYS.models;
+package de.fourzerofournotfound.rateyourstuff.rays.models;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -6,19 +6,21 @@ import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
+import java.sql.Date;
 import java.time.LocalDateTime;
-import java.util.Set;
+import java.util.List;
 
 @Getter
 @Setter
 @Entity
 @RequiredArgsConstructor
-@Table(name = "Genres")
-public class Genre {
+@Table(name = "Persons")
+
+public class Person {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long genreId;
+    private Long personId;
 
     @Column(nullable = false)
     @ColumnDefault("CURRENT_TIMESTAMP()")
@@ -28,9 +30,15 @@ public class Genre {
     @ColumnDefault("NULL ON UPDATE CURRENT_TIMESTAMP()")
     private LocalDateTime updatedAt;
 
-    @Column(nullable = false, length = 45)
-    private String genreName;
+    @Column (length=250)
+    private String firstName;
 
-    @ManyToMany
-    Set<Medium> media;
+    @Column (length=250)
+    private String lastName;
+
+    @Column
+    private Date birthDate;
+
+    @OneToMany (mappedBy = "person")
+    private List<PersonAssignment> personAssignments;
 }

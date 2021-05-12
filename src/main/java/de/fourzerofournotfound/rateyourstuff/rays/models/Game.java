@@ -1,31 +1,26 @@
-package de.fourzerofournotfound.rateyourstuff.RaYS.models;
+package de.fourzerofournotfound.rateyourstuff.rays.models;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
-import java.awt.*;
 import java.time.LocalDateTime;
-import java.util.List;
 
 
-public class Game {
+public class Game extends Medium{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long gameId;
+    //@Id
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    //private Long gameId;
 
     @Column(nullable = false)
     @ColumnDefault("CURRENT_TIMESTAMP()")
     private LocalDateTime createdAt;
 
-    @Column(nullable = true)
+    @Column
     @ColumnDefault("NULL ON UPDATE CURRENT_TIMESTAMP()")
     private LocalDateTime updatedAt;
 
-    @Column(nullable = true)
+    @Column
     private Float avaragePlaytime;
 
     @Column(nullable = false)
@@ -49,8 +44,8 @@ public class Game {
     @Column(nullable = false)
     private Integer ageRestriction;
 
-    @OneToOne
-    @JoinColumn(name = "mediumId", referencedColumnName = "mediumId")
-    private Medium medium;
+    //@OneToOne
+    //@JoinColumn(name = "mediumId", referencedColumnName = "mediumId")
+    //private Medium medium;
 
 }

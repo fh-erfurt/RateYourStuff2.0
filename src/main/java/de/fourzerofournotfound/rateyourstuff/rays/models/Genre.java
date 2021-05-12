@@ -1,4 +1,4 @@
-package de.fourzerofournotfound.rateyourstuff.RaYS.models;
+package de.fourzerofournotfound.rateyourstuff.rays.models;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -13,24 +13,24 @@ import java.util.Set;
 @Setter
 @Entity
 @RequiredArgsConstructor
-@Table(name = "Platforms")
-public class Platform {
+@Table(name = "Genres")
+public class Genre {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long plattformId;
+    private Long genreId;
 
     @Column(nullable = false)
     @ColumnDefault("CURRENT_TIMESTAMP()")
     private LocalDateTime createdAt;
 
-    @Column
+    @Column(nullable = true)
     @ColumnDefault("NULL ON UPDATE CURRENT_TIMESTAMP()")
     private LocalDateTime updatedAt;
 
-    @Column (length = 250)
-    private String platformTitel;
+    @Column(nullable = false, length = 45)
+    private String genreName;
 
     @ManyToMany
     Set<Medium> media;
-
 }

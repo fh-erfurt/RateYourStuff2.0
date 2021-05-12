@@ -1,4 +1,5 @@
-package de.fourzerofournotfound.rateyourstuff.RaYS.models;
+package de.fourzerofournotfound.rateyourstuff.rays.models;
+
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -10,12 +11,12 @@ import java.time.LocalDateTime;
 @Data
 @Entity
 @RequiredArgsConstructor
-@Table(name = "Progresses")
-public class Progress {
+@Table(name = "LoginRoles")
+public class LoginRole {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long progressId;
+    private Long loginRoleId;
 
     @Column(nullable = false)
     @ColumnDefault("CURRENT_TIMESTAMP()")
@@ -26,11 +27,11 @@ public class Progress {
     private LocalDateTime updatedAt;
 
     @ManyToOne
-    @JoinColumn(name = "userId", referencedColumnName = "userId")
-    private User user;
+    @JoinColumn(name = "loginID", referencedColumnName = "loginID")
+    private Login login;
 
     @ManyToOne
-    @JoinColumn(name = "mediumId", referencedColumnName = "mediumId")
-    private Medium medium;
-}
+    @JoinColumn(name = "roleId", referencedColumnName = "roleId")
+    private Role role;
 
+}

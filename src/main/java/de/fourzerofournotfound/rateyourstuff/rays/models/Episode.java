@@ -1,5 +1,4 @@
-package de.fourzerofournotfound.rateyourstuff.RaYS.models;
-
+package de.fourzerofournotfound.rateyourstuff.rays.models;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -14,12 +13,12 @@ import java.util.Set;
 @Setter
 @Entity
 @RequiredArgsConstructor
-@Table(name = "Languages")
+@Table(name = "Episodes")
+public class Episode extends Medium {
 
-public class Language {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long languageId;
+    //@Id
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    //private Long episodeId;
 
     @Column(nullable = false)
     @ColumnDefault("CURRENT_TIMESTAMP()")
@@ -29,9 +28,14 @@ public class Language {
     @ColumnDefault("NULL ON UPDATE CURRENT_TIMESTAMP()")
     private LocalDateTime updatedAt;
 
-    @Column(length = 200)
-    private String language;
+    @Column
+    private Integer episodeNumber;
 
-    @ManyToMany
-    Set<Medium> media;
+    @Column
+    private Integer length;
+
+    @ManyToOne
+    @JoinColumn(name = "seasonId", referencedColumnName = "seasonId")
+    private Season season;
 }
+

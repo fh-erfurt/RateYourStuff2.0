@@ -1,5 +1,4 @@
-package de.fourzerofournotfound.rateyourstuff.RaYS.models;
-
+package de.fourzerofournotfound.rateyourstuff.rays.models;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -7,17 +6,16 @@ import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Data
 @Entity
 @RequiredArgsConstructor
-@Table(name = "Roles")
-public class Role {
+@Table(name = "Progresses")
+public class Progress {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long roleId;
+    private Long progressId;
 
     @Column(nullable = false)
     @ColumnDefault("CURRENT_TIMESTAMP()")
@@ -27,10 +25,12 @@ public class Role {
     @ColumnDefault("NULL ON UPDATE CURRENT_TIMESTAMP()")
     private LocalDateTime updatedAt;
 
-    @Column(nullable = false)
-    private String roleName;
+    @ManyToOne
+    @JoinColumn(name = "userId", referencedColumnName = "userId")
+    private User user;
 
-    @OneToMany(mappedBy = "role")
-    private List<LoginRole> loginRoles;
-
+    @ManyToOne
+    @JoinColumn(name = "mediumId", referencedColumnName = "mediumId")
+    private Medium medium;
 }
+

@@ -1,34 +1,36 @@
-package de.fourzerofournotfound.rateyourstuff.RaYS.models;
+package de.fourzerofournotfound.rateyourstuff.rays.models;
 
-import lombok.Data;
+
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
 @Entity
 @RequiredArgsConstructor
-@Table(name = "Collections")
-public class Collection {
+@Table(name = "Languages")
 
+public class Language {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long collectionId;
+    private Long languageId;
 
     @Column(nullable = false)
     @ColumnDefault("CURRENT_TIMESTAMP()")
     private LocalDateTime createdAt;
 
-    @Column(nullable = true)
+    @Column
     @ColumnDefault("NULL ON UPDATE CURRENT_TIMESTAMP()")
     private LocalDateTime updatedAt;
 
-    @ManyToOne
-    @JoinColumn(name = "userId", referencedColumnName = "userid")
-    private User user;
+    @Column(length = 200)
+    private String language;
 
     @ManyToMany
     Set<Medium> media;
