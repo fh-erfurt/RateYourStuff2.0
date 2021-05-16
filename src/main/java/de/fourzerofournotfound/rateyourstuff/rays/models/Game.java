@@ -1,11 +1,18 @@
 package de.fourzerofournotfound.rateyourstuff.rays.models;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-
+@Getter
+@Setter
+@Entity
+@RequiredArgsConstructor
+@Table(name = "Games")
 public class Game extends Medium{
 
     //@Id

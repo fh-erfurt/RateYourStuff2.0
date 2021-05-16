@@ -1,13 +1,16 @@
 package de.fourzerofournotfound.rateyourstuff.rays.models;
 
 import lombok.Data;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Data
+@Getter
+@Setter
 @Entity
 @RequiredArgsConstructor
 @Table(name = "Progresses")
