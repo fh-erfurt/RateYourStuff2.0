@@ -26,7 +26,7 @@ public class MovieRepositoryTest {
     }
 
     @Test
-    void saveMovie() {
+    void should_save_movie() {
         //Given
         Movie given = new Movie("Zurück in die Zukunft", "[...]", LocalDate.now(), 90, 6);
 
@@ -37,9 +37,41 @@ public class MovieRepositoryTest {
         Assertions.assertThat(result.getMediumId()).isNotNull().isGreaterThan(0);
     }
 
+    @Test
+    void should_save_movie_with_network() {
+        //Given
+        Movie given = new Movie("Zurück in die Zukunft", "[...]", LocalDate.now(), 90, 6);
+        Network network = new Network("Warner Bros");
+        given.setNetwork(network);
+
+        //When
+        Movie result = repository.save(given);
+
+        //Then
+        Assertions.assertThat(result.getMediumId()).isNotNull().isGreaterThan(0);
+        Assertions.assertThat(result.getNetwork().getNetworkId()).isNotNull().isGreaterThan(0);
+    }
 
     @Test
-    void findByMovieTitle () {
+    void should_update_description_of_movie() {
+        //Given
+        Movie given = new Movie("Zurück in die Zukunft", "[...]", LocalDate.now(), 90, 6);
+        Movie saved = repository.save(given);
+        String initialDescription = saved.getShortDescription();
+
+        //When
+        String updatedShortDescription = "Great Scott!";
+        saved.setShortDescription(updatedShortDescription);
+        Movie result = repository.save(saved);
+
+        //Then
+        Assertions.assertThat(result.getMediumId()).isEqualTo(saved.getMediumId());
+        Assertions.assertThat(result.getShortDescription()).isEqualTo(updatedShortDescription);
+
+    }
+
+    @Test
+    void should_find_movie_by_title () {
         //Given
         Movie given1 = new Movie("Zurück in die Zukunft", "[...]", LocalDate.now(), 90, 6);
         Movie given2 = new Movie("Zwiebeljack räumt auf", "[...]", LocalDate.now(), 85, 12);
@@ -56,7 +88,7 @@ public class MovieRepositoryTest {
     }
 
     @Test
-    void findWithNetwork() {
+    void should_find_movies_with_network() {
         //Given
         Movie given1 = new Movie("Zurück in die Zukunft", "[...]", LocalDate.now(), 90, 6);
         Network network1  = new Network("CBS");
@@ -76,11 +108,23 @@ public class MovieRepositoryTest {
         //When
         List<Movie> results = repository.findAllByNetwork(network2);
 
-
         //Then
         Assertions.assertThat(results).isNotNull().isNotEmpty().allMatch(Objects::nonNull);
         Assertions.assertThat(persisted).isNotNull().isNotEmpty().allMatch(Objects::nonNull);
+    }
 
+    @Test
+    void should_remove_movie_from_database() {
+        //Given
+        Movie given = new Movie("Zurück in die Zukunft", "[...]", LocalDate.now(), 90, 6);
+        Movie saved = repository.save(given);
+
+        //When
+        repository.delete(saved);
+        Optional<Movie> result = repository.findByMediumName("Zurück in die Zukunft");
+
+        //Then
+        Assertions.assertThat(result).isNotPresent();
     }
 
 }

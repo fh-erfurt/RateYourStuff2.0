@@ -8,6 +8,7 @@ import org.hibernate.annotations.ColumnDefault;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -44,7 +45,7 @@ public class Series extends Medium {
     private Boolean isCompleted;
 
     @OneToMany (mappedBy = "medium", cascade = CascadeType.ALL)
-    private Set<Season> seasons;
+    private Set<Season> seasons = new HashSet<>();
 
     public Series(String mediumName, String shortDescription, LocalDate releaseDate, Integer averageLength, Integer ageRestriction, Boolean isCompleted) {
         this.setMediumName(mediumName);

@@ -23,7 +23,7 @@ public class NetworkRepositoryTest {
     }
 
     @Test
-    void saveNetwork() {
+    void should_save_network() {
         //Given
         Network given = new Network("CBS");
 
@@ -35,7 +35,7 @@ public class NetworkRepositoryTest {
     }
 
     @Test
-    void findByNetworkTitle () {
+    void should_find_network_by_title () {
         //Given
         Network given1 = new Network("CBS");
         Network given2 = new Network("ABC");
@@ -52,7 +52,7 @@ public class NetworkRepositoryTest {
     }
 
     @Test
-    void findAllNetworks() {
+    void should_find_all_networks() {
         //Given
         Network given1 = new Network("CBS");
         Network given2 = new Network("ABC");

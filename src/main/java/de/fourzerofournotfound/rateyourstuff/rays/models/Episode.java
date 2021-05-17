@@ -17,10 +17,6 @@ import java.util.Set;
 @Table(name = "Episodes")
 public class Episode extends Medium {
 
-    //@Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
-    //private Long episodeId;
-
     @Column(nullable = false)
     @ColumnDefault("CURRENT_TIMESTAMP()")
     private LocalDateTime createdAt;

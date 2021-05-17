@@ -8,6 +8,7 @@ import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -44,8 +45,8 @@ public class Season {
     @JoinColumn(name = "mediumId", referencedColumnName = "mediumId")
     private Medium medium;
 
-    @OneToMany (mappedBy = "season")
-    private Set<Episode> episodes;
+    @OneToMany (mappedBy = "season", cascade = CascadeType.PERSIST)
+    private Set<Episode> episodes = new HashSet<>();
 
 
 }

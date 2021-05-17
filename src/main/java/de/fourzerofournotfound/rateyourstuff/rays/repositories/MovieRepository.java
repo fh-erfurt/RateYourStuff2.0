@@ -10,7 +10,7 @@ import java.util.Optional;
 
 @Repository
 public interface MovieRepository extends JpaRepository<Movie, Long> {
-    Optional<Movie> findByMediumName(String mediumName);
+    Optional<Movie> findByMediumName(String movieName);
 
     List<Movie> findAllByNetwork(Network network);
 }

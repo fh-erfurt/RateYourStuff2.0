@@ -17,13 +17,17 @@ public class SeriesRepositoryTest {
     @Autowired
     SeriesRepository repository;
 
+    @Autowired
+    SeasonRepository seasonRepository;
+
     @AfterEach
     public void afterEach() {
-        //repository.deleteAll();
+        seasonRepository.deleteAll();
+        repository.deleteAll();
     }
 
     @Test
-    void saveSeries() {
+    void should_save_series() {
         //Given
         Series given = new Series("Ein Käfig voller Helden",
                 "[...]",
@@ -40,7 +44,7 @@ public class SeriesRepositoryTest {
     }
 
     @Test
-    void findSeriesByName() {
+    void should_find_series_by_name() {
         //Given
         Series given1 = new Series("Ein Käfig voller Helden",
                 "[...]",
@@ -68,7 +72,7 @@ public class SeriesRepositoryTest {
     }
 
     @Test
-    void saveSeriesWithSeasons() {
+    void should_save_series_with_seasons() {
         //Given
         Series given = new Series("Ein Käfig voller Helden",
                 "[...]",
@@ -78,7 +82,8 @@ public class SeriesRepositoryTest {
                 true);
 
         Season season1 = new Season(1, "");
-        //TODO: Does not work, "saveSeriesWithSeasons" cannot be found
+        season1.setMedium(given);
+
         given.getSeasons().add(season1);
 
         //When
