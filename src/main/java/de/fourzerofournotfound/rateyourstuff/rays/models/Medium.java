@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
@@ -20,8 +21,7 @@ public abstract class Medium {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long mediumId;
 
-    @Column(nullable = false)
-    @ColumnDefault("CURRENT_TIMESTAMP()")
+    @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime createdAt;
 
     @Column
@@ -32,7 +32,7 @@ public abstract class Medium {
     private String mediumName;
 
     @Column(nullable = false)
-    private LocalDateTime releaseDate;
+    private LocalDate releaseDate;
 
     @Column(nullable = false, length = 10000)
     private String shortDescription;

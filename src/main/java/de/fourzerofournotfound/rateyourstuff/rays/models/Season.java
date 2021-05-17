@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -19,8 +20,9 @@ public class Season {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long seasonId;
 
-    @Column(nullable = false)
-    @ColumnDefault("CURRENT_TIMESTAMP()")
+    @CreatedDate
+    @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    //@ColumnDefault("CURRENT_TIMESTAMP()")
     private LocalDateTime createdAt;
 
     @Column
@@ -33,7 +35,12 @@ public class Season {
     @Column(length=250)
     private String seasonTitle;
 
-    @ManyToOne
+    public Season(Integer seasonNumber, String seasonTitle) {
+        this.seasonNumber = seasonNumber;
+        this.seasonTitle = seasonTitle;
+    }
+
+    @ManyToOne (cascade = CascadeType.PERSIST)
     @JoinColumn(name = "mediumId", referencedColumnName = "mediumId")
     private Medium medium;
 
