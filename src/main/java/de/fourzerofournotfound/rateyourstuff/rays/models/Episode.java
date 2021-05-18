@@ -1,8 +1,6 @@
 package de.fourzerofournotfound.rateyourstuff.rays.models;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
@@ -13,6 +11,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
+@AllArgsConstructor
 @RequiredArgsConstructor
 @Table(name = "Episodes")
 public class Episode extends Medium {
@@ -31,6 +30,10 @@ public class Episode extends Medium {
     @Column
     private Integer length;
 
+    @ManyToOne
+    @JoinColumn(name = "seasonId", referencedColumnName = "seasonId")
+    private Season season;
+
     public Episode(String mediumName, String shortDescription, LocalDate releaseDate, Integer episodeNumber, Integer length) {
         this.setMediumName(mediumName);
         this.setShortDescription(shortDescription);
@@ -38,10 +41,5 @@ public class Episode extends Medium {
         this.episodeNumber = episodeNumber;
         this.length = length;
     }
-
-
-    @ManyToOne
-    @JoinColumn(name = "seasonId", referencedColumnName = "seasonId")
-    private Season season;
 }
 

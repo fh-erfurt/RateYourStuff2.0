@@ -1,17 +1,20 @@
 package de.fourzerofournotfound.rateyourstuff.rays.models;
 
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@Data
+@Getter
+@Setter
 @Entity
+@AllArgsConstructor
 @RequiredArgsConstructor
+@Builder
 @Table(name = "Ratings")
-public class Rating {
+public class Rating{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,4 +47,5 @@ public class Rating {
     @ManyToOne
     @JoinColumn(name = "mediumId", referencedColumnName = "mediumId")
     private Medium medium;
+
 }

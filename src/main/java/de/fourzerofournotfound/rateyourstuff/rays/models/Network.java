@@ -1,15 +1,14 @@
 package de.fourzerofournotfound.rateyourstuff.rays.models;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
 
-@Entity
 @Getter
 @Setter
+@Entity
+@AllArgsConstructor
 @RequiredArgsConstructor
 @Table(name="networks")
 public class Network {

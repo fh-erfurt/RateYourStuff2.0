@@ -1,8 +1,6 @@
 package de.fourzerofournotfound.rateyourstuff.rays.models;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.mapping.List;
 
@@ -12,6 +10,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Entity
+@AllArgsConstructor
 @RequiredArgsConstructor
 @Table(name = "Books")
 public class Book extends Medium{
@@ -44,6 +43,5 @@ public class Book extends Medium{
     //@OneToOne
     //@JoinColumn(name = "mediumId", referencedColumnName = "mediumId")
     //private Medium medium;
-
 
 }
