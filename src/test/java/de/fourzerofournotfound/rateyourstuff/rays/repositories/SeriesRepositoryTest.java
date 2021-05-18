@@ -22,7 +22,6 @@ public class SeriesRepositoryTest {
 
     @AfterEach
     public void afterEach() {
-        seasonRepository.deleteAll();
         repository.deleteAll();
     }
 
