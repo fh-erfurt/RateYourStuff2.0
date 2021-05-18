@@ -48,4 +48,34 @@ public class EpisodeRepositoryTest {
         Assertions.assertThat(result).isPresent();
         Assertions.assertThat(result.get().getMediumName()).isEqualTo("Fasse dich, Kurtz!");
     }
+
+    @Test
+    public void should_update_episode() {
+        //Given
+        Episode given = new Episode("Fasse dich, Kurtz!", "[...]", LocalDate.now(), 23, 20);
+        Episode savedEpisode = repository.save(given);
+        String initialDescription = savedEpisode.getMediumName();
+
+        //When
+        savedEpisode.setShortDescription("Test");
+        Episode result = repository.save(savedEpisode);
+
+        //Then
+        Assertions.assertThat(result.getMediumId()).isEqualTo(savedEpisode.getMediumId());
+        Assertions.assertThat(result.getShortDescription()).isEqualTo("Test");
+    }
+
+    @Test
+    public void should_delete_episode() {
+        //Given
+        Episode given = new Episode("Fasse dich, Kurtz!", "[...]", LocalDate.now(), 23, 20);
+        repository.save(given);
+
+        //When
+        repository.delete(given);
+        Optional<Episode> result = repository.findByMediumName("Fasse dich, Kurtz!");
+
+        //Then
+        Assertions.assertThat(result).isNotPresent();
+    }
 }

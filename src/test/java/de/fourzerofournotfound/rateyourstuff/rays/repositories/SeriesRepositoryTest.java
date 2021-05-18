@@ -93,4 +93,43 @@ public class SeriesRepositoryTest {
         Assertions.assertThat(result.getSeasons()).isNotNull().isNotEmpty().allMatch(Objects::nonNull);
 
     }
+
+    @Test
+    public void should_update_series() {
+        //Given
+        Series given = new Series("Ein Käfig voller Helden",
+                "Test",
+                LocalDate.of(1965,9,17),
+                20,
+                12,
+                true);
+        Series saved = repository.save(given);
+
+        //When
+        saved.setShortDescription("Test");
+        Series result = repository.save(saved);
+
+        //Then
+        Assertions.assertThat(result.getMediumId()).isEqualTo(saved.getMediumId());
+        Assertions.assertThat(result.getShortDescription()).isEqualTo("Test");
+    }
+
+    @Test
+    public void should_delete_series() {
+        //Given
+        Series given = new Series("Ein Käfig voller Helden",
+                "[...]",
+                LocalDate.of(1965,9,17),
+                20,
+                12,
+                true);
+        repository.save(given);
+
+        //When
+        repository.delete(given);
+        Optional<Series> result = repository.findByMediumName("Ein Käfig voller Helden");
+
+        //Then
+        Assertions.assertThat(result).isNotPresent();
+    }
 }
