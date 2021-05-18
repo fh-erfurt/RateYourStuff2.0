@@ -1,8 +1,6 @@
 package de.fourzerofournotfound.rateyourstuff.rays.models;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.annotation.CreatedDate;
 
@@ -13,8 +11,10 @@ import java.util.Set;
 
 @Getter
 @Setter
+@Builder
 @Entity
 @RequiredArgsConstructor
+@AllArgsConstructor
 @Table(name="seasons")
 public class Season {
     @Id
@@ -45,6 +45,7 @@ public class Season {
     @JoinColumn(name = "mediumId", referencedColumnName = "mediumId")
     private Medium medium;
 
+    @Builder.Default
     @OneToMany (mappedBy = "season", cascade = CascadeType.PERSIST)
     private Set<Episode> episodes = new HashSet<>();
 

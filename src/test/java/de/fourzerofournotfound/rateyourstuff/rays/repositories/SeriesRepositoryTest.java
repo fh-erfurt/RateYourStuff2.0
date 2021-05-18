@@ -28,12 +28,14 @@ public class SeriesRepositoryTest {
     @Test
     void should_save_series() {
         //Given
-        Series given = new Series("Ein Käfig voller Helden",
-                "[...]",
-                LocalDate.of(1965,9,17),
-                20,
-                12,
-                true);
+        Series given = Series.builder()
+                .mediumName("Ein Käfig voller Helden")
+                .shortDescription("[...]")
+                .releaseDate(LocalDate.of(1965,9,17))
+                .averageLength(20)
+                .ageRestriction(12)
+                .isCompleted(true)
+                .build();
 
         //When
         Series result = repository.save(given);
@@ -45,19 +47,23 @@ public class SeriesRepositoryTest {
     @Test
     void should_find_series_by_name() {
         //Given
-        Series given1 = new Series("Ein Käfig voller Helden",
-                "[...]",
-                LocalDate.of(1965,9,17),
-                20,
-                12,
-                true);
+        Series given1 = Series.builder()
+                .mediumName("Ein Käfig voller Helden")
+                .shortDescription("[...]")
+                .releaseDate(LocalDate.of(1965,9,17))
+                .averageLength(20)
+                .ageRestriction(12)
+                .isCompleted(true)
+                .build();
 
-        Series given2 = new Series("M*A*S*H",
-                "[...]",
-                LocalDate.of(1965,9,17),
-                20,
-                12,
-                true);
+        Series given2 = Series.builder()
+                .mediumName("M*A*S*H")
+                .shortDescription("[...]")
+                .releaseDate(LocalDate.of(1965,9,17))
+                .averageLength(20)
+                .ageRestriction(12)
+                .isCompleted(true)
+                .build();
 
         repository.save(given1);
         repository.save(given2);
@@ -73,14 +79,16 @@ public class SeriesRepositoryTest {
     @Test
     void should_save_series_with_seasons() {
         //Given
-        Series given = new Series("Ein Käfig voller Helden",
-                "[...]",
-                LocalDate.of(1965,9,17),
-                20,
-                12,
-                true);
+        Series given = Series.builder()
+                .mediumName("Ein Käfig voller Helden")
+                .shortDescription("[...]")
+                .releaseDate(LocalDate.of(1965,9,17))
+                .averageLength(20)
+                .ageRestriction(12)
+                .isCompleted(true)
+                .build();
 
-        Season season1 = new Season(1, "");
+        Season season1 = Season.builder().seasonNumber(1).seasonTitle("").build();
         season1.setMedium(given);
 
         given.getSeasons().add(season1);
@@ -97,12 +105,15 @@ public class SeriesRepositoryTest {
     @Test
     public void should_update_series() {
         //Given
-        Series given = new Series("Ein Käfig voller Helden",
-                "Test",
-                LocalDate.of(1965,9,17),
-                20,
-                12,
-                true);
+        Series given = Series.builder()
+                .mediumName("Ein Käfig voller Helden")
+                .shortDescription("[...]")
+                .releaseDate(LocalDate.of(1965,9,17))
+                .averageLength(20)
+                .ageRestriction(12)
+                .isCompleted(true)
+                .build();
+
         Series saved = repository.save(given);
 
         //When
@@ -117,12 +128,15 @@ public class SeriesRepositoryTest {
     @Test
     public void should_delete_series() {
         //Given
-        Series given = new Series("Ein Käfig voller Helden",
-                "[...]",
-                LocalDate.of(1965,9,17),
-                20,
-                12,
-                true);
+        Series given = Series.builder()
+                .mediumName("Ein Käfig voller Helden")
+                .shortDescription("[...]")
+                .releaseDate(LocalDate.of(1965,9,17))
+                .averageLength(20)
+                .ageRestriction(12)
+                .isCompleted(true)
+                .build();
+
         repository.save(given);
 
         //When

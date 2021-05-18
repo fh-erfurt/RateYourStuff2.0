@@ -29,7 +29,7 @@ public class SeasonRepositoryTest {
     @Test
     void should_save_season() {
         //Given
-        Season given = new Season(1, "");
+        Season given = Season.builder().seasonNumber(1).seasonTitle("").build();
 
         //When
         Season result = repository.save(given);
@@ -41,9 +41,22 @@ public class SeasonRepositoryTest {
     @Test
     public void should_save_season_and_episodes() {
         //Given
-        Season given = new Season(1, "");
-        Episode episode1 = new Episode("Kuckuck im Nest", "[...]", LocalDate.of(1965,9,17),1,20);
-        Episode episode2 = new Episode("Operation Tiger", "[...]", LocalDate.of(1965,9,24),2,20);
+        Season given = Season.builder().seasonNumber(1).seasonTitle("").build();
+        Episode episode1 = Episode.builder()
+                .mediumName("Kuckuck im Nest")
+                .shortDescription("[...]")
+                .releaseDate(LocalDate.of(1965,9,17))
+                .episodeNumber(1)
+                .length(20)
+                .build();
+
+        Episode episode2 = Episode.builder()
+                .mediumName("Operation Tiger")
+                .shortDescription("[...]")
+                .releaseDate(LocalDate.of(1965,9,24))
+                .episodeNumber(2)
+                .length(20)
+                .build();
 
         //When
         episode1.setSeason(given);
@@ -63,7 +76,7 @@ public class SeasonRepositoryTest {
     @Test
     public void should_update_season() {
         //Given
-        Season given = new Season(1, "");
+        Season given = Season.builder().seasonNumber(1).seasonTitle("").build();
         Season saved = repository.save(given);
 
         //When
@@ -78,7 +91,7 @@ public class SeasonRepositoryTest {
     @Test
     public void should_delete_season() {
         //Given
-        Season given = new Season(1, "");
+        Season given = Season.builder().seasonNumber(1).seasonTitle("").build();
         repository.save(given);
 
         //When

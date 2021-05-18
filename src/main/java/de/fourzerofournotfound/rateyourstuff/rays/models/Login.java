@@ -33,7 +33,6 @@ public class Login {
     @Column
     private LocalDateTime lastLogin;
 
-    //TODO: Should not be nullable!
     @Column(nullable = false)
     @ColumnDefault("false")
     private Boolean isEnabled;

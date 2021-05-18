@@ -23,7 +23,13 @@ public class EpisodeRepositoryTest {
     @Test
     public void should_save_episode() {
         //Given
-        Episode given = new Episode("Fassen Sie sich, Kurtz!", "[...]", LocalDate.now(), 1, 20);
+        Episode given = Episode.builder()
+                .mediumName("Fasse dich, Kurtz!")
+                .shortDescription("[...]")
+                .releaseDate(LocalDate.of(1965,9,17))
+                .episodeNumber(23)
+                .length(20)
+                .build();
 
         //When
         Episode result = repository.save(given);
@@ -35,8 +41,21 @@ public class EpisodeRepositoryTest {
     @Test
     public void should_find_episode_by_name() {
         //Given
-        Episode given1 = new Episode("Fasse dich, Kurtz!", "[...]", LocalDate.now(), 23, 20);
-        Episode given2 = new Episode("Klink der Casanova", "[...]", LocalDate.now(), 6, 20);
+        Episode given1 = Episode.builder()
+                .mediumName("Fasse dich, Kurtz!")
+                .shortDescription("[...]")
+                .releaseDate(LocalDate.of(1965,9,17))
+                .episodeNumber(23)
+                .length(20)
+                .build();
+
+        Episode given2 = Episode.builder()
+                .mediumName("Operation Tiger")
+                .shortDescription("[...]")
+                .releaseDate(LocalDate.of(1965,9,24))
+                .episodeNumber(2)
+                .length(20)
+                .build();
 
         repository.save(given1);
         repository.save(given2);
@@ -52,7 +71,14 @@ public class EpisodeRepositoryTest {
     @Test
     public void should_update_episode() {
         //Given
-        Episode given = new Episode("Fasse dich, Kurtz!", "[...]", LocalDate.now(), 23, 20);
+        Episode given = Episode.builder()
+                .mediumName("Fasse dich, Kurtz!")
+                .shortDescription("[...]")
+                .releaseDate(LocalDate.of(1965,9,17))
+                .episodeNumber(23)
+                .length(20)
+                .build();
+
         Episode savedEpisode = repository.save(given);
         String initialDescription = savedEpisode.getMediumName();
 
@@ -68,7 +94,14 @@ public class EpisodeRepositoryTest {
     @Test
     public void should_delete_episode() {
         //Given
-        Episode given = new Episode("Fasse dich, Kurtz!", "[...]", LocalDate.now(), 23, 20);
+        Episode given = Episode.builder()
+                .mediumName("Fasse dich, Kurtz!")
+                .shortDescription("[...]")
+                .releaseDate(LocalDate.of(1965,9,17))
+                .episodeNumber(23)
+                .length(20)
+                .build();
+
         repository.save(given);
 
         //When

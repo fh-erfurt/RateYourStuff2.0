@@ -11,7 +11,7 @@
 	<groupId>de.fourzerofournotfound.rateyourstuff</groupId>
 	<artifactId>RaYS</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>RaYS</name>
+	<name>rays</name>
 	<description>Java 2 project for rate your stuff</description>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

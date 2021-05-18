@@ -32,7 +32,10 @@ public class NetworkRepositoryTest {
     @Test
     void should_save_network() {
         //Given
-        Network given = new Network("CBS");
+        Network given = Network.builder()
+                .networkTitle("CBS")
+                .build();
+
 
         //When
         Network result = repository.save(given);
@@ -44,8 +47,12 @@ public class NetworkRepositoryTest {
     @Test
     void should_find_network_by_title () {
         //Given
-        Network given1 = new Network("CBS");
-        Network given2 = new Network("ABC");
+        Network given1 = Network.builder()
+                .networkTitle("CBS")
+                .build();
+        Network given2 = Network.builder()
+                .networkTitle("ABC")
+                .build();
 
         repository.save(given1);
         repository.save(given2);
@@ -61,8 +68,12 @@ public class NetworkRepositoryTest {
     @Test
     void should_find_all_networks() {
         //Given
-        Network given1 = new Network("CBS");
-        Network given2 = new Network("ABC");
+        Network given1 = Network.builder()
+                .networkTitle("CBS")
+                .build();
+        Network given2 = Network.builder()
+                .networkTitle("ABC")
+                .build();
 
         List<Network> persisted = new ArrayList<>();
         persisted.add(repository.save(given1));
@@ -79,7 +90,9 @@ public class NetworkRepositoryTest {
     @Test
     public void should_update_network() {
         //Given
-        Network given = new Network("DBS");
+        Network given = Network.builder()
+                .networkTitle("CBS")
+                .build();
         Network saved = repository.save(given);
 
         //When
@@ -93,7 +106,9 @@ public class NetworkRepositoryTest {
     @Test
     public void should_delete_network () {
         //Given
-        Network given = new Network("CBS");
+        Network given = Network.builder()
+                .networkTitle("CBS")
+                .build();
         repository.save(given);
 
         //When
