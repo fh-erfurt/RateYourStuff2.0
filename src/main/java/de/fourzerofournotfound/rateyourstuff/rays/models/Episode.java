@@ -11,6 +11,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
+@AllArgsConstructor
 @RequiredArgsConstructor
 @Table(name = "Episodes")
 public class Episode extends Medium {
@@ -30,6 +31,10 @@ public class Episode extends Medium {
     private Integer length;
 
     @Builder
+    @ManyToOne
+    @JoinColumn(name = "seasonId", referencedColumnName = "seasonId")
+    private Season season;
+
     public Episode(String mediumName, String shortDescription, LocalDate releaseDate, Integer episodeNumber, Integer length) {
         this.setMediumName(mediumName);
         this.setShortDescription(shortDescription);
@@ -37,10 +42,5 @@ public class Episode extends Medium {
         this.episodeNumber = episodeNumber;
         this.length = length;
     }
-
-
-    @ManyToOne
-    @JoinColumn(name = "seasonId", referencedColumnName = "seasonId")
-    private Season season;
 }
 

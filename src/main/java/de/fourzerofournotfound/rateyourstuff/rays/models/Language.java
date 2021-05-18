@@ -1,9 +1,7 @@
 package de.fourzerofournotfound.rateyourstuff.rays.models;
 
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
@@ -13,6 +11,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
+@AllArgsConstructor
 @RequiredArgsConstructor
 @Table(name = "Languages")
 

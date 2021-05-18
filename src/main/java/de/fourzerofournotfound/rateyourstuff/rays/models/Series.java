@@ -13,6 +13,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
+@AllArgsConstructor
 @RequiredArgsConstructor
 @Table(name = "Series")
 public class Series extends Medium {

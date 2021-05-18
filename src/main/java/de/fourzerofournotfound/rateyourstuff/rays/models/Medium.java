@@ -1,8 +1,6 @@
 package de.fourzerofournotfound.rateyourstuff.rays.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
@@ -11,10 +9,11 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
 @Entity
-@RequiredArgsConstructor
 @AllArgsConstructor
+@RequiredArgsConstructor
 @Table(name = "Media")
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Medium {

@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Entity
+@AllArgsConstructor
 @RequiredArgsConstructor
 @Table(name = "Movies")
 public class Movie extends Medium {

@@ -1,15 +1,16 @@
 package de.fourzerofournotfound.rateyourstuff.rays.models;
 
 
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Data
+@Getter
+@Setter
 @Entity
+@AllArgsConstructor
 @RequiredArgsConstructor
 @Table(name = "LoginRoles")
 public class LoginRole {

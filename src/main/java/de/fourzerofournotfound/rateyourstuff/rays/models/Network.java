@@ -5,12 +5,11 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.List;
 
-@Entity
 @Getter
 @Setter
-@Builder
-@RequiredArgsConstructor
+@Entity
 @AllArgsConstructor
+@RequiredArgsConstructor
 @Table(name="networks")
 public class Network {
     @Id
@@ -26,4 +25,7 @@ public class Network {
     @OneToMany (mappedBy = "network")
     private List<Movie> movies;
 
+    public Network(String networkTitle) {
+        this.networkTitle = networkTitle;
+    }
 }
