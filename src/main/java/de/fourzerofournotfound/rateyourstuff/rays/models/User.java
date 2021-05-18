@@ -1,5 +1,6 @@
 package de.fourzerofournotfound.rateyourstuff.rays.models;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -9,6 +10,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Set;
 
+@Builder
 @Getter
 @Setter
 @Entity
@@ -61,4 +63,13 @@ public class User {
     @ManyToMany
     private Set<User> friendList;
 
+
+    public User(String firstName, String lastName, String secondName, String userName, String gender)
+    {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.secondName = secondName;
+        this.userName = userName;
+        this.gender = gender;
+    }
 }
