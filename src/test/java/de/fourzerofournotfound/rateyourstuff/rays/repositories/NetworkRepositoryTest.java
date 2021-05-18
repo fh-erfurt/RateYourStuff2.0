@@ -3,6 +3,8 @@ package de.fourzerofournotfound.rateyourstuff.rays.repositories;
 import de.fourzerofournotfound.rateyourstuff.rays.models.Network;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,6 +18,11 @@ import java.util.Optional;
 public class NetworkRepositoryTest {
     @Autowired
     private NetworkRepository repository;
+
+    @BeforeEach
+    public void beforeEach() {
+        repository.deleteAll();
+    }
 
     @AfterEach
     public void afterEach() {
@@ -67,6 +74,34 @@ public class NetworkRepositoryTest {
         //Then
         Assertions.assertThat(results).isNotNull().isNotEmpty().allMatch(Objects::nonNull);
         Assertions.assertThat(persisted).isNotNull().isNotEmpty().allMatch(Objects::nonNull);
+    }
+
+    @Test
+    public void should_update_network() {
+        //Given
+        Network given = new Network("DBS");
+        Network saved = repository.save(given);
+
+        //When
+        saved.setNetworkTitle("CBS");
+        Network result = repository.save(saved);
+        //Then
+        Assertions.assertThat(result.getNetworkId()).isEqualTo(saved.getNetworkId());
+        Assertions.assertThat(result.getNetworkTitle()).isEqualTo("CBS");
+    }
+
+    @Test
+    public void should_delete_network () {
+        //Given
+        Network given = new Network("CBS");
+        repository.save(given);
+
+        //When
+        repository.delete(given);
+        Optional<Network> result = repository.findByNetworkTitle("CBS");
+
+        //Then
+        Assertions.assertThat(result).isNotPresent();
     }
 
 }
