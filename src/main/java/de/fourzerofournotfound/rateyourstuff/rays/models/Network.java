@@ -25,4 +25,8 @@ public class Network {
 
     @OneToMany (mappedBy = "network")
     private List<Movie> movies;
+
+    public Network(String networkTitle) {
+        this.networkTitle = networkTitle;
+    }
 }

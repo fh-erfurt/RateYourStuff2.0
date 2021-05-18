@@ -6,6 +6,7 @@ import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
@@ -13,12 +14,7 @@ import java.time.LocalDateTime;
 @Entity
 @RequiredArgsConstructor
 @Table(name = "Movies")
-public class Movie extends Medium{
-
-
-    //@Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
-    //private Long movieId;
+public class Movie extends Medium {
 
     @Column(nullable = false)
     @ColumnDefault("CURRENT_TIMESTAMP()")
@@ -34,11 +30,17 @@ public class Movie extends Medium{
     @Column
     private Integer ageRestriction;
 
-    @ManyToOne
+    @ManyToOne (cascade = CascadeType.PERSIST)
     @JoinColumn(name = "networkId", referencedColumnName = "networkId")
     private Network network;
 
-
+    public Movie(String mediumName, String shortDescription, LocalDate releaseDate, Integer length, Integer ageRestriction) {
+        this.setMediumName(mediumName);
+        this.setShortDescription(shortDescription);
+        this.setReleaseDate(releaseDate);
+        this.length = length;
+        this.ageRestriction = ageRestriction;
+    }
 
 
     //@OneToOne

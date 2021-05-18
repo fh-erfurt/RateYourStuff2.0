@@ -6,6 +6,7 @@ import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -15,10 +16,6 @@ import java.util.Set;
 @RequiredArgsConstructor
 @Table(name = "Episodes")
 public class Episode extends Medium {
-
-    //@Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
-    //private Long episodeId;
 
     @Column(nullable = false)
     @ColumnDefault("CURRENT_TIMESTAMP()")
@@ -33,6 +30,15 @@ public class Episode extends Medium {
 
     @Column
     private Integer length;
+
+    public Episode(String mediumName, String shortDescription, LocalDate releaseDate, Integer episodeNumber, Integer length) {
+        this.setMediumName(mediumName);
+        this.setShortDescription(shortDescription);
+        this.setReleaseDate(releaseDate);
+        this.episodeNumber = episodeNumber;
+        this.length = length;
+    }
+
 
     @ManyToOne
     @JoinColumn(name = "seasonId", referencedColumnName = "seasonId")
