@@ -1,6 +1,8 @@
 package de.fourzerofournotfound.rateyourstuff.rays.models;
 
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
@@ -10,6 +12,8 @@ import java.time.LocalDateTime;
 
 @Data
 @Entity
+@Builder
+@AllArgsConstructor
 @RequiredArgsConstructor
 @Table(name = "LoginRoles")
 public class LoginRole {

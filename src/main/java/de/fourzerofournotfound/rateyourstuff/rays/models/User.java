@@ -1,9 +1,6 @@
 package de.fourzerofournotfound.rateyourstuff.rays.models;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
@@ -15,6 +12,7 @@ import java.util.Set;
 @Setter
 @Entity
 @RequiredArgsConstructor
+@AllArgsConstructor
 @Table(name = "Users")
 public class User {
 
@@ -44,7 +42,7 @@ public class User {
     @Column(length = 45, nullable = false)
     private String gender;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "login_Id", referencedColumnName = "loginId")
     private Login login;
 
@@ -63,7 +61,7 @@ public class User {
     @ManyToMany
     private Set<User> friendList;
 
-
+/*
     public User(String firstName, String lastName, String secondName, String userName, String gender)
     {
         this.firstName = firstName;
@@ -72,4 +70,6 @@ public class User {
         this.userName = userName;
         this.gender = gender;
     }
+
+ */
 }

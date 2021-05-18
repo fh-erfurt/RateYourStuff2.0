@@ -1,6 +1,8 @@
 package de.fourzerofournotfound.rateyourstuff.rays.models;
 
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
@@ -11,6 +13,8 @@ import java.util.List;
 
 @Data
 @Entity
+@Builder
+@AllArgsConstructor
 @RequiredArgsConstructor
 @Table(name = "Logins")
 public class Login {
@@ -19,8 +23,7 @@ public class Login {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long loginId;
 
-    @Column(nullable = false)
-    @ColumnDefault("CURRENT_TIMESTAMP()")
+    @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime createdAt;
 
     @Column(nullable = true)
@@ -30,6 +33,7 @@ public class Login {
     @Column
     private LocalDateTime lastLogin;
 
+    //TODO: Should not be nullable!
     @Column(nullable = false)
     @ColumnDefault("false")
     private Boolean isEnabled;
@@ -37,13 +41,10 @@ public class Login {
     @Column
     private String email;
 
-    @Column(length = 45, nullable = false)
-    @ColumnDefault("'user'")
-    private String userRole;
-
     @Column(nullable = false)
     @ColumnDefault("0")
-    private Integer failedLoginCount;
+    @Builder.Default
+    private Integer failedLoginCount = 0;
 
     @Column(nullable = false, length = 255)
     private String passwordHash;
