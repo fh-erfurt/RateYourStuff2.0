@@ -13,7 +13,6 @@ import java.util.Set;
 @Setter
 @Builder
 @Entity
-@AllArgsConstructor
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Table(name="seasons")

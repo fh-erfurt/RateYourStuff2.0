@@ -30,11 +30,12 @@ public class Episode extends Medium {
     @Column
     private Integer length;
 
-    @Builder
+
     @ManyToOne
     @JoinColumn(name = "seasonId", referencedColumnName = "seasonId")
     private Season season;
 
+    @Builder
     public Episode(String mediumName, String shortDescription, LocalDate releaseDate, Integer episodeNumber, Integer length) {
         this.setMediumName(mediumName);
         this.setShortDescription(shortDescription);
