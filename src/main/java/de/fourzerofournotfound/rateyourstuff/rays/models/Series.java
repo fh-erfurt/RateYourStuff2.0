@@ -34,10 +34,6 @@ public class Series extends Medium {
     @JoinColumn(name = "networkId", referencedColumnName = "networkId")
     private Network network;
 
-    //TODO: it does not really make sense to have a highest resolution. An aspect ratio would be more fitting, would suggest to remove this attribute
-    //@Column(nullable = false)
-    //private String highestResolution;
-
     @Column(nullable = false)
     private Integer ageRestriction;
 
