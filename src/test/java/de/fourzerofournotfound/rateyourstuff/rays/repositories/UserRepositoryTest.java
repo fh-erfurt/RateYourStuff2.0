@@ -22,12 +22,12 @@ public class UserRepositoryTest {
 
     @BeforeEach
     public void beforeEach() {
-        repository.deleteAll();
+        //repository.deleteAll();
     }
 
     @AfterEach
     public void afterEach() {
-       //repository.deleteAll();
+       repository.deleteAll();
     }
 
     @Test
@@ -91,7 +91,7 @@ public class UserRepositoryTest {
         User result = repository.save(given);
 
         //Then
-        Assertions.assertThat(result.getUserId()).isEqualTo(given.getLogin().getLoginId());
+        Assertions.assertThat(result.getLogin().getLoginId()).isNotNull();
     }
 
     @Test
