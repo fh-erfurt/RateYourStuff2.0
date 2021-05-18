@@ -1,5 +1,6 @@
 package de.fourzerofournotfound.rateyourstuff.rays.models;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
@@ -13,6 +14,7 @@ import java.util.Set;
 @Data
 @Entity
 @RequiredArgsConstructor
+@AllArgsConstructor
 @Table(name = "Media")
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Medium {

@@ -1,8 +1,6 @@
 package de.fourzerofournotfound.rateyourstuff.rays.models;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -10,7 +8,9 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@Builder
 @RequiredArgsConstructor
+@AllArgsConstructor
 @Table(name="networks")
 public class Network {
     @Id
@@ -26,7 +26,4 @@ public class Network {
     @OneToMany (mappedBy = "network")
     private List<Movie> movies;
 
-    public Network(String networkTitle) {
-        this.networkTitle = networkTitle;
-    }
 }

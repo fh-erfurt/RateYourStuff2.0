@@ -28,7 +28,13 @@ public class MovieRepositoryTest {
     @Test
     void should_save_movie() {
         //Given
-        Movie given = new Movie("Zurück in die Zukunft", "[...]", LocalDate.now(), 90, 6);
+        Movie given = Movie.builder()
+                .mediumName("Zurück in die Zukunft")
+                .shortDescription("[...]")
+                .releaseDate(LocalDate.now())
+                .length(90)
+                .ageRestriction(6)
+                .build();
 
         //When
         Movie result = repository.save(given);
@@ -40,8 +46,16 @@ public class MovieRepositoryTest {
     @Test
     void should_save_movie_with_network() {
         //Given
-        Movie given = new Movie("Zurück in die Zukunft", "[...]", LocalDate.now(), 90, 6);
-        Network network = new Network("Warner Bros");
+        Movie given = Movie.builder()
+                .mediumName("Zurück in die Zukunft")
+                .shortDescription("[...]")
+                .releaseDate(LocalDate.now())
+                .length(90)
+                .ageRestriction(6)
+                .build();
+        Network network = Network.builder()
+                .networkTitle("Warner Bros")
+                .build();
         given.setNetwork(network);
 
         //When
@@ -55,7 +69,13 @@ public class MovieRepositoryTest {
     @Test
     void should_update_description_of_movie() {
         //Given
-        Movie given = new Movie("Zurück in die Zukunft", "[...]", LocalDate.now(), 90, 6);
+        Movie given = Movie.builder()
+                .mediumName("Zurück in die Zukunft")
+                .shortDescription("[...]")
+                .releaseDate(LocalDate.now())
+                .length(90)
+                .ageRestriction(6)
+                .build();
         Movie saved = repository.save(given);
         String initialDescription = saved.getShortDescription();
 
@@ -73,8 +93,21 @@ public class MovieRepositoryTest {
     @Test
     void should_find_movie_by_title () {
         //Given
-        Movie given1 = new Movie("Zurück in die Zukunft", "[...]", LocalDate.now(), 90, 6);
-        Movie given2 = new Movie("Zwiebeljack räumt auf", "[...]", LocalDate.now(), 85, 12);
+        Movie given1 = Movie.builder()
+                .mediumName("Zurück in die Zukunft")
+                .shortDescription("[...]")
+                .releaseDate(LocalDate.now())
+                .length(90)
+                .ageRestriction(6)
+                .build();
+
+        Movie given2 = Movie.builder()
+                .mediumName("Zwiebeljack räumt auf")
+                .shortDescription("[...]")
+                .releaseDate(LocalDate.now())
+                .length(85)
+                .ageRestriction(12)
+                .build();
 
         repository.save(given1);
         repository.save(given2);
@@ -90,13 +123,30 @@ public class MovieRepositoryTest {
     @Test
     void should_find_movies_with_network() {
         //Given
-        Movie given1 = new Movie("Zurück in die Zukunft", "[...]", LocalDate.now(), 90, 6);
-        Network network1  = new Network("CBS");
+        Movie given1 = Movie.builder()
+                .mediumName("Zurück in die Zukunft")
+                .shortDescription("[...]")
+                .releaseDate(LocalDate.now())
+                .length(90)
+                .ageRestriction(6)
+                .build();
+        Network network1 = Network.builder()
+                .networkTitle("CBS")
+                .build();
 
         given1.setNetwork(network1);
 
-        Movie given2 = new Movie("Batman hält die Welt in Atem", "[...]", LocalDate.now(), 90, 6);
-        Network network2  = new Network("Warner Bros");
+        Movie given2 = Movie.builder()
+                .mediumName("Batman hält die Welt in Atem")
+                .shortDescription("[...]")
+                .releaseDate(LocalDate.now())
+                .length(90)
+                .ageRestriction(6)
+                .build();
+
+        Network network2 = Network.builder()
+                .networkTitle("Warner Bros")
+                .build();
 
         given1.setNetwork(network1);
         given2.setNetwork(network2);
@@ -116,7 +166,14 @@ public class MovieRepositoryTest {
     @Test
     void should_remove_movie_from_database() {
         //Given
-        Movie given = new Movie("Zurück in die Zukunft", "[...]", LocalDate.now(), 90, 6);
+        Movie given = Movie.builder()
+                .mediumName("Zurück in die Zukunft")
+                .shortDescription("[...]")
+                .releaseDate(LocalDate.now())
+                .length(90)
+                .ageRestriction(6)
+                .build();
+
         Movie saved = repository.save(given);
 
         //When

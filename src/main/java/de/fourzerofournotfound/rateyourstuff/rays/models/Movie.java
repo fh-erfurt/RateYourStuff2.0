@@ -1,8 +1,6 @@
 package de.fourzerofournotfound.rateyourstuff.rays.models;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
@@ -34,6 +32,7 @@ public class Movie extends Medium {
     @JoinColumn(name = "networkId", referencedColumnName = "networkId")
     private Network network;
 
+    @Builder
     public Movie(String mediumName, String shortDescription, LocalDate releaseDate, Integer length, Integer ageRestriction) {
         this.setMediumName(mediumName);
         this.setShortDescription(shortDescription);
@@ -41,10 +40,4 @@ public class Movie extends Medium {
         this.length = length;
         this.ageRestriction = ageRestriction;
     }
-
-
-    //@OneToOne
-    //@JoinColumn(name = "mediumId", referencedColumnName = "mediumId")
-    //private Medium medium;
-
 }

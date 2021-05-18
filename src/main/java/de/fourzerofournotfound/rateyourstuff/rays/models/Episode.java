@@ -1,8 +1,6 @@
 package de.fourzerofournotfound.rateyourstuff.rays.models;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
@@ -31,6 +29,7 @@ public class Episode extends Medium {
     @Column
     private Integer length;
 
+    @Builder
     public Episode(String mediumName, String shortDescription, LocalDate releaseDate, Integer episodeNumber, Integer length) {
         this.setMediumName(mediumName);
         this.setShortDescription(shortDescription);

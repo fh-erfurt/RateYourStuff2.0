@@ -1,8 +1,6 @@
 package de.fourzerofournotfound.rateyourstuff.rays.models;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
@@ -43,6 +41,7 @@ public class Series extends Medium {
     @OneToMany (mappedBy = "medium", cascade = CascadeType.ALL)
     private Set<Season> seasons = new HashSet<>();
 
+    @Builder
     public Series(String mediumName, String shortDescription, LocalDate releaseDate, Integer averageLength, Integer ageRestriction, Boolean isCompleted) {
         this.setMediumName(mediumName);
         this.setShortDescription(shortDescription);
