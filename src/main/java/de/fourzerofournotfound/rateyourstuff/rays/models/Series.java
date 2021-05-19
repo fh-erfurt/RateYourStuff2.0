@@ -1,5 +1,6 @@
 package de.fourzerofournotfound.rateyourstuff.rays.models;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -42,6 +43,7 @@ public class Series extends Medium {
 
     @OneToMany (mappedBy = "medium", cascade = CascadeType.ALL)
     private Set<Season> seasons = new HashSet<>();
+
 
     public Series(String mediumName, String shortDescription, LocalDate releaseDate, Integer averageLength, Integer ageRestriction, Boolean isCompleted) {
         this.setMediumName(mediumName);

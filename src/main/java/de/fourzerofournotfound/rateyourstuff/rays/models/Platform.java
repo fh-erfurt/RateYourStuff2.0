@@ -7,6 +7,7 @@ import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -17,7 +18,7 @@ import java.util.Set;
 public class Platform {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long plattformId;
+    private Long platformId;
 
     @Column(nullable = false)
     @ColumnDefault("CURRENT_TIMESTAMP()")
@@ -28,9 +29,16 @@ public class Platform {
     private LocalDateTime updatedAt;
 
     @Column (length = 250)
-    private String platformTitel;
+    private String platformTitle;
+
+    @OneToMany (mappedBy = "platform")
+    private List<Game> games;
 
     @ManyToMany
     Set<Medium> media;
+
+    public Platform(String platformTitle) {
+        this.platformTitle = platformTitle;
+    }
 
 }

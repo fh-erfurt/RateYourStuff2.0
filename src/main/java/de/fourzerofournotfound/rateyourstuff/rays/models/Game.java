@@ -1,12 +1,15 @@
 package de.fourzerofournotfound.rateyourstuff.rays.models;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+
 
 @Getter
 @Setter
@@ -28,7 +31,7 @@ public class Game extends Medium{
     private LocalDateTime updatedAt;
 
     @Column
-    private Float avaragePlaytime;
+    private Float averagePlaytime;
 
     @Column(nullable = false)
     private String publisher;
@@ -45,8 +48,9 @@ public class Game extends Medium{
     @Column
     private Integer maxNumberOfGamers;
 
-   /* @Column
-    private List<String> plattforms;*/
+    @ManyToOne (cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "plattformId", referencedColumnName = "platformId")
+    private Platform platform;
 
     @Column(nullable = false)
     private Integer ageRestriction;
@@ -54,5 +58,25 @@ public class Game extends Medium{
     //@OneToOne
     //@JoinColumn(name = "mediumId", referencedColumnName = "mediumId")
     //private Medium medium;
+
+    @Builder
+    public Game(String mediumName,
+                String shortDescription,
+                LocalDate releaseDate,
+                float averagePlaytime ,
+                String publisher,
+                int minNumberOfGamers,
+                int maxNumberOfGamers,
+                int ageRestriction)
+    {
+       this.setMediumName(mediumName);
+       this.setShortDescription(shortDescription);
+       this.setReleaseDate(releaseDate);
+       this.averagePlaytime = averagePlaytime;
+       this.publisher = publisher;
+       this.minNumberOfGamers = minNumberOfGamers;
+       this.maxNumberOfGamers = maxNumberOfGamers;
+       this.ageRestriction = ageRestriction;
+    }
 
 }
