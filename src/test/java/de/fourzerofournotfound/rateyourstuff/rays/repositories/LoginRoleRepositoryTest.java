@@ -10,6 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.stereotype.Repository;
 
+import javax.swing.text.html.Option;
+
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -18,8 +22,13 @@ class LoginRoleRepositoryTest {
     @Autowired
     LoginRoleRepository loginRoleRepository;
 
+/*
     @BeforeEach
-    public void BeforeEach(){loginRoleRepository.deleteAll();};
+    public void BeforeEach(){loginRoleRepository.deleteAll();}
+*/
+
+    @AfterEach
+    public void AfterEach(){loginRoleRepository.deleteAll();}
 
     @Test
     public void should_add_LoginRole()
@@ -45,6 +54,12 @@ class LoginRoleRepositoryTest {
         LoginRole saved = loginRoleRepository.save(given);
 
         //When
+        Long savedId = saved.getLoginRoleId();
+        loginRoleRepository.delete(saved);
+        Optional<LoginRole> result = loginRoleRepository.findById(savedId);
+
+        //Then
+        Assertions.assertThat(result).isNotPresent();
     }
 
 }
