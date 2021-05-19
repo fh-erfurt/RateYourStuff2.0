@@ -4,6 +4,7 @@ import com.mysql.cj.log.Log;
 import de.fourzerofournotfound.rateyourstuff.rays.models.LoginRole;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,8 +18,8 @@ class LoginRoleRepositoryTest {
     @Autowired
     LoginRoleRepository loginRoleRepository;
 
-    @AfterEach
-    public void AfterEach(){loginRoleRepository.deleteAll();};
+    @BeforeEach
+    public void BeforeEach(){loginRoleRepository.deleteAll();};
 
     @Test
     public void should_add_LoginRole()
