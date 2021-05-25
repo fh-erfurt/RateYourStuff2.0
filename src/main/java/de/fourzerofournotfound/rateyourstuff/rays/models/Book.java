@@ -48,6 +48,9 @@ public class Book extends Medium{
     @ManyToOne (cascade = CascadeType.PERSIST)
     @JoinColumn(name = "publisherId", referencedColumnName = "publisherId")
     private Publisher publisher;
+    //@OneToOne
+    //@JoinColumn(name = "mediumId", referencedColumnName = "mediumId")
+    //private Medium medium;
 
     @Builder
     public Book(String mediumName,
