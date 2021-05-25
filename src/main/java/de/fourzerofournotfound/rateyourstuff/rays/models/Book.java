@@ -1,10 +1,15 @@
 package de.fourzerofournotfound.rateyourstuff.rays.models;
 
+import lombok.Builder;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.mapping.List;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
@@ -40,8 +45,25 @@ public class Book extends Medium{
     @Column(nullable = false)
     private Integer numberOfPages;
 
-    //@OneToOne
-    //@JoinColumn(name = "mediumId", referencedColumnName = "mediumId")
-    //private Medium medium;
+    @ManyToOne (cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "publisherId", referencedColumnName = "publisherId")
+    private Publisher publisher;
 
+    @Builder
+    public Book(String mediumName,
+                String shortDescription,
+                LocalDate releaseDate,
+                String isbn,
+                Boolean isEBook,
+                Boolean isPrint,
+                int numberOfPages)
+    {
+        this.setMediumName(mediumName);
+        this.setShortDescription(shortDescription);
+        this.setReleaseDate(releaseDate);
+        this.isbn = isbn;
+        this.isEBook = isEBook;
+        this.isPrint = isPrint;
+        this.numberOfPages = numberOfPages;
+    }
 }
