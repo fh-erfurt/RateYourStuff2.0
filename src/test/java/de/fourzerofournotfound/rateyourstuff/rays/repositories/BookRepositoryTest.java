@@ -123,7 +123,7 @@ public class BookRepositoryTest {
         persisted.add(bookRepository.save(given2));
 
         //When
-        List<Book> results = bookRepository.findAllByPublishers(publisher2);
+        List<Book> results = bookRepository.findAllByPublisher(publisher2);
 
         //Then
         Assertions.assertThat(results).isNotNull().isNotEmpty().allMatch(Objects::nonNull);

@@ -25,7 +25,7 @@ public class Book extends Medium{
     //@GeneratedValue(strategy = GenerationType.IDENTITY)
     //private Long bookId;
 
-    @Column(nullable = false)
+    @Column
     @ColumnDefault("CURRENT_TIMESTAMP()")
     private LocalDateTime createdAt;
 

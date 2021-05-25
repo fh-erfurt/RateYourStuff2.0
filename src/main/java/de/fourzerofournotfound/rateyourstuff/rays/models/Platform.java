@@ -19,7 +19,7 @@ public class Platform {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long platformId;
 
-    @Column(nullable = false)
+    @Column
     @ColumnDefault("CURRENT_TIMESTAMP()")
     private LocalDateTime createdAt;
 

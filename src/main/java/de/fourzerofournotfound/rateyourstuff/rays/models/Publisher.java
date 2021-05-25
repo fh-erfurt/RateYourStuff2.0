@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -21,7 +22,7 @@ public class Publisher {
     private String publisherTitle;
 
     @OneToMany (mappedBy = "publisher")
-    private List<Book> books;
+    private List<Book> books = new ArrayList<>();
 
     public Publisher(String publisherTitle) {
         this.publisherTitle = publisherTitle;

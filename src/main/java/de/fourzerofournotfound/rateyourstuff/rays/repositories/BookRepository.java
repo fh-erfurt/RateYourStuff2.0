@@ -1,6 +1,7 @@
 package de.fourzerofournotfound.rateyourstuff.rays.repositories;
 
 import de.fourzerofournotfound.rateyourstuff.rays.models.Book;
+import de.fourzerofournotfound.rateyourstuff.rays.models.Publisher;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -12,5 +13,5 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     Optional<Book> findByMediumName(String bookName);
     Optional<Book> findByIsbn(String bookIsbn);
 
-    List<Book> findAllByPublishers(Publisher publisher);
+    List<Book> findAllByPublisher(Publisher publisher);
 }

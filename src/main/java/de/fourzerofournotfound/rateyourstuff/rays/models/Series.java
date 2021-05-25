@@ -22,7 +22,7 @@ import java.util.Set;
 @Table(name = "Series")
 public class Series extends Medium {
 
-    @Column(nullable = false)
+    @Column
     @ColumnDefault("CURRENT_TIMESTAMP()")
     private LocalDateTime createdAt;
 

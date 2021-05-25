@@ -29,7 +29,7 @@ public class Game extends Medium{
     //@GeneratedValue(strategy = GenerationType.IDENTITY)
     //private Long gameId;
 
-    @Column(nullable = false)
+    @Column
     @ColumnDefault("CURRENT_TIMESTAMP()")
     private LocalDateTime createdAt;
 
