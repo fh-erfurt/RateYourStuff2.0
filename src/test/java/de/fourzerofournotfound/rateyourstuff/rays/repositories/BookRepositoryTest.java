@@ -77,11 +77,11 @@ public class BookRepositoryTest {
         bookRepository.save(given2);
 
         //When
-        Optional<Book> result = bookRepository.findByMediumName("Harry Potter und der Halbblutprinz");
+        Optional<Book> result = bookRepository.findByMediumName("Harry Potter und der Orden des Phönix");
 
         //Then
         Assertions.assertThat(result).isPresent();
-        Assertions.assertThat(result.get().getMediumName()).isEqualTo("Harry Potter und der Halbblutprinz");
+        Assertions.assertThat(result.get().getMediumName()).isEqualTo("Harry Potter und der Orden des Phönix");
 
     }
 
