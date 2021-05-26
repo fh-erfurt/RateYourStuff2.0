@@ -33,7 +33,7 @@ public class User {
     @Column(length = 200)
     private String lastName;
 
-    @Column(length = 200)
+    @Column(length = 200, nullable = true) //Mark: Changed to nullable | 26.05.2021
     private String secondName;
 
     @Column(length = 200, nullable = false, unique = true)
