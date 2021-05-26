@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Rays Signup</title>
+</head>
+<body>
+<h1>SignUp</h1>
+<form action="#" th:action="@{/signup}" th:object="${newUser}" method="POST">
+    <label for="firstname">first name: </label>
+    <input id="firstname" type="text" th:field="*{firstName}"/>
+    <label for="secondname">second name: </label>
+    <input id="secondname" type="text" th:field="*{secondName}"/>
+    <label for="lastname">last name: </label>
+    <input id="lastname" type="text" th:field="*{lastName}"/>
+    <label for="username">user name: </label>
+    <input id="username" type="text" th:field="*{userName}"/>
+    <label for="email">email: </label>
+    <input id="email" type="text" th:field="*{login.email}"/>
+    <label for="gender">gender: </label>
+    <input id="gender" type="text" th:field="*{gender}"/>
+    <label for="password">password: </label>
+    <input id="password" type="text" th:field="*{login.passwordHash}"/>
+    <input type="submit">
+
+</form>
+
+</body>
+</html>

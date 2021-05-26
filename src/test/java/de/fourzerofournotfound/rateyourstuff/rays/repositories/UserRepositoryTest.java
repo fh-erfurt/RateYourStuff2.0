@@ -22,12 +22,12 @@ public class UserRepositoryTest {
 
     @BeforeEach
     public void beforeEach() {
-        //repository.deleteAll();
+        repository.deleteAll();
     }
 
     @AfterEach
     public void afterEach() {
-       repository.deleteAll();
+       //repository.deleteAll();
     }
 
     @Test
