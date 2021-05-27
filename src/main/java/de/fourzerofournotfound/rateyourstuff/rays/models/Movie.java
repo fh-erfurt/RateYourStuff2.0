@@ -1,5 +1,7 @@
 package de.fourzerofournotfound.rateyourstuff.rays.models;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
@@ -12,6 +14,7 @@ import java.time.LocalDateTime;
 @Entity
 @AllArgsConstructor
 @RequiredArgsConstructor
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "mediumId")
 @Table(name = "Movies")
 public class Movie extends Medium {
 

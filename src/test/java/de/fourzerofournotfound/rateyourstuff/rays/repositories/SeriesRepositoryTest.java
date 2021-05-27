@@ -137,11 +137,11 @@ public class SeriesRepositoryTest {
                 .isCompleted(true)
                 .build();
 
-        repository.save(given);
+        Series saved = repository.save(given);
 
         //When
-        repository.delete(given);
-        Optional<Series> result = repository.findByMediumName("Ein Käfig voller Helden");
+        repository.delete(saved);
+        Optional<Series> result = repository.findById(saved.getMediumId());
 
         //Then
         Assertions.assertThat(result).isNotPresent();

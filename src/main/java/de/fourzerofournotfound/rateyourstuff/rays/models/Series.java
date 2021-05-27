@@ -1,5 +1,7 @@
 package de.fourzerofournotfound.rateyourstuff.rays.models;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,6 +21,7 @@ import java.util.Set;
 @Entity
 @AllArgsConstructor
 @RequiredArgsConstructor
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "mediumId")
 @Table(name = "Series")
 public class Series extends Medium {
 
