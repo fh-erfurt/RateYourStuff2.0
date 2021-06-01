@@ -2,6 +2,8 @@
 [![Build Status](https://github.com/fh-erfurt/RateYourStuff//workflows/build/badge.svg)](https://github.com/fh-erfurt/RateYourStuff/actions)
 [![Docs](https://img.shields.io/badge/javadoc-see%20here-9cf.svg?style=flat&logo=java)](https://fh-erfurt.github.io/RateYourStuff)
 
+SpringFox: http://localhost:5000/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config
+
 Projekt, um verschiedene Arten von Multimedia zu bewerten und Ihre aktuellen Fortschritte zu teilen.
 
 Und wer sind die Köpfe hinter dieser großartigen und überwältigend Idee?
