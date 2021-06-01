@@ -1,5 +1,7 @@
 package de.fourzerofournotfound.rateyourstuff.rays.models;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.annotation.CreatedDate;
@@ -15,6 +17,7 @@ import java.util.Set;
 @Entity
 @RequiredArgsConstructor
 @AllArgsConstructor
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "seasonId")
 @Table(name="seasons")
 public class Season {
     @Id
