@@ -19,14 +19,6 @@ import java.util.Set;
 @Table(name = "Episodes")
 public class Episode extends Medium {
 
-    @Column(nullable = false)
-    @ColumnDefault("CURRENT_TIMESTAMP()")
-    private LocalDateTime createdAt;
-
-    @Column
-    @ColumnDefault("NULL ON UPDATE CURRENT_TIMESTAMP()")
-    private LocalDateTime updatedAt;
-
     @Column
     private Integer episodeNumber;
 

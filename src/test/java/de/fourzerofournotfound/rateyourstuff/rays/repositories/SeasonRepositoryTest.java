@@ -92,13 +92,12 @@ public class SeasonRepositoryTest {
     public void should_delete_season() {
         //Given
         Season given = Season.builder().seasonNumber(1).seasonTitle("").build();
-        repository.save(given);
+        Season saved = repository.save(given);
 
         //When
-        Long givenID = given.getSeasonId();
         repository.delete(given);
 
-        Optional<Season> result = repository.findById(givenID);
+        Optional<Season> result = repository.findById(saved.getSeasonId());
 
         //Then
         Assertions.assertThat(result).isNotPresent();

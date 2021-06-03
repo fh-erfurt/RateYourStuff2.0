@@ -17,18 +17,11 @@ import java.util.List;
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Table(name = "Logins")
-public class Login {
+public class Login extends BaseModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long loginId;
-
-    @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private LocalDateTime createdAt;
-
-    @Column(nullable = true)
-    @ColumnDefault("NULL ON UPDATE CURRENT_TIMESTAMP()")
-    private LocalDateTime updatedAt;
 
     @Column
     private LocalDateTime lastLogin;

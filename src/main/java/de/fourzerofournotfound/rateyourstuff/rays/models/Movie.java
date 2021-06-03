@@ -18,14 +18,6 @@ import java.time.LocalDateTime;
 @Table(name = "Movies")
 public class Movie extends Medium {
 
-    @Column(nullable = false)
-    @ColumnDefault("CURRENT_TIMESTAMP()")
-    private LocalDateTime createdAt;
-
-    @Column
-    @ColumnDefault("NULL ON UPDATE CURRENT_TIMESTAMP()")
-    private LocalDateTime updatedAt;
-
     @Column
     private Integer length;
 

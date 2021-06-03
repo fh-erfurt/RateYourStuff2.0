@@ -178,7 +178,7 @@ public class MovieRepositoryTest {
 
         //When
         repository.delete(saved);
-        Optional<Movie> result = repository.findByMediumName("Zurück in die Zukunft");
+        Optional<Movie> result = repository.findById(saved.getMediumId());
 
         //Then
         Assertions.assertThat(result).isNotPresent();

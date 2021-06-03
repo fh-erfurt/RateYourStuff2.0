@@ -18,6 +18,7 @@ public class MovieController {
     @Autowired
     private MovieRepository repository;
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/all")
     ResponseEntity<List<Movie>> getAll() {
         return ResponseEntity.ok(this.repository.findAll());
@@ -33,6 +34,7 @@ public class MovieController {
         return ResponseEntity.ok(this.repository.findByMediumName(title).orElseThrow(() -> new MovieNotFoundException("No Movie with title " +title )));
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping(path="/add", consumes= "application/json", produces="application/json")
     ResponseEntity<Movie> add(@RequestBody Movie movie) {
         return ResponseEntity.ok(this.repository.save(movie));

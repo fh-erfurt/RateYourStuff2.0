@@ -102,11 +102,11 @@ public class EpisodeRepositoryTest {
                 .length(20)
                 .build();
 
-        repository.save(given);
+        Episode saved = repository.save(given);
 
         //When
         repository.delete(given);
-        Optional<Episode> result = repository.findByMediumName("Fasse dich, Kurtz!");
+        Optional<Episode> result = repository.findById(saved.getMediumId());
 
         //Then
         Assertions.assertThat(result).isNotPresent();

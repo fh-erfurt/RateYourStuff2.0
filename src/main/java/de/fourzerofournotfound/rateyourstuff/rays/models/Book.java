@@ -20,19 +20,6 @@ import java.time.LocalDateTime;
 @Table(name = "Books")
 public class Book extends Medium{
 
-
-    //@Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
-    //private Long bookId;
-
-    @Column
-    @ColumnDefault("CURRENT_TIMESTAMP()")
-    private LocalDateTime createdAt;
-
-    @Column
-    @ColumnDefault("NULL ON UPDATE CURRENT_TIMESTAMP()")
-    private LocalDateTime updatedAt;
-
     @Column(nullable = false)
     private String isbn;
 
@@ -48,9 +35,6 @@ public class Book extends Medium{
     @ManyToOne (cascade = CascadeType.PERSIST)
     @JoinColumn(name = "publisherId", referencedColumnName = "publisherId")
     private Publisher publisher;
-    //@OneToOne
-    //@JoinColumn(name = "mediumId", referencedColumnName = "mediumId")
-    //private Medium medium;
 
     @Builder
     public Book(String mediumName,

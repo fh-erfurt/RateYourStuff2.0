@@ -109,11 +109,11 @@ public class NetworkRepositoryTest {
         Network given = Network.builder()
                 .networkTitle("CBS")
                 .build();
-        repository.save(given);
+        Network saved = repository.save(given);
 
         //When
         repository.delete(given);
-        Optional<Network> result = repository.findByNetworkTitle("CBS");
+        Optional<Network> result = repository.findById(saved.getNetworkId());
 
         //Then
         Assertions.assertThat(result).isNotPresent();

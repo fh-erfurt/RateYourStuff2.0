@@ -25,18 +25,6 @@ import java.time.LocalDateTime;
 @Table(name = "Games")
 public class Game extends Medium{
 
-    //@Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
-    //private Long gameId;
-
-    @Column
-    @ColumnDefault("CURRENT_TIMESTAMP()")
-    private LocalDateTime createdAt;
-
-    @Column
-    @ColumnDefault("NULL ON UPDATE CURRENT_TIMESTAMP()")
-    private LocalDateTime updatedAt;
-
     @Column
     private Float averagePlaytime;
 
