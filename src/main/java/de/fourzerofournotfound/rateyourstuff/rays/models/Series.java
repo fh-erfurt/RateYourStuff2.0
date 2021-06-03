@@ -26,14 +26,6 @@ import java.util.Set;
 public class Series extends Medium {
 
     @Column
-    @ColumnDefault("CURRENT_TIMESTAMP()")
-    private LocalDateTime createdAt;
-
-    @Column
-    @ColumnDefault("NULL ON UPDATE CURRENT_TIMESTAMP()")
-    private LocalDateTime updatedAt;
-
-    @Column
     private Integer averageLength;
 
     @ManyToOne (cascade = CascadeType.PERSIST)

@@ -1,14 +1,10 @@
 package de.fourzerofournotfound.rateyourstuff.rays.models;
 
 import lombok.*;
-import lombok.Builder;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
@@ -19,18 +15,11 @@ import java.util.Set;
 @RequiredArgsConstructor
 @Table(name = "Media")
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class Medium {
+public abstract class Medium extends BaseModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long mediumId;
-
-    @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private LocalDateTime createdAt;
-
-    @Column
-    @ColumnDefault("NULL ON UPDATE CURRENT_TIMESTAMP()")
-    private LocalDateTime updatedAt;
 
     @Column(nullable = false, length = 200)
     private String mediumName;

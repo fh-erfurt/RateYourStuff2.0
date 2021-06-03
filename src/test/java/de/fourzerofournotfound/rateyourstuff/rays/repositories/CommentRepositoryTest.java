@@ -25,7 +25,6 @@ public class CommentRepositoryTest {
         LocalDateTime localDateTime = LocalDateTime.now();
 
         Comment given = Comment.builder()
-                .createdAt(localDateTime)
                 .textOfComment("Ich bin ein blöder Kommentar den eh keiner liest.")
                 .build();
 
