@@ -12,7 +12,7 @@ public class NetworkNotFoundAdvice {
     @ResponseBody
     @ExceptionHandler(NetworkNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    String personNotFoundHandler(NetworkNotFoundException ex) {
+    String networkNotFoundHandler(NetworkNotFoundException ex) {
         return ex.getMessage();
     }
 }

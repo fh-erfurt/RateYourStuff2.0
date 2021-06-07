@@ -12,7 +12,7 @@ public class EpisodeNotFoundAdvice {
     @ResponseBody
     @ExceptionHandler(EpisodeNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    String personNotFoundHandler(EpisodeNotFoundException ex) {
+    String episodeNotFoundHandler(EpisodeNotFoundException ex) {
         return ex.getMessage();
     }
 }

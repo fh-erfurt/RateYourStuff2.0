@@ -13,7 +13,7 @@ public class SeriesNotFoundAdvice {
     @ResponseBody
     @ExceptionHandler(SeriesNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    String personNotFoundHandler(SeriesNotFoundException ex) {
+    String seriesNotFoundHandler(SeriesNotFoundException ex) {
         return ex.getMessage();
     }
 }
