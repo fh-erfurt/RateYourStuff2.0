@@ -12,7 +12,7 @@ public class SeasonNotFoundAdvice {
     @ResponseBody
     @ExceptionHandler(SeasonNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    String personNotFoundHandler(SeasonNotFoundException ex) {
+    String seasonNotFoundHandler(SeasonNotFoundException ex) {
         return ex.getMessage();
     }
 }
