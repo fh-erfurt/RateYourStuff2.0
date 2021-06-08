@@ -12,7 +12,7 @@ public class CommentNotFoundAdvice {
     @ResponseBody
     @ExceptionHandler(CommentNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    String personNotFoundHandler(CommentNotFoundException ex) {
+    String commentNotFoundHandler(CommentNotFoundException ex) {
         return ex.getMessage();
     }
 }

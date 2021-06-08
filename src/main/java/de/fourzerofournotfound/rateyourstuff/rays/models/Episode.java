@@ -25,7 +25,6 @@ public class Episode extends Medium {
     @Column
     private Integer length;
 
-
     @ManyToOne
     @JoinColumn(name = "seasonId", referencedColumnName = "seasonId")
     private Season season;

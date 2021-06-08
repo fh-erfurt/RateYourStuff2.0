@@ -14,7 +14,7 @@ public class RatingNotFoundAdvice {
     @ResponseBody
     @ExceptionHandler(RatingNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    String personNotFoundHandler(RatingNotFoundException ex) {
+    String ratingNotFoundHandler(RatingNotFoundException ex) {
         return ex.getMessage();
     }
 }
