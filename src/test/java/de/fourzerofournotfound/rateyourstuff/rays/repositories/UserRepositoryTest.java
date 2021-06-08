@@ -46,7 +46,7 @@ public class UserRepositoryTest {
         User result = repository.save(given);
 
         //Then
-        Assertions.assertThat(result.getUserId()).isNotNull().isGreaterThan(0);
+        Assertions.assertThat(result.getId()).isNotNull().isGreaterThan(0);
     }
 
     @Test
@@ -91,7 +91,7 @@ public class UserRepositoryTest {
         User result = repository.save(given);
 
         //Then
-        Assertions.assertThat(result.getLogin().getLoginId()).isNotNull();
+        Assertions.assertThat(result.getLogin().getId()).isNotNull();
     }
 
     @Test
@@ -113,7 +113,7 @@ public class UserRepositoryTest {
         User result = repository.save(saved);
 
         //Then
-        Assertions.assertThat(result.getUserId()).isEqualTo(saved.getUserId());
+        Assertions.assertThat(result.getId()).isEqualTo(saved.getId());
         Assertions.assertThat(result.getLastName()).isEqualTo("Musterfrau");
     }
 

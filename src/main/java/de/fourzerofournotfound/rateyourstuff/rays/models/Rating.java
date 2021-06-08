@@ -13,10 +13,6 @@ import javax.persistence.*;
 @Table(name = "Ratings")
 public class Rating extends BaseModel {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long ratingId;
-
     @Column(nullable = false)
     private Integer minimumPoints;
 
@@ -30,11 +26,11 @@ public class Rating extends BaseModel {
     private String desscription;
 
     @ManyToOne
-    @JoinColumn(name = "userId", referencedColumnName = "userId")
+    @JoinColumn(name = "userId", referencedColumnName = "id")
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "mediumId", referencedColumnName = "mediumId")
+    @JoinColumn(name = "mediumId", referencedColumnName = "id")
     private Medium medium;
 
 }

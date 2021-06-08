@@ -13,9 +13,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @Table(name="networks")
 public class Network extends BaseModel {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long networkId;
 
     @Column
     private String networkTitle;

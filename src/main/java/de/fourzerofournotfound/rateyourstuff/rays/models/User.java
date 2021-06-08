@@ -14,10 +14,6 @@ import java.util.Set;
 @Table(name = "Users")
 public class User extends BaseModel {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userId;
-
     @Column(length = 200)
     private String firstName;
 
@@ -34,7 +30,7 @@ public class User extends BaseModel {
     private String gender;
 
     @OneToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "login_Id", referencedColumnName = "loginId")
+    @JoinColumn(name = "loginId", referencedColumnName = "id")
     private Login login;
 
     @OneToMany(mappedBy = "user")

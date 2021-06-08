@@ -13,10 +13,6 @@ import java.util.Set;
 @Table(name = "Genres")
 public class Genre extends BaseModel {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long genreId;
-
     @Column(nullable = false, length = 45)
     private String genreName;
 

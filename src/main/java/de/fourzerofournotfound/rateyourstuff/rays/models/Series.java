@@ -29,7 +29,7 @@ public class Series extends Medium {
     private Integer averageLength;
 
     @ManyToOne (cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "networkId", referencedColumnName = "networkId")
+    @JoinColumn(name = "networkId", referencedColumnName = "id")
     private Network network;
 
     @Column(nullable = false)

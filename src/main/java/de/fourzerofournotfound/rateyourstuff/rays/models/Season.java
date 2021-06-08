@@ -17,9 +17,6 @@ import java.util.Set;
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "seasonId")
 @Table(name="seasons")
 public class Season extends BaseModel {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long seasonId;
 
     @Column
     private Integer seasonNumber;
@@ -33,7 +30,7 @@ public class Season extends BaseModel {
     }
 
     @ManyToOne (cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "mediumId", referencedColumnName = "mediumId")
+    @JoinColumn(name = "seriesId", referencedColumnName = "id")
     private Medium medium;
 
     @Builder.Default

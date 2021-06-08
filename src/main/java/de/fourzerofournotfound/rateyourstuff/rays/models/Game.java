@@ -44,7 +44,7 @@ public class Game extends Medium{
     private Integer maxNumberOfGamers;
 
     @ManyToOne (cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "plattformId", referencedColumnName = "platformId")
+    @JoinColumn(name = "platformId", referencedColumnName = "id")
     private Platform platform;
 
     @Column(nullable = false)

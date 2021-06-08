@@ -35,7 +35,7 @@ public class EpisodeRepositoryTest {
         Episode result = repository.save(given);
 
         //Then
-        Assertions.assertThat(result.getMediumId()).isNotNull().isGreaterThan(0);
+        Assertions.assertThat(result.getId()).isNotNull().isGreaterThan(0);
     }
 
     @Test
@@ -87,7 +87,7 @@ public class EpisodeRepositoryTest {
         Episode result = repository.save(savedEpisode);
 
         //Then
-        Assertions.assertThat(result.getMediumId()).isEqualTo(savedEpisode.getMediumId());
+        Assertions.assertThat(result.getId()).isEqualTo(savedEpisode.getId());
         Assertions.assertThat(result.getShortDescription()).isEqualTo("Test");
     }
 
@@ -106,7 +106,7 @@ public class EpisodeRepositoryTest {
 
         //When
         repository.delete(given);
-        Optional<Episode> result = repository.findById(saved.getMediumId());
+        Optional<Episode> result = repository.findById(saved.getId());
 
         //Then
         Assertions.assertThat(result).isNotPresent();

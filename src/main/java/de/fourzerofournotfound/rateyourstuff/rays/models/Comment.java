@@ -14,19 +14,15 @@ import java.util.Set;
 @Table(name = "Comments")
 public class Comment extends BaseModel {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long commentId;
-
     @Column(nullable = false, length = 10000)
     private String textOfComment;
 
     @ManyToOne
-    @JoinColumn(name = "userId", referencedColumnName = "userId")
+    @JoinColumn(name = "userId", referencedColumnName = "id")
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "mediumId", referencedColumnName = "mediumId")
+    @JoinColumn(name = "mediumId", referencedColumnName = "id")
     private Medium medium;
 
     @OneToMany(mappedBy = "commentParent")

@@ -41,7 +41,7 @@ public class NetworkRepositoryTest {
         Network result = repository.save(given);
 
         //Then
-        Assertions.assertThat(result.getNetworkId()).isNotNull().isGreaterThan(0);
+        Assertions.assertThat(result.getId()).isNotNull().isGreaterThan(0);
     }
 
     @Test
@@ -99,7 +99,7 @@ public class NetworkRepositoryTest {
         saved.setNetworkTitle("CBS");
         Network result = repository.save(saved);
         //Then
-        Assertions.assertThat(result.getNetworkId()).isEqualTo(saved.getNetworkId());
+        Assertions.assertThat(result.getId()).isEqualTo(saved.getId());
         Assertions.assertThat(result.getNetworkTitle()).isEqualTo("CBS");
     }
 
@@ -113,7 +113,7 @@ public class NetworkRepositoryTest {
 
         //When
         repository.delete(given);
-        Optional<Network> result = repository.findById(saved.getNetworkId());
+        Optional<Network> result = repository.findById(saved.getId());
 
         //Then
         Assertions.assertThat(result).isNotPresent();

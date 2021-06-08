@@ -19,10 +19,6 @@ import java.util.List;
 @Table(name = "Logins")
 public class Login extends BaseModel {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long loginId;
-
     @Column
     private LocalDateTime lastLogin;
 

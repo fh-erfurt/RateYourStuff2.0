@@ -41,7 +41,7 @@ public class SeriesRepositoryTest {
         Series result = repository.save(given);
 
         //Then
-        Assertions.assertThat(result.getMediumId()).isNotNull().isGreaterThan(0);
+        Assertions.assertThat(result.getId()).isNotNull().isGreaterThan(0);
     }
 
     @Test
@@ -97,7 +97,7 @@ public class SeriesRepositoryTest {
         Series result = repository.save(given);
 
         //Then
-        Assertions.assertThat(result.getMediumId()).isNotNull().isGreaterThan(0);
+        Assertions.assertThat(result.getId()).isNotNull().isGreaterThan(0);
         Assertions.assertThat(result.getSeasons()).isNotNull().isNotEmpty().allMatch(Objects::nonNull);
 
     }
@@ -121,7 +121,7 @@ public class SeriesRepositoryTest {
         Series result = repository.save(saved);
 
         //Then
-        Assertions.assertThat(result.getMediumId()).isEqualTo(saved.getMediumId());
+        Assertions.assertThat(result.getId()).isEqualTo(saved.getId());
         Assertions.assertThat(result.getShortDescription()).isEqualTo("Test");
     }
 
@@ -141,7 +141,7 @@ public class SeriesRepositoryTest {
 
         //When
         repository.delete(saved);
-        Optional<Series> result = repository.findById(saved.getMediumId());
+        Optional<Series> result = repository.findById(saved.getId());
 
         //Then
         Assertions.assertThat(result).isNotPresent();

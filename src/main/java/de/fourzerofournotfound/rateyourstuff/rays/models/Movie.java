@@ -25,7 +25,7 @@ public class Movie extends Medium {
     private Integer ageRestriction;
 
     @ManyToOne (cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "networkId", referencedColumnName = "networkId")
+    @JoinColumn(name = "networkId", referencedColumnName = "id")
     private Network network;
 
     @Builder

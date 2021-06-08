@@ -14,10 +14,6 @@ import java.util.List;
 @Table(name = "Roles")
 public class Role extends BaseModel {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long roleId;
-
     @Column(nullable = false)
     private String roleName;
 

@@ -41,8 +41,8 @@ class LoginRoleRepositoryTest {
         LoginRole result = loginRoleRepository.save(given);
 
         //Then
-        Assertions.assertThat(result.getLoginRoleId()).isNotNull();
-        Assertions.assertThat(result.getLoginRoleId()).isGreaterThan(0);
+        Assertions.assertThat(result.getId()).isNotNull();
+        Assertions.assertThat(result.getId()).isGreaterThan(0);
     }
 
     @Test
@@ -54,7 +54,7 @@ class LoginRoleRepositoryTest {
         LoginRole saved = loginRoleRepository.save(given);
 
         //When
-        Long savedId = saved.getLoginRoleId();
+        Long savedId = saved.getId();
         loginRoleRepository.delete(saved);
         Optional<LoginRole> result = loginRoleRepository.findById(savedId);
 

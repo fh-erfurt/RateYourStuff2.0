@@ -15,10 +15,6 @@ import java.util.List;
 
 public class Person extends BaseModel {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long personId;
-
     @Column (length=250)
     private String firstName;
 

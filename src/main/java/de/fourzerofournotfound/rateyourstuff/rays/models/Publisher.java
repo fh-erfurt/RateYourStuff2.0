@@ -14,9 +14,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @Table(name="publishers")
 public class Publisher extends BaseModel {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long publisherId;
 
     @Column
     private String publisherTitle;

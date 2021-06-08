@@ -11,9 +11,6 @@ import javax.persistence.*;
 @RequiredArgsConstructor
 @Table(name="PersonAssignments")
 public class PersonAssignment extends BaseModel {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long personAssignmentId;
 
     @Column
     private Boolean isActor;
@@ -28,11 +25,11 @@ public class PersonAssignment extends BaseModel {
     private Boolean isAuthor;
 
     @ManyToOne
-    @JoinColumn(name = "personId", referencedColumnName = "personId")
+    @JoinColumn(name = "personId", referencedColumnName = "id")
     private Person person;
 
     @ManyToOne
-    @JoinColumn(name = "mediumId", referencedColumnName = "mediumId")
+    @JoinColumn(name = "mediumId", referencedColumnName = "id")
     private Medium medium;
 
 

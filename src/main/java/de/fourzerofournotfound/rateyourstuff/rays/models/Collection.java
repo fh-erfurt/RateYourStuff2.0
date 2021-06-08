@@ -13,12 +13,8 @@ import java.util.Set;
 @Table(name = "Collections")
 public class Collection extends BaseModel {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long collectionId;
-
     @ManyToOne
-    @JoinColumn(name = "userId", referencedColumnName = "userid")
+    @JoinColumn(name = "userId", referencedColumnName = "id")
     private User user;
 
     @ManyToMany

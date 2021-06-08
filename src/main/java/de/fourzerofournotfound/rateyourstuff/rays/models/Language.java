@@ -14,9 +14,6 @@ import java.util.Set;
 @Table(name = "Languages")
 
 public class Language extends BaseModel {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long languageId;
 
     @Column(length = 200)
     private String language;

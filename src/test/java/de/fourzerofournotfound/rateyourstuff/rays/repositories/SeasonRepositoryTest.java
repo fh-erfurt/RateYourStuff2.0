@@ -35,7 +35,7 @@ public class SeasonRepositoryTest {
         Season result = repository.save(given);
 
         //Then
-        Assertions.assertThat(result.getSeasonId()).isNotNull().isGreaterThan(0);
+        Assertions.assertThat(result.getId()).isNotNull().isGreaterThan(0);
     }
 
     @Test
@@ -84,7 +84,7 @@ public class SeasonRepositoryTest {
         Season result = repository.save(saved);
 
         //Then
-        Assertions.assertThat(result.getSeasonId()).isEqualTo(saved.getSeasonId());
+        Assertions.assertThat(result.getId()).isEqualTo(saved.getId());
         Assertions.assertThat(result.getSeasonTitle()).isEqualTo("The Beginning");
     }
 
@@ -97,7 +97,7 @@ public class SeasonRepositoryTest {
         //When
         repository.delete(given);
 
-        Optional<Season> result = repository.findById(saved.getSeasonId());
+        Optional<Season> result = repository.findById(saved.getId());
 
         //Then
         Assertions.assertThat(result).isNotPresent();

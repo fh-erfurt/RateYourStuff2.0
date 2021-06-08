@@ -46,7 +46,7 @@ public class RatingRepositoryTest {
         Rating result = ratingRepository.save(given);
 
         //Then
-        Assertions.assertThat(result.getRatingId()).isNotNull().isGreaterThan(0);
+        Assertions.assertThat(result.getId()).isNotNull().isGreaterThan(0);
     }
 
     @Test

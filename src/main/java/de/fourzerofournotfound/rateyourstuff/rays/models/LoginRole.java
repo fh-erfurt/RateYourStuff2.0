@@ -16,16 +16,12 @@ import javax.persistence.*;
 @Table(name = "LoginRoles")
 public class LoginRole extends BaseModel {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long loginRoleId;
-
     @ManyToOne
-    @JoinColumn(name = "loginID", referencedColumnName = "loginID")
+    @JoinColumn(name = "loginID", referencedColumnName = "id")
     private Login login;
 
     @ManyToOne
-    @JoinColumn(name = "roleId", referencedColumnName = "roleId")
+    @JoinColumn(name = "roleId", referencedColumnName = "id")
     private Role role;
 
 }

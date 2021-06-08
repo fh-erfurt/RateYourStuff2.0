@@ -31,7 +31,7 @@ public class BookRepositoryTest {
         Book result = bookRepository.save(given);
 
         //Then
-        Assertions.assertThat(result.getMediumId()).isNotNull().isGreaterThan(0);
+        Assertions.assertThat(result.getId()).isNotNull().isGreaterThan(0);
     }
 
     @Test
@@ -45,8 +45,8 @@ public class BookRepositoryTest {
         Book result = bookRepository.save(given);
 
         //Then
-        Assertions.assertThat(result.getMediumId()).isNotNull().isGreaterThan(0);
-        Assertions.assertThat(result.getPublisher().getPublisherId()).isNotNull().isGreaterThan(0);
+        Assertions.assertThat(result.getId()).isNotNull().isGreaterThan(0);
+        Assertions.assertThat(result.getPublisher().getId()).isNotNull().isGreaterThan(0);
     }
 
     @Test
@@ -62,7 +62,7 @@ public class BookRepositoryTest {
         Book result = bookRepository.save(saved);
 
         //Then
-        Assertions.assertThat(result.getMediumId()).isEqualTo(saved.getMediumId());
+        Assertions.assertThat(result.getId()).isEqualTo(saved.getId());
         Assertions.assertThat(result.getShortDescription()).isEqualTo(updatedShortDescription);
 
     }

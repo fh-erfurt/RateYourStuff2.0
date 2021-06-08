@@ -17,10 +17,6 @@ import java.util.Set;
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Medium extends BaseModel {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long mediumId;
-
     @Column(nullable = false, length = 200)
     private String mediumName;
 

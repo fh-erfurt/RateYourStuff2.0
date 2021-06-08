@@ -32,6 +32,6 @@ public class CommentRepositoryTest {
         Comment result = commentRepository.save(given);
 
         //Then
-        Assertions.assertThat(result.getCommentId()).isNotNull().isGreaterThan(0);
+        Assertions.assertThat(result.getId()).isNotNull().isGreaterThan(0);
     }
 }

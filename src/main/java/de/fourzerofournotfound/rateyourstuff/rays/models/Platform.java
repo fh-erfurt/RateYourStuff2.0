@@ -13,9 +13,6 @@ import java.util.Set;
 @RequiredArgsConstructor
 @Table(name = "Platforms")
 public class Platform extends BaseModel {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long platformId;
 
     @Column (length = 250)
     private String platformTitle;
