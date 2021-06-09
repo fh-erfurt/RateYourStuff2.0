@@ -25,7 +25,6 @@ public class CommentRepositoryTest {
         LocalDateTime localDateTime = LocalDateTime.now();
 
         Comment given = Comment.builder()
-                .createdAt(localDateTime)
                 .textOfComment("Ich bin ein blöder Kommentar den eh keiner liest.")
                 .build();
 
@@ -33,6 +32,6 @@ public class CommentRepositoryTest {
         Comment result = commentRepository.save(given);
 
         //Then
-        Assertions.assertThat(result.getCommentId()).isNotNull().isGreaterThan(0);
+        Assertions.assertThat(result.getId()).isNotNull().isGreaterThan(0);
     }
 }

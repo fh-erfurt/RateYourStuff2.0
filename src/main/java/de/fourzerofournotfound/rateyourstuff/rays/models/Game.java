@@ -25,18 +25,6 @@ import java.time.LocalDateTime;
 @Table(name = "Games")
 public class Game extends Medium{
 
-    //@Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
-    //private Long gameId;
-
-    @Column
-    @ColumnDefault("CURRENT_TIMESTAMP()")
-    private LocalDateTime createdAt;
-
-    @Column
-    @ColumnDefault("NULL ON UPDATE CURRENT_TIMESTAMP()")
-    private LocalDateTime updatedAt;
-
     @Column
     private Float averagePlaytime;
 
@@ -56,7 +44,7 @@ public class Game extends Medium{
     private Integer maxNumberOfGamers;
 
     @ManyToOne (cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "plattformId", referencedColumnName = "platformId")
+    @JoinColumn(name = "platformId", referencedColumnName = "id")
     private Platform platform;
 
     @Column(nullable = false)

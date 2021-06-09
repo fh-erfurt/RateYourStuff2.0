@@ -35,7 +35,7 @@ public class RatingRepositoryTest {
 //        given.setGivenPoints(7);
 //        given.setDesscription(description);
 
-        Rating given = Rating.builder().createdAt(localDate)
+        Rating given = Rating.builder()
                         .minimumPoints(0)
                         .maximumPoints(10)
                         .givenPoints(5)
@@ -46,7 +46,7 @@ public class RatingRepositoryTest {
         Rating result = ratingRepository.save(given);
 
         //Then
-        Assertions.assertThat(result.getRatingId()).isNotNull().isGreaterThan(0);
+        Assertions.assertThat(result.getId()).isNotNull().isGreaterThan(0);
     }
 
     @Test
@@ -55,7 +55,7 @@ public class RatingRepositoryTest {
         //Given
         LocalDateTime localDate = LocalDateTime.now();
 
-        Rating.builder().createdAt(localDate)
+        Rating.builder()
                 .minimumPoints(0)
                 .maximumPoints(10)
                 .givenPoints(5)
@@ -63,7 +63,6 @@ public class RatingRepositoryTest {
                 .build();
 
         ratingRepository.save(Rating.builder()
-                .createdAt(localDate)
                 .minimumPoints(0)
                 .maximumPoints(10)
                 .givenPoints(5)

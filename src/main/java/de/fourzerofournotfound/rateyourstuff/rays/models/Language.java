@@ -2,10 +2,8 @@ package de.fourzerofournotfound.rateyourstuff.rays.models;
 
 
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.Set;
 
 @Getter
@@ -15,18 +13,7 @@ import java.util.Set;
 @RequiredArgsConstructor
 @Table(name = "Languages")
 
-public class Language {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long languageId;
-
-    @Column(nullable = false)
-    @ColumnDefault("CURRENT_TIMESTAMP()")
-    private LocalDateTime createdAt;
-
-    @Column
-    @ColumnDefault("NULL ON UPDATE CURRENT_TIMESTAMP()")
-    private LocalDateTime updatedAt;
+public class Language extends BaseModel {
 
     @Column(length = 200)
     private String language;

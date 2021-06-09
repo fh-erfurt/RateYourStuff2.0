@@ -1,11 +1,9 @@
 package de.fourzerofournotfound.rateyourstuff.rays.models;
 
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.sql.Date;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -15,19 +13,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Table(name = "Persons")
 
-public class Person {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long personId;
-
-    @Column(nullable = false)
-    @ColumnDefault("CURRENT_TIMESTAMP()")
-    private LocalDateTime createdAt;
-
-    @Column(nullable = true)
-    @ColumnDefault("NULL ON UPDATE CURRENT_TIMESTAMP()")
-    private LocalDateTime updatedAt;
+public class Person extends BaseModel {
 
     @Column (length=250)
     private String firstName;

@@ -40,7 +40,7 @@ public class MovieRepositoryTest {
         Movie result = repository.save(given);
 
         //Then
-        Assertions.assertThat(result.getMediumId()).isNotNull().isGreaterThan(0);
+        Assertions.assertThat(result.getId()).isNotNull().isGreaterThan(0);
     }
 
     @Test
@@ -62,8 +62,8 @@ public class MovieRepositoryTest {
         Movie result = repository.save(given);
 
         //Then
-        Assertions.assertThat(result.getMediumId()).isNotNull().isGreaterThan(0);
-        Assertions.assertThat(result.getNetwork().getNetworkId()).isNotNull().isGreaterThan(0);
+        Assertions.assertThat(result.getId()).isNotNull().isGreaterThan(0);
+        Assertions.assertThat(result.getNetwork().getId()).isNotNull().isGreaterThan(0);
     }
 
     @Test
@@ -85,7 +85,7 @@ public class MovieRepositoryTest {
         Movie result = repository.save(saved);
 
         //Then
-        Assertions.assertThat(result.getMediumId()).isEqualTo(saved.getMediumId());
+        Assertions.assertThat(result.getId()).isEqualTo(saved.getId());
         Assertions.assertThat(result.getShortDescription()).isEqualTo(updatedShortDescription);
 
     }
@@ -178,7 +178,7 @@ public class MovieRepositoryTest {
 
         //When
         repository.delete(saved);
-        Optional<Movie> result = repository.findByMediumName("Zurück in die Zukunft");
+        Optional<Movie> result = repository.findById(saved.getId());
 
         //Then
         Assertions.assertThat(result).isNotPresent();

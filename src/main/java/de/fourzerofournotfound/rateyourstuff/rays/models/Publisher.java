@@ -13,10 +13,7 @@ import java.util.List;
 @Setter
 @RequiredArgsConstructor
 @Table(name="publishers")
-public class Publisher {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long publisherId;
+public class Publisher extends BaseModel {
 
     @Column
     private String publisherTitle;

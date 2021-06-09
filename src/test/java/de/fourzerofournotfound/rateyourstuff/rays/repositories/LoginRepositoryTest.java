@@ -34,7 +34,7 @@ class LoginRepositoryTest {
         Login result = loginRepository.save(given);
 
         //Then
-        Assertions.assertThat(result.getLoginId()).isNotNull().isGreaterThan(0);
+        Assertions.assertThat(result.getId()).isNotNull().isGreaterThan(0);
     }
 
     @Test
@@ -53,7 +53,7 @@ class LoginRepositoryTest {
         Login result = loginRepository.save(saved);
 
         //Then
-        Assertions.assertThat(result.getLoginId()).isEqualTo(saved.getLoginId());
+        Assertions.assertThat(result.getId()).isEqualTo(saved.getId());
         Assertions.assertThat(result.getEmail()).isEqualTo("maxima.mustermann@rays.de");
     }
 

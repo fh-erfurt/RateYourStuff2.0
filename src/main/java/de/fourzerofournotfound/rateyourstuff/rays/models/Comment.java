@@ -1,10 +1,8 @@
 package de.fourzerofournotfound.rateyourstuff.rays.models;
 
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.Set;
 
 @Getter
@@ -14,29 +12,17 @@ import java.util.Set;
 @RequiredArgsConstructor
 @Builder
 @Table(name = "Comments")
-public class Comment {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long commentId;
-
-    @Column(nullable = false)
-    @ColumnDefault("CURRENT_TIMESTAMP()")
-    private LocalDateTime createdAt;
-
-    @Column(nullable = true)
-    @ColumnDefault("NULL ON UPDATE CURRENT_TIMESTAMP()")
-    private LocalDateTime updatedAt;
+public class Comment extends BaseModel {
 
     @Column(nullable = false, length = 10000)
     private String textOfComment;
 
     @ManyToOne
-    @JoinColumn(name = "userId", referencedColumnName = "userId")
+    @JoinColumn(name = "userId", referencedColumnName = "id")
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "mediumId", referencedColumnName = "mediumId")
+    @JoinColumn(name = "mediumId", referencedColumnName = "id")
     private Medium medium;
 
     @OneToMany(mappedBy = "commentParent")

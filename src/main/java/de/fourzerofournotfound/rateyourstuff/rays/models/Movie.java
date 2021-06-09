@@ -1,5 +1,7 @@
 package de.fourzerofournotfound.rateyourstuff.rays.models;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
@@ -12,16 +14,9 @@ import java.time.LocalDateTime;
 @Entity
 @AllArgsConstructor
 @RequiredArgsConstructor
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "mediumId")
 @Table(name = "Movies")
 public class Movie extends Medium {
-
-    @Column(nullable = false)
-    @ColumnDefault("CURRENT_TIMESTAMP()")
-    private LocalDateTime createdAt;
-
-    @Column
-    @ColumnDefault("NULL ON UPDATE CURRENT_TIMESTAMP()")
-    private LocalDateTime updatedAt;
 
     @Column
     private Integer length;
@@ -30,7 +25,7 @@ public class Movie extends Medium {
     private Integer ageRestriction;
 
     @ManyToOne (cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "networkId", referencedColumnName = "networkId")
+    @JoinColumn(name = "networkId", referencedColumnName = "id")
     private Network network;
 
     @Builder

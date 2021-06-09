@@ -1,10 +1,8 @@
 package de.fourzerofournotfound.rateyourstuff.rays.models;
 
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -12,18 +10,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Table(name="PersonAssignments")
-public class PersonAssignment {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long personAssignmentId;
-
-    @Column(nullable = false)
-    @ColumnDefault("CURRENT_TIMESTAMP()")
-    private LocalDateTime createdAt;
-
-    @Column(nullable = true)
-    @ColumnDefault("NULL ON UPDATE CURRENT_TIMESTAMP()")
-    private LocalDateTime updatedAt;
+public class PersonAssignment extends BaseModel {
 
     @Column
     private Boolean isActor;
@@ -38,11 +25,11 @@ public class PersonAssignment {
     private Boolean isAuthor;
 
     @ManyToOne
-    @JoinColumn(name = "personId", referencedColumnName = "personId")
+    @JoinColumn(name = "personId", referencedColumnName = "id")
     private Person person;
 
     @ManyToOne
-    @JoinColumn(name = "mediumId", referencedColumnName = "mediumId")
+    @JoinColumn(name = "mediumId", referencedColumnName = "id")
     private Medium medium;
 
 

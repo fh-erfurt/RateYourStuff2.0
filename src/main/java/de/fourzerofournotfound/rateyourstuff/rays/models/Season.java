@@ -1,11 +1,10 @@
 package de.fourzerofournotfound.rateyourstuff.rays.models;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
-import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,20 +14,9 @@ import java.util.Set;
 @Entity
 @RequiredArgsConstructor
 @AllArgsConstructor
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "seasonId")
 @Table(name="seasons")
-public class Season {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long seasonId;
-
-    @CreatedDate
-    @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    //@ColumnDefault("CURRENT_TIMESTAMP()")
-    private LocalDateTime createdAt;
-
-    @Column
-    @ColumnDefault("NULL ON UPDATE CURRENT_TIMESTAMP()")
-    private LocalDateTime updatedAt;
+public class Season extends BaseModel {
 
     @Column
     private Integer seasonNumber;
@@ -42,7 +30,7 @@ public class Season {
     }
 
     @ManyToOne (cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "mediumId", referencedColumnName = "mediumId")
+    @JoinColumn(name = "seriesId", referencedColumnName = "id")
     private Medium medium;
 
     @Builder.Default

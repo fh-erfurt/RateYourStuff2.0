@@ -1,11 +1,8 @@
 package de.fourzerofournotfound.rateyourstuff.rays.models;
 
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -14,19 +11,7 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 @Builder
 @Table(name = "Ratings")
-public class Rating{
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long ratingId;
-
-    @Column(nullable = false)
-    @ColumnDefault("CURRENT_TIMESTAMP()")
-    private LocalDateTime createdAt;
-
-    @Column(nullable = true)
-    @ColumnDefault("NULL ON UPDATE CURRENT_TIMESTAMP()")
-    private LocalDateTime updatedAt;
+public class Rating extends BaseModel {
 
     @Column(nullable = false)
     private Integer minimumPoints;
@@ -41,11 +26,11 @@ public class Rating{
     private String desscription;
 
     @ManyToOne
-    @JoinColumn(name = "userId", referencedColumnName = "userId")
+    @JoinColumn(name = "userId", referencedColumnName = "id")
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "mediumId", referencedColumnName = "mediumId")
+    @JoinColumn(name = "mediumId", referencedColumnName = "id")
     private Medium medium;
 
 }

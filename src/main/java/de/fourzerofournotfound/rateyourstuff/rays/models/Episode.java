@@ -1,5 +1,7 @@
 package de.fourzerofournotfound.rateyourstuff.rays.models;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
@@ -13,16 +15,9 @@ import java.util.Set;
 @Entity
 @AllArgsConstructor
 @RequiredArgsConstructor
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "mediumId")
 @Table(name = "Episodes")
 public class Episode extends Medium {
-
-    @Column(nullable = false)
-    @ColumnDefault("CURRENT_TIMESTAMP()")
-    private LocalDateTime createdAt;
-
-    @Column
-    @ColumnDefault("NULL ON UPDATE CURRENT_TIMESTAMP()")
-    private LocalDateTime updatedAt;
 
     @Column
     private Integer episodeNumber;
@@ -30,9 +25,8 @@ public class Episode extends Medium {
     @Column
     private Integer length;
 
-
     @ManyToOne
-    @JoinColumn(name = "seasonId", referencedColumnName = "seasonId")
+    @JoinColumn(name = "seasonId", referencedColumnName = "id")
     private Season season;
 
     @Builder

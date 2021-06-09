@@ -1,5 +1,7 @@
 package de.fourzerofournotfound.rateyourstuff.rays.models;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,22 +21,15 @@ import java.util.Set;
 @Entity
 @AllArgsConstructor
 @RequiredArgsConstructor
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "mediumId")
 @Table(name = "Series")
 public class Series extends Medium {
-
-    @Column
-    @ColumnDefault("CURRENT_TIMESTAMP()")
-    private LocalDateTime createdAt;
-
-    @Column
-    @ColumnDefault("NULL ON UPDATE CURRENT_TIMESTAMP()")
-    private LocalDateTime updatedAt;
 
     @Column
     private Integer averageLength;
 
     @ManyToOne (cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "networkId", referencedColumnName = "networkId")
+    @JoinColumn(name = "networkId", referencedColumnName = "id")
     private Network network;
 
     @Column(nullable = false)
