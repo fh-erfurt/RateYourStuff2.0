@@ -24,7 +24,7 @@ public class Login extends BaseModel {
 
     //TODO: Why should "isEnabled" be false from the beginning?
     // Is it because of the user have to validate his mail before the account will be enabled?
-    @Column(nullable = true)
+    @Column(nullable = false)
     @ColumnDefault("false")
     private Boolean isEnabled;
 

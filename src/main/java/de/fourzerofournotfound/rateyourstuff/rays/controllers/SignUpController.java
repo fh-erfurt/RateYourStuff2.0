@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.mindrot.jbcrypt.BCrypt;
 
 @Controller
 public class SignUpController {
@@ -26,13 +27,25 @@ public class SignUpController {
     }
 
     @PostMapping("/signup")
-    public ModelAndView storeUser(@ModelAttribute(value = "newUser") User user/*, Login login*/, Model model)
+    public ModelAndView storeUser(@ModelAttribute(value = "newUser") User user, Login login, Model model)
     {
-        //System.out.println(user.getFirstName());
-        /*user.setLastName("ggg");
-        user.setGender("m");
-        user.setUserName("eee");*/
+        user.getLogin().setIsEnabled(false);
+
+        String passwordSalt = BCrypt.gensalt();
+        user.getLogin().setPasswordHash(BCrypt.hashpw(login.getPasswordHash(), passwordSalt));
+
+        //TODO: role and loginRole -/- Structure?
+
         userRepository.save(user);
         return new ModelAndView("redirect:/greeting");
     }
+
+    //TODO: Methods
+
+    //TODO: Update User
+
+    //TODO: Update Password
+    //TODO: Reset Password
+
+
 }
