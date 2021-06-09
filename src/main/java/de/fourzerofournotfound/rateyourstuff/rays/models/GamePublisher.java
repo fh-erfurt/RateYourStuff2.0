@@ -23,11 +23,11 @@ public class GamePublisher extends BaseModel {
     @Column
     private String gamePublisherTitle;
 
-    /*@OneToMany (mappedBy = "gamePublisher")
-    private List<Game> games = new ArrayList<>();*/
+    @OneToMany (mappedBy = "gamePublisher")
+    private List<Game> games = new ArrayList<>();
 
-    @ManyToMany
-    Set<Game> games;
+    /*@ManyToMany
+    Set<Game> games;*/
 
     public GamePublisher(String gamePublisherTitle) {
         this.gamePublisherTitle = gamePublisherTitle;

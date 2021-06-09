@@ -39,12 +39,12 @@ public class Game extends Medium{
     @JoinColumn(name = "plattformId", referencedColumnName = "platformId")
     private Platform platform;
 
-    /*@ManyToOne (cascade = CascadeType.PERSIST)
+    @ManyToOne (cascade = CascadeType.PERSIST)
     @JoinColumn(name = "gamePublisherId", referencedColumnName = "gamePublisherId")
-    private GamePublisher gamePublisher;*/
+    private GamePublisher gamePublisher;
 
-    @ManyToMany
-    Set<GamePublisher> gamePublisher;
+    /*@ManyToMany
+    Set<GamePublisher> gamePublisher;*/
 
     @Column(nullable = false)
     private Integer ageRestriction;
