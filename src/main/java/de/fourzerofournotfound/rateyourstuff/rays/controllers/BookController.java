@@ -1,6 +1,5 @@
 package de.fourzerofournotfound.rateyourstuff.rays.controllers;
 
-
 import de.fourzerofournotfound.rateyourstuff.rays.models.Book;
 import de.fourzerofournotfound.rateyourstuff.rays.models.errors.BookNotFoundException;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.BookRepository;
@@ -12,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/episodes-rest")
+@RequestMapping("/books-rest")
 public class BookController {
 
     @Autowired
@@ -29,7 +28,7 @@ public class BookController {
 
     @GetMapping()
     ResponseEntity<Book> findByTitle(@RequestParam(value = "title") String title) throws BookNotFoundException {
-        return ResponseEntity.ok(this.repository.findByMediumName(title).orElseThrow(() -> new BookNotFoundException("No Episode with title " + title))); }
+        return ResponseEntity.ok(this.repository.findByMediumName(title).orElseThrow(() -> new BookNotFoundException("No Book with title " + title))); }
 
     @PostMapping(path="/add", consumes= "application/json", produces="application/json")
     ResponseEntity<Book> add(@RequestBody Book book) {

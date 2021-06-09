@@ -8,5 +8,5 @@ import java.util.Optional;
 
 @Repository
 public interface PlatformRepository extends JpaRepository<Platform, Long> {
-    Optional<Platform> findByMediumName (String platformTitle);
+    Optional<Platform> findByPlatformTitle (String platformTitle);
 }

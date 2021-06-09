@@ -35,18 +35,18 @@ public class BookRepositoryTest {
     }
 
     @Test
-    void should_save_book_with_publisher(){
+    void should_save_book_with_bookPublisher(){
         //Given
         Book given = new Book("Harry Potter und der Orden des Phönix", "bestes Buch der Reihe", LocalDate.now(), "3551555559", true, true, 1021);
-        Publisher publisher = new Publisher("Carlsen");
-        given.setPublisher(publisher);
+        BookPublisher bookPublisher = new BookPublisher("Carlsen");
+        given.setBookPublisher(bookPublisher);
 
         //When
         Book result = bookRepository.save(given);
 
         //Then
         Assertions.assertThat(result.getMediumId()).isNotNull().isGreaterThan(0);
-        Assertions.assertThat(result.getPublisher().getPublisherId()).isNotNull().isGreaterThan(0);
+        Assertions.assertThat(result.getBookPublisher().getBookPublisherId()).isNotNull().isGreaterThan(0);
     }
 
     @Test
@@ -109,21 +109,21 @@ public class BookRepositoryTest {
         //Given
         //Given
         Book given1 = new Book("Harry Potter und der Orden des Phönix", "bestes Buch der Reihe", LocalDate.now(), "3551555559", true, true, 1021);
-        Publisher publisher1 = new Publisher("Carlsen");
-        given1.setPublisher(publisher1);
+        BookPublisher bookPublisher1 = new BookPublisher("Carlsen");
+        given1.setBookPublisher(bookPublisher1);
 
         Book given2 = new Book("Ready Player One", "Film ist gut, aber das Buch ist besser", LocalDate.now(), "9783596296590", true, true, 538);
-        Publisher publisher2 = new Publisher("Tor");
+        BookPublisher bookPublisher2 = new BookPublisher("Tor");
 
-        given1.setPublisher(publisher1);
-        given2.setPublisher(publisher2);
+        given1.setBookPublisher(bookPublisher1);
+        given2.setBookPublisher(bookPublisher2);
 
         List<Book> persisted = new ArrayList<>();
         persisted.add(bookRepository.save(given1));
         persisted.add(bookRepository.save(given2));
 
         //When
-        List<Book> results = bookRepository.findAllByPublisher(publisher2);
+        List<Book> results = bookRepository.findAllByBookPublisher(bookPublisher2);
 
         //Then
         Assertions.assertThat(results).isNotNull().isNotEmpty().allMatch(Objects::nonNull);

@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/episodes-rest")
+@RequestMapping("/games-rest")
 public class GameController {
 
     @Autowired
@@ -29,7 +29,7 @@ public class GameController {
 
     @GetMapping()
     ResponseEntity<Game> findByTitle(@RequestParam(value = "title") String title) throws GameNotFoundException {
-        return ResponseEntity.ok(this.repository.findByMediumName(title).orElseThrow(() -> new GameNotFoundException("No Episode with title " + title))); }
+        return ResponseEntity.ok(this.repository.findByMediumName(title).orElseThrow(() -> new GameNotFoundException("No Game with title " + title))); }
 
     @PostMapping(path="/add", consumes= "application/json", produces="application/json")
     ResponseEntity<Game> add(@RequestBody Game game) {

@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/episodes-rest")
+@RequestMapping("/platforms-rest")
 public class PlatformController {
 
     @Autowired
@@ -28,7 +28,7 @@ public class PlatformController {
 
     @GetMapping()
     ResponseEntity<Platform> findByTitle(@RequestParam(value = "title") String title) throws PlatformNotFoundException {
-        return ResponseEntity.ok(this.repository.findByMediumName(title).orElseThrow(() -> new PlatformNotFoundException("No Episode with title " + title))); }
+        return ResponseEntity.ok(this.repository.findByPlatformTitle(title).orElseThrow(() -> new PlatformNotFoundException("No Platform with title " + title))); }
 
     @PostMapping(path="/add", consumes= "application/json", produces="application/json")
     ResponseEntity<Platform> add(@RequestBody Platform platform) {
