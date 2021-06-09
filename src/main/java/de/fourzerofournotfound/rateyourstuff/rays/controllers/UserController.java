@@ -3,6 +3,7 @@ package de.fourzerofournotfound.rateyourstuff.rays.controllers;
 import de.fourzerofournotfound.rateyourstuff.rays.models.Login;
 import de.fourzerofournotfound.rateyourstuff.rays.models.User;
 import de.fourzerofournotfound.rateyourstuff.rays.models.errors.UserNotFoundException;
+import de.fourzerofournotfound.rateyourstuff.rays.repositories.LoginRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,19 +19,21 @@ import java.util.List;
 public class UserController {
     @Autowired
     UserRepository userRepository;
+    LoginRepository loginRepository;
 
     @GetMapping("/all")
     ResponseEntity<List<User>> getAllUsers() {return ResponseEntity.ok(this.userRepository.findAll());}
 
-    @PostMapping("/{id}}")
+    @GetMapping("/{id}")
     ResponseEntity<User> getUserById(@PathVariable Long id) throws UserNotFoundException
     {
         return ResponseEntity.ok(this.userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("No user found for id" + id)));
     }
 
     @PostMapping(path="/add", consumes = "application/json", produces = "application/json")
-    ResponseEntity<User> addUser(@RequestBody User user)
+    ResponseEntity<User> addUser(@RequestBody User user, Login login)
     {
+
         return ResponseEntity.ok(this.userRepository.save(user));
     }
 
