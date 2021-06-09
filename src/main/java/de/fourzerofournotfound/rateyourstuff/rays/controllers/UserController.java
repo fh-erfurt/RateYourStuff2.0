@@ -2,6 +2,7 @@ package de.fourzerofournotfound.rateyourstuff.rays.controllers;
 
 import de.fourzerofournotfound.rateyourstuff.rays.models.Login;
 import de.fourzerofournotfound.rateyourstuff.rays.models.User;
+import de.fourzerofournotfound.rateyourstuff.rays.services.UserSecurityService;
 import de.fourzerofournotfound.rateyourstuff.rays.models.errors.UserNotFoundException;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.LoginRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.UserRepository;
@@ -19,7 +20,9 @@ import java.util.List;
 public class UserController {
     @Autowired
     UserRepository userRepository;
-    LoginRepository loginRepository;
+
+    @Autowired
+    UserSecurityService uss;
 
     @GetMapping("/all")
     ResponseEntity<List<User>> getAllUsers() {return ResponseEntity.ok(this.userRepository.findAll());}
@@ -31,9 +34,9 @@ public class UserController {
     }
 
     @PostMapping(path="/add", consumes = "application/json", produces = "application/json")
-    ResponseEntity<User> addUser(@RequestBody User user, Login login)
+    ResponseEntity<User> addUser(@RequestBody User user)
     {
-
+        uss.hashPasswordOfSignUp(user);
         return ResponseEntity.ok(this.userRepository.save(user));
     }
 
