@@ -46,7 +46,7 @@ public class UserController {
         return ResponseEntity.ok(this.userRepository.save(user));
     }
 
-    @PutMapping(consumes = "application/json", produces = "application/json")
+    @PutMapping(path ="/changePassword", consumes = "application/json", produces = "application/json")
     ResponseEntity<User> changePassword(@RequestBody User user, String currentPassword, String newPassword)
     {
         uss.changePassword(currentPassword, newPassword, user);

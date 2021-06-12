@@ -15,5 +15,6 @@ public interface GameRepository extends JpaRepository<Game, Long> {
     Optional<Game> findByMediumName(String gameName);
 
     List<Game> findAllByPlatform(Platform platform);
+
 }
 

@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 public class UserSecurityService {
     private static final Logger UCC_LOGGER = Logger.getLogger(UserSecurityService.class.getName());
 
-    String passwordSalt = BCrypt.gensalt();
+    private static final String passwordSalt = BCrypt.gensalt();
 
     public void hashPasswordOfSignUp(User user)
     {
