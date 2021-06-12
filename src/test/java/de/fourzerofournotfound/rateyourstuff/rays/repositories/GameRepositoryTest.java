@@ -47,7 +47,7 @@ public class GameRepositoryTest
         Game result = gameRepository.save(given);
 
         //Then
-        Assertions.assertThat(result.getMediumId()).isNotNull().isGreaterThan(0);
+        Assertions.assertThat(result.getId()).isNotNull().isGreaterThan(0);
         Assertions.assertThat(result.getGamePublisher().getGamePublisherId()).isNotNull().isGreaterThan(0);
     }
 

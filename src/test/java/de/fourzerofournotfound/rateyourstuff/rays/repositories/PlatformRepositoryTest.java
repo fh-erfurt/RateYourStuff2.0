@@ -41,7 +41,7 @@ public class PlatformRepositoryTest {
         Platform result = repository.save(given);
 
         //Then
-        Assertions.assertThat(result.getPlatformId()).isNotNull().isGreaterThan(0);
+        Assertions.assertThat(result.getId()).isNotNull().isGreaterThan(0);
     }
 
     @Test
@@ -99,7 +99,7 @@ public class PlatformRepositoryTest {
         saved.setPlatformTitle("CBS");
         Platform result = repository.save(saved);
         //Then
-        Assertions.assertThat(result.getPlatformId()).isEqualTo(saved.getPlatformId());
+        Assertions.assertThat(result.getId()).isEqualTo(saved.getId());
         Assertions.assertThat(result.getPlatformTitle()).isEqualTo("CBS");
     }
 
@@ -113,7 +113,7 @@ public class PlatformRepositoryTest {
 
         //When
         repository.delete(given);
-        Optional<Platform> result = repository.findById(saved.getPlatformId());
+        Optional<Platform> result = repository.findById(saved.getId());
 
         //Then
         Assertions.assertThat(result).isNotPresent();

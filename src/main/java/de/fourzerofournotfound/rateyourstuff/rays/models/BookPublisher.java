@@ -19,12 +19,12 @@ public class BookPublisher extends BaseModel {
     private Long bookPublisherId;
 
     @Column
-    private String publisherTitle;
+    private String bookPublisherTitle;
 
     @OneToMany (mappedBy = "publisher")
     private List<Book> books = new ArrayList<>();
 
-    public Publisher(String publisherTitle) {
-        this.publisherTitle = publisherTitle;
+    public BookPublisher(String bookPublisherTitle) {
+        this.bookPublisherTitle = bookPublisherTitle;
     }
 }
