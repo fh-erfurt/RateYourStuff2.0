@@ -15,6 +15,7 @@ import org.hibernate.annotations.ColumnDefault;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 
 @Getter
@@ -29,15 +30,6 @@ public class Game extends Medium{
     private Float averagePlaytime;
 
     @Column(nullable = false)
-    private String publisher;
-
-    /*@Column(nullable = false)
-    private List<String> languages;
-
-    @Column
-    private List<String> subtitles;*/
-
-    @Column(nullable = false)
     private Integer minNumberOfGamers;
 
     @Column
@@ -47,19 +39,21 @@ public class Game extends Medium{
     @JoinColumn(name = "platformId", referencedColumnName = "id")
     private Platform platform;
 
+    @ManyToOne (cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "gamePublisherId", referencedColumnName = "gamePublisherId")
+    private GamePublisher gamePublisher;
+
+    /*@ManyToMany
+    Set<GamePublisher> gamePublisher;*/
+
     @Column(nullable = false)
     private Integer ageRestriction;
-
-    //@OneToOne
-    //@JoinColumn(name = "mediumId", referencedColumnName = "mediumId")
-    //private Medium medium;
 
     @Builder
     public Game(String mediumName,
                 String shortDescription,
                 LocalDate releaseDate,
                 float averagePlaytime ,
-                String publisher,
                 int minNumberOfGamers,
                 int maxNumberOfGamers,
                 int ageRestriction)
@@ -68,7 +62,6 @@ public class Game extends Medium{
        this.setShortDescription(shortDescription);
        this.setReleaseDate(releaseDate);
        this.averagePlaytime = averagePlaytime;
-       this.publisher = publisher;
        this.minNumberOfGamers = minNumberOfGamers;
        this.maxNumberOfGamers = maxNumberOfGamers;
        this.ageRestriction = ageRestriction;

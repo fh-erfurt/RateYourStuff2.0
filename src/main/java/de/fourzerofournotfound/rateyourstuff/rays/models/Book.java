@@ -1,22 +1,22 @@
 package de.fourzerofournotfound.rateyourstuff.rays.models;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.mapping.List;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @Entity
 @AllArgsConstructor
 @RequiredArgsConstructor
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "mediumId")
 @Table(name = "Books")
 public class Book extends Medium{
 
@@ -33,8 +33,8 @@ public class Book extends Medium{
     private Integer numberOfPages;
 
     @ManyToOne (cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "publisherId", referencedColumnName = "id")
-    private Publisher publisher;
+    @JoinColumn(name = "bookPublisherId", referencedColumnName = "bookPublisherId")
+    private BookPublisher bookPublisher;
 
     @Builder
     public Book(String mediumName,

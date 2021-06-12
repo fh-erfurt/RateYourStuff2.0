@@ -1,10 +1,7 @@
 package de.fourzerofournotfound.rateyourstuff.rays.repositories;
 
 
-import de.fourzerofournotfound.rateyourstuff.rays.models.Game;
-import de.fourzerofournotfound.rateyourstuff.rays.models.Movie;
-import de.fourzerofournotfound.rateyourstuff.rays.models.Network;
-import de.fourzerofournotfound.rateyourstuff.rays.models.Platform;
+import de.fourzerofournotfound.rateyourstuff.rays.models.*;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -30,7 +27,7 @@ public class GameRepositoryTest
     @Test
     void should_save_game(){
         //Given
-        Game given = new Game("Anthem", "Worst Game ever", LocalDate.now(), (float) 0.8, "Electronic Arts", 1, 4, 12);
+        Game given = new Game("Anthem", "Worst Game ever", LocalDate.now(), (float) 0.8,  1, 4, 12);
 
         //When
         Game result = gameRepository.save(given);
@@ -40,9 +37,24 @@ public class GameRepositoryTest
     }
 
     @Test
+    void should_save_game_with_gamePublisher(){
+        //Given
+        Game given = new Game("Anthem", "Worst Game ever", LocalDate.now(), (float) 0.8,  1, 4, 12);
+        GamePublisher gamePublisher = new GamePublisher("Electronic Arts");
+        given.setGamePublisher(gamePublisher);
+
+        //When
+        Game result = gameRepository.save(given);
+
+        //Then
+        Assertions.assertThat(result.getMediumId()).isNotNull().isGreaterThan(0);
+        Assertions.assertThat(result.getGamePublisher().getGamePublisherId()).isNotNull().isGreaterThan(0);
+    }
+
+    @Test
     void should_update_game_shortDescription(){
         //Given
-        Game given = new Game("Anthem", "Worst Game ever", LocalDate.now(), (float) 0.8, "Electronic Arts", 1, 4, 12);
+        Game given = new Game("Anthem", "Worst Game ever", LocalDate.now(), (float) 0.8,  1, 4, 12);
         Game saved = gameRepository.save(given);
         String initialDescription = saved.getShortDescription();
 
@@ -59,7 +71,7 @@ public class GameRepositoryTest
     @Test
     void should_delete_game_from_database() {
         //Given
-        Game given = new Game("Anthem", "Worst Game ever", LocalDate.now(), (float) 0.8, "Electronic Arts", 1, 4, 12);
+        Game given = new Game("Anthem", "Worst Game ever", LocalDate.now(), (float) 0.8,  1, 4, 12);
         Game saved = gameRepository.save(given);
 
         //When
@@ -73,7 +85,7 @@ public class GameRepositoryTest
     @Test
     void should_find_Game_by_title(){
         //Given
-        Game given = new Game("Anthem", "Worst Game ever", LocalDate.now(), (float) 0.8, "Electronic Arts", 1, 4, 12);
+        Game given = new Game("Anthem", "Worst Game ever", LocalDate.now(), (float) 0.8, 1, 4, 12);
         gameRepository.save(given);
 
         //When
@@ -85,54 +97,14 @@ public class GameRepositoryTest
     }
 
     @Test
-    void should_find_Game_by_publisher(){
-        //Given
-
-        //When
-
-        //Then
-
-    }
-
-    @Test
-    void should_find_Game_by_minNumberOfPlayers(){
-        //Given
-
-        //When
-
-        //Then
-
-    }
-
-    @Test
-    void should_find_Game_by_maxNumberOfPlayers(){
-        //Given
-
-        //When
-
-        //Then
-
-    }
-
-    @Test
-    void should_find_Game_by_ageRestriction(){
-        //Given
-
-        //When
-
-        //Then
-
-    }
-
-    @Test
     void should_find_games_with_platform() {
         //Given
-        Game given1 = new Game("Anthem", "Worst Game ever", LocalDate.now(), 0.8f, "Electronic Arts", 1, 4, 12);
+        Game given1 = new Game("Anthem", "Worst Game ever", LocalDate.now(), 0.8f,  1, 4, 12);
         Platform platform1  = new Platform("PC");
 
         given1.setPlatform(platform1);
 
-        Game given2 = new Game("Landwirtschaftssimulator", "Best Farmingsimulator", LocalDate.now(), 170.7f, "Astragon", 1, 1, 0);
+        Game given2 = new Game("Landwirtschaftssimulator", "Best Farmingsimulator", LocalDate.now(), 170.7f,  1, 1, 0);
         Platform platform2  = new Platform("PC");
 
         given1.setPlatform(platform1);

@@ -12,8 +12,11 @@ import java.util.List;
 @Getter
 @Setter
 @RequiredArgsConstructor
-@Table(name="publishers")
-public class Publisher extends BaseModel {
+@Table(name="bookPublishers")
+public class BookPublisher extends BaseModel {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long bookPublisherId;
 
     @Column
     private String publisherTitle;
