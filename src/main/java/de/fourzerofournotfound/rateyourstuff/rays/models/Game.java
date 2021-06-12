@@ -40,7 +40,7 @@ public class Game extends Medium{
     private Platform platform;
 
     @ManyToOne (cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "gamePublisherId", referencedColumnName = "gamePublisherId")
+    @JoinColumn(name = "gamePublisherId", referencedColumnName = "id")
     private GamePublisher gamePublisher;
 
     /*@ManyToMany

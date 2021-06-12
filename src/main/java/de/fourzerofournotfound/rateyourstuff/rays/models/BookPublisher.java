@@ -1,5 +1,6 @@
 package de.fourzerofournotfound.rateyourstuff.rays.models;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -14,16 +15,14 @@ import java.util.List;
 @RequiredArgsConstructor
 @Table(name="bookPublishers")
 public class BookPublisher extends BaseModel {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long bookPublisherId;
 
     @Column
     private String bookPublisherTitle;
 
-    @OneToMany (mappedBy = "publisher")
+    @OneToMany (mappedBy = "bookPublisher")
     private List<Book> books = new ArrayList<>();
 
+    @Builder
     public BookPublisher(String bookPublisherTitle) {
         this.bookPublisherTitle = bookPublisherTitle;
     }

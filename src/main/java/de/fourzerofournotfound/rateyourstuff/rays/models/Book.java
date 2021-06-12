@@ -33,7 +33,7 @@ public class Book extends Medium{
     private Integer numberOfPages;
 
     @ManyToOne (cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "bookPublisherId", referencedColumnName = "bookPublisherId")
+    @JoinColumn(name = "bookPublisherId", referencedColumnName = "id")
     private BookPublisher bookPublisher;
 
     @Builder

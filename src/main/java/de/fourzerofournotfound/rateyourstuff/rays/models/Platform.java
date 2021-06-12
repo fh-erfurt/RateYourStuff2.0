@@ -24,6 +24,7 @@ public class Platform extends BaseModel {
     @ManyToMany
     Set<Medium> media;
 
+    @Builder
     public Platform(String platformTitle) {
         this.platformTitle = platformTitle;
     }

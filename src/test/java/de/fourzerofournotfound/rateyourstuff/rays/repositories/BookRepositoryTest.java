@@ -46,7 +46,7 @@ public class BookRepositoryTest {
 
         //Then
         Assertions.assertThat(result.getId()).isNotNull().isGreaterThan(0);
-        Assertions.assertThat(result.getBookPublisher().getBookPublisherId()).isNotNull().isGreaterThan(0);
+        Assertions.assertThat(result.getBookPublisher().getId()).isNotNull().isGreaterThan(0);
     }
 
     @Test

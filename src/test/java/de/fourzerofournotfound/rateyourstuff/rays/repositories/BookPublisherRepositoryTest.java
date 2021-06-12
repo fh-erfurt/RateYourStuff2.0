@@ -38,7 +38,7 @@ public class BookPublisherRepositoryTest {
         BookPublisher result = repository.save(given);
 
         //Then
-        Assertions.assertThat(result.getBookPublisherId()).isNotNull().isGreaterThan(0);
+        Assertions.assertThat(result.getId()).isNotNull().isGreaterThan(0);
     }
 
     @Test
@@ -86,7 +86,7 @@ public class BookPublisherRepositoryTest {
         saved.setBookPublisherTitle("HEYNE");
         BookPublisher result = repository.save(saved);
         //Then
-        Assertions.assertThat(result.getBookPublisherId()).isEqualTo(saved.getBookPublisherId());
+        Assertions.assertThat(result.getId()).isEqualTo(saved.getId());
         Assertions.assertThat(result.getBookPublisherTitle()).isEqualTo("HEYNE");
     }
 
@@ -98,7 +98,7 @@ public class BookPublisherRepositoryTest {
 
         //When
         repository.delete(given);
-        Optional<BookPublisher> result = repository.findById(saved.getBookPublisherId());
+        Optional<BookPublisher> result = repository.findById(saved.getId());
 
         //Then
         Assertions.assertThat(result).isNotPresent();

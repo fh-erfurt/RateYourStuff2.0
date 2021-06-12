@@ -48,7 +48,7 @@ public class GameRepositoryTest
 
         //Then
         Assertions.assertThat(result.getId()).isNotNull().isGreaterThan(0);
-        Assertions.assertThat(result.getGamePublisher().getGamePublisherId()).isNotNull().isGreaterThan(0);
+        Assertions.assertThat(result.getGamePublisher().getId()).isNotNull().isGreaterThan(0);
     }
 
     @Test

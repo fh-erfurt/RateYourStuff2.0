@@ -39,7 +39,7 @@ public class GamePublisherRepositoryTest {
         GamePublisher result = repository.save(given);
 
         //Then
-        Assertions.assertThat(result.getGamePublisherId()).isNotNull().isGreaterThan(0);
+        Assertions.assertThat(result.getId()).isNotNull().isGreaterThan(0);
     }
 
     @Test
@@ -87,7 +87,7 @@ public class GamePublisherRepositoryTest {
         saved.setGamePublisherTitle("Electronic Arts");
         GamePublisher result = repository.save(saved);
         //Then
-        Assertions.assertThat(result.getGamePublisherId()).isEqualTo(saved.getGamePublisherId());
+        Assertions.assertThat(result.getId()).isEqualTo(saved.getId());
         Assertions.assertThat(result.getGamePublisherTitle()).isEqualTo("Electronic Arts");
     }
 
@@ -99,7 +99,7 @@ public class GamePublisherRepositoryTest {
 
         //When
         repository.delete(given);
-        Optional<GamePublisher> result = repository.findById(saved.getGamePublisherId());
+        Optional<GamePublisher> result = repository.findById(saved.getId());
 
         //Then
         Assertions.assertThat(result).isNotPresent();

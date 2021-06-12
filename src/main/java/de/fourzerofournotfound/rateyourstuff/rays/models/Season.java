@@ -37,5 +37,4 @@ public class Season extends BaseModel {
     @OneToMany (mappedBy = "season", cascade = CascadeType.PERSIST)
     private Set<Episode> episodes = new HashSet<>();
 
-
 }

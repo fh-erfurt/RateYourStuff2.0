@@ -16,9 +16,6 @@ import java.util.Set;
 @RequiredArgsConstructor
 @Table(name="gamePublishers")
 public class GamePublisher extends BaseModel {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long gamePublisherId;
 
     @Column
     private String gamePublisherTitle;
@@ -29,6 +26,7 @@ public class GamePublisher extends BaseModel {
     /*@ManyToMany
     Set<Game> games;*/
 
+    @Builder
     public GamePublisher(String gamePublisherTitle) {
         this.gamePublisherTitle = gamePublisherTitle;
     }
