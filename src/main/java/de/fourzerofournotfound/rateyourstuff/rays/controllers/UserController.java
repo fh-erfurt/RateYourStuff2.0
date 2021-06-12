@@ -46,6 +46,13 @@ public class UserController {
         return ResponseEntity.ok(this.userRepository.save(user));
     }
 
+    @PutMapping(consumes = "application/json", produces = "application/json")
+    ResponseEntity<User> changePassword(@RequestBody User user, String currentPassword, String newPassword)
+    {
+        uss.changePassword(currentPassword, newPassword, user);
+        return ResponseEntity.ok(this.userRepository.save(user));
+    }
+
     @DeleteMapping("/{id}")
     void deleteUser(@PathVariable Long id) {this.userRepository.deleteById(id);}
 
