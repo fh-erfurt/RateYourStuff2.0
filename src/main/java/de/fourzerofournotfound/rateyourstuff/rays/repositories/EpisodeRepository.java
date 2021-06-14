@@ -9,4 +9,5 @@ import java.util.Optional;
 @Repository
 public interface EpisodeRepository extends JpaRepository<Episode, Long> {
     Optional<Episode> findByMediumName (String episodeTitle);
+
 }

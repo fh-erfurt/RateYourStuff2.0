@@ -29,12 +29,9 @@ public class UserSecurityService {
     {
         if(isValidPassword(currentPassword, user))
         {
-            try {
-                user.getLogin().setPasswordHash(BCrypt.hashpw(newPassword, passwordSalt));
-                throw new InvalidPasswordException("Incorrect password");
-            } catch(InvalidPasswordException e) {
-                UCC_LOGGER.warning("Error: " + e.getMessage());
-            }
+            user.getLogin().setPasswordHash(BCrypt.hashpw(newPassword, passwordSalt));
+        } else {
+            //throw new InvalidPasswordException("Incorrect password");
         }
     }
 }

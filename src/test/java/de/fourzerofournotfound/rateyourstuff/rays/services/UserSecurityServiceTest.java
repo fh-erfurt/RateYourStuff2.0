@@ -24,6 +24,9 @@ class UserSecurityServiceTest {
     @Autowired
     LoginRepository loginRepository;
 
+    @Autowired
+    UserSecurityService service;
+
     @BeforeEach
     public void beforeEach() {
         userRepository.deleteAll();
@@ -34,8 +37,6 @@ class UserSecurityServiceTest {
     public void shouldEncryptPassword()
     {
         //Given
-        UserSecurityService service = new UserSecurityService();
-
         Login givenLogin = Login.builder()
                 .email("mickey.knop@fh-erfurt.de")
                 .passwordHash("1234")
@@ -86,14 +87,16 @@ class UserSecurityServiceTest {
                 .build();
         service.hashPasswordOfSignUp(givenUser);
         User saved = userRepository.save(givenUser);
+        saved.getLogin().setEmail("m.k@fh-erfurt.de");
 
 
         //When
-        service.changePassword("7895", "7894", saved);
+        service.changePassword("1234", "7894", saved);
         User result = userRepository.save(saved);
+        System.out.println(result.getLogin().getEmail());
 
 
         //Then
-        assertTrue(BCrypt.checkpw("1234", result.getLogin().getPasswordHash()));
+        assertTrue(BCrypt.checkpw("7894", result.getLogin().getPasswordHash()));
     }
 }
