@@ -20,7 +20,7 @@ public class BookRepositoryTest {
     private BookRepository bookRepository;
 
     @AfterEach
-    public void afterEach(){//bookRepository.deleteAll();
+    public void afterEach(){bookRepository.deleteAll();
          }
 
     @Test
