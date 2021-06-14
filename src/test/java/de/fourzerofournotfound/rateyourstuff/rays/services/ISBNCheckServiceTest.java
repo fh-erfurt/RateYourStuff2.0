@@ -46,7 +46,7 @@ public class ISBNCheckServiceTest {
         Book given = new Book("Harry Potter und der Orden des Phönix", "bestes Buch der Reihe", LocalDate.now(), "3551555559", true, true, 1021);
 
         //When
-        boolean isValidISBN = !isbnCheckService.checkIfISBNisValid(given);
+        boolean isValidISBN = isbnCheckService.checkIfISBNisValid(given);
 
         //Then
         Assertions.assertThat(isValidISBN).isFalse();
