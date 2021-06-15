@@ -32,6 +32,9 @@ public class User extends BaseModel {
     @Column(length = 45, nullable = false)
     private String gender;
 
+    @Column(length = 256)
+    private String profilePicturePath;
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "loginId", referencedColumnName = "id")
     private Login login;

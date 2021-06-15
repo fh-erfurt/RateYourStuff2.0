@@ -28,5 +28,4 @@ public class Platform extends BaseModel {
     public Platform(String platformTitle) {
         this.platformTitle = platformTitle;
     }
-
 }

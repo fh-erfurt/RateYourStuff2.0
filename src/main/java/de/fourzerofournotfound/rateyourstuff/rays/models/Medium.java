@@ -26,6 +26,9 @@ public abstract class Medium extends BaseModel {
     @Column(nullable = false, length = 10000)
     private String shortDescription;
 
+    @Column(length = 256)
+    private String picturePath;
+
 
     @OneToMany(mappedBy = "medium")
     private Set<Rating> mediumRatings;
