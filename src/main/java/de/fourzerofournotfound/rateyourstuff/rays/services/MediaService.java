@@ -18,7 +18,8 @@ public class MediaService {
     private EpisodeRepository episodeRepository;
 
     @Autowired
-    public void MediaService(BookRepository bookRepository)
+    public void MediaService(BookRepository bookRepository, GameRepository gameRepository, MovieRepository movieRepository,
+                             SeriesRepository seriesRepository, EpisodeRepository episodeRepository)
     {
         this.bookRepository = bookRepository;
         this.gameRepository = gameRepository;
