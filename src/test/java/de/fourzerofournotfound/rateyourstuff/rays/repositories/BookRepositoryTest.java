@@ -18,9 +18,10 @@ import java.util.Optional;
 public class BookRepositoryTest {
     @Autowired
     private BookRepository bookRepository;
+    private BookPublisherRepository bookPublisherRepository;
 
     @AfterEach
-    public void afterEach(){bookRepository.deleteAll();}
+    public void afterEach(){bookRepository.deleteAll(); bookPublisherRepository.deleteAll();}
 
     @Test
     void should_save_book(){
