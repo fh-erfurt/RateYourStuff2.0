@@ -5,6 +5,8 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.time.LocalDate;
+
 public class EinfuegenTestDaten {
 
     @Autowired
@@ -133,9 +135,20 @@ public class EinfuegenTestDaten {
 
         roleRepository.save(role1);
         roleRepository.save(role2);
-
         roleRepository.save(role3);
         roleRepository.save(role4);
+
+
+
+
+        Book neewBook1 = Book.builder().mediumName("Aera")
+                .isEBook(true)
+                .isPrint(true)
+                .numberOfPages(577)
+                .isbn("978-3-426-51861-8")
+                .releaseDate(LocalDate.of(2015,10,26))
+                .shortDescription("Im Jahr 2019 herrscht eine neue Weltordnung: Die Götter kehren auf die Erde zurück. Alle Götter – bis auf einen. Während Odin, Zeus, Manitu, Anubis, Shiva und Co. sich ihre alten Kultstätten zurückholen und ihre Anhänger um sich scharen, warten Christen, Moslems und Juden vergeblich. Die einst mächtigsten Religionen der Welt werden bald als bedeutungslose Sekten belächelt. Mit »AERA - Rückkehr der Götter« hat Markus Heitz einen neuen Kosmos geschaffen - ein großes Vergnügen für alle Fans von düsterer Spannung und filmreifer Action!")
+                .build();
 
 
     }
