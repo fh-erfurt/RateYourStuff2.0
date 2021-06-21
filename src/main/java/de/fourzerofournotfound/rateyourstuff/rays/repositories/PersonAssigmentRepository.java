@@ -7,5 +7,4 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 public interface PersonAssigmentRepository extends JpaRepository<PersonAssignment,Long> {
-    Optional<PersonAssignment> findById (Long id);
 }
