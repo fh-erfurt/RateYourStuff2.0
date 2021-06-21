@@ -1,12 +1,18 @@
 package de.fourzerofournotfound.rateyourstuff.rays.controllers;
 
+import de.fourzerofournotfound.rateyourstuff.rays.models.Book;
 import de.fourzerofournotfound.rateyourstuff.rays.models.Episode;
+import de.fourzerofournotfound.rateyourstuff.rays.models.Game;
 import de.fourzerofournotfound.rateyourstuff.rays.models.errors.EpisodeNotFoundException;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.EpisodeRepository;
+import de.fourzerofournotfound.rateyourstuff.rays.services.FileUploadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,6 +22,9 @@ public class EpisodeController {
 
     @Autowired
     EpisodeRepository repository;
+
+    @Autowired
+    FileUploadService fus;
 
     @GetMapping("/all")
     List<Episode> getAll() {
@@ -47,4 +56,19 @@ public class EpisodeController {
         this.repository.deleteById(id);
     }
 
+    @PutMapping("/images/{id}")
+    ResponseEntity<Episode> addImage(@RequestParam("image") MultipartFile multipartFile, @PathVariable Long id) throws IOException {
+        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+        Optional<Episode> episode = this.repository.findById(id);
+        //check if the given movie exists
+        if(episode.isPresent()) {
+            episode.get().setPicturePath(fileName);
+            //define the target path
+            String uploadDir = Episode.IMAGE_PATH_PREFIX + id.toString();
+            //upload the file
+            fus.saveFile(uploadDir, fileName, multipartFile);
+            return ResponseEntity.ok(this.repository.save(episode.get()));
+        }
+        return ResponseEntity.badRequest().build();
+    }
 }

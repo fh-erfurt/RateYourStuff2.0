@@ -25,6 +25,8 @@ import java.util.Set;
 @Table(name = "Series")
 public class Series extends Medium {
 
+    public final static String IMAGE_PATH_PREFIX = "images/media/series/";
+
     @Column
     private Integer averageLength;
 
@@ -49,5 +51,13 @@ public class Series extends Medium {
         this.averageLength = averageLength;
         this.ageRestriction = ageRestriction;
         this.isCompleted = isCompleted;
+    }
+
+    public String getPicturePath() {
+        return IMAGE_PATH_PREFIX + super.getPicturePath();
+    }
+
+    public void setPicturePath(String picturePath) {
+        super.setPicturePath(picturePath.replace(IMAGE_PATH_PREFIX, ""));
     }
 }

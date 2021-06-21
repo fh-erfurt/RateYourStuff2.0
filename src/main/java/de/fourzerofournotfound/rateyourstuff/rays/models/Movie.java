@@ -18,6 +18,8 @@ import java.time.LocalDateTime;
 @Table(name = "Movies")
 public class Movie extends Medium {
 
+    public final static String IMAGE_PATH_PREFIX = "images/media/movies/";
+
     @Column
     private Integer length;
 
@@ -35,5 +37,13 @@ public class Movie extends Medium {
         this.setReleaseDate(releaseDate);
         this.length = length;
         this.ageRestriction = ageRestriction;
+    }
+
+    public String getPicturePath() {
+        return IMAGE_PATH_PREFIX + super.getPicturePath();
+    }
+
+    public void setPicturePath(String picturePath) {
+        super.setPicturePath(picturePath.replace(IMAGE_PATH_PREFIX, ""));
     }
 }

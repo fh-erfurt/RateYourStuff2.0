@@ -20,6 +20,8 @@ import java.time.LocalDate;
 @Table(name = "Books")
 public class Book extends Medium{
 
+    public final static String IMAGE_PATH_PREFIX = "images/media/books/";
+
     @Column(nullable = false)
     private String isbn;
 
@@ -52,5 +54,13 @@ public class Book extends Medium{
         this.isEBook = isEBook;
         this.isPrint = isPrint;
         this.numberOfPages = numberOfPages;
+    }
+
+    public String getPicturePath() {
+        return IMAGE_PATH_PREFIX + super.getPicturePath();
+    }
+
+    public void setPicturePath(String picturePath) {
+        super.setPicturePath(picturePath.replace(IMAGE_PATH_PREFIX, ""));
     }
 }

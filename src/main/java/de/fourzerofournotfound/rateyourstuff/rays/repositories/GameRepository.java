@@ -6,6 +6,7 @@ import de.fourzerofournotfound.rateyourstuff.rays.models.Network;
 import de.fourzerofournotfound.rateyourstuff.rays.models.Platform;
 import org.apache.tomcat.jni.Local;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;

@@ -26,6 +26,8 @@ import java.util.Set;
 @Table(name = "Games")
 public class Game extends Medium{
 
+    public final static String IMAGE_PATH_PREFIX = "images/media/games/";
+
     @Column
     private Float averagePlaytime;
 
@@ -67,4 +69,11 @@ public class Game extends Medium{
        this.ageRestriction = ageRestriction;
     }
 
+    public String getPicturePath() {
+        return IMAGE_PATH_PREFIX + super.getPicturePath();
+    }
+
+    public void setPicturePath(String picturePath) {
+        super.setPicturePath(picturePath.replace(IMAGE_PATH_PREFIX, ""));
+    }
 }

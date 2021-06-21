@@ -58,7 +58,7 @@ public class MovieController {
         this.repository.deleteById(id);
     }
 
-    @PostMapping("/images/{id}")
+    @PutMapping("/images/{id}")
     ResponseEntity<Movie> addImage(@RequestParam("image") MultipartFile multipartFile, @PathVariable Long id) throws IOException {
         String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
         Optional<Movie> movie = this.repository.findById(id);
@@ -66,7 +66,7 @@ public class MovieController {
         if(movie.isPresent()) {
             movie.get().setPicturePath(fileName);
             //define the target path
-            String uploadDir = "images/media/movies/" + id.toString();
+            String uploadDir = Movie.IMAGE_PATH_PREFIX + id.toString();
             //upload the file
             fus.saveFile(uploadDir, fileName, multipartFile);
             return ResponseEntity.ok(this.repository.save(movie.get()));

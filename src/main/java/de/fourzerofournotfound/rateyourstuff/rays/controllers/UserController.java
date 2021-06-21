@@ -1,7 +1,9 @@
 package de.fourzerofournotfound.rateyourstuff.rays.controllers;
 
+import de.fourzerofournotfound.rateyourstuff.rays.models.Book;
 import de.fourzerofournotfound.rateyourstuff.rays.models.Login;
 import de.fourzerofournotfound.rateyourstuff.rays.models.User;
+import de.fourzerofournotfound.rateyourstuff.rays.services.FileUploadService;
 import de.fourzerofournotfound.rateyourstuff.rays.services.UserSecurityService;
 import de.fourzerofournotfound.rateyourstuff.rays.models.errors.UserNotFoundException;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.LoginRepository;
@@ -10,10 +12,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/user")
@@ -23,6 +29,10 @@ public class UserController {
 
     @Autowired
     UserSecurityService uss;
+
+    @Autowired
+    FileUploadService fus;
+
 
     @GetMapping("/all")
     ResponseEntity<List<User>> getAllUsers() {return ResponseEntity.ok(this.userRepository.findAll());}
@@ -56,7 +66,21 @@ public class UserController {
     @DeleteMapping("/{id}")
     void deleteUser(@PathVariable Long id) {this.userRepository.deleteById(id);}
 
-
+    @PutMapping("/images/{id}")
+    ResponseEntity<User> addImage(@RequestParam("image") MultipartFile multipartFile, @PathVariable Long id) throws IOException {
+        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+        Optional<User> user = this.userRepository.findById(id);
+        //check if the given movie exists
+        if(user.isPresent()) {
+            user.get().setProfilePicturePath(fileName);
+            //define the target path
+            String uploadDir = User.IMAGE_PATH_PREFIX + id.toString();
+            //upload the file
+            fus.saveFile(uploadDir, fileName, multipartFile);
+            return ResponseEntity.ok(this.userRepository.save(user.get()));
+        }
+        return ResponseEntity.badRequest().build();
+    }
 
 
     //TODO: Methods
