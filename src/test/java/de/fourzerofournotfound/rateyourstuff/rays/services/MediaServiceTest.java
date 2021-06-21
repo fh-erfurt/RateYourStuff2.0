@@ -1,12 +1,7 @@
 package de.fourzerofournotfound.rateyourstuff.rays.services;
 
-import de.fourzerofournotfound.rateyourstuff.rays.models.Book;
-import de.fourzerofournotfound.rateyourstuff.rays.models.Game;
-import de.fourzerofournotfound.rateyourstuff.rays.models.Movie;
-import de.fourzerofournotfound.rateyourstuff.rays.repositories.BookRepository;
-import de.fourzerofournotfound.rateyourstuff.rays.repositories.GameRepository;
-import de.fourzerofournotfound.rateyourstuff.rays.repositories.MovieRepository;
-import de.fourzerofournotfound.rateyourstuff.rays.repositories.SeriesRepository;
+import de.fourzerofournotfound.rateyourstuff.rays.models.*;
+import de.fourzerofournotfound.rateyourstuff.rays.repositories.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -32,6 +29,12 @@ class MediaServiceTest {
     SeriesRepository seriesRepository;
 
     @Autowired
+    SeasonRepository seasonRepository;
+
+    @Autowired
+    EpisodeRepository episodeRepository;
+
+    @Autowired
     MediaService mediaService;
 
     @BeforeEach
@@ -40,6 +43,9 @@ class MediaServiceTest {
         bookRepository.deleteAll();
         gameRepository.deleteAll();
         movieRepository.deleteAll();
+        seriesRepository.deleteAll();
+        seasonRepository.deleteAll();
+        episodeRepository.deleteAll();
     }
 
 
@@ -67,10 +73,12 @@ class MediaServiceTest {
         //Then
         /**
          * @Test shows that isValidBook finds a duplicate of the given book already in saved database
+         * @returns false if media is already existent
          */
         Assertions.assertTrue(mediaService.isValidBook(testMedia));
         /**
          * @Test shows that isValidBook is detecting duplicates of a book which is already saved in database
+         * @returns false if media is already existent
          */
         Assertions.assertTrue(mediaService.isValidBook(saved));
     }
@@ -122,5 +130,67 @@ class MediaServiceTest {
     }
 
     //TODO: TestCase for isValidSeries -> shouldFindDuplicationOfGivenSeries
+    @Test
+    void shouldDetectDuplicationOfGivenSeries()
+    {
+        //Given
+        LocalDate releaseDate0 = LocalDate.of(2017, 9, 24);
+
+        Series givenSeries = Series.builder()
+                .mediumName("Star Trek: Discovery")
+                .ageRestriction(0)
+                .shortDescription("Star Trek: Discovery ist eine US-amerikanische Science-Fiction-Fernsehserie und die sechste Realfilm-Fernsehserie, die im fiktiven Star-Trek-Universum spielt. In der auch mit DSC abgekürzten Serie geht es um das titelgebende Sternenflottenraumschiff Discovery. ")
+                .averageLength(51)
+                .releaseDate(releaseDate0)
+                .isCompleted(false)
+                .build();
+
+        Series givenSeries2 = Series.builder()
+                .mediumName("Star Trek: Discovery")
+                .ageRestriction(0)
+                .shortDescription("StarTrek: Discovery ist eine US-amerikanische Science-Fiction-Fernsehserie und die sechste Realfilm-Fernsehserie, die im fiktiven Star-Trek-Universum spielt. In der auch mit DSC abgekürzten Serie geht es um das titelgebende Sternenflottenraumschiff Discovery. ")
+                .averageLength(51)
+                .releaseDate(releaseDate0)
+                .isCompleted(false)
+                .build();
+
+        Series givenSeriesNotToStore = Series.builder()
+                .mediumName("How i met your Mother")
+                .releaseDate(LocalDate.of(2005,9,19))
+                .shortDescription("[...]")
+                .ageRestriction(0)
+                .isCompleted(true)
+                .build();
+
+        Episode givenEpisodeOne = Episode.builder()
+                .mediumName("Leuchtfeuer")
+                .episodeNumber(1)
+                .shortDescription("[...]")
+                .releaseDate(releaseDate0)
+                .length(51)
+                .build();
+
+        Season starTrekDiscoverySeasonOne = Season.builder()
+                .seasonNumber(1)
+                .seasonTitle("Season 1")
+                .build();
+
+        givenEpisodeOne.setSeason(starTrekDiscoverySeasonOne);
+        //starTrekDiscoverySeasonOne.getEpisodes().add(givenEpisodeOne);
+        givenSeries.getSeasons().add(starTrekDiscoverySeasonOne);
+
+        // When
+        Series result = seriesRepository.save(givenSeries);
+
+
+        //Then
+        Assertions.assertTrue(mediaService.isValidSeries(givenSeries));
+
+        Assertions.assertTrue(mediaService.isValidSeries(result));
+
+        Assertions.assertTrue(mediaService.isValidSeries(givenSeriesNotToStore));
+        //TODO: Outsource to an unique test
+        Assertions.assertFalse(mediaService.isValidSeries(givenSeries2));
+    }
 
 }

@@ -16,6 +16,7 @@ public class MediaService {
     private MovieRepository movieRepository;
     private SeriesRepository seriesRepository;
     private EpisodeRepository episodeRepository;
+    private SeasonRepository seasonRepository;
 
     @Autowired
     public void MediaService(BookRepository bookRepository, GameRepository gameRepository, MovieRepository movieRepository,
@@ -26,6 +27,7 @@ public class MediaService {
         this.movieRepository = movieRepository;
         this.seriesRepository = seriesRepository;
         this.episodeRepository = episodeRepository;
+        this.seasonRepository = seasonRepository;
 
 
     }
@@ -52,7 +54,7 @@ public class MediaService {
         } else {
             optionalGame = gameRepository.findGameByMediumNameIgnoreCaseAndReleaseDate(game.getMediumName(), game.getReleaseDate());
         }
-        return optionalGame.isPresent();
+        return optionalGame.isEmpty();
     }
 
     public boolean isValidMovie(Movie movie)
@@ -64,7 +66,7 @@ public class MediaService {
         } else {
             optionalMovie = movieRepository.findMovieByMediumNameIgnoreCaseAndReleaseDate(movie.getMediumName(), movie.getReleaseDate());
         }
-        return optionalMovie.isPresent();
+        return optionalMovie.isEmpty();
     }
 
     public boolean isValidSeries(Series series)
@@ -76,10 +78,37 @@ public class MediaService {
         } else {
             optionalSeries = seriesRepository.findSeriesByMediumNameIgnoreCaseAndReleaseDate(series.getMediumName(), series.getReleaseDate());
         }
-        return optionalSeries.isPresent();
+        return optionalSeries.isEmpty();
     }
 
-    //TODO: Function isValidSeason
-    //TODO: Function isValidEpisode
+    public boolean isValidSeason(Season season)
+    {
+        Optional<Season> optionalSeason;
+        if(Objects.nonNull(season.getId()))
+        {
+            optionalSeason = seasonRepository.findSeasonByIdNotAndSeasonTitleIgnoreCaseAndSeasonNumber(season.getId(), season.getSeasonTitle(), season.getSeasonNumber());
+        }
+        else
+        {
+            optionalSeason = seasonRepository.findSeasonBySeasonTitleIgnoreCaseAndSeasonNumber(season.getSeasonTitle(), season.getSeasonNumber());
+        }
+        return optionalSeason.isEmpty();
+    }
+
+   /* public boolean isValidEpisode(Season season)
+    {
+        Optional<Episode> optionalEpisode;
+        if(Objects.nonNull(season.getId()))
+        {
+            //TODO: How can i get a permission for seasonID?
+            //optionalEpisode = episodeRepository.findEpisodeByIdNotAndMediumNameIgnoreCaseAndReleaseDateAndSeasonId(season.getId(), season.getMedium().getMediumName(), season.getMedium().getReleaseDate());
+        }
+        else
+        {
+            //optionalEpisode = episodeRepository.findEpisodeByMediumNameIgnoreCaseAndReleaseDateAndSeasonId(season.getMedium().getMediumName(), season.getMedium().getReleaseDate(), season.)
+        }
+        return optionalEpisode.isEmpty();
+    }*/
+
 }
 
