@@ -9,6 +9,7 @@ import javax.persistence.*;
 @Entity
 @AllArgsConstructor
 @RequiredArgsConstructor
+@Builder
 @Table(name="PersonAssignments")
 public class PersonAssignment extends BaseModel {
 
