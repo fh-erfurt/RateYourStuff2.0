@@ -61,7 +61,7 @@ public class SeriesController {
         Optional<Series> series = this.repository.findById(id);
         //check if the given movie exists
         if(series.isPresent()) {
-            series.get().setPicturePath(fileName);
+            series.get().setPicturePath(series.get().getId() + "/" + fileName);
             //define the target path
             String uploadDir = Series.IMAGE_PATH_PREFIX + id.toString();
             //upload the file

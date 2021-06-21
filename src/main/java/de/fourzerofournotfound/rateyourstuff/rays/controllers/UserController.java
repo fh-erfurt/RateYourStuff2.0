@@ -72,7 +72,7 @@ public class UserController {
         Optional<User> user = this.userRepository.findById(id);
         //check if the given movie exists
         if(user.isPresent()) {
-            user.get().setProfilePicturePath(fileName);
+            user.get().setProfilePicturePath(user.get().getId() + "/" + fileName);
             //define the target path
             String uploadDir = User.IMAGE_PATH_PREFIX + id.toString();
             //upload the file

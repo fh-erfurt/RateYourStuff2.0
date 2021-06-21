@@ -72,7 +72,7 @@ public class BookController {
         Optional<Book> book = this.repository.findById(id);
         //check if the given movie exists
         if(book.isPresent()) {
-            book.get().setPicturePath(fileName);
+            book.get().setPicturePath(book.get().getId() + "/" + fileName);
             //define the target path
             String uploadDir = Book.IMAGE_PATH_PREFIX + id.toString();
             //upload the file

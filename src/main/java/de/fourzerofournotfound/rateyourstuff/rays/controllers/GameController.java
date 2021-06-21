@@ -61,7 +61,7 @@ public class GameController {
         Optional<Game> game = this.repository.findById(id);
         //check if the given movie exists
         if(game.isPresent()) {
-            game.get().setPicturePath(fileName);
+            game.get().setPicturePath(game.get().getId() + "/" + fileName);
             //define the target path
             String uploadDir = Game.IMAGE_PATH_PREFIX + id.toString();
             //upload the file

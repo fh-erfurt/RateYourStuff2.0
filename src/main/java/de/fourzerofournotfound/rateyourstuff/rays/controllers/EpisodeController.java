@@ -62,7 +62,7 @@ public class EpisodeController {
         Optional<Episode> episode = this.repository.findById(id);
         //check if the given movie exists
         if(episode.isPresent()) {
-            episode.get().setPicturePath(fileName);
+            episode.get().setPicturePath(episode.get().getId() + "/" + fileName);
             //define the target path
             String uploadDir = Episode.IMAGE_PATH_PREFIX + id.toString();
             //upload the file
