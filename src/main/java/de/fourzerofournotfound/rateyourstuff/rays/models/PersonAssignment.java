@@ -1,5 +1,8 @@
 package de.fourzerofournotfound.rateyourstuff.rays.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 
 import javax.persistence.*;
@@ -10,6 +13,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Builder
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Table(name="PersonAssignments")
 public class PersonAssignment extends BaseModel {
 
@@ -29,6 +33,7 @@ public class PersonAssignment extends BaseModel {
     @JoinColumn(name = "personId", referencedColumnName = "id")
     private Person person;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "mediumId", referencedColumnName = "id")
     private Medium medium;

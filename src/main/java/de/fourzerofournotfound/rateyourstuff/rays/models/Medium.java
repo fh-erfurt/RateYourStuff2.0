@@ -1,5 +1,8 @@
 package de.fourzerofournotfound.rateyourstuff.rays.models;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 import lombok.RequiredArgsConstructor;
 
@@ -16,6 +19,7 @@ import java.util.Set;
 @RequiredArgsConstructor
 @Table(name = "Media")
 @Inheritance(strategy = InheritanceType.JOINED)
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public abstract class Medium extends BaseModel {
 
     @Column(nullable = false, length = 200)
@@ -40,18 +44,23 @@ public abstract class Medium extends BaseModel {
     @OneToMany(mappedBy = "medium")
     private Set<Comment> comments;
 
+    @JsonManagedReference
     @ManyToMany(mappedBy = "media")
     Set<Collection> collections;
 
+    @JsonManagedReference
     @ManyToMany(mappedBy = "media")
     Set<Genre> genres;
 
+    @JsonManagedReference
     @ManyToMany(mappedBy = "media")
     Set<Language> languages;
 
+    @JsonManagedReference
     @ManyToMany(mappedBy = "media")
     Set<Platform> platforms;
 
+    @JsonManagedReference
     @OneToMany (mappedBy = "medium")
     private List<PersonAssignment> personAssignments;
 }

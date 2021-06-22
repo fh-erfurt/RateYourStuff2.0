@@ -1,5 +1,8 @@
 package de.fourzerofournotfound.rateyourstuff.rays.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -14,12 +17,14 @@ import java.util.Set;
 @Getter
 @Setter
 @RequiredArgsConstructor
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Table(name="gamePublishers")
 public class GamePublisher extends BaseModel {
 
     @Column
     private String gamePublisherTitle;
 
+    @JsonBackReference
     @OneToMany (mappedBy = "gamePublisher")
     private List<Game> games = new ArrayList<>();
 

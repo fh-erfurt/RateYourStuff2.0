@@ -16,7 +16,6 @@ import java.time.LocalDate;
 @Entity
 @AllArgsConstructor
 @RequiredArgsConstructor
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Table(name = "Books")
 public class Book extends Medium{
 

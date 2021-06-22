@@ -1,5 +1,6 @@
 package de.fourzerofournotfound.rateyourstuff.rays.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -41,12 +42,11 @@ public class Game extends Medium{
     @JoinColumn(name = "platformId", referencedColumnName = "id")
     private Platform platform;
 
+    @JsonManagedReference
     @ManyToOne (cascade = CascadeType.PERSIST)
     @JoinColumn(name = "gamePublisherId", referencedColumnName = "id")
     private GamePublisher gamePublisher;
 
-    /*@ManyToMany
-    Set<GamePublisher> gamePublisher;*/
 
     @Column(nullable = false)
     private Integer ageRestriction;
