@@ -15,9 +15,11 @@ import java.util.Set;
 @Entity
 @AllArgsConstructor
 @RequiredArgsConstructor
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "mediumId")
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Table(name = "Episodes")
 public class Episode extends Medium {
+
+    public final static String IMAGE_PATH_PREFIX = "images/media/episodes/";
 
     @Column
     private Integer episodeNumber;
@@ -36,6 +38,17 @@ public class Episode extends Medium {
         this.setReleaseDate(releaseDate);
         this.episodeNumber = episodeNumber;
         this.length = length;
+    }
+
+    public String getPicturePath() {
+        if(super.getPicturePath() != null) {
+            return IMAGE_PATH_PREFIX + super.getPicturePath();
+        }
+        return null;
+    }
+
+    public void setPicturePath(String picturePath) {
+        super.setPicturePath(picturePath.replace(IMAGE_PATH_PREFIX, ""));
     }
 }
 

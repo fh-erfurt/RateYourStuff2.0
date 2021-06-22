@@ -1,5 +1,7 @@
 package de.fourzerofournotfound.rateyourstuff.rays.models;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 
 import javax.persistence.*;
@@ -11,6 +13,7 @@ import java.util.Set;
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Builder
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Table(name = "Comments")
 public class Comment extends BaseModel {
 

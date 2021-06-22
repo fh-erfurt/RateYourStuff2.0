@@ -1,5 +1,6 @@
 package de.fourzerofournotfound.rateyourstuff.rays.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +27,8 @@ import java.util.Set;
 @Table(name = "Games")
 public class Game extends Medium{
 
+    public final static String IMAGE_PATH_PREFIX = "images/media/games/";
+
     @Column
     private Float averagePlaytime;
 
@@ -39,12 +42,11 @@ public class Game extends Medium{
     @JoinColumn(name = "platformId", referencedColumnName = "id")
     private Platform platform;
 
+    @JsonManagedReference
     @ManyToOne (cascade = CascadeType.PERSIST)
     @JoinColumn(name = "gamePublisherId", referencedColumnName = "id")
     private GamePublisher gamePublisher;
 
-    /*@ManyToMany
-    Set<GamePublisher> gamePublisher;*/
 
     @Column(nullable = false)
     private Integer ageRestriction;
@@ -67,4 +69,14 @@ public class Game extends Medium{
        this.ageRestriction = ageRestriction;
     }
 
+    public String getPicturePath() {
+        if(super.getPicturePath() != null) {
+            return IMAGE_PATH_PREFIX + super.getPicturePath();
+        }
+        return null;
+    }
+
+    public void setPicturePath(String picturePath) {
+        super.setPicturePath(picturePath.replace(IMAGE_PATH_PREFIX, ""));
+    }
 }

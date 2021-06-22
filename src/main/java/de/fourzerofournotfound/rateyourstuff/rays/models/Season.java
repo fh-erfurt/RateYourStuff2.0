@@ -14,7 +14,7 @@ import java.util.Set;
 @Entity
 @RequiredArgsConstructor
 @AllArgsConstructor
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "seasonId")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Table(name="seasons")
 public class Season extends BaseModel {
 

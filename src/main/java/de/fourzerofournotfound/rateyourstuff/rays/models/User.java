@@ -17,6 +17,8 @@ import java.util.Set;
 @Table(name = "Users")
 public class User extends BaseModel {
 
+    public final static String IMAGE_PATH_PREFIX = "images/users/";
+
     @Column(length = 200)
     private String firstName;
 
@@ -54,15 +56,14 @@ public class User extends BaseModel {
     @ManyToMany
     private Set<User> friendList;
 
-/*
-    public User(String firstName, String lastName, String secondName, String userName, String gender)
-    {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.secondName = secondName;
-        this.userName = userName;
-        this.gender = gender;
+    public void setProfilePicturePath(String profilePicturePath) {
+        this.profilePicturePath = profilePicturePath.replace(IMAGE_PATH_PREFIX, "");
     }
 
- */
+    public String getProfilePicturePath() {
+        if(profilePicturePath != null) {
+            return IMAGE_PATH_PREFIX + this.profilePicturePath;
+        }
+        return null;
+    }
 }
