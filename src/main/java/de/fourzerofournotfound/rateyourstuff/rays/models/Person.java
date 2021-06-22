@@ -13,6 +13,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Table(name = "Persons")
 
+@Builder
 public class Person extends BaseModel {
 
     @Column (length=250)
