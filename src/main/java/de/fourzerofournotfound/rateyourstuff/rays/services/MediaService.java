@@ -26,7 +26,6 @@ public class MediaService {
         this.seriesRepository = seriesRepository;
         this.episodeRepository = episodeRepository;
 
-
     }
 
     public boolean isValidBook(Book book)
