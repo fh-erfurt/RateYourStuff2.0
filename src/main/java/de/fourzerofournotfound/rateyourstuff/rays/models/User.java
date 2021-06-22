@@ -61,6 +61,9 @@ public class User extends BaseModel {
     }
 
     public String getProfilePicturePath() {
-        return IMAGE_PATH_PREFIX + this.profilePicturePath;
+        if(profilePicturePath != null) {
+            return IMAGE_PATH_PREFIX + this.profilePicturePath;
+        }
+        return null;
     }
 }

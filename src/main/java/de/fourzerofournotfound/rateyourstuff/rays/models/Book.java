@@ -56,7 +56,10 @@ public class Book extends Medium{
     }
 
     public String getPicturePath() {
-        return IMAGE_PATH_PREFIX + super.getPicturePath();
+        if(super.getPicturePath() != null) {
+            return IMAGE_PATH_PREFIX + super.getPicturePath();
+        }
+        return null;
     }
 
     public void setPicturePath(String picturePath) {
