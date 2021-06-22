@@ -12,7 +12,7 @@ import java.util.Optional;
 public interface EpisodeRepository extends JpaRepository<Episode, Long> {
     Optional<Episode> findByMediumName (String episodeTitle);
 
-    Optional<Episode> findEpisodeByIdNotAndMediumNameIgnoreCaseAndReleaseDateAndSeasonId(Long id, String mediumName, LocalDate releaseDate, Long seasonId);
+    Optional<Episode> findEpisodeByIdNotAndMediumNameIgnoreCaseAndReleaseDateAndSeasonIdNot(Long id, String mediumName, LocalDate releaseDate, Long seasonId);
 
-    Optional<Episode> findEpisodeByMediumNameIgnoreCaseAndReleaseDateAndSeasonId(String mediumName, LocalDate releaseDate, Long seasonId);
+    Optional<Episode> findEpisodeByMediumNameIgnoreCaseAndReleaseDateAndSeasonIdNot(String mediumName, LocalDate releaseDate, Long seasonId);
 }

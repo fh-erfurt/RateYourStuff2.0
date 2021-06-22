@@ -175,9 +175,11 @@ class MediaServiceTest {
                 .seasonTitle("Season 1")
                 .build();
 
+
         givenEpisodeOne.setSeason(starTrekDiscoverySeasonOne);
-        //starTrekDiscoverySeasonOne.getEpisodes().add(givenEpisodeOne);
+        starTrekDiscoverySeasonOne.getEpisodes().add(givenEpisodeOne);
         givenSeries.getSeasons().add(starTrekDiscoverySeasonOne);
+
 
         // When
         Series result = seriesRepository.save(givenSeries);

@@ -94,20 +94,20 @@ public class MediaService {
         return optionalSeason.isEmpty();
     }
 
-   /* public boolean isValidEpisode(Season season)
+    public boolean isValidEpisode(Episode episode)
     {
         Optional<Episode> optionalEpisode;
-        if(Objects.nonNull(season.getId()))
+        if(Objects.nonNull(episode.getId()))
         {
             //TODO: How can i get a permission for seasonID?
-            //optionalEpisode = episodeRepository.findEpisodeByIdNotAndMediumNameIgnoreCaseAndReleaseDateAndSeasonId(season.getId(), season.getMedium().getMediumName(), season.getMedium().getReleaseDate());
+            optionalEpisode = episodeRepository.findEpisodeByIdNotAndMediumNameIgnoreCaseAndReleaseDateAndSeasonIdNot(episode.getId(), episode.getMediumName(), episode.getReleaseDate(), episode.getSeason().getId());
         }
         else
         {
-            //optionalEpisode = episodeRepository.findEpisodeByMediumNameIgnoreCaseAndReleaseDateAndSeasonId(season.getMedium().getMediumName(), season.getMedium().getReleaseDate(), season.)
+            optionalEpisode = episodeRepository.findEpisodeByMediumNameIgnoreCaseAndReleaseDateAndSeasonIdNot( episode.getMediumName(), episode.getReleaseDate(), episode.getSeason().getId());
         }
         return optionalEpisode.isEmpty();
-    }*/
+    }
 
 }
 

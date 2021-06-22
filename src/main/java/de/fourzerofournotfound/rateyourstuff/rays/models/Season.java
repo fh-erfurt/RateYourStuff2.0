@@ -34,7 +34,7 @@ public class Season extends BaseModel {
     private Medium medium;
 
     @Builder.Default
-    @OneToMany (mappedBy = "season", cascade = CascadeType.PERSIST)
+    @OneToMany (mappedBy = "season", cascade = CascadeType.ALL)
     private Set<Episode> episodes = new HashSet<>();
 
 }

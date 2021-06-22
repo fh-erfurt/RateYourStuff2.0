@@ -42,7 +42,7 @@ public class UserController {
     {
         return ResponseEntity.ok(this.userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("No user found for id" + id)));
     }
-
+    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping(path="/add", consumes = "application/json", produces = "application/json")
     ResponseEntity<User> addUser(@RequestBody User user)
     {
