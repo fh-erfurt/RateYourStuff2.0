@@ -94,7 +94,7 @@ INSERT INTO `media` (`id`, `created_at`, `updated_at`, `medium_name`, `picture_p
 INSERT INTO `books` (`isebook`, `is_print`, `isbn`, `number_of_pages`, `id`, `book_publisher_id`) VALUES
 (b'1', b'1', '978-3-426-51861-8', 600, 1, 1),
 (b'1', b'1', '978-3-641-06578-2', 528, 2, 2),
-(b'1', b'1', '978-3446457935', 435, 3, 3);
+(b'1', b'1', '978-3-446-45793-5', 435, 3, 3);
 
 
 -- --------------------------------------------------------
