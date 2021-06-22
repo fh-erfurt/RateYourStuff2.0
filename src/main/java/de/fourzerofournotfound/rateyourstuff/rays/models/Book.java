@@ -53,4 +53,5 @@ public class Book extends Medium{
         this.isPrint = isPrint;
         this.numberOfPages = numberOfPages;
     }
+
 }
