@@ -54,7 +54,7 @@ public class RatingController {
         List<Rating> ratings = ratingRepository.findAll(pageable).getContent();
         return ResponseEntity.ok(
                 ratings.stream()
-                .map(this::convertToDto)
+                .map(ratingService::convertToDto)
                 .collect(Collectors.toList())
         );
     }
@@ -71,7 +71,7 @@ public class RatingController {
         List<Rating> ratings = ratingRepository.findAllByMediumId(mediumId, pageable).getContent();
         return ResponseEntity.ok(
                 ratings.stream()
-                        .map(this::convertToDto)
+                        .map(ratingService::convertToDto)
                         .collect(Collectors.toList())
         );
     }
@@ -88,7 +88,7 @@ public class RatingController {
         List<Rating> ratings = ratingRepository.findAllByUserId(userId, pageable).getContent();
         return ResponseEntity.ok(
                 ratings.stream()
-                        .map(this::convertToDto)
+                        .map(ratingService::convertToDto)
                         .collect(Collectors.toList())
         );
     }
@@ -97,7 +97,7 @@ public class RatingController {
     ResponseEntity<RatingDto> getById (@PathVariable Long id) throws RatingNotFoundException {
         Optional<Rating> rating = ratingRepository.findById(id);
         if(rating.isPresent()) {
-            return ResponseEntity.ok(convertToDto(rating.get()));
+            return ResponseEntity.ok(ratingService.convertToDto(rating.get()));
         } else {
             throw new RatingNotFoundException("No Rating found for id " + id);
         }
@@ -120,15 +120,5 @@ public class RatingController {
         this.ratingRepository.deleteById(id);
     }
 
-    /**
-     * Converts a given rating to a ratingDTO object to limit the data that gets sent to the client
-     * @param rating    the rating that should be converted
-     * @return          the corresponding dtoObject
-     */
-    private RatingDto convertToDto(Rating rating) {
-        RatingDto ratingDto = modelMapper.map(rating, RatingDto.class);
-        ratingDto.setMAX_POINTS(Rating.MAX_POINTS);
-        ratingDto.setMIN_POINTS(Rating.MIN_POINTS);
-        return ratingDto;
-    }
+
 }

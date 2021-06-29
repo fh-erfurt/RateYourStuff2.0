@@ -1,5 +1,6 @@
 package de.fourzerofournotfound.rateyourstuff.rays.services;
 
+import de.fourzerofournotfound.rateyourstuff.rays.dtos.RatingDto;
 import de.fourzerofournotfound.rateyourstuff.rays.models.Medium;
 import de.fourzerofournotfound.rateyourstuff.rays.models.Rating;
 import de.fourzerofournotfound.rateyourstuff.rays.models.User;
@@ -7,6 +8,7 @@ import de.fourzerofournotfound.rateyourstuff.rays.repositories.MediaRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.RatingRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.UserRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.services.errors.InvalidRatingException;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,13 +17,16 @@ import java.util.Optional;
 @Service("rs")
 public class RatingService {
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    MediaRepository mediaRepository;
+    private MediaRepository mediaRepository;
 
     @Autowired
-    RatingRepository ratingRepository;
+    private RatingRepository ratingRepository;
+
+    @Autowired
+    private ModelMapper modelMapper;
 
     /**
      * Limits the given Points of a given Rating to the defined minimum and maximum
@@ -52,5 +57,17 @@ public class RatingService {
         } else {
             throw new InvalidRatingException("The given rating must have a valid mediumId and a valid userId");
         }
+    }
+
+    /**
+     * Converts a given rating to a ratingDTO object to limit the data that gets sent to the client
+     * @param rating    the rating that should be converted
+     * @return          the corresponding dtoObject
+     */
+    public RatingDto convertToDto(Rating rating) {
+        RatingDto ratingDto = modelMapper.map(rating, RatingDto.class);
+        ratingDto.setMAX_POINTS(Rating.MAX_POINTS);
+        ratingDto.setMIN_POINTS(Rating.MIN_POINTS);
+        return ratingDto;
     }
 }

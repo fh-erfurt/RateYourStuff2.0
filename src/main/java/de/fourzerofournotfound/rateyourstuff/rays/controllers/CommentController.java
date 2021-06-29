@@ -49,7 +49,7 @@ public class CommentController {
         List<Comment> comments = commentRepository.findAll(pageable).getContent();
         return ResponseEntity.ok(
                 comments.stream()
-                .map(this::convertToDto)
+                .map(commentService::convertToDto)
                 .collect(Collectors.toList())
         );
     }
@@ -66,7 +66,7 @@ public class CommentController {
         List<Comment> comments = commentRepository.findAllByMediumId(mediumId, pageable).getContent();
         return ResponseEntity.ok(
                 comments.stream()
-                        .map(this::convertToDto)
+                        .map(commentService::convertToDto)
                         .collect(Collectors.toList())
         );
     }
@@ -83,7 +83,7 @@ public class CommentController {
         List<Comment> comments = commentRepository.findAllByUserId(userId, pageable).getContent();
         return ResponseEntity.ok(
                 comments.stream()
-                        .map(this::convertToDto)
+                        .map(commentService::convertToDto)
                         .collect(Collectors.toList())
         );
     }
@@ -100,7 +100,7 @@ public class CommentController {
         List<Comment> comments = commentRepository.findAllByCommentParent(parentId, pageable).getContent();
         return ResponseEntity.ok(
                 comments.stream()
-                        .map(this::convertToDto)
+                        .map(commentService::convertToDto)
                         .collect(Collectors.toList())
         );
     }
@@ -109,7 +109,7 @@ public class CommentController {
     ResponseEntity<CommentDto> getById (@PathVariable Long id) throws CommentNotFoundException {
         Optional<Comment> comment = commentRepository.findById(id);
         if(comment.isPresent()) {
-            return ResponseEntity.ok(convertToDto(comment.get()));
+            return ResponseEntity.ok(commentService.convertToDto(comment.get()));
         } else {
             throw new CommentNotFoundException("No Comment found for id " + id);
         }
@@ -130,16 +130,6 @@ public class CommentController {
     @DeleteMapping("/{id}")
     void deleteSeason (@PathVariable Long id) {
         this.commentRepository.deleteById(id);
-    }
-
-    /**
-     * Converts a given comment to a commentDTO object to limit the data that gets sent to the client
-     * @param comment   the comment that should be converted
-     * @return          the corresponding dtoObject
-     */
-    private CommentDto convertToDto(Comment comment) {
-        CommentDto commentDto = modelMapper.map(comment, CommentDto.class);
-        return commentDto;
     }
 
 }
