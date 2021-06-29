@@ -76,6 +76,24 @@ class LoginRepositoryTest {
     }
 
     @Test
+    public void should_not_found_login_by_email()
+    {
+        //Given
+        Login given = Login.builder()
+                .email("max.mustermann@rays.de")
+                .passwordHash("musterRays123")
+                .isEnabled(false)
+                .build();
+        //When
+        Login saved = loginRepository.save(given);
+        Optional<Login> result = loginRepository.findLoginByEmailNotIgnoreCase("max.mustermann@rays.de");
+
+        //Then
+        assertFalse(result.isEmpty());
+
+    }
+
+    @Test
     public void should_delete_login_account()
     {
         //Given

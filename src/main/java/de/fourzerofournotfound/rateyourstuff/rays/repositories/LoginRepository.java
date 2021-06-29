@@ -15,4 +15,6 @@ import java.util.Optional;
 @Repository
 public interface LoginRepository extends JpaRepository<Login, Long> {
     public Optional<Login> findByEmail(String Email);
+
+    public Optional<Login> findLoginByEmailNotIgnoreCase(String email);
 }
