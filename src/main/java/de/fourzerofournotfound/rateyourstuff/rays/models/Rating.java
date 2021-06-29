@@ -1,6 +1,7 @@
 package de.fourzerofournotfound.rateyourstuff.rays.models;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 
@@ -35,5 +36,13 @@ public class Rating extends BaseModel {
     @ManyToOne
     @JoinColumn(name = "mediumId", referencedColumnName = "id")
     private Medium medium;
+
+    @JsonInclude()
+    @Transient
+    private Long mediumMappingID;
+
+    @JsonInclude()
+    @Transient
+    private Long userMappingID;
 
 }
