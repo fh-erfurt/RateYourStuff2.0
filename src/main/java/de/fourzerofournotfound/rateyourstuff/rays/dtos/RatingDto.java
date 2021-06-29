@@ -13,9 +13,13 @@ public class RatingDto {
 
     private static final DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 
-    private Long id;
+    //written in screaming snake case because it is a final attribute in the model
+    private int MAX_POINTS;
 
-    private Integer maximumPoints;
+    //written in screaming snake case because it is a final attribute in the model
+    private int MIN_POINTS;
+
+    private Long id;
 
     private Integer givenPoints;
 

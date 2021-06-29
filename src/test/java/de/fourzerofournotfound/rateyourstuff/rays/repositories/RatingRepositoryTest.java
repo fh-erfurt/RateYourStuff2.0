@@ -36,8 +36,6 @@ public class RatingRepositoryTest {
 //        given.setDesscription(description);
 
         Rating given = Rating.builder()
-                        .minimumPoints(0)
-                        .maximumPoints(10)
                         .givenPoints(5)
                         .description("Heute wird es nicht so lustig")
                         .build();
@@ -56,15 +54,11 @@ public class RatingRepositoryTest {
         LocalDateTime localDate = LocalDateTime.now();
 
         Rating.builder()
-                .minimumPoints(0)
-                .maximumPoints(10)
                 .givenPoints(5)
                 .description("Heute wird es nicht so lustig")
                 .build();
 
         ratingRepository.save(Rating.builder()
-                .minimumPoints(0)
-                .maximumPoints(10)
                 .givenPoints(5)
                 .description("Heute wird es nicht so lustig")
                 .build());

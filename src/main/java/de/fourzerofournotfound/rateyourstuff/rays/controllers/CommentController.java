@@ -1,40 +1,129 @@
 package de.fourzerofournotfound.rateyourstuff.rays.controllers;
 
+import de.fourzerofournotfound.rateyourstuff.rays.dtos.CommentDto;
+import de.fourzerofournotfound.rateyourstuff.rays.dtos.RatingDto;
 import de.fourzerofournotfound.rateyourstuff.rays.models.Comment;
+import de.fourzerofournotfound.rateyourstuff.rays.models.Rating;
 import de.fourzerofournotfound.rateyourstuff.rays.models.Season;
 import de.fourzerofournotfound.rateyourstuff.rays.models.errors.CommentNotFoundException;
 import de.fourzerofournotfound.rateyourstuff.rays.models.errors.SeasonNotFoundException;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.CommentRepository;
+import de.fourzerofournotfound.rateyourstuff.rays.services.CommentService;
+import de.fourzerofournotfound.rateyourstuff.rays.services.PageableService;
+import de.fourzerofournotfound.rateyourstuff.rays.services.errors.InvalidCommentException;
+import org.apache.coyote.Response;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/comments-rest")
+@RequestMapping("/rest/comments")
 public class CommentController {
 
     @Autowired
     CommentRepository commentRepository;
 
+    @Autowired
+    ModelMapper modelMapper;
+
+    @Autowired
+    PageableService pageableService;
+
+    @Autowired
+    CommentService commentService;
+
     @GetMapping("/all")
-    ResponseEntity<List<Comment>> getAll() {
-        return ResponseEntity.ok(this.commentRepository.findAll());
+    ResponseEntity<List<CommentDto>> getAll(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "50") int size,
+            @RequestParam(defaultValue = "createdAt") String orderBy,
+            @RequestParam(defaultValue = "desc") String order
+    ) {
+        Pageable pageable = pageableService.createPageable(orderBy, order, page, size);
+        List<Comment> comments = commentRepository.findAll(pageable).getContent();
+        return ResponseEntity.ok(
+                comments.stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList())
+        );
+    }
+
+    @GetMapping("/all/medium/{mediumId}")
+    ResponseEntity<List<CommentDto>> getAllByMediumId(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "50") int size,
+            @RequestParam(defaultValue = "createdAt") String orderBy,
+            @RequestParam(defaultValue = "desc") String order,
+            @PathVariable Long mediumId
+    ) {
+        Pageable pageable = pageableService.createPageable(orderBy, order, page, size);
+        List<Comment> comments = commentRepository.findAllByMediumId(mediumId, pageable).getContent();
+        return ResponseEntity.ok(
+                comments.stream()
+                        .map(this::convertToDto)
+                        .collect(Collectors.toList())
+        );
+    }
+
+    @GetMapping("/all/user/{userId}")
+    ResponseEntity<List<CommentDto>> getAllByUserId(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "50") int size,
+            @RequestParam(defaultValue = "createdAt") String orderBy,
+            @RequestParam(defaultValue = "desc") String order,
+            @PathVariable Long userId
+    ) {
+        Pageable pageable = pageableService.createPageable(orderBy, order, page, size);
+        List<Comment> comments = commentRepository.findAllByUserId(userId, pageable).getContent();
+        return ResponseEntity.ok(
+                comments.stream()
+                        .map(this::convertToDto)
+                        .collect(Collectors.toList())
+        );
+    }
+
+    @GetMapping("/all/subcomments/{parentId}")
+    ResponseEntity<List<CommentDto>> getAllByParentCommentId(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "50") int size,
+            @RequestParam(defaultValue = "createdAt") String orderBy,
+            @RequestParam(defaultValue = "asc") String order,
+            @PathVariable Long parentId
+    ) {
+        Pageable pageable = pageableService.createPageable(orderBy, order, page, size);
+        List<Comment> comments = commentRepository.findAllByCommentParent(parentId, pageable).getContent();
+        return ResponseEntity.ok(
+                comments.stream()
+                        .map(this::convertToDto)
+                        .collect(Collectors.toList())
+        );
     }
 
     @GetMapping("/{id}")
-    ResponseEntity<Comment> getById (@PathVariable Long id) throws CommentNotFoundException {
-        return ResponseEntity.ok(this.commentRepository.findById(id).orElseThrow(() -> new CommentNotFoundException("No Comment found for id " + id)));
+    ResponseEntity<CommentDto> getById (@PathVariable Long id) throws CommentNotFoundException {
+        Optional<Comment> comment = commentRepository.findById(id);
+        if(comment.isPresent()) {
+            return ResponseEntity.ok(convertToDto(comment.get()));
+        } else {
+            throw new CommentNotFoundException("No Comment found for id " + id);
+        }
     }
 
     @PostMapping(path="/add", consumes= "application/json", produces="application/json")
-    ResponseEntity<Comment> add(@RequestBody Comment comment) {
+    ResponseEntity<Comment> add(@RequestBody Comment comment) throws InvalidCommentException {
+        comment = commentService.addReferencesToComment(comment);
         return ResponseEntity.ok(this.commentRepository.save(comment));
     }
 
     @PutMapping(consumes="application/json", produces="application/json")
-    ResponseEntity<Comment> update(@RequestBody Comment comment) {
+    ResponseEntity<Comment> update(@RequestBody Comment comment) throws InvalidCommentException {
+        comment = commentService.addReferencesToComment(comment);
         return ResponseEntity.ok(this.commentRepository.save(comment));
     }
 
@@ -43,5 +132,14 @@ public class CommentController {
         this.commentRepository.deleteById(id);
     }
 
+    /**
+     * Converts a given comment to a commentDTO object to limit the data that gets sent to the client
+     * @param comment   the comment that should be converted
+     * @return          the corresponding dtoObject
+     */
+    private CommentDto convertToDto(Comment comment) {
+        CommentDto commentDto = modelMapper.map(comment, CommentDto.class);
+        return commentDto;
+    }
 
 }

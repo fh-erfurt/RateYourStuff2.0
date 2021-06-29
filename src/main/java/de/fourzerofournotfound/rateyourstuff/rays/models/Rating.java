@@ -17,11 +17,9 @@ import javax.persistence.*;
 @Table(name = "Ratings")
 public class Rating extends BaseModel {
 
-    @Column(nullable = false)
-    private Integer minimumPoints;
+    public final static  int MIN_POINTS = 0;
 
-    @Column(nullable = false)
-    private Integer maximumPoints;
+    public final static int MAX_POINTS = 10;
 
     @Column(nullable = false)
     private Integer givenPoints;

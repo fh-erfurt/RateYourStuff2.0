@@ -1,7 +1,6 @@
 package de.fourzerofournotfound.rateyourstuff.rays.models;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.*;
 import lombok.*;
 
 import javax.persistence.*;
@@ -13,7 +12,7 @@ import java.util.Set;
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Builder
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Table(name = "Comments")
 public class Comment extends BaseModel {
 
@@ -28,11 +27,22 @@ public class Comment extends BaseModel {
     @JoinColumn(name = "mediumId", referencedColumnName = "id")
     private Medium medium;
 
-    @OneToMany(mappedBy = "commentParent")
+    @OneToMany(mappedBy = "commentParent", fetch= FetchType.LAZY)
     private Set<Comment> commentChildren;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "commentParent")
     private Comment commentParent;
 
+    @JsonInclude()
+    @Transient
+    private Long mediumMappingId;
+
+    @JsonInclude()
+    @Transient
+    private Long userMappingId;
+
+    @JsonInclude()
+    @Transient
+    private Long parentMappingId;
 }

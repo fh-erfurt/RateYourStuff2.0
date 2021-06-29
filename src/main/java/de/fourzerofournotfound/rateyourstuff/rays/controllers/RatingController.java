@@ -11,6 +11,8 @@ import de.fourzerofournotfound.rateyourstuff.rays.repositories.MediaRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.RatingRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.UserRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.services.PageableService;
+import de.fourzerofournotfound.rateyourstuff.rays.services.RatingService;
+import de.fourzerofournotfound.rateyourstuff.rays.services.errors.InvalidRatingException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -33,16 +35,13 @@ public class RatingController {
     RatingRepository ratingRepository;
 
     @Autowired
-    MediaRepository mediaRepository;
-
-    @Autowired
-    UserRepository userRepository;
-
-    @Autowired
     private ModelMapper modelMapper;
 
     @Autowired
     private PageableService pageableService;
+
+    @Autowired
+    private RatingService ratingService;
 
     @GetMapping("/all")
     ResponseEntity<List<RatingDto>> getAll(
@@ -95,20 +94,20 @@ public class RatingController {
     }
 
     @GetMapping("/{id}")
-    ResponseEntity<Rating> getById (@PathVariable Long id) throws RatingNotFoundException {
-        return ResponseEntity.ok(this.ratingRepository.findById(id).orElseThrow(() -> new RatingNotFoundException("No Rating found for id " + id)));
+    ResponseEntity<RatingDto> getById (@PathVariable Long id) throws RatingNotFoundException {
+        Optional<Rating> rating = ratingRepository.findById(id);
+        if(rating.isPresent()) {
+            return ResponseEntity.ok(convertToDto(rating.get()));
+        } else {
+            throw new RatingNotFoundException("No Rating found for id " + id);
+        }
     }
 
     @PostMapping(path="/add", consumes= "application/json", produces="application/json")
-    ResponseEntity<Rating> add(@RequestBody Rating rating) {
-        Optional<Medium> medium = mediaRepository.findById(rating.getMediumMappingId());
-        Optional<User> user = userRepository.findById(rating.getUserMappingId());
-        if(medium.isPresent() && user.isPresent()) {
-            rating.setMedium(medium.get());
-            rating.setUser(user.get());
-            return ResponseEntity.ok(ratingRepository.save(rating));
-        }
-        return ResponseEntity.badRequest().build();
+    ResponseEntity<Rating> add(@RequestBody Rating rating) throws InvalidRatingException {
+        rating = ratingService.addReferencesToRating(rating);
+        rating = ratingService.validateRatingValue(rating);
+        return ResponseEntity.ok(ratingRepository.save(rating));
     }
 
     @PutMapping(consumes="application/json", produces="application/json")
@@ -117,13 +116,19 @@ public class RatingController {
     }
 
     @DeleteMapping("/{id}")
-    void deleteSeason (@PathVariable Long id) {
+    void deleteRating (@PathVariable Long id) {
         this.ratingRepository.deleteById(id);
     }
 
+    /**
+     * Converts a given rating to a ratingDTO object to limit the data that gets sent to the client
+     * @param rating    the rating that should be converted
+     * @return          the corresponding dtoObject
+     */
     private RatingDto convertToDto(Rating rating) {
         RatingDto ratingDto = modelMapper.map(rating, RatingDto.class);
-        //ratingDto.setUserName(rating.getUser().getUserName());
+        ratingDto.setMAX_POINTS(Rating.MAX_POINTS);
+        ratingDto.setMIN_POINTS(Rating.MIN_POINTS);
         return ratingDto;
     }
 }
