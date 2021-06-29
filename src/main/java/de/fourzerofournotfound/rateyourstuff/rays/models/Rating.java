@@ -27,7 +27,7 @@ public class Rating extends BaseModel {
     private Integer givenPoints;
 
     @Column(length = 10000)
-    private String desscription;
+    private String description;
 
     @ManyToOne
     @JoinColumn(name = "userId", referencedColumnName = "id")
@@ -39,10 +39,10 @@ public class Rating extends BaseModel {
 
     @JsonInclude()
     @Transient
-    private Long mediumMappingID;
+    private Long mediumMappingId;
 
     @JsonInclude()
     @Transient
-    private Long userMappingID;
+    private Long userMappingId;
 
 }

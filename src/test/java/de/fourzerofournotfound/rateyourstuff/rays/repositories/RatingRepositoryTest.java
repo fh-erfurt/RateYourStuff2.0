@@ -39,7 +39,7 @@ public class RatingRepositoryTest {
                         .minimumPoints(0)
                         .maximumPoints(10)
                         .givenPoints(5)
-                        .desscription("Heute wird es nicht so lustig")
+                        .description("Heute wird es nicht so lustig")
                         .build();
 
         //When
@@ -59,14 +59,14 @@ public class RatingRepositoryTest {
                 .minimumPoints(0)
                 .maximumPoints(10)
                 .givenPoints(5)
-                .desscription("Heute wird es nicht so lustig")
+                .description("Heute wird es nicht so lustig")
                 .build();
 
         ratingRepository.save(Rating.builder()
                 .minimumPoints(0)
                 .maximumPoints(10)
                 .givenPoints(5)
-                .desscription("Heute wird es nicht so lustig")
+                .description("Heute wird es nicht so lustig")
                 .build());
 
         //When

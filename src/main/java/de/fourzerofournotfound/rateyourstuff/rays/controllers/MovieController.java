@@ -6,6 +6,7 @@ import de.fourzerofournotfound.rateyourstuff.rays.models.Movie;
 import de.fourzerofournotfound.rateyourstuff.rays.models.errors.MovieNotFoundException;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.MovieRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.services.FileUploadService;
+import de.fourzerofournotfound.rateyourstuff.rays.services.PageableService;
 import org.apache.tomcat.util.http.fileupload.FileUpload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -30,6 +31,9 @@ public class MovieController {
     @Autowired
     private FileUploadService fus;
 
+    @Autowired
+    private PageableService pageableService;
+
     @GetMapping("/all")
     ResponseEntity<Page<Movie>> getAll(
             @RequestParam(defaultValue = "0") int page,
@@ -37,18 +41,7 @@ public class MovieController {
             @RequestParam(defaultValue = "") String orderBy,
             @RequestParam(defaultValue = "asc") String order
     ) {
-        Pageable pageable;
-        if(!orderBy.equals("")) {
-            Sort sort;
-            if(order.toLowerCase().equals("asc")) {
-                sort = Sort.by(Sort.Direction.ASC, orderBy);
-            } else {
-                sort = Sort.by(Sort.Direction.DESC, orderBy);
-            }
-            pageable = PageRequest.of(page, size, sort);
-        } else {
-            pageable = PageRequest.of(page, size);
-        }
+        Pageable pageable = pageableService.createPageable(orderBy, order, page, size);
         return ResponseEntity.ok(this.repository.findAll(pageable));
     }
 

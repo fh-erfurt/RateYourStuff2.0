@@ -3,9 +3,6 @@ package de.fourzerofournotfound.rateyourstuff.rays.repositories;
 import de.fourzerofournotfound.rateyourstuff.rays.models.Book;
 import de.fourzerofournotfound.rateyourstuff.rays.models.BookPublisher;
 import de.fourzerofournotfound.rateyourstuff.rays.models.Medium;
-import de.fourzerofournotfound.rateyourstuff.rays.models.Movie;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.stereotype.Repository;
@@ -16,7 +13,6 @@ import java.util.Optional;
 
 @Repository
 public interface BookRepository extends JpaRepository<Book, Long> {
-    Page<Book> findAll(Pageable pageable);
     Optional<Book> findByMediumName(String bookName);
     Optional<Book> findByIsbn(String bookIsbn);
 

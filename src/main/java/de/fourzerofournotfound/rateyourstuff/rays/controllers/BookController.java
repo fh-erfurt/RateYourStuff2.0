@@ -5,6 +5,7 @@ import de.fourzerofournotfound.rateyourstuff.rays.models.Game;
 import de.fourzerofournotfound.rateyourstuff.rays.models.errors.BookNotFoundException;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.BookRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.services.FileUploadService;
+import de.fourzerofournotfound.rateyourstuff.rays.services.PageableService;
 import de.fourzerofournotfound.rateyourstuff.rays.services.isbn.ISBNCheckService;
 import de.fourzerofournotfound.rateyourstuff.rays.services.isbn.InvalidISBNException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,9 @@ public class BookController {
     @Autowired
     ISBNCheckService ics;
 
+    @Autowired
+    PageableService pageableService;
+
     @GetMapping("/all")
     ResponseEntity<Page<Book>> getAll(
             @RequestParam(defaultValue = "0") int page,
@@ -41,18 +45,7 @@ public class BookController {
             @RequestParam(defaultValue = "") String orderBy,
             @RequestParam(defaultValue = "asc") String order
     ) {
-        Pageable pageable;
-        if(!orderBy.equals("")) {
-            Sort sort;
-            if(order.equals("asc")) {
-                sort = Sort.by(Sort.Direction.ASC, orderBy);
-            } else {
-                sort = Sort.by(Sort.Direction.DESC, orderBy);
-            }
-            pageable = PageRequest.of(page, size, sort);
-        } else {
-            pageable = PageRequest.of(page, size);
-        }
+        Pageable pageable = pageableService.createPageable(orderBy, order, page, size);
         return ResponseEntity.ok(this.repository.findAll(pageable));
     }
 

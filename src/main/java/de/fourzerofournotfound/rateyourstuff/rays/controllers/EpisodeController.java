@@ -6,6 +6,7 @@ import de.fourzerofournotfound.rateyourstuff.rays.models.Game;
 import de.fourzerofournotfound.rateyourstuff.rays.models.errors.EpisodeNotFoundException;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.EpisodeRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.services.FileUploadService;
+import de.fourzerofournotfound.rateyourstuff.rays.services.PageableService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -30,6 +31,9 @@ public class EpisodeController {
     @Autowired
     FileUploadService fus;
 
+    @Autowired
+    PageableService pageableService;
+
     @GetMapping("/all")
     ResponseEntity<Page<Episode>> getAll(
             @RequestParam(defaultValue = "0") int page,
@@ -37,18 +41,7 @@ public class EpisodeController {
             @RequestParam(defaultValue = "") String orderBy,
             @RequestParam(defaultValue = "asc") String order
     ) {
-        Pageable pageable;
-        if (!orderBy.equals("")) {
-            Sort sort;
-            if (order.toLowerCase().equals("asc")) {
-                sort = Sort.by(Sort.Direction.ASC, orderBy);
-            } else {
-                sort = Sort.by(Sort.Direction.DESC, orderBy);
-            }
-            pageable = PageRequest.of(page, size, sort);
-        } else {
-            pageable = PageRequest.of(page, size);
-        }
+        Pageable pageable = pageableService.createPageable(orderBy, order, page, size);
         return ResponseEntity.ok(this.repository.findAll(pageable));
     }
 

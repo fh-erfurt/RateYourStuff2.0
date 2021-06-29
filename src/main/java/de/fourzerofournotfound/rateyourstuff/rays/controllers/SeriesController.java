@@ -4,6 +4,7 @@ import de.fourzerofournotfound.rateyourstuff.rays.models.Series;
 import de.fourzerofournotfound.rateyourstuff.rays.models.errors.SeriesNotFoundException;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.SeriesRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.services.FileUploadService;
+import de.fourzerofournotfound.rateyourstuff.rays.services.PageableService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -28,6 +29,8 @@ public class SeriesController {
     @Autowired
     FileUploadService fus;
 
+    @Autowired
+    PageableService pageableService;
 
     @GetMapping("/all")
     ResponseEntity<Page<Series>> getAll(
@@ -36,18 +39,7 @@ public class SeriesController {
             @RequestParam(defaultValue = "") String orderBy,
             @RequestParam(defaultValue = "asc") String order
     ) {
-        Pageable pageable;
-        if (!orderBy.equals("")) {
-            Sort sort;
-            if (order.toLowerCase().equals("asc")) {
-                sort = Sort.by(Sort.Direction.ASC, orderBy);
-            } else {
-                sort = Sort.by(Sort.Direction.DESC, orderBy);
-            }
-            pageable = PageRequest.of(page, size, sort);
-        } else {
-            pageable = PageRequest.of(page, size);
-        }
+        Pageable pageable = pageableService.createPageable(orderBy, order, page, size);
         return ResponseEntity.ok(this.repository.findAll(pageable));
     }
 
