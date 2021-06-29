@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +22,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/movies-rest")
+@RequestMapping("/rest/movies")
 public class MovieController {
     @Autowired
     private MovieRepository repository;
@@ -31,8 +32,25 @@ public class MovieController {
 
     @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/all")
-    ResponseEntity<Page<Movie>> getAll() {
-        return ResponseEntity.ok(this.repository.findAll(PageRequest.of(5,5)));
+    ResponseEntity<Page<Movie>> getAll(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "50") int size,
+            @RequestParam(defaultValue = "") String orderBy,
+            @RequestParam(defaultValue = "asc") String order
+    ) {
+        Pageable pageable;
+        if(!orderBy.equals("")) {
+            Sort sort;
+            if(order.toLowerCase().equals("asc")) {
+                sort = Sort.by(Sort.Direction.ASC, orderBy);
+            } else {
+                sort = Sort.by(Sort.Direction.DESC, orderBy);
+            }
+            pageable = PageRequest.of(page, size, sort);
+        } else {
+            pageable = PageRequest.of(page, size);
+        }
+        return ResponseEntity.ok(this.repository.findAll(pageable));
     }
 
     @GetMapping("/{id}")

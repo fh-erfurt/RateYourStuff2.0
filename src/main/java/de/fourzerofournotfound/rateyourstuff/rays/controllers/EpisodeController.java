@@ -7,6 +7,10 @@ import de.fourzerofournotfound.rateyourstuff.rays.models.errors.EpisodeNotFoundE
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.EpisodeRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.services.FileUploadService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +21,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/episodes-rest")
+@RequestMapping("/rest/episodes")
 public class EpisodeController {
 
     @Autowired
@@ -27,32 +31,49 @@ public class EpisodeController {
     FileUploadService fus;
 
     @GetMapping("/all")
-    List<Episode> getAll() {
-        return repository.findAll();
+    ResponseEntity<Page<Episode>> getAll(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "50") int size,
+            @RequestParam(defaultValue = "") String orderBy,
+            @RequestParam(defaultValue = "asc") String order
+    ) {
+        Pageable pageable;
+        if (!orderBy.equals("")) {
+            Sort sort;
+            if (order.toLowerCase().equals("asc")) {
+                sort = Sort.by(Sort.Direction.ASC, orderBy);
+            } else {
+                sort = Sort.by(Sort.Direction.DESC, orderBy);
+            }
+            pageable = PageRequest.of(page, size, sort);
+        } else {
+            pageable = PageRequest.of(page, size);
+        }
+        return ResponseEntity.ok(this.repository.findAll(pageable));
     }
 
     @GetMapping("/{id}")
-    ResponseEntity<Episode> getById (@PathVariable Long id) throws EpisodeNotFoundException {
+    ResponseEntity<Episode> getById(@PathVariable Long id) throws EpisodeNotFoundException {
         return ResponseEntity.ok(this.repository.findById(id).orElseThrow(() -> new EpisodeNotFoundException("No Episode found for id " + id)));
     }
 
     @GetMapping()
-    ResponseEntity<Episode> findByTitle(@RequestParam(value="title") String title) throws EpisodeNotFoundException {
-        return ResponseEntity.ok(this.repository.findByMediumName(title).orElseThrow(() -> new EpisodeNotFoundException("No Episode with title " +title )));
+    ResponseEntity<Episode> findByTitle(@RequestParam(value = "title") String title) throws EpisodeNotFoundException {
+        return ResponseEntity.ok(this.repository.findByMediumName(title).orElseThrow(() -> new EpisodeNotFoundException("No Episode with title " + title)));
     }
 
-    @PostMapping(path="/add", consumes= "application/json", produces="application/json")
+    @PostMapping(path = "/add", consumes = "application/json", produces = "application/json")
     ResponseEntity<Episode> add(@RequestBody Episode episode) {
         return ResponseEntity.ok(this.repository.save(episode));
     }
 
-    @PutMapping(consumes="application/json", produces="application/json")
+    @PutMapping(consumes = "application/json", produces = "application/json")
     ResponseEntity<Episode> update(@RequestBody Episode episode) {
         return ResponseEntity.ok(this.repository.save(episode));
     }
 
     @DeleteMapping("/{id}")
-    void deleteEpisode (@PathVariable Long id) {
+    void deleteEpisode(@PathVariable Long id) {
         this.repository.deleteById(id);
     }
 
@@ -61,7 +82,7 @@ public class EpisodeController {
         String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
         Optional<Episode> episode = this.repository.findById(id);
         //check if the given movie exists
-        if(episode.isPresent()) {
+        if (episode.isPresent()) {
             episode.get().setPicturePath(episode.get().getId() + "/" + fileName);
             //define the target path
             String uploadDir = Episode.IMAGE_PATH_PREFIX + id.toString();

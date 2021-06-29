@@ -8,6 +8,10 @@ import de.fourzerofournotfound.rateyourstuff.rays.services.FileUploadService;
 import de.fourzerofournotfound.rateyourstuff.rays.services.isbn.ISBNCheckService;
 import de.fourzerofournotfound.rateyourstuff.rays.services.isbn.InvalidISBNException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +22,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/books-rest")
+@RequestMapping("/rest/books")
 public class BookController {
 
     @Autowired
@@ -31,8 +35,25 @@ public class BookController {
     ISBNCheckService ics;
 
     @GetMapping("/all")
-    ResponseEntity<List<Book>> getAll() {
-        return ResponseEntity.ok(this.repository.findAll());
+    ResponseEntity<Page<Book>> getAll(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "50") int size,
+            @RequestParam(defaultValue = "") String orderBy,
+            @RequestParam(defaultValue = "asc") String order
+    ) {
+        Pageable pageable;
+        if(!orderBy.equals("")) {
+            Sort sort;
+            if(order.equals("asc")) {
+                sort = Sort.by(Sort.Direction.ASC, orderBy);
+            } else {
+                sort = Sort.by(Sort.Direction.DESC, orderBy);
+            }
+            pageable = PageRequest.of(page, size, sort);
+        } else {
+            pageable = PageRequest.of(page, size);
+        }
+        return ResponseEntity.ok(this.repository.findAll(pageable));
     }
 
     @GetMapping("/{id}")

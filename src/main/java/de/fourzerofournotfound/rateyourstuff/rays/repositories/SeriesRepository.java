@@ -1,7 +1,10 @@
 package de.fourzerofournotfound.rateyourstuff.rays.repositories;
 
+import de.fourzerofournotfound.rateyourstuff.rays.models.Book;
 import de.fourzerofournotfound.rateyourstuff.rays.models.Season;
 import de.fourzerofournotfound.rateyourstuff.rays.models.Series;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -15,6 +18,7 @@ import java.util.Optional;
 
 @Repository
 public interface SeriesRepository extends JpaRepository<Series, Long> {
+    Page<Series> findAll(Pageable pageable);
     Optional<Series> findByMediumName(String mediumName);
 
     Optional<Series> findSeriesByMediumNameIgnoreCaseAndReleaseDate(String mediumName, LocalDate releaseDate);

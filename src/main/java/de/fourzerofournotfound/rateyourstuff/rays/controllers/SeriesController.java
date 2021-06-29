@@ -5,6 +5,10 @@ import de.fourzerofournotfound.rateyourstuff.rays.models.errors.SeriesNotFoundEx
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.SeriesRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.services.FileUploadService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +19,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/series-rest")
+@RequestMapping("/rest/series")
 public class SeriesController {
 
     @Autowired
@@ -26,8 +30,25 @@ public class SeriesController {
 
 
     @GetMapping("/all")
-    ResponseEntity<List<Series>> getAll() {
-        return ResponseEntity.ok(this.repository.findAll());
+    ResponseEntity<Page<Series>> getAll(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "50") int size,
+            @RequestParam(defaultValue = "") String orderBy,
+            @RequestParam(defaultValue = "asc") String order
+    ) {
+        Pageable pageable;
+        if (!orderBy.equals("")) {
+            Sort sort;
+            if (order.toLowerCase().equals("asc")) {
+                sort = Sort.by(Sort.Direction.ASC, orderBy);
+            } else {
+                sort = Sort.by(Sort.Direction.DESC, orderBy);
+            }
+            pageable = PageRequest.of(page, size, sort);
+        } else {
+            pageable = PageRequest.of(page, size);
+        }
+        return ResponseEntity.ok(this.repository.findAll(pageable));
     }
 
     @GetMapping("/{id}")
