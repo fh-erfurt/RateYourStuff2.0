@@ -30,7 +30,6 @@ public class MovieController {
     @Autowired
     private FileUploadService fus;
 
-    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/all")
     ResponseEntity<Page<Movie>> getAll(
             @RequestParam(defaultValue = "0") int page,
