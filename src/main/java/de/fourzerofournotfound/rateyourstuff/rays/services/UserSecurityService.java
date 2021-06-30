@@ -16,8 +16,12 @@ public class UserSecurityService {
 
     public void hashPasswordOfSignUp(User user)
     {
-
         user.getLogin().setPasswordHash(BCrypt.hashpw(user.getLogin().getPasswordHash(), passwordSalt));
+    }
+
+    public void hashPasswordOfLogin(Login login)
+    {
+        login.setPasswordHash(BCrypt.hashpw(login.getPasswordHash(), passwordSalt));
     }
 
     public boolean isValidPassword(String password, User user)
