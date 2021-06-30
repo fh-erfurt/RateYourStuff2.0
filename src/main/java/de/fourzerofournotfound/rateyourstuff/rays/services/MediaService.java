@@ -8,6 +8,10 @@ import org.springframework.stereotype.Service;
 import java.util.Objects;
 import java.util.Optional;
 
+/**
+ * This Services are used to validate some media data which comes via rest api.
+ */
+
 @Service("ms")
 public class MediaService {
 
@@ -20,7 +24,7 @@ public class MediaService {
 
     @Autowired
     public void MediaService(BookRepository bookRepository, GameRepository gameRepository, MovieRepository movieRepository,
-                             SeriesRepository seriesRepository, EpisodeRepository episodeRepository)
+                             SeriesRepository seriesRepository, EpisodeRepository episodeRepository, SeasonRepository seasonRepository)
     {
         this.bookRepository = bookRepository;
         this.gameRepository = gameRepository;
@@ -31,6 +35,11 @@ public class MediaService {
 
     }
 
+    /**
+     * This service is used to check if a given book-object(checked by its attributes) is already stored in database
+     * @param book - object which is streamed via rest api
+     * @return true if a object is already stored in database (the entry of this book-object is valid)
+     */
     public boolean isValidBook(Book book)
     {
         Optional<Book> optionalBook;
@@ -40,10 +49,14 @@ public class MediaService {
         } else {
             optionalBook = bookRepository.findBookByMediumNameIgnoreCaseAndReleaseDate(book.getMediumName(), book.getReleaseDate());
         }
-        //TODO: Shouldn´t be values inside if the repository detects a match?
         return optionalBook.isEmpty();
     }
 
+    /**
+     * This service is used to check if a given game-object(checked by its attributes) is already stored in database
+     * @param game - object which is streamed via rest api
+     * @return true if a object is already stored in database (the entry of this game-object is valid)
+     */
     public boolean isValidGame(Game game)
     {
         Optional<Game> optionalGame;
@@ -56,6 +69,11 @@ public class MediaService {
         return optionalGame.isEmpty();
     }
 
+    /**
+     * This service is used to check if a given movie-object(checked by its attributes) is already stored in database
+     * @param movie - object which is streamed via rest api
+     * @return true if a object is already stored in database (the entry of this movie-object is valid)
+     */
     public boolean isValidMovie(Movie movie)
     {
         Optional<Movie> optionalMovie;
@@ -68,6 +86,11 @@ public class MediaService {
         return optionalMovie.isEmpty();
     }
 
+    /**
+     * This service is used to check if a given series-object(checked by its attributes) is already stored in database
+     * @param series - object which is streamed via rest api
+     * @return true if a object is already stored in database (the entry of this series-object is valid)
+     */
     public boolean isValidSeries(Series series)
     {
         Optional<Series> optionalSeries;
@@ -80,6 +103,11 @@ public class MediaService {
         return optionalSeries.isEmpty();
     }
 
+    /**
+     * This service is used to check if a given season-object(checked by its attributes) is already stored in database
+     * @param season - object which is streamed via rest api
+     * @return true if a object is already stored in database (the entry of this season-object is valid)
+     */
     public boolean isValidSeason(Season season)
     {
         Optional<Season> optionalSeason;
@@ -94,17 +122,21 @@ public class MediaService {
         return optionalSeason.isEmpty();
     }
 
+    /**
+     * This service is used to check if a given episode-object(checked by its attributes) is already stored in database
+     * @param episode - object which is streamed via rest api
+     * @return true if a object is already stored in database (the entry of this episode-object is valid)
+     */
     public boolean isValidEpisode(Episode episode)
     {
         Optional<Episode> optionalEpisode;
-        if(Objects.nonNull(episode.getId()))
+        if(Objects.nonNull(episode.getId())&&Objects.nonNull(episode.getSeason()))
         {
-            //TODO: How can i get a permission for seasonID?
             optionalEpisode = episodeRepository.findEpisodeByIdNotAndMediumNameIgnoreCaseAndReleaseDateAndSeasonIdNot(episode.getId(), episode.getMediumName(), episode.getReleaseDate(), episode.getSeason().getId());
         }
         else
         {
-            optionalEpisode = episodeRepository.findEpisodeByMediumNameIgnoreCaseAndReleaseDateAndSeasonIdNot( episode.getMediumName(), episode.getReleaseDate(), episode.getSeason().getId());
+            optionalEpisode = episodeRepository.findEpisodeByMediumNameIgnoreCaseAndReleaseDateAndEpisodeNumber(episode.getMediumName(), episode.getReleaseDate(), episode.getEpisodeNumber());
         }
         return optionalEpisode.isEmpty();
     }

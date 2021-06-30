@@ -42,10 +42,10 @@ class MediaServiceTest {
     {
         bookRepository.deleteAll();
         gameRepository.deleteAll();
-        movieRepository.deleteAll();
-        seriesRepository.deleteAll();
-        seasonRepository.deleteAll();
         episodeRepository.deleteAll();
+        seasonRepository.deleteAll();
+        seriesRepository.deleteAll();
+        movieRepository.deleteAll();
     }
 
 
@@ -129,7 +129,6 @@ class MediaServiceTest {
         Assertions.assertTrue(mediaService.isValidMovie(result));
     }
 
-    //TODO: TestCase for isValidSeries -> shouldFindDuplicationOfGivenSeries
     @Test
     void shouldDetectDuplicationOfGivenSeries()
     {
@@ -193,6 +192,76 @@ class MediaServiceTest {
         Assertions.assertTrue(mediaService.isValidSeries(givenSeriesNotToStore));
         //TODO: Outsource to an unique test
         Assertions.assertFalse(mediaService.isValidSeries(givenSeries2));
+    }
+
+    @Test
+    void shouldDetectDuplicationOfGivenSeason()
+    {
+        // Given
+        LocalDate releaseDate0 = LocalDate.of(2017, 9, 26);
+
+        Episode givenEpisodeOne = Episode.builder()
+                .mediumName("Leuchtfeuer")
+                .episodeNumber(1)
+                .shortDescription("[...]")
+                .releaseDate(releaseDate0)
+                .length(51)
+                .build();
+
+        Season givenSeason = Season.builder()
+                .seasonTitle("Season")
+                .seasonNumber(1)
+                .build();
+
+        givenSeason.getEpisodes().add(givenEpisodeOne);
+
+        // When
+        Season result = seasonRepository.save(givenSeason);
+
+        // Then
+        Assertions.assertTrue(mediaService.isValidSeason(givenSeason));
+
+        Assertions.assertTrue(mediaService.isValidSeason(result));
+    }
+
+    @Test
+    void shouldDetectDuplicationOfGivenEpisode()
+    {
+        //Given
+        LocalDate releaseDate = LocalDate.of(2017, 9, 26);
+
+        Series givenSeries = Series.builder()
+                .mediumName("Star Trek: Discovery")
+                .ageRestriction(0)
+                .shortDescription("Star Trek: Discovery ist eine US-amerikanische Science-Fiction-Fernsehserie und die sechste Realfilm-Fernsehserie, die im fiktiven Star-Trek-Universum spielt. In der auch mit DSC abgekürzten Serie geht es um das titelgebende Sternenflottenraumschiff Discovery. ")
+                .averageLength(51)
+                .releaseDate(releaseDate)
+                .isCompleted(false)
+                .build();
+
+        Episode givenEpisode = Episode.builder()
+                .mediumName("Leuchtfeuer")
+                .episodeNumber(1)
+                .shortDescription("[...]")
+                .releaseDate(releaseDate)
+                .length(51)
+                .build();
+
+        Season givenSeason = Season.builder()
+                .seasonTitle("Season")
+                .seasonNumber(1)
+                .build();
+
+        givenEpisode.setSeason(givenSeason);
+        givenSeason.getEpisodes().add(givenEpisode);
+        givenSeries.getSeasons().add(givenSeason);
+
+
+        //When
+        seriesRepository.save(givenSeries);
+
+        //Then
+        Assertions.assertTrue(mediaService.isValidEpisode(givenEpisode));
     }
 
 }
