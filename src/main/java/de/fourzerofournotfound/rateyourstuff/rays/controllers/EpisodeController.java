@@ -53,6 +53,20 @@ public class EpisodeController {
                 episodes.stream().map(episodeService::convertToDto).collect(Collectors.toList()));
     }
 
+    @GetMapping("/season/{id}")
+    ResponseEntity<List<EpisodeDto>> getAllBySeason(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "50") int size,
+            @RequestParam(defaultValue = "") String orderBy,
+            @RequestParam(defaultValue = "asc") String order,
+            @PathVariable Long id
+    ) {
+        Pageable pageable = pageableService.createPageable(orderBy, order, page, size);
+        List<Episode> episodes = this.repository.findAllBySeasonId(id, pageable).getContent();
+        return ResponseEntity.ok(
+                episodes.stream().map(episodeService::convertToDto).collect(Collectors.toList()));
+    }
+
     @GetMapping("/{id}")
     ResponseEntity<EpisodeDto> getById(@PathVariable Long id) throws EpisodeNotFoundException {
         Optional<Episode> episode = this.repository.findById(id);
