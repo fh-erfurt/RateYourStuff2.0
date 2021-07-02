@@ -20,11 +20,11 @@ public class GameService {
     public GameDto convertToDto(Game game) {
         GameDto gameDto= modelMapper.map(game, GameDto.class);
         gameDto.setAverageRating(game.getMediumRatings());
-        gameDto.setNumberOfRatings(game.getMediumRatings().size());
+        gameDto.setNumberOfRatings(game.getMediumRatings());
         gameDto.setMIN_RATING_POINTS(Rating.MIN_POINTS);
         gameDto.setMAX_RATING_POINTS(Rating.MAX_POINTS);
-        gameDto.setNumberOfComments(game.getComments().size());
-        gameDto.setNumberOfCollections(game.getCollections().size());
+        gameDto.setNumberOfComments(game.getComments());
+        gameDto.setNumberOfCollections(game.getCollections());
         return gameDto;
     }
 }

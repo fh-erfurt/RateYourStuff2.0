@@ -20,11 +20,11 @@ public class SeriesService {
     public SeriesDto convertToDto(Series series) {
         SeriesDto seriesDto= modelMapper.map(series, SeriesDto.class);
         seriesDto.setAverageRating(series.getMediumRatings());
-        seriesDto.setNumberOfRatings(series.getMediumRatings().size());
+        seriesDto.setNumberOfRatings(series.getMediumRatings());
         seriesDto.setMIN_RATING_POINTS(Rating.MIN_POINTS);
         seriesDto.setMAX_RATING_POINTS(Rating.MAX_POINTS);
-        seriesDto.setNumberOfComments(series.getComments().size());
-        seriesDto.setNumberOfCollections(series.getCollections().size());
+        seriesDto.setNumberOfComments(series.getComments());
+        seriesDto.setNumberOfCollections(series.getCollections());
         seriesDto.setNumberOfSeasons(series.getSeasons().size());
         return seriesDto;
     }

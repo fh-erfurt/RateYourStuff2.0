@@ -20,11 +20,11 @@ public class EpisodeService {
     public EpisodeDto convertToDto(Episode episode) {
         EpisodeDto episodeDto= modelMapper.map(episode, EpisodeDto.class);
         episodeDto.setAverageRating(episode.getMediumRatings());
-        episodeDto.setNumberOfRatings(episode.getMediumRatings().size());
+        episodeDto.setNumberOfRatings(episode.getMediumRatings());
         episodeDto.setMIN_RATING_POINTS(Rating.MIN_POINTS);
         episodeDto.setMAX_RATING_POINTS(Rating.MAX_POINTS);
-        episodeDto.setNumberOfComments(episode.getComments().size());
-        episodeDto.setNumberOfCollections(episode.getCollections().size());
+        episodeDto.setNumberOfComments(episode.getComments());
+        episodeDto.setNumberOfCollections(episode.getCollections());
         episodeDto.setSeriesId(episode.getSeason());
         return episodeDto;
     }

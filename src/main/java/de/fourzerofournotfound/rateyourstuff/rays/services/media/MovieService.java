@@ -20,11 +20,11 @@ public class MovieService {
     public MovieDto convertToDto(Movie movie) {
         MovieDto movieDto= modelMapper.map(movie, MovieDto.class);
         movieDto.setAverageRating(movie.getMediumRatings());
-        movieDto.setNumberOfRatings(movie.getMediumRatings().size());
+        movieDto.setNumberOfRatings(movie.getMediumRatings());
         movieDto.setMIN_RATING_POINTS(Rating.MIN_POINTS);
         movieDto.setMAX_RATING_POINTS(Rating.MAX_POINTS);
-        movieDto.setNumberOfComments(movie.getComments().size());
-        movieDto.setNumberOfCollections(movie.getCollections().size());
+        movieDto.setNumberOfComments(movie.getComments());
+        movieDto.setNumberOfCollections(movie.getCollections());
         return movieDto;
     }
 }

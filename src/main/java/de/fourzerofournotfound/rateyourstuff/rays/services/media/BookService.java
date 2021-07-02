@@ -22,11 +22,11 @@ public class BookService {
     public BookDto convertToDto(Book book) {
         BookDto bookDto= modelMapper.map(book, BookDto.class);
         bookDto.setAverageRating(book.getMediumRatings());
-        bookDto.setNumberOfRatings(book.getMediumRatings().size());
+        bookDto.setNumberOfRatings(book.getMediumRatings());
         bookDto.setMIN_RATING_POINTS(Rating.MIN_POINTS);
         bookDto.setMAX_RATING_POINTS(Rating.MAX_POINTS);
-        bookDto.setNumberOfComments(book.getComments().size());
-        bookDto.setNumberOfCollections(book.getCollections().size());
+        bookDto.setNumberOfComments(book.getComments());
+        bookDto.setNumberOfCollections(book.getCollections());
         return bookDto;
     }
 }

@@ -41,17 +41,55 @@ public abstract class MediumDto {
     private List<PersonAssignment> personAssignments;
 
     public void setLanguages(Set<Language> languages) {
+        if(languages != null) {
             this.languages = languages.stream().map(o -> o.getLanguage()).collect(Collectors.toList());
+        } else {
+            this.languages = new ArrayList<>();
+        }
+
     }
 
     public void setGenres(Set<Genre> genres) {
-        this.genres = genres.stream().map(o -> o.getGenreName()).collect(Collectors.toList());
+        if(genres != null) {
+            this.genres = genres.stream().map(o -> o.getGenreName()).collect(Collectors.toList());
+        } else {
+            this.genres = new ArrayList<>();
+        }
     }
 
     public void setAverageRating(Set<Rating> mediumRatings) {
-        int ratingSum = mediumRatings.stream().mapToInt(o -> o.getGivenPoints()).sum();
-        if(mediumRatings.size() > 0) {
-            this.averageRating = ratingSum / mediumRatings.size();
+        if(mediumRatings != null) {
+            int ratingSum = mediumRatings.stream().mapToInt(o -> o.getGivenPoints()).sum();
+            if(mediumRatings.size() > 0) {
+                this.averageRating = ratingSum / mediumRatings.size();
+            }
+        } else {
+            averageRating = 0;
         }
+    }
+
+    public void setNumberOfRatings(Set<Rating> ratings) {
+        if(ratings != null) {
+            this.numberOfRatings = ratings.size();
+        } else {
+            this.numberOfRatings = 0;
+        }
+    }
+
+    public void setNumberOfCollections(Set<Collection> collections) {
+        if(collections != null) {
+            this.numberOfCollections = collections.size();
+        } else {
+            this.numberOfCollections = 0;
+        }
+    }
+
+    public void setNumberOfComments(Set<Comment> comments) {
+        if(comments != null) {
+            this.numberOfComments = comments.size();
+        } else {
+            this.numberOfComments = 0;
+        }
+
     }
 }
