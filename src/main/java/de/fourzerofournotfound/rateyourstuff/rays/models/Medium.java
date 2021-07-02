@@ -57,10 +57,6 @@ public abstract class Medium extends BaseModel {
     Set<Language> languages;
 
     @JsonManagedReference
-    @ManyToMany(mappedBy = "media")
-    Set<Platform> platforms;
-
-    @JsonManagedReference
     @OneToMany (mappedBy = "medium")
     private List<PersonAssignment> personAssignments;
 }

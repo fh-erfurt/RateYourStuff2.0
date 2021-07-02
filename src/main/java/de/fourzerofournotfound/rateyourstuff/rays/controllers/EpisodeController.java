@@ -1,5 +1,6 @@
 package de.fourzerofournotfound.rateyourstuff.rays.controllers;
 
+import de.fourzerofournotfound.rateyourstuff.rays.dtos.media.EpisodeDto;
 import de.fourzerofournotfound.rateyourstuff.rays.models.Book;
 import de.fourzerofournotfound.rateyourstuff.rays.models.Episode;
 import de.fourzerofournotfound.rateyourstuff.rays.models.Game;
@@ -7,6 +8,7 @@ import de.fourzerofournotfound.rateyourstuff.rays.models.errors.EpisodeNotFoundE
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.EpisodeRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.services.FileUploadService;
 import de.fourzerofournotfound.rateyourstuff.rays.services.PageableService;
+import de.fourzerofournotfound.rateyourstuff.rays.services.media.EpisodeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -20,39 +22,57 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/rest/episodes")
 public class EpisodeController {
 
     @Autowired
-    EpisodeRepository repository;
+    private EpisodeRepository repository;
 
     @Autowired
-    FileUploadService fus;
+    private FileUploadService fus;
 
     @Autowired
-    PageableService pageableService;
+    private PageableService pageableService;
+
+    @Autowired
+    private EpisodeService episodeService;
 
     @GetMapping("/all")
-    ResponseEntity<Page<Episode>> getAll(
+    ResponseEntity<List<EpisodeDto>> getAll(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "50") int size,
             @RequestParam(defaultValue = "") String orderBy,
             @RequestParam(defaultValue = "asc") String order
     ) {
         Pageable pageable = pageableService.createPageable(orderBy, order, page, size);
-        return ResponseEntity.ok(this.repository.findAll(pageable));
+        List<Episode> episodes = this.repository.findAll(pageable).getContent();
+        return ResponseEntity.ok(
+                episodes.stream().map(episodeService::convertToDto).collect(Collectors.toList()));
     }
 
     @GetMapping("/{id}")
-    ResponseEntity<Episode> getById(@PathVariable Long id) throws EpisodeNotFoundException {
-        return ResponseEntity.ok(this.repository.findById(id).orElseThrow(() -> new EpisodeNotFoundException("No Episode found for id " + id)));
+    ResponseEntity<EpisodeDto> getById(@PathVariable Long id) throws EpisodeNotFoundException {
+        Optional<Episode> episode = this.repository.findById(id);
+        if(episode.isPresent()) {
+            EpisodeDto episodeDto = episodeService.convertToDto(episode.get());
+            return ResponseEntity.ok(episodeDto);
+        } else {
+            throw new EpisodeNotFoundException("No Episode found for id " + id);
+        }
     }
 
     @GetMapping()
-    ResponseEntity<Episode> findByTitle(@RequestParam(value = "title") String title) throws EpisodeNotFoundException {
-        return ResponseEntity.ok(this.repository.findByMediumName(title).orElseThrow(() -> new EpisodeNotFoundException("No Episode with title " + title)));
+    ResponseEntity<EpisodeDto> findByTitle(@RequestParam(value = "title") String title) throws EpisodeNotFoundException {
+        Optional<Episode> episode = this.repository.findByMediumName(title);
+        if(episode.isPresent()) {
+            EpisodeDto episodeDto = episodeService.convertToDto(episode.get());
+            return ResponseEntity.ok(episodeDto);
+        } else {
+            throw new EpisodeNotFoundException("No Episode with title " + title);
+        }
     }
 
     @PostMapping(path = "/add", consumes = "application/json", produces = "application/json")

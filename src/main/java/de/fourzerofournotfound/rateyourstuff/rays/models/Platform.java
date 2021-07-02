@@ -1,5 +1,6 @@
 package de.fourzerofournotfound.rateyourstuff.rays.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
@@ -21,11 +22,9 @@ public class Platform extends BaseModel {
     @Column (length = 250)
     private String platformTitle;
 
+    @JsonBackReference
     @OneToMany (mappedBy = "platform")
     private List<Game> games;
-
-    @ManyToMany
-    Set<Medium> media;
 
     @Builder
     public Platform(String platformTitle) {
