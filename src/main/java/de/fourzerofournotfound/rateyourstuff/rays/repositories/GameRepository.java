@@ -17,7 +17,7 @@ public interface GameRepository extends JpaRepository<Game, Long> {
     Page<Game> findAll(Pageable pageable);
     Optional<Game> findByMediumName(String gameName);
 
-    List<Game> findAllByPlatform(Platform platform);
+    //List<Game> findAllByPlatform(Platform platform);
 
     Optional<Game> findGameByMediumNameIgnoreCaseAndReleaseDate(String mediumName, LocalDate releaseDate);
 

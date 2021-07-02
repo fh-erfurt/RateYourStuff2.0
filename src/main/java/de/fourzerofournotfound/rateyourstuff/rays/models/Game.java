@@ -39,9 +39,13 @@ public class Game extends Medium{
     private Integer maxNumberOfGamers;
 
     @JsonManagedReference
-    @ManyToOne (cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "platformId", referencedColumnName = "id")
-    private Platform platform;
+    @ManyToMany(mappedBy = "games")
+    Set<Platform> platforms;
+
+    //@JsonManagedReference
+    //ManyToOne (cascade = CascadeType.PERSIST)
+    //@JoinColumn(name = "platformId", referencedColumnName = "id")
+    //private Platform platform;
 
     @JsonManagedReference
     @ManyToOne (cascade = CascadeType.PERSIST)

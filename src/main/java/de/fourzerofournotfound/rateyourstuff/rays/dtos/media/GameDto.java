@@ -10,6 +10,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -21,7 +22,7 @@ public class GameDto extends MediumDto{
 
     private Integer maxNumberOfGamers;
 
-    private Platform platform;
+    private Set<Platform> platforms;
 
     private GamePublisher gamePublisher;
 

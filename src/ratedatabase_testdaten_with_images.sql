@@ -134,10 +134,10 @@ INSERT INTO `episodes` (`episode_number`, `length`, `id`, `season_id`) VALUES
 -- Daten für Tabelle `games`
 --
 
-INSERT INTO `games` (`age_restriction`, `average_playtime`, `max_number_of_gamers`, `min_number_of_gamers`, `id`, `game_publisher_id`, `platform_id`) VALUES
-(12, NULL, NULL, 1, 4, 3, 22),
-(12, 17, 2, 2, 5, 2, 4),
-(12, 40, 4, 1, 6, 1, 4);
+INSERT INTO `games` (`age_restriction`, `average_playtime`, `max_number_of_gamers`, `min_number_of_gamers`, `id`, `game_publisher_id`) VALUES
+(12, NULL, NULL, 1, 4, 3),
+(12, 17, 2, 2, 5, 2),
+(12, 40, 4, 1, 6, 1);
 
 
 --
@@ -224,12 +224,6 @@ INSERT INTO `person_assignments` (`id`, `created_at`, `updated_at`, `is_actor`, 
 --
 -- Daten für Tabelle `platforms_media`
 --
-
-INSERT INTO `platforms_media` (`platforms_id`, `media_id`) VALUES
-(4, 5),
-(4, 6),
-(9, 5),
-(22, 5);
 
 --
 -- Daten für Tabelle `roles`
