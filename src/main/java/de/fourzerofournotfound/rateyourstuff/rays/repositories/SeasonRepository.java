@@ -13,6 +13,8 @@ import java.util.Optional;
 public interface SeasonRepository extends JpaRepository<Season, Long> {
     List<Season> findAllByMedium(Series series);
 
+    List<Season> findAllByMediumId(Long id);
+
     Optional<Season> findSeasonByIdNotAndSeasonTitleIgnoreCaseAndSeasonNumber(Long id, String seasonTitle, int seasonNumber);
 
     Optional<Season> findSeasonBySeasonTitleIgnoreCaseAndSeasonNumber(String seasonTitle, int seasonNumber);

@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/seasons-rest")
+@RequestMapping("/rest/seasons")
 public class SeasonController {
 
     @Autowired
@@ -25,6 +25,11 @@ public class SeasonController {
     @GetMapping("/{id}")
     ResponseEntity<Season> getById (@PathVariable Long id) throws SeasonNotFoundException {
         return ResponseEntity.ok(this.repository.findById(id).orElseThrow(() -> new SeasonNotFoundException("No Season found for id " + id)));
+    }
+
+    @GetMapping("/series/{id}")
+    ResponseEntity<List<Season>> getByMediumId (@PathVariable Long id) throws SeasonNotFoundException {
+        return ResponseEntity.ok(this.repository.findAllByMediumId(id));
     }
 
     @PostMapping(path="/add", consumes= "application/json", produces="application/json")
