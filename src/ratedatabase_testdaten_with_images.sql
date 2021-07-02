@@ -241,15 +241,29 @@ INSERT INTO `roles` (`id`, `created_at`, `updated_at`, `role_name`) VALUES
 (3, '2021-06-21 19:17:34', '2021-06-21 19:17:34', 'Moderator'),
 (4, '2021-06-21 19:17:34', '2021-06-21 19:17:34', 'Customer');
 
+--
+-- Daten für Tabelle `logins`
+--
+
+INSERT INTO `logins` (`id`, `created_at`, `updated_at`, `email`, `failed_login_count`, `is_enabled`, `last_login`, `password_hash`, `password_reset_created_at`, `password_reset_hash`) VALUES
+(1, '2021-06-30 20:35:49', '2021-06-30 20:38:04', 'chris@rays.com', 0, b'0', NULL, '$2a$10$j9UIcuHfJV9ENas.kAW8pevUCibNKIaeUxo3ABdPanvleQNXk860G', NULL, NULL),
+(2, '2021-06-30 20:38:56', '2021-06-30 20:38:56', 'robin@rays.com', 0, b'0', NULL, '$2a$10$j9UIcuHfJV9ENas.kAW8pevUCibNKIaeUxo3ABdPanvleQNXk860G', NULL, NULL),
+(3, '2021-06-30 20:39:20', '2021-06-30 20:39:20', 'mickey@rays.com', 0, b'0', NULL, '$2a$10$j9UIcuHfJV9ENas.kAW8pevUCibNKIaeUxo3ABdPanvleQNXk860G', NULL, NULL),
+(4, '2021-06-30 20:39:41', '2021-06-30 20:39:41', 'john@rays.com', 0, b'0', NULL, '$2a$10$j9UIcuHfJV9ENas.kAW8pevUCibNKIaeUxo3ABdPanvleQNXk860G', NULL, NULL),
+(5, '2021-06-30 20:40:12', '2021-06-30 20:40:12', 'schnoernia@web.com', 0, b'0', NULL, '$2a$10$j9UIcuHfJV9ENas.kAW8pee/MdD.dmDeUAYJoi9x.zk675pfblLK6', NULL, NULL),
+(6, '2021-06-30 20:40:47', '2021-06-30 20:40:47', 'r.kruse@web.com', 0, b'0', NULL, '$2a$10$j9UIcuHfJV9ENas.kAW8pee/MdD.dmDeUAYJoi9x.zk675pfblLK6', NULL, NULL);
 
 --
 -- Daten für Tabelle `users`
 --
 
 INSERT INTO `users` (`id`, `created_at`, `updated_at`, `first_name`, `gender`, `last_name`, `profile_picture_path`, `second_name`, `user_name`, `login_id`) VALUES
-(1, '2021-06-21 21:17:56', '2021-06-21 21:17:56', 'Super', 'männlich', 'Typ', NULL, NULL, 'SuperTyp', NULL),
-(2, '2021-06-21 21:17:56', '2021-06-21 21:17:56', 'Maxima', 'weiblich', 'Musterfrau', NULL, NULL, 'BadWomand78', NULL),
-(3, '2021-06-21 21:17:56', '2021-06-21 21:17:56', 'Kevin', 'divers', 'Kevinson', NULL, NULL, 'DoedelDoedler', NULL);
+(1, '2021-06-30 20:35:49', '2021-06-30 20:35:49', 'Christoph', 'male', 'Frischmuth', NULL, '', 'ChrisTheSquirrel', 1),
+(2, '2021-06-30 20:38:56', '2021-06-30 20:38:56', 'Robin', 'male', 'beck', NULL, '', 'LittleBigPlaye', 2),
+(3, '2021-06-30 20:39:20', '2021-06-30 20:39:20', 'Mickey', 'male', 'Knop', NULL, '', 'mikmin', 3),
+(4, '2021-06-30 20:39:41', '2021-06-30 20:39:41', 'John', 'male', 'Klippstein', NULL, '', 'Avartos', 4),
+(5, '2021-06-30 20:40:12', '2021-06-30 20:40:12', 'Saskia', 'female', 'Wohlers', NULL, '', 'Schnoernia', 5),
+(6, '2021-06-30 20:40:47', '2021-06-30 20:40:47', 'Rolf', 'male', 'Kruse', NULL, '', 'Rolf_Kruse', 6);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
