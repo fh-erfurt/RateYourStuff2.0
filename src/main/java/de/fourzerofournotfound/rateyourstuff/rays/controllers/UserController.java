@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.Optional;
 
 import de.fourzerofournotfound.rateyourstuff.rays.services.UserSecurityService;
 import de.fourzerofournotfound.rateyourstuff.rays.services.UserService;
@@ -29,11 +30,6 @@ public class UserController {
     @GetMapping("/all")
     ResponseEntity<List<User>> getAll(){
         return ResponseEntity.ok(this.repository.findAll());
-    }
-
-    @GetMapping("/username={getUserName}")
-    ResponseEntity<User> getUserName (@PathVariable String userName) throws UserNotFoundException{
-        return ResponseEntity.ok((this.repository.findByUserName(userName).orElseThrow(()-> new UserNotFoundException("No User found for given User Name"))));
     }
 
     @GetMapping("/id={id}")

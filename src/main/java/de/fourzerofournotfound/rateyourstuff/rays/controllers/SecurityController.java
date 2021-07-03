@@ -2,7 +2,11 @@ package de.fourzerofournotfound.rateyourstuff.rays.controllers;
 
 import de.fourzerofournotfound.rateyourstuff.rays.models.AuthenticationRequest;
 import de.fourzerofournotfound.rateyourstuff.rays.models.AuthenticationResponse;
+import de.fourzerofournotfound.rateyourstuff.rays.models.User;
+import de.fourzerofournotfound.rateyourstuff.rays.models.errors.UserNotFoundException;
+import de.fourzerofournotfound.rateyourstuff.rays.repositories.UserRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.services.AppUserDetailService;
+import de.fourzerofournotfound.rateyourstuff.rays.services.UserService;
 import de.fourzerofournotfound.rateyourstuff.rays.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +15,8 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 public class SecurityController {
@@ -24,6 +30,13 @@ public class SecurityController {
     @Autowired
     private JwtUtil jwtTokenUtil;
 
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private UserService userService;
+
+    @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
     public ResponseEntity<AuthenticationResponse> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
         try {
@@ -38,5 +51,12 @@ public class SecurityController {
         final String jwt = jwtTokenUtil.generateToken(userDetails);
 
         return ResponseEntity.ok(new AuthenticationResponse(jwt));
+    }
+
+    @RequestMapping(value = "/uId={getUserIdByUserName}", method = RequestMethod.POST)
+    ResponseEntity<Long> getUserIdByUsername (@PathVariable String getUserIdByUserName) throws UserNotFoundException {
+        Optional<User> givenUser = userRepository.findByUserName(getUserIdByUserName);
+        System.out.printf("Should getUid: " + userService.getIdByUser(givenUser));
+        return ResponseEntity.ok(userService.getIdByUser(givenUser));
     }
 }
