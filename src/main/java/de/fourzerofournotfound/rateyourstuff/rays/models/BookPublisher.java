@@ -1,5 +1,6 @@
 package de.fourzerofournotfound.rateyourstuff.rays.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Builder;
@@ -22,6 +23,7 @@ public class BookPublisher extends BaseModel {
     @Column
     private String bookPublisherTitle;
 
+    @JsonBackReference
     @OneToMany (mappedBy = "bookPublisher")
     private List<Book> books = new ArrayList<>();
 

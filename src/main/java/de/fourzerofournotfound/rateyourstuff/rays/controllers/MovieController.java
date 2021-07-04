@@ -1,12 +1,14 @@
 package de.fourzerofournotfound.rateyourstuff.rays.controllers;
 
 
+import de.fourzerofournotfound.rateyourstuff.rays.dtos.media.MovieDto;
 import de.fourzerofournotfound.rateyourstuff.rays.models.Movie;
 
 import de.fourzerofournotfound.rateyourstuff.rays.models.errors.MovieNotFoundException;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.MovieRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.services.FileUploadService;
 import de.fourzerofournotfound.rateyourstuff.rays.services.PageableService;
+import de.fourzerofournotfound.rateyourstuff.rays.services.media.MovieService;
 import org.apache.tomcat.util.http.fileupload.FileUpload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/rest/movies")
@@ -34,28 +37,48 @@ public class MovieController {
     @Autowired
     private PageableService pageableService;
 
+    @Autowired
+    private MovieService movieService;
+
     @GetMapping("/all")
-    ResponseEntity<Page<Movie>> getAll(
+    ResponseEntity<List<MovieDto>> getAll(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "50") int size,
             @RequestParam(defaultValue = "") String orderBy,
             @RequestParam(defaultValue = "asc") String order
     ) {
         Pageable pageable = pageableService.createPageable(orderBy, order, page, size);
-        return ResponseEntity.ok(this.repository.findAll(pageable));
+        List<Movie> movies = this.repository.findAll(pageable).getContent();
+
+        return ResponseEntity.ok(
+                movies.stream()
+                        .map(movieService::convertToDto)
+                        .collect(Collectors.toList())
+        );
     }
 
     @GetMapping("/{id}")
-    ResponseEntity<Movie> getById (@PathVariable Long id) throws MovieNotFoundException {
-        return ResponseEntity.ok(this.repository.findById(id).orElseThrow(() -> new MovieNotFoundException("No Movie found for id " + id)));
+    ResponseEntity<MovieDto> getById (@PathVariable Long id) throws MovieNotFoundException {
+        Optional<Movie> movie = this.repository.findById(id);
+        if(movie.isPresent()) {
+            MovieDto movieDto = movieService.convertToDto(movie.get());
+            return ResponseEntity.ok(movieDto);
+        } else {
+            throw new MovieNotFoundException("No Movie found for id " + id);
+        }
     }
 
     @GetMapping()
-    ResponseEntity<Movie> findByTitle(@RequestParam(value="title") String title) throws MovieNotFoundException {
-        return ResponseEntity.ok(this.repository.findByMediumName(title).orElseThrow(() -> new MovieNotFoundException("No Movie with title " +title )));
+    ResponseEntity<MovieDto> findByTitle(@RequestParam(value="title") String title) throws MovieNotFoundException {
+        Optional<Movie> movie = this.repository.findByMediumName(title);
+        if(movie.isPresent()) {
+            MovieDto movieDto = movieService.convertToDto(movie.get());
+            return ResponseEntity.ok(movieDto);
+        } else {
+            throw new MovieNotFoundException("No Movie with title " +title );
+        }
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping(path="/add", consumes= "application/json", produces="application/json")
     ResponseEntity<Movie> add(@RequestBody Movie movie) {
         return ResponseEntity.ok(this.repository.save(movie));

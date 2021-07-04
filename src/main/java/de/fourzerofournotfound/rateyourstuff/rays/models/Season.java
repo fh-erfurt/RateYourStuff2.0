@@ -1,5 +1,6 @@
 package de.fourzerofournotfound.rateyourstuff.rays.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
@@ -29,10 +30,12 @@ public class Season extends BaseModel {
         this.seasonTitle = seasonTitle;
     }
 
+    @JsonBackReference
     @ManyToOne (cascade = CascadeType.PERSIST)
     @JoinColumn(name = "seriesId", referencedColumnName = "id")
     private Medium medium;
 
+    @JsonBackReference
     @Builder.Default
     @OneToMany (mappedBy = "season", cascade = CascadeType.ALL)
     private Set<Episode> episodes = new HashSet<>();
