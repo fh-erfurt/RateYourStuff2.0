@@ -2,6 +2,7 @@ package de.fourzerofournotfound.rateyourstuff.rays.services;
 
 import de.fourzerofournotfound.rateyourstuff.rays.models.Login;
 import de.fourzerofournotfound.rateyourstuff.rays.models.User;
+import de.fourzerofournotfound.rateyourstuff.rays.models.errors.UserNotFoundException;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.LoginRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.UserRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.services.errors.InvalidLoginException;
@@ -40,6 +41,14 @@ public class UserService {
             return login;
         } else {
             throw new InvalidLoginException("The given login must have a valid loginId");
+        }
+    }
+
+    public Long getIdByUser(Optional<User> user) throws UserNotFoundException {
+        if(user.isPresent()){
+            return user.get().getId();
+        } else {
+            throw new UserNotFoundException("No valid user!");
         }
     }
 

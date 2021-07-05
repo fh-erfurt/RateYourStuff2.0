@@ -1,57 +1,21 @@
--- phpMyAdmin SQL Dump
--- version 5.1.0
--- https://www.phpmyadmin.net/
---
--- Host: 127.0.0.1
--- Erstellungszeit: 22. Jun 2021 um 17:08
--- Server-Version: 10.4.18-MariaDB
--- PHP-Version: 7.4.18
-
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
---
--- Datenbank: `ratedatabase`
---
-
---
--- Daten für Tabelle `book_publishers`
---
 
 INSERT INTO `book_publishers` (`id`, `created_at`, `updated_at`, `book_publisher_title`) VALUES
 (1, '2021-06-21 19:12:59', '2021-06-21 19:12:59', 'Knaur'),
 (2, '2021-06-21 19:12:59', '2021-06-21 19:12:59', 'Heyne'),
 (3, '2021-06-21 19:12:59', '2021-06-21 19:12:59', 'Hanser');
 
-
---
--- Daten für Tabelle `game_publishers`
---
-
 INSERT INTO `game_publishers` (`id`, `created_at`, `updated_at`, `game_publisher_title`) VALUES
 (1, '2021-06-21 19:14:05', '2021-06-21 19:14:05', 'Square Enix'),
 (2, '2021-06-21 19:14:05', '2021-06-21 19:14:05', 'Electronic Arts'),
 (3, '2021-06-21 19:14:05', '2021-06-21 19:14:05', 'Blizzard');
 
---
--- Daten für Tabelle `networks`
---
-
 INSERT INTO `networks` (`id`, `created_at`, `updated_at`, `network_title`) VALUES
 (1, '2021-06-21 19:14:50', '2021-06-21 19:14:50', 'HBO'),
 (2, '2021-06-21 19:14:50', '2021-06-21 19:14:50', 'CBS'),
 (3, '2021-06-21 19:14:50', '2021-06-21 19:14:50', 'Marvel');
-
---
--- Daten für Tabelle `platforms`
---
 
 INSERT INTO `platforms` (`id`, `created_at`, `updated_at`, `platform_title`) VALUES
 (1, '2021-06-21 19:15:42', '2021-06-21 19:15:42', 'Playstation'),
@@ -77,11 +41,6 @@ INSERT INTO `platforms` (`id`, `created_at`, `updated_at`, `platform_title`) VAL
 (21, '2021-06-21 19:15:42', '2021-06-21 19:15:42', 'Nintendo 3 DS'),
 (22, '2021-06-21 19:49:15', '2021-06-21 19:49:15', 'PC');
 
-
---
--- Daten für Tabelle `media`
---
-
 INSERT INTO `media` (`id`, `created_at`, `updated_at`, `medium_name`, `picture_path`, `release_date`, `short_description`) VALUES
 (1, '2021-06-21 19:34:35', '2021-06-21 19:34:35', 'Aera', '1/poster.jpg', '2015-10-26', 'Im Jahr 2019 herrscht eine neue Weltordnung: Die Götter kehren auf die Erde zurück. Alle Götter – bis auf einen. Während Odin, Zeus, Manitu, Anubis, Shiva und Co. sich ihre alten Kultstätten zurückholen und ihre Anhänger um sich scharen, warten Christen, Moslems und Juden vergeblich. Die einst mächtigsten Religionen der Welt werden bald als bedeutungslose Sekten belächelt. Mit »AERA - Rückkehr der Götter« hat Markus Heitz einen neuen Kosmos geschaffen - ein großes Vergnügen für alle Fans von düsterer Spannung und filmreifer Action!'),
 (2, '2021-06-21 19:34:35', '2021-06-21 19:34:35', 'Wächter der Nacht', '2/poster.jpg', '2011-08-19', 'In Russland das Kultbuch schlechthin und erfolgreicher als »Der Herr der Ringe« oder »Harry Potter«: Sergej Lukianenkos »Wächter der Nacht« – eine einzigartige Mischung aus Fantasy und Horror über den ewigen Kampf zwischen den Mächten des Lichts und der Finsternis'),
@@ -97,52 +56,27 @@ INSERT INTO `media` (`id`, `created_at`, `updated_at`, `medium_name`, `picture_p
 (12, '2021-06-21 20:52:29', '2021-06-21 20:52:29', 'Braveheart', '12/poster.jpg', '1995-10-05', 'Schottland im 13. Jahrhundert. Der englische König Edward I. führt ein brutales Regiment über das Land. Als William Wallaces Frau von Truppen ermordet wird, schwört er auf Rache.'),
 (13, '2021-06-21 20:52:29', '2021-06-21 20:52:29', 'Rush Hour', '13/poster.jpg', '1998-09-18', 'Als diese beiden Cops aus völlig unterschiedlichen Welten temperamentvoll aneinander geraten, sorgt der Kulturschock für die Erkenntnis, dass sie nur Eines gemeinsam haben.');
 
---
--- Daten für Tabelle `series`
---
-
 INSERT INTO `series` (`age_restriction`, `average_length`, `is_completed`, `id`, `network_id`) VALUES
 (12, NULL, b'1', 7, NULL);
 
---
--- Daten für Tabelle `seasons`
---
-
 INSERT INTO `seasons` (`id`, `created_at`, `updated_at`, `season_number`, `season_title`, `series_id`) VALUES
 (1, '2021-06-21 20:25:06', '2021-06-21 20:25:06', 1, 'Staffel 1', 7);
-
---
--- Daten für Tabelle `books`
---
 
 INSERT INTO `books` (`isebook`, `is_print`, `isbn`, `number_of_pages`, `id`, `book_publisher_id`) VALUES
 (b'1', b'1', '978-3-426-51861-8', 600, 1, 1),
 (b'1', b'1', '978-3-641-06578-2', 528, 2, 2),
 (b'1', b'1', '978-3-446-45793-5', 435, 3, 3);
 
-
---
--- Daten für Tabelle `episodes`
---
-
 INSERT INTO `episodes` (`episode_number`, `length`, `id`, `season_id`) VALUES
 (1, 22, 8, 1),
 (2, 21, 9, 1),
 (3, 21, 10, 1);
-
---
--- Daten für Tabelle `games`
---
 
 INSERT INTO `games` (`age_restriction`, `average_playtime`, `max_number_of_gamers`, `min_number_of_gamers`, `id`, `game_publisher_id`) VALUES
 (12, NULL, NULL, 1, 4, 3),
 (12, 17, 2, 2, 5, 2),
 (12, 40, 4, 1, 6, 1);
 
-
---
--- Daten für Tabelle `genres`
---
 
 INSERT INTO `genres` (`id`, `created_at`, `updated_at`, `genre_name`) VALUES
 (1, '2021-06-21 20:45:25', '2021-06-21 20:45:25', 'Komödie'),
@@ -156,9 +90,6 @@ INSERT INTO `genres` (`id`, `created_at`, `updated_at`, `genre_name`) VALUES
 (9, '2021-06-21 20:45:25', '2021-06-21 20:45:25', 'SiFi'),
 (10, '2021-06-21 20:45:25', '2021-06-21 20:45:25', 'Adventure');
 
---
--- Daten für Tabelle `genres_media`
---
 
 INSERT INTO `genres_media` (`genres_id`, `media_id`) VALUES
 (1, 7),
@@ -169,9 +100,6 @@ INSERT INTO `genres_media` (`genres_id`, `media_id`) VALUES
 (8, 4),
 (10, 5);
 
---
--- Daten für Tabelle `languages`
---
 
 INSERT INTO `languages` (`id`, `created_at`, `updated_at`, `language`) VALUES
 (1, '2021-06-21 20:43:48', '2021-06-21 20:43:48', 'Deutsch'),
@@ -185,9 +113,6 @@ INSERT INTO `languages` (`id`, `created_at`, `updated_at`, `language`) VALUES
 (9, '2021-06-21 20:43:48', '2021-06-21 20:43:48', 'Dänisch'),
 (10, '2021-06-21 20:43:48', '2021-06-21 20:43:48', 'Türkisch');
 
---
--- Daten für Tabelle `languages_media`
---
 
 INSERT INTO `languages_media` (`languages_id`, `media_id`) VALUES
 (1, 1),
@@ -196,38 +121,22 @@ INSERT INTO `languages_media` (`languages_id`, `media_id`) VALUES
 (1, 12),
 (2, 12);
 
---
--- Daten für Tabelle `movies`
---
 
 INSERT INTO `movies` (`age_restriction`, `length`, `id`, `network_id`) VALUES
 (16, 89, 11, NULL),
 (16, 177, 12, NULL),
 (12, 98, 13, NULL);
 
---
--- Daten für Tabelle `persons`
---
 
 INSERT INTO `persons` (`id`, `created_at`, `updated_at`, `birth_date`, `first_name`, `last_name`) VALUES
 (2, '2021-06-21 19:25:27', '2021-06-21 19:25:27', '1971-10-10', 'Markus', 'Heitz'),
 (3, '2021-06-21 19:27:09', '2021-06-21 19:27:09', '1968-04-11', 'Sergei', 'Lukjanenko');
 
---
--- Daten für Tabelle `person_assignments`
---
 
 INSERT INTO `person_assignments` (`id`, `created_at`, `updated_at`, `is_actor`, `is_author`, `is_director`, `is_producer`, `medium_id`, `person_id`) VALUES
 (5, '2021-06-21 19:18:28', '2021-06-21 19:18:28', b'0', b'1', b'0', b'0', NULL, 2),
 (13, '2021-06-21 19:28:05', '2021-06-21 19:28:05', NULL, b'1', NULL, NULL, NULL, 3);
 
---
--- Daten für Tabelle `platforms_media`
---
-
---
--- Daten für Tabelle `roles`
---
 
 INSERT INTO `roles` (`id`, `created_at`, `updated_at`, `role_name`) VALUES
 (1, '2021-06-21 19:17:34', '2021-06-21 19:17:34', 'User'),
@@ -235,31 +144,9 @@ INSERT INTO `roles` (`id`, `created_at`, `updated_at`, `role_name`) VALUES
 (3, '2021-06-21 19:17:34', '2021-06-21 19:17:34', 'Moderator'),
 (4, '2021-06-21 19:17:34', '2021-06-21 19:17:34', 'Customer');
 
---
--- Daten für Tabelle `logins`
---
-
-INSERT INTO `logins` (`id`, `created_at`, `updated_at`, `email`, `failed_login_count`, `is_enabled`, `last_login`, `password_hash`, `password_reset_created_at`, `password_reset_hash`) VALUES
-(1, '2021-06-30 20:35:49', '2021-06-30 20:38:04', 'chris@rays.com', 0, b'0', NULL, '$2a$10$j9UIcuHfJV9ENas.kAW8pevUCibNKIaeUxo3ABdPanvleQNXk860G', NULL, NULL),
-(2, '2021-06-30 20:38:56', '2021-06-30 20:38:56', 'robin@rays.com', 0, b'0', NULL, '$2a$10$j9UIcuHfJV9ENas.kAW8pevUCibNKIaeUxo3ABdPanvleQNXk860G', NULL, NULL),
-(3, '2021-06-30 20:39:20', '2021-06-30 20:39:20', 'mickey@rays.com', 0, b'0', NULL, '$2a$10$j9UIcuHfJV9ENas.kAW8pevUCibNKIaeUxo3ABdPanvleQNXk860G', NULL, NULL),
-(4, '2021-06-30 20:39:41', '2021-06-30 20:39:41', 'john@rays.com', 0, b'0', NULL, '$2a$10$j9UIcuHfJV9ENas.kAW8pevUCibNKIaeUxo3ABdPanvleQNXk860G', NULL, NULL),
-(5, '2021-06-30 20:40:12', '2021-06-30 20:40:12', 'schnoernia@web.com', 0, b'0', NULL, '$2a$10$j9UIcuHfJV9ENas.kAW8pee/MdD.dmDeUAYJoi9x.zk675pfblLK6', NULL, NULL),
-(6, '2021-06-30 20:40:47', '2021-06-30 20:40:47', 'r.kruse@web.com', 0, b'0', NULL, '$2a$10$j9UIcuHfJV9ENas.kAW8pee/MdD.dmDeUAYJoi9x.zk675pfblLK6', NULL, NULL);
-
---
--- Daten für Tabelle `users`
---
 
 INSERT INTO `users` (`id`, `created_at`, `updated_at`, `first_name`, `gender`, `last_name`, `profile_picture_path`, `second_name`, `user_name`, `login_id`) VALUES
-(1, '2021-06-30 20:35:49', '2021-06-30 20:35:49', 'Christoph', 'male', 'Frischmuth', NULL, '', 'ChrisTheSquirrel', 1),
-(2, '2021-06-30 20:38:56', '2021-06-30 20:38:56', 'Robin', 'male', 'beck', NULL, '', 'LittleBigPlaye', 2),
-(3, '2021-06-30 20:39:20', '2021-06-30 20:39:20', 'Mickey', 'male', 'Knop', NULL, '', 'mikmin', 3),
-(4, '2021-06-30 20:39:41', '2021-06-30 20:39:41', 'John', 'male', 'Klippstein', NULL, '', 'Avartos', 4),
-(5, '2021-06-30 20:40:12', '2021-06-30 20:40:12', 'Saskia', 'female', 'Wohlers', NULL, '', 'Schnoernia', 5),
-(6, '2021-06-30 20:40:47', '2021-06-30 20:40:47', 'Rolf', 'male', 'Kruse', NULL, '', 'Rolf_Kruse', 6);
+(1, '2021-06-21 21:17:56', '2021-06-21 21:17:56', 'Super', 'männlich', 'Typ', NULL, NULL, 'SuperTyp', NULL),
+(2, '2021-06-21 21:17:56', '2021-06-21 21:17:56', 'Maxima', 'weiblich', 'Musterfrau', NULL, NULL, 'BadWomand78', NULL),
+(3, '2021-06-21 21:17:56', '2021-06-21 21:17:56', 'Kevin', 'divers', 'Kevinson', NULL, NULL, 'DoedelDoedler', NULL);
 COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

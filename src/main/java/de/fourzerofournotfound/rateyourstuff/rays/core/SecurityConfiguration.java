@@ -45,6 +45,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        http.httpBasic().disable();
         http.csrf().disable()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST,"/authenticate").permitAll()
@@ -63,7 +64,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         try{
             web.ignoring()
-                    .antMatchers("/rest/**", "/images/media/**");
+                    .antMatchers("/rest/**", "/images/media/**", "/user/add", "/authenticate/**");
         } catch(Exception e) {
             throw new Exception("Cant ignore URL", e);
         }

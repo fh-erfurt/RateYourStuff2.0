@@ -1,4 +1,4 @@
-package de.fourzerofournotfound.rateyourstuff.rays.services;
+package de.fourzerofournotfound.rateyourstuff.rays.services.isbn;
 
 import de.fourzerofournotfound.rateyourstuff.rays.models.Book;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.BookRepository;
