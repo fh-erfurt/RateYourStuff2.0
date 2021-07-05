@@ -4,16 +4,6 @@ public class AuthenticationRequest {
 
     private String username;
     private String password;
-    private boolean isAdmin;
-
-
-    public boolean isAdmin() {
-        return isAdmin;
-    }
-
-    public void setAdmin(boolean admin) {
-        isAdmin = admin;
-    }
 
     public AuthenticationRequest() {
     }

@@ -45,9 +45,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        http.cors();
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST,"/authenticate").permitAll()
+                .antMatchers("/authenticate").permitAll()
+                //.antMatchers("/user/**").permitAll()
                 .anyRequest().authenticated()
                 .and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
@@ -63,7 +65,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         try{
             web.ignoring()
-                    .antMatchers("/rest/**", "/images/media/**", "/user/add", "/authenticate/**");
+                    .antMatchers("/rest/**", "/images/media/**", "/user/add");
         } catch(Exception e) {
             throw new Exception("Cant ignore URL", e);
         }

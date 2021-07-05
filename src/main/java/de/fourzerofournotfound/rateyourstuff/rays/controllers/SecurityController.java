@@ -8,6 +8,7 @@ import de.fourzerofournotfound.rateyourstuff.rays.repositories.UserRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.services.AppUserDetailService;
 import de.fourzerofournotfound.rateyourstuff.rays.services.UserService;
 import de.fourzerofournotfound.rateyourstuff.rays.util.JwtUtil;
+import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -36,6 +37,8 @@ public class SecurityController {
     @Autowired
     private UserService userService;
 
+    User validUser;
+
     @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
     public ResponseEntity<AuthenticationResponse> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
@@ -48,15 +51,15 @@ public class SecurityController {
         }
         final UserDetails userDetails = appUserDetailService
                 .loadUserByUsername(authenticationRequest.getUsername());
-        final String jwt = jwtTokenUtil.generateToken(userDetails);
+
+        Optional<User> user = userRepository.findByUserName(authenticationRequest.getUsername());
+
+        //Save Optional User in User Object validUser
+        user.ifPresent(value -> validUser = value);
+
+        final String jwt = jwtTokenUtil.generateToken(userDetails, validUser);
+
 
         return ResponseEntity.ok(new AuthenticationResponse(jwt));
-    }
-
-    @RequestMapping(value = "/uId={getUserIdByUserName}", method = RequestMethod.POST)
-    ResponseEntity<Long> getUserIdByUsername (@PathVariable String getUserIdByUserName) throws UserNotFoundException {
-        Optional<User> givenUser = userRepository.findByUserName(getUserIdByUserName);
-        System.out.printf("Should getUid: " + userService.getIdByUser(givenUser));
-        return ResponseEntity.ok(userService.getIdByUser(givenUser));
     }
 }

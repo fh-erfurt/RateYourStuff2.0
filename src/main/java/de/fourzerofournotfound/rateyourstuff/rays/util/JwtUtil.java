@@ -1,8 +1,11 @@
 package de.fourzerofournotfound.rateyourstuff.rays.util;
 
+import de.fourzerofournotfound.rateyourstuff.rays.models.User;
+import de.fourzerofournotfound.rateyourstuff.rays.repositories.UserRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -11,6 +14,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
+
 
 @Service
 public class JwtUtil {
@@ -37,8 +41,16 @@ public class JwtUtil {
         return extractExpiration(token).before(new Date());
     }
 
-    public String generateToken(UserDetails userDetails) {
+    /**
+     * Function generates token for JWT
+     * @param userDetails for given Username
+     * @param user for different claims
+     * @return JWT - Token
+     */
+    public String generateToken(UserDetails userDetails, User user) {
         Map<String, Object> claims = new HashMap<>();
+        claims.put("id", user.getId());
+        claims.put("email", user.getLogin().getEmail());
         return createToken(claims, userDetails.getUsername());
     }
 
