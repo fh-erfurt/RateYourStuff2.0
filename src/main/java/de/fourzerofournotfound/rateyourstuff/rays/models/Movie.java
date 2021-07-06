@@ -1,5 +1,6 @@
 package de.fourzerofournotfound.rateyourstuff.rays.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -28,6 +29,7 @@ public class Movie extends Medium {
     @Column
     private Integer ageRestriction;
 
+    //@JsonManagedReference(value="movies-networks")
     @ManyToOne (cascade = CascadeType.PERSIST)
     @JoinColumn(name = "networkId", referencedColumnName = "id")
     private Network network;

@@ -3,6 +3,7 @@ package de.fourzerofournotfound.rateyourstuff.rays.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 
@@ -31,7 +32,7 @@ public class Language extends BaseModel {
     @Column(length = 200)
     private String language;
 
-    @JsonBackReference
+    //@JsonManagedReference(value="media-languages")
     @ManyToMany()
     Set<Medium> media;
 }

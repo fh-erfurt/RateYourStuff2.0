@@ -38,7 +38,7 @@ public class Season extends BaseModel {
         this.seasonTitle = seasonTitle;
     }
 
-    @JsonBackReference
+    //@JsonBackReference
     @ManyToOne (cascade = CascadeType.PERSIST)
     @JoinColumn(name = "seriesId", referencedColumnName = "id")
     private Medium medium;

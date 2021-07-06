@@ -7,7 +7,9 @@ import de.fourzerofournotfound.rateyourstuff.rays.models.Movie;
 import de.fourzerofournotfound.rateyourstuff.rays.models.errors.MovieNotFoundException;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.MovieRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.services.FileUploadService;
+import de.fourzerofournotfound.rateyourstuff.rays.services.MediaService;
 import de.fourzerofournotfound.rateyourstuff.rays.services.PageableService;
+import de.fourzerofournotfound.rateyourstuff.rays.services.errors.DuplicateMediumException;
 import de.fourzerofournotfound.rateyourstuff.rays.services.media.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -29,13 +31,15 @@ public class MovieController {
     private final FileUploadService fileUploadService;
     private final PageableService pageableService;
     private final MovieService movieService;
+    private final MediaService mediaService;
 
     @Autowired
-    public MovieController(MovieRepository repository, FileUploadService fus, PageableService pageableService, MovieService movieService) {
+    public MovieController(MovieRepository repository, FileUploadService fus, PageableService pageableService, MovieService movieService, MediaService mediaService) {
         this.movieRepository = repository;
         this.fileUploadService = fus;
         this.pageableService = pageableService;
         this.movieService = movieService;
+        this.mediaService = mediaService;
     }
 
     @GetMapping("/all")
@@ -78,8 +82,16 @@ public class MovieController {
     }
 
     @PostMapping(path="/add", consumes= "application/json", produces="application/json")
-    ResponseEntity<Movie> add(@RequestBody Movie movie) {
-        return ResponseEntity.ok(this.movieRepository.save(movie));
+    ResponseEntity<Movie> add(@RequestBody Movie movie) throws DuplicateMediumException {
+        if(this.mediaService.isValidMovie(movie)) {
+            this.movieRepository.save(movie);
+            movie.setGenres(this.mediaService.getGenresSet(movie.getGenreStrings(), movie));
+            movie.setLanguages(this.mediaService.getLanguageSet(movie.getLanguageStrings(), movie));
+            return ResponseEntity.ok(this.movieRepository.save(movie));
+        } else {
+            throw new DuplicateMediumException("The Movie " + movie.getMediumName() + " already exists.");
+        }
+
     }
 
     @PutMapping(consumes="application/json", produces="application/json")
@@ -92,8 +104,8 @@ public class MovieController {
         this.movieRepository.deleteById(id);
     }
 
-    @PutMapping("/images/{id}")
-    ResponseEntity<Movie> addImage(@RequestParam("image") MultipartFile multipartFile, @PathVariable Long id) throws IOException {
+    @PostMapping("/images/{id}")
+    ResponseEntity<Movie> addImage(@RequestParam(name="image") MultipartFile multipartFile, @PathVariable Long id) throws IOException {
         String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
         Optional<Movie> movie = this.movieRepository.findById(id);
         //check if the given movie exists

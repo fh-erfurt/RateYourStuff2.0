@@ -39,7 +39,7 @@ public class Book extends Medium{
     @Column(nullable = false)
     private Integer numberOfPages;
 
-    @JsonManagedReference
+    //@JsonManagedReference
     @ManyToOne (cascade = CascadeType.PERSIST)
     @JoinColumn(name = "bookPublisherId", referencedColumnName = "id")
     private BookPublisher bookPublisher;

@@ -29,7 +29,7 @@ public class Platform extends BaseModel {
     @Column (length = 250)
     private String platformTitle;
 
-    @JsonBackReference
+    //@JsonBackReference
     @ManyToMany
     Set<Medium> games;
 

@@ -1,5 +1,6 @@
 package de.fourzerofournotfound.rateyourstuff.rays.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
@@ -29,9 +30,11 @@ public class Network extends BaseModel {
     @Column
     private String networkTitle;
 
+    //@JsonBackReference(value="series-networks")
     @OneToMany (mappedBy = "network")
     private List<Series> series;
 
+    //@JsonBackReference(value="movies-networks")
     @OneToMany (mappedBy = "network")
     private List<Movie> movies;
 }

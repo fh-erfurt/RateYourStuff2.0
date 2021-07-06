@@ -22,6 +22,7 @@ import java.util.Set;
 @RequiredArgsConstructor
 @Builder
 @Table(name = "Comments")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Comment extends BaseModel {
 
     @Column(nullable = false, length = 10000)

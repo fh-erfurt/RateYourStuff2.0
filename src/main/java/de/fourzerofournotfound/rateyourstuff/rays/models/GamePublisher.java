@@ -31,7 +31,7 @@ public class GamePublisher extends BaseModel {
     @Column
     private String gamePublisherTitle;
 
-    @JsonBackReference
+    //@JsonBackReference
     @OneToMany (mappedBy = "gamePublisher")
     private List<Game> games = new ArrayList<>();
 
