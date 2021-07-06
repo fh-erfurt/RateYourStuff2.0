@@ -61,7 +61,7 @@ public abstract class MediumDto {
         if(mediumRatings != null) {
             int ratingSum = mediumRatings.stream().mapToInt(o -> o.getGivenPoints()).sum();
             if(mediumRatings.size() > 0) {
-                this.averageRating = ratingSum / mediumRatings.size();
+                this.averageRating = (float)ratingSum / mediumRatings.size();
             }
         } else {
             averageRating = 0;
