@@ -11,7 +11,7 @@ public class PageableService {
         Pageable pageable;
         if(!orderBy.equals("")) {
             Sort sort;
-            if(order.toLowerCase().equals("asc")) {
+            if(order.equalsIgnoreCase("asc")) {
                 sort = Sort.by(Sort.Direction.ASC, orderBy);
             } else {
                 sort = Sort.by(Sort.Direction.DESC, orderBy);

@@ -9,8 +9,12 @@ import org.springframework.stereotype.Service;
 
 @Service("seriesService")
 public class SeriesService {
+    private final ModelMapper modelMapper;
+
     @Autowired
-    ModelMapper modelMapper;
+    public SeriesService(ModelMapper modelMapper) {
+        this.modelMapper = modelMapper;
+    }
 
     /**
      * Converts a given movie to a movieDTO object to limit the data that gets sent to the client

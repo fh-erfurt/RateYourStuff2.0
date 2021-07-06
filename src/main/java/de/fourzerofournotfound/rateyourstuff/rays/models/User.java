@@ -25,7 +25,7 @@ public class User extends BaseModel {
     @Column(length = 200)
     private String lastName;
 
-    @Column(length = 200, nullable = true) //Mark: Changed to nullable | 26.05.2021
+    @Column(length = 200)
     private String secondName;
 
     @Column(length = 200, nullable = false, unique = true)

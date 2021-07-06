@@ -12,7 +12,6 @@ import java.util.Set;
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Builder
-//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Table(name = "Comments")
 public class Comment extends BaseModel {
 

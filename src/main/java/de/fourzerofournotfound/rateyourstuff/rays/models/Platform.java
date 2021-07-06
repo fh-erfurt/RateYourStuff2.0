@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -21,10 +20,6 @@ public class Platform extends BaseModel {
 
     @Column (length = 250)
     private String platformTitle;
-
-    //@JsonBackReference
-    //@OneToMany (mappedBy = "platform")
-    //private List<Game> games;
 
     @JsonBackReference
     @ManyToMany

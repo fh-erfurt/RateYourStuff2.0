@@ -1,19 +1,14 @@
 package de.fourzerofournotfound.rateyourstuff.rays.controllers;
 
 import de.fourzerofournotfound.rateyourstuff.rays.dtos.media.EpisodeDto;
-import de.fourzerofournotfound.rateyourstuff.rays.models.Book;
 import de.fourzerofournotfound.rateyourstuff.rays.models.Episode;
-import de.fourzerofournotfound.rateyourstuff.rays.models.Game;
 import de.fourzerofournotfound.rateyourstuff.rays.models.errors.EpisodeNotFoundException;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.EpisodeRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.services.FileUploadService;
 import de.fourzerofournotfound.rateyourstuff.rays.services.PageableService;
 import de.fourzerofournotfound.rateyourstuff.rays.services.media.EpisodeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -28,17 +24,21 @@ import java.util.stream.Collectors;
 @RequestMapping("/rest/episodes")
 public class EpisodeController {
 
-    @Autowired
-    private EpisodeRepository repository;
+    private final EpisodeRepository repository;
+    private final FileUploadService fus;
+    private final PageableService pageableService;
+    private final EpisodeService episodeService;
 
     @Autowired
-    private FileUploadService fus;
-
-    @Autowired
-    private PageableService pageableService;
-
-    @Autowired
-    private EpisodeService episodeService;
+    public EpisodeController(EpisodeRepository repository,
+                             FileUploadService fus,
+                             PageableService pageableService,
+                             EpisodeService episodeService) {
+        this.repository = repository;
+        this.fus = fus;
+        this.pageableService = pageableService;
+        this.episodeService = episodeService;
+    }
 
     @GetMapping("/all")
     ResponseEntity<List<EpisodeDto>> getAll(
@@ -106,13 +106,13 @@ public class EpisodeController {
 
     @PutMapping("/images/{id}")
     ResponseEntity<Episode> addImage(@RequestParam("image") MultipartFile multipartFile, @PathVariable Long id) throws IOException {
-        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+        String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
         Optional<Episode> episode = this.repository.findById(id);
         //check if the given movie exists
         if (episode.isPresent()) {
             episode.get().setPicturePath(episode.get().getId() + "/" + fileName);
             //define the target path
-            String uploadDir = Episode.IMAGE_PATH_PREFIX + id.toString();
+            String uploadDir = Episode.IMAGE_PATH_PREFIX + id;
             //upload the file
             fus.saveFile(uploadDir, fileName, multipartFile);
             return ResponseEntity.ok(this.repository.save(episode.get()));

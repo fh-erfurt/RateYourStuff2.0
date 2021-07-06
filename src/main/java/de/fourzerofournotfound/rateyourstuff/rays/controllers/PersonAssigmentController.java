@@ -1,21 +1,23 @@
 package de.fourzerofournotfound.rateyourstuff.rays.controllers;
 
 import de.fourzerofournotfound.rateyourstuff.rays.models.PersonAssignment;
-import de.fourzerofournotfound.rateyourstuff.rays.models.Platform;
 import de.fourzerofournotfound.rateyourstuff.rays.models.errors.PersonAssigmentNotFoundException;
-import de.fourzerofournotfound.rateyourstuff.rays.models.errors.PlatformNotFoundException;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.PersonAssigmentRepository;
-import de.fourzerofournotfound.rateyourstuff.rays.repositories.PlatformRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RestController
 public class PersonAssigmentController {
 
+    private final PersonAssigmentRepository personAssigmentRepository;
+
     @Autowired
-    PersonAssigmentRepository personAssigmentRepository;
+    public PersonAssigmentController(PersonAssigmentRepository personAssigmentRepository) {
+        this.personAssigmentRepository = personAssigmentRepository;
+    }
 
     @GetMapping("/all")
     ResponseEntity<List<PersonAssignment>> getAll() {

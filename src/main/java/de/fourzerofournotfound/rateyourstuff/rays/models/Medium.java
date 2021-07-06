@@ -1,14 +1,11 @@
 package de.fourzerofournotfound.rateyourstuff.rays.models;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
@@ -19,7 +16,6 @@ import java.util.Set;
 @RequiredArgsConstructor
 @Table(name = "Media")
 @Inheritance(strategy = InheritanceType.JOINED)
-//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public abstract class Medium extends BaseModel {
 
     @Column(nullable = false, length = 200)

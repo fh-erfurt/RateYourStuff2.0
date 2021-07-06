@@ -16,17 +16,21 @@ import java.util.Optional;
 
 @Service("cs")
 public class CommentService {
-    @Autowired
-    private CommentRepository commentRepository;
+    private final CommentRepository commentRepository;
+    private final MediaRepository mediaRepository;
+    private final UserRepository userRepository;
+    private final ModelMapper modelMapper;
 
     @Autowired
-    private MediaRepository mediaRepository;
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private ModelMapper modelMapper;
+    public CommentService(CommentRepository commentRepository,
+                          MediaRepository mediaRepository,
+                          UserRepository userRepository,
+                          ModelMapper modelMapper) {
+        this.commentRepository = commentRepository;
+        this.mediaRepository = mediaRepository;
+        this.userRepository = userRepository;
+        this.modelMapper = modelMapper;
+    }
 
     /**
      * Adds references for medium, user and parent-comment to the given comment
@@ -36,7 +40,7 @@ public class CommentService {
      * @throws InvalidCommentException  If either mediumId or userId are invalid
      */
     public Comment addReferencesToComment(Comment comment) throws InvalidCommentException {
-        Optional<Comment> parentComment = null;
+        Optional<Comment> parentComment = Optional.empty();
         if(comment.getParentMappingId() != null) {
             parentComment = commentRepository.findById(comment.getParentMappingId());
         }
@@ -47,9 +51,7 @@ public class CommentService {
         if(referencedMedium.isPresent() && referencedUser.isPresent()) {
             comment.setMedium(referencedMedium.get());
             comment.setUser(referencedUser.get());
-            if(parentComment.isPresent()) {
-                comment.setCommentParent(parentComment.get());
-            }
+            parentComment.ifPresent(comment::setCommentParent);
             return comment;
         }
         throw new InvalidCommentException("The given comment must have a valid mediumId and an valid userId");
@@ -61,8 +63,7 @@ public class CommentService {
      * @return          the corresponding dtoObject
      */
     public CommentDto convertToDto(Comment comment) {
-        CommentDto commentDto = modelMapper.map(comment, CommentDto.class);
-        return commentDto;
+        return modelMapper.map(comment, CommentDto.class);
     }
 
 }

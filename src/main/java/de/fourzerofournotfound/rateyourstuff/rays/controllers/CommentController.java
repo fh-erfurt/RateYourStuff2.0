@@ -1,17 +1,12 @@
 package de.fourzerofournotfound.rateyourstuff.rays.controllers;
 
 import de.fourzerofournotfound.rateyourstuff.rays.dtos.CommentDto;
-import de.fourzerofournotfound.rateyourstuff.rays.dtos.RatingDto;
 import de.fourzerofournotfound.rateyourstuff.rays.models.Comment;
-import de.fourzerofournotfound.rateyourstuff.rays.models.Rating;
-import de.fourzerofournotfound.rateyourstuff.rays.models.Season;
 import de.fourzerofournotfound.rateyourstuff.rays.models.errors.CommentNotFoundException;
-import de.fourzerofournotfound.rateyourstuff.rays.models.errors.SeasonNotFoundException;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.CommentRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.services.CommentService;
 import de.fourzerofournotfound.rateyourstuff.rays.services.PageableService;
 import de.fourzerofournotfound.rateyourstuff.rays.services.errors.InvalidCommentException;
-import org.apache.coyote.Response;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -26,17 +21,21 @@ import java.util.stream.Collectors;
 @RequestMapping("/rest/comments")
 public class CommentController {
 
-    @Autowired
-    CommentRepository commentRepository;
+    final CommentRepository commentRepository;
+    final ModelMapper modelMapper;
+    final PageableService pageableService;
+    final CommentService commentService;
 
     @Autowired
-    ModelMapper modelMapper;
-
-    @Autowired
-    PageableService pageableService;
-
-    @Autowired
-    CommentService commentService;
+    public CommentController(CommentRepository commentRepository,
+                             ModelMapper modelMapper,
+                             PageableService pageableService,
+                             CommentService commentService) {
+        this.commentRepository = commentRepository;
+        this.modelMapper = modelMapper;
+        this.pageableService = pageableService;
+        this.commentService = commentService;
+    }
 
     @GetMapping("/all")
     ResponseEntity<List<CommentDto>> getAll(
@@ -97,7 +96,7 @@ public class CommentController {
             @PathVariable Long parentId
     ) {
         Pageable pageable = pageableService.createPageable(orderBy, order, page, size);
-        List<Comment> comments = commentRepository.findAllByCommentParent(parentId, pageable).getContent();
+        List<Comment> comments = commentRepository.findAllByCommentParentId(parentId, pageable).getContent();
         return ResponseEntity.ok(
                 comments.stream()
                         .map(commentService::convertToDto)

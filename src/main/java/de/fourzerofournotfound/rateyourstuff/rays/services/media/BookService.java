@@ -1,9 +1,7 @@
 package de.fourzerofournotfound.rateyourstuff.rays.services.media;
 
 import de.fourzerofournotfound.rateyourstuff.rays.dtos.media.BookDto;
-import de.fourzerofournotfound.rateyourstuff.rays.dtos.media.EpisodeDto;
 import de.fourzerofournotfound.rateyourstuff.rays.models.Book;
-import de.fourzerofournotfound.rateyourstuff.rays.models.Episode;
 import de.fourzerofournotfound.rateyourstuff.rays.models.Rating;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +9,12 @@ import org.springframework.stereotype.Service;
 
 @Service("bookService")
 public class BookService {
+    private final ModelMapper modelMapper;
+
     @Autowired
-    ModelMapper modelMapper;
+    public BookService(ModelMapper modelMapper) {
+        this.modelMapper = modelMapper;
+    }
 
     /**
      * Converts a given book to a bookDTO object to limit the data that gets sent to the client

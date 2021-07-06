@@ -1,6 +1,5 @@
 package de.fourzerofournotfound.rateyourstuff.rays.repositories;
 
-import com.mysql.cj.log.Log;
 import de.fourzerofournotfound.rateyourstuff.rays.models.LoginRole;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
@@ -8,13 +7,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.stereotype.Repository;
-
-import javax.swing.text.html.Option;
 
 import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class LoginRoleRepositoryTest {
@@ -22,10 +16,10 @@ class LoginRoleRepositoryTest {
     @Autowired
     LoginRoleRepository loginRoleRepository;
 
-/*
+
     @BeforeEach
     public void BeforeEach(){loginRoleRepository.deleteAll();}
-*/
+
 
     @AfterEach
     public void AfterEach(){loginRoleRepository.deleteAll();}

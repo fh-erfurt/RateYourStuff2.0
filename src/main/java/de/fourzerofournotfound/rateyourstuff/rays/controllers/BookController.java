@@ -2,7 +2,6 @@ package de.fourzerofournotfound.rateyourstuff.rays.controllers;
 
 import de.fourzerofournotfound.rateyourstuff.rays.dtos.media.BookDto;
 import de.fourzerofournotfound.rateyourstuff.rays.models.Book;
-import de.fourzerofournotfound.rateyourstuff.rays.models.Game;
 import de.fourzerofournotfound.rateyourstuff.rays.models.errors.BookNotFoundException;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.BookRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.services.FileUploadService;
@@ -11,10 +10,7 @@ import de.fourzerofournotfound.rateyourstuff.rays.services.isbn.ISBNCheckService
 import de.fourzerofournotfound.rateyourstuff.rays.services.isbn.InvalidISBNException;
 import de.fourzerofournotfound.rateyourstuff.rays.services.media.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -29,20 +26,24 @@ import java.util.stream.Collectors;
 @RequestMapping("/rest/books")
 public class BookController {
 
-    @Autowired
-    private BookRepository repository;
+    private final BookRepository bookRepository;
+
+    private final FileUploadService fileUploadService;
+
+    private final ISBNCheckService isbnCheckService;
+
+    private final PageableService pageableService;
+
+    private final BookService bookService;
 
     @Autowired
-    private FileUploadService fus;
-
-    @Autowired
-    private ISBNCheckService ics;
-
-    @Autowired
-    private PageableService pageableService;
-
-    @Autowired
-    private BookService bookService;
+    public BookController(BookRepository bookRepository, FileUploadService fileUploadService, ISBNCheckService isbnCheckService, PageableService pageableService, BookService bookService) {
+        this.bookRepository = bookRepository;
+        this.fileUploadService = fileUploadService;
+        this.isbnCheckService = isbnCheckService;
+        this.pageableService = pageableService;
+        this.bookService = bookService;
+    }
 
     @GetMapping("/all")
     ResponseEntity<List<BookDto>> getAll(
@@ -52,14 +53,14 @@ public class BookController {
             @RequestParam(defaultValue = "asc") String order
     ) {
         Pageable pageable = pageableService.createPageable(orderBy, order, page, size);
-        List<Book> books = this.repository.findAll(pageable).getContent();
+        List<Book> books = this.bookRepository.findAll(pageable).getContent();
         return ResponseEntity.ok(
                 books.stream().map(bookService::convertToDto).collect(Collectors.toList()));
     }
 
     @GetMapping("/{id}")
     ResponseEntity<BookDto> getById(@PathVariable Long id) throws BookNotFoundException {
-        Optional<Book> book = this.repository.findById(id);
+        Optional<Book> book = this.bookRepository.findById(id);
         if(book.isPresent()) {
             BookDto bookDto = bookService.convertToDto(book.get());
             return ResponseEntity.ok(bookDto);
@@ -70,7 +71,7 @@ public class BookController {
 
     @GetMapping()
     ResponseEntity<BookDto> findByTitle(@RequestParam(value = "title") String title) throws BookNotFoundException {
-        Optional<Book> book = this.repository.findByMediumName(title);
+        Optional<Book> book = this.bookRepository.findByMediumName(title);
         if(book.isPresent()) {
             BookDto bookDto = bookService.convertToDto(book.get());
             return ResponseEntity.ok(bookDto);
@@ -81,8 +82,8 @@ public class BookController {
 
     @PostMapping(path="/add", consumes= "application/json", produces="application/json")
     ResponseEntity<Book> add(@RequestBody Book book) throws InvalidISBNException {
-        if(ics.checkIfISBNisValid(book)) {
-            return ResponseEntity.ok(this.repository.save(book));
+        if(isbnCheckService.checkIfISBNisValid(book)) {
+            return ResponseEntity.ok(this.bookRepository.save(book));
         } else {
             throw new InvalidISBNException("The ISBN " + book.getIsbn() + " is not valid");
         }
@@ -90,8 +91,8 @@ public class BookController {
 
     @PutMapping(consumes="application/json", produces="application/json")
     ResponseEntity<Book> update(@RequestBody Book book) throws InvalidISBNException {
-        if(ics.checkIfISBNisValid(book)) {
-            return ResponseEntity.ok(this.repository.save(book));
+        if(isbnCheckService.checkIfISBNisValid(book)) {
+            return ResponseEntity.ok(this.bookRepository.save(book));
         } else {
             throw new InvalidISBNException("The ISBN " + book.getIsbn() + " is not valid");
         }
@@ -99,22 +100,22 @@ public class BookController {
 
     @DeleteMapping("/{id}")
     void deleteBook (@PathVariable Long id) {
-        this.repository.deleteById(id);
+        this.bookRepository.deleteById(id);
     }
 
     @PutMapping("/images/{id}")
     ResponseEntity<Book> addImage(@RequestParam("image") MultipartFile multipartFile, @PathVariable Long id) throws IOException {
-        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-        Optional<Book> book = this.repository.findById(id);
-        //check if the given movie exists
-        if(book.isPresent()) {
-            book.get().setPicturePath(book.get().getId() + "/" + fileName);
-            //define the target path
-            String uploadDir = Book.IMAGE_PATH_PREFIX + id.toString();
-            //upload the file
-            fus.saveFile(uploadDir, fileName, multipartFile);
-            return ResponseEntity.ok(this.repository.save(book.get()));
-        }
+            String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
+            Optional<Book> book = this.bookRepository.findById(id);
+            //check if the given movie exists
+            if(book.isPresent()) {
+                book.get().setPicturePath(book.get().getId() + "/" + fileName);
+                //define the target path
+                String uploadDir = Book.IMAGE_PATH_PREFIX + id;
+                //upload the file
+                fileUploadService.saveFile(uploadDir, fileName, multipartFile);
+                return ResponseEntity.ok(this.bookRepository.save(book.get()));
+            }
         return ResponseEntity.badRequest().build();
     }
 }

@@ -2,7 +2,6 @@ package de.fourzerofournotfound.rateyourstuff.rays.repositories;
 
 import de.fourzerofournotfound.rateyourstuff.rays.models.Login;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +17,7 @@ class LoginRepositoryTest {
     LoginRepository loginRepository;
 
     @BeforeEach
-    public void beforeEach() {loginRepository.deleteAll();};
+    public void beforeEach() {loginRepository.deleteAll();}
 
     @Test
     public void should_add_new_login_profile()
