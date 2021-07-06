@@ -4,8 +4,11 @@ import de.fourzerofournotfound.rateyourstuff.rays.models.User;
 import de.fourzerofournotfound.rateyourstuff.rays.models.errors.UserNotFoundException;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.UserRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.services.errors.InvalidUserException;
+import de.fourzerofournotfound.rateyourstuff.rays.services.errors.UserAlreadyExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
@@ -26,6 +29,7 @@ public class UserController {
     @Autowired
     UserSecurityService userSecurityService;
 
+
     @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/all")
     ResponseEntity<List<User>> getAll(){
@@ -35,6 +39,17 @@ public class UserController {
     @GetMapping("/id={id}")
     ResponseEntity<User> getById(@PathVariable Long id) throws UserNotFoundException {
         return ResponseEntity.ok((this.repository.findById(id).orElseThrow(()-> new UserNotFoundException("No User found for given id"))));
+    }
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @GetMapping("/check/is={userName}")
+    ResponseEntity<Boolean> getUsername(@PathVariable String userName) throws UserAlreadyExistsException {
+        Optional<User> user = repository.findByUserNameIgnoreCase(userName);
+        if(user.isPresent()){
+            throw new UserAlreadyExistsException("User tried to sign up with already taken userName: @" + userName);
+        } else {
+            return ResponseEntity.ok(true);
+        }
     }
 
     @CrossOrigin(origins = "http://localhost:3000")

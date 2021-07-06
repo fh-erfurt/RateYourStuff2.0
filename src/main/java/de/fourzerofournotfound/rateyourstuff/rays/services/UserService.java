@@ -43,13 +43,4 @@ public class UserService {
             throw new InvalidLoginException("The given login must have a valid loginId");
         }
     }
-
-    public Long getIdByUser(Optional<User> user) throws UserNotFoundException {
-        if(user.isPresent()){
-            return user.get().getId();
-        } else {
-            throw new UserNotFoundException("No valid user!");
-        }
-    }
-
 }

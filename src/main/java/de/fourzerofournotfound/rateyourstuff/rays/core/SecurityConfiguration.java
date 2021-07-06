@@ -49,7 +49,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/authenticate").permitAll()
-                //.antMatchers("/user/**").permitAll()
                 .anyRequest().authenticated()
                 .and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
@@ -65,12 +64,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         try{
             web.ignoring()
-                    .antMatchers("/rest/**", "/images/media/**", "/user/add");
+                    .antMatchers("/rest/**", "/images/media/**", "/user/add", "/user/check/**");
         } catch(Exception e) {
             throw new Exception("Cant ignore URL", e);
         }
 
     }
+
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {
