@@ -2,8 +2,6 @@
 [![Build Status](https://github.com/fh-erfurt/RateYourStuff//workflows/build/badge.svg)](https://github.com/fh-erfurt/RateYourStuff/actions)
 [![Docs](https://img.shields.io/badge/javadoc-see%20here-9cf.svg?style=flat&logo=java)](https://fh-erfurt.github.io/RateYourStuff)
 
-SpringFox: http://localhost:5000/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config
-
 Projekt, um verschiedene Arten von Multimedia zu bewerten und Ihre aktuellen Fortschritte zu teilen.
 
 Und wer sind die Köpfe hinter dieser großartigen und überwältigend Idee?
@@ -11,6 +9,45 @@ Und wer sind die Köpfe hinter dieser großartigen und überwältigend Idee?
 - Christoph Frischmuth
 - Mickey Knop
 - John Klippstein
+
+## Installation
+### Backend
+#### Datenbank
+Der Server ist konfiguriert, um mit einer mariaDB Datenbank zu kommunizieren. Hierbei sind folgende Eckpunkte wichtig:
+- Datenbankname: ratedatabase (wird automatisch angelegt)
+- Serveradresse: localhost
+- Serverport: 3603
+- Nutzername: root
+- Passwort: (kein Passwort)
+
+Hinweis: Für das Durchlaufen der Testfälle, wird eine extra Datenbank namens "ratedatabasetest" angelegt.
+
+#### REST-API
+Nachdem ein entsprechender Datenbankserver bereitgestellt wurde, kann die Spring-Anwendung gestartet werden.
+Beim Start der Anwendung werden die Tabellen, sofern noch nicht vorhanden, automatisch angelegt.
+Sobald die Tabellen angelegt wurden, kann das Script "data.sql", welches sich im src-Ordner befindet, über z. B. phpmyadmin importiert werden. (in dem Skript befinden sich die Testdaten. Die Testdaten bitte nur in die Datenbank "ratedatabase" importieren.
+
+Der Server ist anschließend unter dem Port 5000 erreichbar.
+
+Über http://localhost:5000/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config können die zur Verfügung stehenden Schnittstellen eingesehen werden.
+
+#### Frontend:
+Das Frontend kann über das Repository https://github.com/Avartos/rateyourstufffrontendwebapp heruntergeladen werden.
+Bitte beachten Sie, dass zum Ausführen des Frontends nodejs benötigt wird. Sobald das Frontend heruntergeladen wurde, müssen mithilfe des Befehls 
+```
+npm install
+```
+fehlende Abhängigkeiten nachinstalliert werden. (Die Abhängigkeiten werden automatisch geladen und installiert, sobald der Befehl eingegeben wurde.)
+Sobald alle Pakete nachinstalliert wurden, kann das Frontend mithilfe von 
+```
+npm start
+```
+gestartet werden. Für gewöhnlich sollte sich ein Browserfenster mit der Startseite der Anwendung öffnen. Sollte dies nicht der Fall sein, so ist das Frontend über:
+http://localhost:3000 erreichbar.
+
+Da sowohl Front- als auch Backend auf dem selben Server betrieben werden, kann es zu Problemen durch CORS kommen. CORS ist zwar im Backend für diesen Fall deaktiviert worden, kann aber ggf. dennoch Probleme verursachen. In diesem Fall sollte eine entsprechende Browsererweiterung nachinstalliert werden, um CORS Fehle rzu vermeiden.
+
+
 
 ## Einleitung
 <details>
