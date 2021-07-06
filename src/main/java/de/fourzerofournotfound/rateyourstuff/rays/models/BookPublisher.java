@@ -10,6 +10,14 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * <h1>BookPublisher</h1>
+ * <p>This Model represents a book publisher. Each book can have one publisher</p>
+ * @author Christoph Frischmuth
+ * @author John Klippstein
+ * @author Mickey Knop
+ * @author Robin Beck
+ */
 @Entity
 @Getter
 @Setter

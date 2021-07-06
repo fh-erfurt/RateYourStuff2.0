@@ -9,6 +9,15 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * <h1>Medium</h1>
+ * <p>This Model represents a medium.
+ * The medium contains all attributes that are important for books, games, series, episodes, movies.</p>
+ * @author Christoph Frischmuth
+ * @author John Klippstein
+ * @author Mickey Knop
+ * @author Robin Beck
+ */
 @Getter
 @Setter
 @Entity

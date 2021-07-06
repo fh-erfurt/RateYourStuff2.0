@@ -7,6 +7,13 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.Set;
 
+/**
+ * <h1>User</h1>
+ * @author Christoph Frischmuth
+ * @author John Klippstein
+ * @author Mickey Knop
+ * @author Robin Beck
+ */
 @Builder
 @Getter
 @Setter

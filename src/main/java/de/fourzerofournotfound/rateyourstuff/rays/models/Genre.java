@@ -6,6 +6,14 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.Set;
 
+/**
+ * <h1>Genre</h1>
+ * <p>This Model represents a genre. Each medium can have multiple genres</p>
+ * @author Christoph Frischmuth
+ * @author John Klippstein
+ * @author Mickey Knop
+ * @author Robin Beck
+ */
 @Getter
 @Setter
 @Entity

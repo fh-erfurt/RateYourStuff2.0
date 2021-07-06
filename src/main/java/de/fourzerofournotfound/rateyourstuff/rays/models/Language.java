@@ -9,6 +9,15 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.Set;
 
+/**
+ * <h1>Language</h1>
+ * <p>This Model represents a language. The language described in which languages a medium is available in.
+ * A medium can have multiple languages.</p>
+ * @author Christoph Frischmuth
+ * @author John Klippstein
+ * @author Mickey Knop
+ * @author Robin Beck
+ */
 @Getter
 @Setter
 @Entity

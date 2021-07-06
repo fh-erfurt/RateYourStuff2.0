@@ -7,6 +7,14 @@ import lombok.*;
 
 import javax.persistence.*;
 
+/**
+ * <h1>Rating</h1>
+ * <p>This Model represents a Rating.</p>
+ * @author Christoph Frischmuth
+ * @author John Klippstein
+ * @author Mickey Knop
+ * @author Robin Beck
+ */
 @Getter
 @Setter
 @Entity

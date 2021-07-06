@@ -6,6 +6,14 @@ import lombok.*;
 
 import javax.persistence.*;
 
+/**
+ * <h1>Progress</h1>
+ * <p>This Model represents a progress. Progresses can be added to media to keep track of the current progress while reading, playing,...</p>
+ * @author Christoph Frischmuth
+ * @author John Klippstein
+ * @author Mickey Knop
+ * @author Robin Beck
+ */
 @Getter
 @Setter
 @Entity
