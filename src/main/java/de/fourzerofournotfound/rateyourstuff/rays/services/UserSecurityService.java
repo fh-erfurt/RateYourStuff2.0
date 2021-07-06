@@ -2,7 +2,6 @@ package de.fourzerofournotfound.rateyourstuff.rays.services;
 
 import de.fourzerofournotfound.rateyourstuff.rays.models.Login;
 import de.fourzerofournotfound.rateyourstuff.rays.models.User;
-import de.fourzerofournotfound.rateyourstuff.rays.services.errors.InvalidPasswordException;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
@@ -31,11 +30,8 @@ public class UserSecurityService {
 
     public void changePassword(String currentPassword, String newPassword, User user)
     {
-        if(isValidPassword(currentPassword, user))
-        {
+        if(isValidPassword(currentPassword, user)) {
             user.getLogin().setPasswordHash(BCrypt.hashpw(newPassword, passwordSalt));
-        } else {
-            //throw new InvalidPasswordException("Incorrect password");
         }
     }
 }

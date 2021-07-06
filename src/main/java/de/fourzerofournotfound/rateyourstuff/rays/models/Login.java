@@ -3,21 +3,27 @@ package de.fourzerofournotfound.rateyourstuff.rays.models;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Data
+/**
+ * <h1>Login</h1>
+ * <p>This Model represents a Login. A login contains the login information for a specific user, such as the password</p>
+ * @author Christoph Frischmuth
+ * @author John Klippstein
+ * @author Mickey Knop
+ * @author Robin Beck
+ */
 @Entity
 @Builder
 @AllArgsConstructor
 @RequiredArgsConstructor
+@Getter
+@Setter
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Table(name = "Logins")
 public class Login extends BaseModel {
@@ -25,8 +31,6 @@ public class Login extends BaseModel {
     @Column
     private LocalDateTime lastLogin;
 
-    //TODO: Why should "isEnabled" be false from the beginning?
-    // Is it because of the user have to validate his mail before the account will be enabled?
     @Column(nullable = false)
     @ColumnDefault("false")
     private Boolean isEnabled;
@@ -39,10 +43,10 @@ public class Login extends BaseModel {
     @Builder.Default
     private Integer failedLoginCount = 0;
 
-    @Column(nullable = false, length = 255)
+    @Column(nullable = false)
     private String passwordHash;
 
-    @Column(length = 255)
+    @Column()
     private String passwordResetHash;
 
     @Column

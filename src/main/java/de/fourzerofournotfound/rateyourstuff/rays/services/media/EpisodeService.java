@@ -9,8 +9,12 @@ import org.springframework.stereotype.Service;
 
 @Service("episodeService")
 public class EpisodeService {
+    private final ModelMapper modelMapper;
+
     @Autowired
-    ModelMapper modelMapper;
+    public EpisodeService(ModelMapper modelMapper) {
+        this.modelMapper = modelMapper;
+    }
 
     /**
      * Converts a given episode to a episodeDTO object to limit the data that gets sent to the client

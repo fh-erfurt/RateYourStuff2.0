@@ -4,6 +4,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * This Config is used to provide a Model Mapper
+ */
 @Configuration
 public class ModelMapperConfig {
     @Bean

@@ -1,9 +1,7 @@
 package de.fourzerofournotfound.rateyourstuff.rays.repositories;
 
 import de.fourzerofournotfound.rateyourstuff.rays.models.Login;
-import lombok.extern.java.Log;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -14,7 +12,6 @@ import java.util.Optional;
 
 @Repository
 public interface LoginRepository extends JpaRepository<Login, Long> {
-    public Optional<Login> findByEmail(String Email);
-
-    public Optional<Login> findLoginByEmailNotIgnoreCase(String email);
+    Optional<Login> findByEmail(String Email);
+    Optional<Login> findLoginByEmailNotIgnoreCase(String email);
 }

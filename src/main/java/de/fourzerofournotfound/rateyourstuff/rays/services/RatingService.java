@@ -16,17 +16,18 @@ import java.util.Optional;
 
 @Service("rs")
 public class RatingService {
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+    private final MediaRepository mediaRepository;
+    private final ModelMapper modelMapper;
 
     @Autowired
-    private MediaRepository mediaRepository;
-
-    @Autowired
-    private RatingRepository ratingRepository;
-
-    @Autowired
-    private ModelMapper modelMapper;
+    public RatingService(UserRepository userRepository,
+                         MediaRepository mediaRepository,
+                         ModelMapper modelMapper) {
+        this.userRepository = userRepository;
+        this.mediaRepository = mediaRepository;
+        this.modelMapper = modelMapper;
+    }
 
     /**
      * Limits the given Points of a given Rating to the defined minimum and maximum
@@ -65,7 +66,6 @@ public class RatingService {
      * @return          the corresponding dtoObject
      */
     public RatingDto convertToDto(Rating rating) {
-        RatingDto ratingDto = modelMapper.map(rating, RatingDto.class);
-        return ratingDto;
+        return modelMapper.map(rating, RatingDto.class);
     }
 }

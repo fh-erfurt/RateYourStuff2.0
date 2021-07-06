@@ -8,43 +8,47 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
+
 
 @RestController
 @RequestMapping("/rest/seasons")
 public class SeasonController {
 
+    private final SeasonRepository seasonRepository;
+
     @Autowired
-    SeasonRepository repository;
+    public SeasonController(SeasonRepository seasonRepository) {
+        this.seasonRepository = seasonRepository;
+    }
 
     @GetMapping("/all")
     ResponseEntity<List<Season>> getAll() {
-        return ResponseEntity.ok(this.repository.findAll());
+        return ResponseEntity.ok(this.seasonRepository.findAll());
     }
 
     @GetMapping("/{id}")
     ResponseEntity<Season> getById (@PathVariable Long id) throws SeasonNotFoundException {
-        return ResponseEntity.ok(this.repository.findById(id).orElseThrow(() -> new SeasonNotFoundException("No Season found for id " + id)));
+        return ResponseEntity.ok(this.seasonRepository.findById(id).orElseThrow(() -> new SeasonNotFoundException("No Season found for id " + id)));
     }
 
     @GetMapping("/series/{id}")
     ResponseEntity<List<Season>> getByMediumId (@PathVariable Long id) throws SeasonNotFoundException {
-        return ResponseEntity.ok(this.repository.findAllByMediumId(id));
+        return ResponseEntity.ok(this.seasonRepository.findAllByMediumId(id));
     }
 
     @PostMapping(path="/add", consumes= "application/json", produces="application/json")
     ResponseEntity<Season> add(@RequestBody Season season) {
-        return ResponseEntity.ok(this.repository.save(season));
+        return ResponseEntity.ok(this.seasonRepository.save(season));
     }
 
     @PutMapping(consumes="application/json", produces="application/json")
     ResponseEntity<Season> update(@RequestBody Season season) {
-        return ResponseEntity.ok(this.repository.save(season));
+        return ResponseEntity.ok(this.seasonRepository.save(season));
     }
 
     @DeleteMapping("/{id}")
     void deleteSeason (@PathVariable Long id) {
-        this.repository.deleteById(id);
+        this.seasonRepository.deleteById(id);
     }
 
 }

@@ -8,6 +8,14 @@ import javax.persistence.*;
 import java.sql.Date;
 import java.util.List;
 
+/**
+ * <h1>Person</h1>
+ * <p>This Model represents a Person. A Person can be assigned to different media.</p>
+ * @author Christoph Frischmuth
+ * @author John Klippstein
+ * @author Mickey Knop
+ * @author Robin Beck
+ */
 @Getter
 @Setter
 @Entity

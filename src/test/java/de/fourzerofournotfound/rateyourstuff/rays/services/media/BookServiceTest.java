@@ -30,7 +30,7 @@ public class BookServiceTest {
         //Given
         Book book = Book.builder()
                 .mediumName("Halo - The fall of reach")
-                .releaseDate(LocalDate.of(2005,02,07))
+                .releaseDate(LocalDate.of(2005,2,7))
                 .shortDescription("The official prequel to the award-winning Xbox(TM) game, one of the bestselling computer games of recent years.")
                 .isEBook(false)
                 .isPrint(true)

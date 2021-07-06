@@ -3,17 +3,13 @@ package de.fourzerofournotfound.rateyourstuff.rays.controllers;
 
 import de.fourzerofournotfound.rateyourstuff.rays.dtos.media.GameDto;
 import de.fourzerofournotfound.rateyourstuff.rays.models.Game;
-import de.fourzerofournotfound.rateyourstuff.rays.models.Series;
 import de.fourzerofournotfound.rateyourstuff.rays.models.errors.GameNotFoundException;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.GameRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.services.FileUploadService;
 import de.fourzerofournotfound.rateyourstuff.rays.services.PageableService;
 import de.fourzerofournotfound.rateyourstuff.rays.services.media.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -28,17 +25,24 @@ import java.util.stream.Collectors;
 @RequestMapping("/rest/games")
 public class GameController {
 
-    @Autowired
-    GameRepository repository;
+    final GameRepository gameRepository;
+
+    final FileUploadService fileUploadService;
+
+    final PageableService pageableService;
+
+    final GameService gameService;
 
     @Autowired
-    FileUploadService fus;
-
-    @Autowired
-    PageableService pageableService;
-
-    @Autowired
-    GameService gameService;
+    public GameController(GameRepository gameRepository,
+                          FileUploadService fileUploadService,
+                          PageableService pageableService,
+                          GameService gameService) {
+        this.gameRepository = gameRepository;
+        this.fileUploadService = fileUploadService;
+        this.pageableService = pageableService;
+        this.gameService = gameService;
+    }
 
     @GetMapping("/all")
     ResponseEntity<List<GameDto>> getAll(
@@ -48,14 +52,14 @@ public class GameController {
             @RequestParam(defaultValue = "asc") String order
     ) {
         Pageable pageable = pageableService.createPageable(orderBy, order, page, size);
-        List<Game> games = this.repository.findAll(pageable).getContent();
+        List<Game> games = this.gameRepository.findAll(pageable).getContent();
         return ResponseEntity.ok(
                 games.stream().map(gameService::convertToDto).collect(Collectors.toList()));
     }
 
     @GetMapping("/{id}")
     ResponseEntity<GameDto> getById(@PathVariable Long id) throws GameNotFoundException {
-        Optional<Game> game = this.repository.findById(id);
+        Optional<Game> game = this.gameRepository.findById(id);
         if (game.isPresent()) {
             GameDto gameDto = gameService.convertToDto(game.get());
             return ResponseEntity.ok(gameDto);
@@ -66,7 +70,7 @@ public class GameController {
 
     @GetMapping()
     ResponseEntity<GameDto> findByTitle(@RequestParam(value = "title") String title) throws GameNotFoundException {
-        Optional<Game> game = this.repository.findByMediumName(title);
+        Optional<Game> game = this.gameRepository.findByMediumName(title);
         if (game.isPresent()) {
             GameDto gameDto = gameService.convertToDto(game.get());
             return ResponseEntity.ok(gameDto);
@@ -77,31 +81,31 @@ public class GameController {
 
     @PostMapping(path="/add", consumes= "application/json", produces="application/json")
     ResponseEntity<Game> add(@RequestBody Game game) {
-        return ResponseEntity.ok(this.repository.save(game));
+        return ResponseEntity.ok(this.gameRepository.save(game));
     }
 
     @PutMapping(consumes="application/json", produces="application/json")
     ResponseEntity<Game> update(@RequestBody Game game) {
-        return ResponseEntity.ok(this.repository.save(game));
+        return ResponseEntity.ok(this.gameRepository.save(game));
     }
 
     @DeleteMapping("/{id}")
     void deleteGame (@PathVariable Long id) {
-        this.repository.deleteById(id);
+        this.gameRepository.deleteById(id);
     }
 
     @PutMapping("/images/{id}")
     ResponseEntity<Game> addImage(@RequestParam("image") MultipartFile multipartFile, @PathVariable Long id) throws IOException {
-        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-        Optional<Game> game = this.repository.findById(id);
+        String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
+        Optional<Game> game = this.gameRepository.findById(id);
         //check if the given movie exists
         if(game.isPresent()) {
             game.get().setPicturePath(game.get().getId() + "/" + fileName);
             //define the target path
-            String uploadDir = Game.IMAGE_PATH_PREFIX + id.toString();
+            String uploadDir = Game.IMAGE_PATH_PREFIX + id;
             //upload the file
-            fus.saveFile(uploadDir, fileName, multipartFile);
-            return ResponseEntity.ok(this.repository.save(game.get()));
+            fileUploadService.saveFile(uploadDir, fileName, multipartFile);
+            return ResponseEntity.ok(this.gameRepository.save(game.get()));
         }
         return ResponseEntity.badRequest().build();
     }

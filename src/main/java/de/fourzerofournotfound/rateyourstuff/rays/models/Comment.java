@@ -6,13 +6,21 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.Set;
 
+/**
+ * <h1>Comment</h1>
+ * <p>This Model represents a Comment. A Comment is assigned to a medium.
+ * A comment can also have a parent comment.</p>
+ * @author Christoph Frischmuth
+ * @author John Klippstein
+ * @author Mickey Knop
+ * @author Robin Beck
+ */
 @Getter
 @Setter
 @Entity
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Builder
-//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Table(name = "Comments")
 public class Comment extends BaseModel {
 

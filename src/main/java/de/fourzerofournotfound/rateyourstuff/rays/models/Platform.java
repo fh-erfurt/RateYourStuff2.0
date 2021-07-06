@@ -6,9 +6,16 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Set;
 
+/**
+ * <h1>Platform</h1>
+ * <p>This Model represents a platform. A platform defines the device on which a game can be played.</p>
+ * @author Christoph Frischmuth
+ * @author John Klippstein
+ * @author Mickey Knop
+ * @author Robin Beck
+ */
 @Getter
 @Setter
 @Entity
@@ -21,10 +28,6 @@ public class Platform extends BaseModel {
 
     @Column (length = 250)
     private String platformTitle;
-
-    //@JsonBackReference
-    //@OneToMany (mappedBy = "platform")
-    //private List<Game> games;
 
     @JsonBackReference
     @ManyToMany

@@ -1,47 +1,35 @@
 package de.fourzerofournotfound.rateyourstuff.rays.controllers;
 
 import de.fourzerofournotfound.rateyourstuff.rays.dtos.RatingDto;
-import de.fourzerofournotfound.rateyourstuff.rays.models.Comment;
-import de.fourzerofournotfound.rateyourstuff.rays.models.Medium;
 import de.fourzerofournotfound.rateyourstuff.rays.models.Rating;
-import de.fourzerofournotfound.rateyourstuff.rays.models.User;
-import de.fourzerofournotfound.rateyourstuff.rays.models.errors.CommentNotFoundException;
 import de.fourzerofournotfound.rateyourstuff.rays.models.errors.RatingNotFoundException;
-import de.fourzerofournotfound.rateyourstuff.rays.repositories.MediaRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.RatingRepository;
-import de.fourzerofournotfound.rateyourstuff.rays.repositories.UserRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.services.PageableService;
 import de.fourzerofournotfound.rateyourstuff.rays.services.RatingService;
 import de.fourzerofournotfound.rateyourstuff.rays.services.errors.InvalidRatingException;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Properties;
 import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/rest/ratings")
 public class RatingController {
 
-    @Autowired
-    RatingRepository ratingRepository;
+    private final RatingRepository ratingRepository;
+    private final PageableService pageableService;
+    private final RatingService ratingService;
 
     @Autowired
-    private ModelMapper modelMapper;
-
-    @Autowired
-    private PageableService pageableService;
-
-    @Autowired
-    private RatingService ratingService;
+    public RatingController(RatingRepository ratingRepository, PageableService pageableService, RatingService ratingService) {
+        this.ratingRepository = ratingRepository;
+        this.pageableService = pageableService;
+        this.ratingService = ratingService;
+    }
 
     @GetMapping("/all")
     ResponseEntity<List<RatingDto>> getAll(

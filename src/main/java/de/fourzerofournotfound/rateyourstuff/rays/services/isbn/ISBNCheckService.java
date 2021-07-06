@@ -1,8 +1,6 @@
 package de.fourzerofournotfound.rateyourstuff.rays.services.isbn;
 
 import de.fourzerofournotfound.rateyourstuff.rays.models.Book;
-import de.fourzerofournotfound.rateyourstuff.rays.repositories.BookRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service("ics")

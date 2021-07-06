@@ -15,16 +15,20 @@ import java.util.Optional;
 @Service("ms")
 public class MediaService {
 
-    private BookRepository bookRepository;
-    private GameRepository gameRepository;
-    private MovieRepository movieRepository;
-    private SeriesRepository seriesRepository;
-    private EpisodeRepository episodeRepository;
-    private SeasonRepository seasonRepository;
+    private final BookRepository bookRepository;
+    private final GameRepository gameRepository;
+    private final MovieRepository movieRepository;
+    private final SeriesRepository seriesRepository;
+    private final EpisodeRepository episodeRepository;
+    private final SeasonRepository seasonRepository;
 
     @Autowired
-    public void MediaService(BookRepository bookRepository, GameRepository gameRepository, MovieRepository movieRepository,
-                             SeriesRepository seriesRepository, EpisodeRepository episodeRepository, SeasonRepository seasonRepository)
+    public MediaService(BookRepository bookRepository,
+                        GameRepository gameRepository,
+                        MovieRepository movieRepository,
+                        SeriesRepository seriesRepository,
+                        EpisodeRepository episodeRepository,
+                        SeasonRepository seasonRepository)
     {
         this.bookRepository = bookRepository;
         this.gameRepository = gameRepository;

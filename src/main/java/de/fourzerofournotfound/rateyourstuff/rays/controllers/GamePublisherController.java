@@ -14,34 +14,38 @@ import java.util.List;
 @RequestMapping("/gamePublishers-rest")
 public class GamePublisherController {
 
+    private final GamePublisherRepository gamePublisherRepository;
+
     @Autowired
-    GamePublisherRepository repository;
+    public GamePublisherController(GamePublisherRepository gamePublisherRepository) {
+        this.gamePublisherRepository = gamePublisherRepository;
+    }
 
     @GetMapping("/all")
     ResponseEntity<List<GamePublisher>> getAll() {
-        return ResponseEntity.ok(this.repository.findAll());
+        return ResponseEntity.ok(this.gamePublisherRepository.findAll());
     }
 
     @GetMapping("/{id}")
     ResponseEntity<GamePublisher> getById(@PathVariable Long id) throws GamePublisherNotFoundException {
-        return ResponseEntity.ok(this.repository.findById(id).orElseThrow(() -> new GamePublisherNotFoundException("No Publisher found for id " + id))); }
+        return ResponseEntity.ok(this.gamePublisherRepository.findById(id).orElseThrow(() -> new GamePublisherNotFoundException("No Publisher found for id " + id))); }
 
     @GetMapping()
     ResponseEntity<GamePublisher> findByTitle(@RequestParam(value = "title") String title) throws GamePublisherNotFoundException {
-        return ResponseEntity.ok(this.repository.findByGamePublisherTitle(title).orElseThrow(() -> new GamePublisherNotFoundException("No Publisher with title " + title))); }
+        return ResponseEntity.ok(this.gamePublisherRepository.findByGamePublisherTitle(title).orElseThrow(() -> new GamePublisherNotFoundException("No Publisher with title " + title))); }
 
     @PostMapping(path="/add", consumes= "application/json", produces="application/json")
     ResponseEntity<GamePublisher> add(@RequestBody GamePublisher gamePublisher) {
-        return ResponseEntity.ok(this.repository.save(gamePublisher));
+        return ResponseEntity.ok(this.gamePublisherRepository.save(gamePublisher));
     }
 
     @PutMapping(consumes="application/json", produces="application/json")
     ResponseEntity<GamePublisher> update(@RequestBody GamePublisher gamePublisher) {
-        return ResponseEntity.ok(this.repository.save(gamePublisher));
+        return ResponseEntity.ok(this.gamePublisherRepository.save(gamePublisher));
     }
 
     @DeleteMapping("/{id}")
     void deletePublisher (@PathVariable Long id) {
-        this.repository.deleteById(id);
+        this.gamePublisherRepository.deleteById(id);
     }
 }

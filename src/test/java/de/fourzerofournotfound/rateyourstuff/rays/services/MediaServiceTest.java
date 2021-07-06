@@ -9,10 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Set;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(properties = "spring.profiles.active = test")
 class MediaServiceTest {
@@ -53,7 +49,7 @@ class MediaServiceTest {
     void shouldFindDuplicatesOfGivenBook()
     {
         //Given
-        LocalDate release = LocalDate.of(2005,02,07);
+        LocalDate release = LocalDate.of(2005,2,7);
 
         Book testMedia = Book.builder()
                 .mediumName("Halo - The fall of reach")
@@ -71,15 +67,10 @@ class MediaServiceTest {
 
 
         //Then
-        /**
-         * @Test shows that isValidBook finds a duplicate of the given book already in saved database
-         * @returns false if media is already existent
-         */
+
+        //false if media is already existent
         Assertions.assertTrue(mediaService.isValidBook(testMedia));
-        /**
-         * @Test shows that isValidBook is detecting duplicates of a book which is already saved in database
-         * @returns false if media is already existent
-         */
+        //false if media is already existent
         Assertions.assertTrue(mediaService.isValidBook(saved));
     }
 

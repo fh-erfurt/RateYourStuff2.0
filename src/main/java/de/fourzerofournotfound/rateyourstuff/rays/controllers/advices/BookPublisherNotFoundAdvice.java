@@ -1,6 +1,5 @@
 package de.fourzerofournotfound.rateyourstuff.rays.controllers.advices;
 
-import de.fourzerofournotfound.rateyourstuff.rays.models.errors.EpisodeNotFoundException;
 import de.fourzerofournotfound.rateyourstuff.rays.models.errors.BookPublisherNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -13,7 +12,7 @@ public class BookPublisherNotFoundAdvice {
     @ResponseBody
     @ExceptionHandler(BookPublisherNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    String personNotFoundHandler(BookPublisherNotFoundException ex) {
+    String bookPublisherNotFoundHandler(BookPublisherNotFoundException ex) {
         return ex.getMessage();
     }
 }

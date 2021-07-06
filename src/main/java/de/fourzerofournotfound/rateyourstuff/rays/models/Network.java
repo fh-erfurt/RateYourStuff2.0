@@ -7,6 +7,15 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.List;
 
+/**
+ * <h1>Network</h1>
+ * <p>This Model represents a network.
+ * A network is the publisher of a series. (e.g. CBS, CWS, ABC, BBC...)</p>
+ * @author Christoph Frischmuth
+ * @author John Klippstein
+ * @author Mickey Knop
+ * @author Robin Beck
+ */
 @Getter
 @Setter
 @Entity
@@ -25,8 +34,4 @@ public class Network extends BaseModel {
 
     @OneToMany (mappedBy = "network")
     private List<Movie> movies;
-
-    public Network(String networkTitle) {
-        this.networkTitle = networkTitle;
-    }
 }
