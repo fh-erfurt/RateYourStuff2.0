@@ -23,6 +23,12 @@ public class UserService {
         this.loginRepository = loginRepository;
     }
 
+    /**
+     * Both Mehtods, addReferenceToUser and addReferenceToLogin saves Login ID and Created at if user will be updated in database
+     * @param user from api
+     * @return User object
+     * @throws InvalidUserException if UserId isn´t valid.
+     */
     public User addReferencesToUser(User user) throws InvalidUserException {
         Optional<User> tempUser = userRepository.findById(user.getId());
         Optional<Login> tempLogin = loginRepository.findById(tempUser.get().getLogin().getId());
