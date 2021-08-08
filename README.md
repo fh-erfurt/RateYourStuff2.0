@@ -1,5 +1,5 @@
 # RateYourStuff
-[![Build Status](https://github.com/fh-erfurt/RateYourStuff//workflows/build/badge.svg)](https://github.com/fh-erfurt/RateYourStuff/actions)
+[![Java CI with Maven](https://github.com/fh-erfurt/RateYourStuff2.0/actions/workflows/maven.yml/badge.svg)](https://github.com/fh-erfurt/RateYourStuff2.0/actions/workflows/maven.yml)
 [![Docs](https://img.shields.io/badge/javadoc-see%20here-9cf.svg?style=flat&logo=java)](https://fh-erfurt.github.io/RateYourStuff)
 
 Projekt, um verschiedene Arten von Multimedia zu bewerten und Ihre aktuellen Fortschritte zu teilen.
