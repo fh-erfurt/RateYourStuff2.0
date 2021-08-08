@@ -10,7 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Optional;
 
-@SpringBootTest
+@SpringBootTest(properties = "spring.profiles.active=test")
 class LoginRoleRepositoryTest {
 
     @Autowired
