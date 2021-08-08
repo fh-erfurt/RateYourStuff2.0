@@ -5,8 +5,7 @@ import de.fourzerofournotfound.rateyourstuff.rays.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * This Services are used to validate some media data which comes via rest api.
@@ -15,16 +14,24 @@ import java.util.Optional;
 @Service("ms")
 public class MediaService {
 
-    private BookRepository bookRepository;
-    private GameRepository gameRepository;
-    private MovieRepository movieRepository;
-    private SeriesRepository seriesRepository;
-    private EpisodeRepository episodeRepository;
-    private SeasonRepository seasonRepository;
+    private final BookRepository bookRepository;
+    private final GameRepository gameRepository;
+    private final MovieRepository movieRepository;
+    private final SeriesRepository seriesRepository;
+    private final EpisodeRepository episodeRepository;
+    private final SeasonRepository seasonRepository;
+    private final GenreRepository genreRepository;
+    private final LanguageRepository languageRepository;
 
     @Autowired
-    public void MediaService(BookRepository bookRepository, GameRepository gameRepository, MovieRepository movieRepository,
-                             SeriesRepository seriesRepository, EpisodeRepository episodeRepository, SeasonRepository seasonRepository)
+    public MediaService(BookRepository bookRepository,
+                        GameRepository gameRepository,
+                        MovieRepository movieRepository,
+                        SeriesRepository seriesRepository,
+                        EpisodeRepository episodeRepository,
+                        SeasonRepository seasonRepository,
+                        GenreRepository genreRepository,
+                        LanguageRepository languageRepository)
     {
         this.bookRepository = bookRepository;
         this.gameRepository = gameRepository;
@@ -32,7 +39,8 @@ public class MediaService {
         this.seriesRepository = seriesRepository;
         this.episodeRepository = episodeRepository;
         this.seasonRepository = seasonRepository;
-
+        this.genreRepository = genreRepository;
+        this.languageRepository = languageRepository;
     }
 
     /**
@@ -139,6 +147,42 @@ public class MediaService {
             optionalEpisode = episodeRepository.findEpisodeByMediumNameIgnoreCaseAndReleaseDateAndEpisodeNumber(episode.getMediumName(), episode.getReleaseDate(), episode.getEpisodeNumber());
         }
         return optionalEpisode.isEmpty();
+    }
+
+    public Set<Genre> getGenresSet(List<String> genreStrings, Medium medium) {
+        Set<Genre> genres = new HashSet<>();
+        for(String genre : genreStrings) {
+            Optional<Genre> foundGenre = genreRepository.findGenreByGenreName(genre);
+            if(foundGenre.isPresent()) {
+                foundGenre.get().getMedia().add(medium);
+                genres.add(foundGenre.get());
+            } else {
+                Genre newGenre = new Genre();
+                newGenre.setGenreName(genre);
+                newGenre.setMedia(new HashSet<Medium>());
+                newGenre.getMedia().add(medium);
+                genres.add(genreRepository.save(newGenre));
+            }
+        }
+        return genres;
+    }
+
+    public Set<Language> getLanguageSet(List<String> languageStrings, Medium medium) {
+        Set<Language> languages = new HashSet<>();
+        for(String language:  languageStrings) {
+            Optional<Language> foundLanguage = languageRepository.findLanguageByLanguage(language);
+            if(foundLanguage.isPresent()) {
+                foundLanguage.get().getMedia().add(medium);
+                languages.add(foundLanguage.get());
+            } else {
+                Language newLanguage = new Language();
+                newLanguage.setLanguage(language);
+                newLanguage.setMedia(new HashSet<>());
+                newLanguage.getMedia().add(medium);
+                languages.add(languageRepository.save(newLanguage));
+            }
+        }
+        return languages;
     }
 
 }

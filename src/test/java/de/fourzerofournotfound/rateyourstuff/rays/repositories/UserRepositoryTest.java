@@ -1,19 +1,15 @@
 package de.fourzerofournotfound.rateyourstuff.rays.repositories;
 
 import de.fourzerofournotfound.rateyourstuff.rays.models.Login;
-import de.fourzerofournotfound.rateyourstuff.rays.models.LoginRole;
 import de.fourzerofournotfound.rateyourstuff.rays.models.User;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(properties = "spring.profiles.active=test")
 public class UserRepositoryTest {

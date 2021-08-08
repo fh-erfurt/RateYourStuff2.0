@@ -5,12 +5,19 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 
-@Data
+/**
+ * <h1>Login Role</h1>
+ * <p>This Model represents a login role. The login role connects the login and the roles.
+ * It allows a single login to have multiple roles</p>
+ * @author Christoph Frischmuth
+ * @author John Klippstein
+ * @author Mickey Knop
+ * @author Robin Beck
+ */
 @Entity
 @Builder
 @AllArgsConstructor

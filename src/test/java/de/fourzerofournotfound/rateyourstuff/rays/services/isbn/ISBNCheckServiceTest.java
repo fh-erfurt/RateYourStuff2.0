@@ -1,10 +1,7 @@
 package de.fourzerofournotfound.rateyourstuff.rays.services.isbn;
 
 import de.fourzerofournotfound.rateyourstuff.rays.models.Book;
-import de.fourzerofournotfound.rateyourstuff.rays.repositories.BookRepository;
-import de.fourzerofournotfound.rateyourstuff.rays.services.isbn.ISBNCheckService;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

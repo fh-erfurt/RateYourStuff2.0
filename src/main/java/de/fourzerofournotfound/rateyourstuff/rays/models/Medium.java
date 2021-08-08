@@ -1,17 +1,23 @@
 package de.fourzerofournotfound.rateyourstuff.rays.models;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.*;
 import lombok.*;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * <h1>Medium</h1>
+ * <p>This Model represents a medium.
+ * The medium contains all attributes that are important for books, games, series, episodes, movies.</p>
+ * @author Christoph Frischmuth
+ * @author John Klippstein
+ * @author Mickey Knop
+ * @author Robin Beck
+ */
 @Getter
 @Setter
 @Entity
@@ -19,7 +25,7 @@ import java.util.Set;
 @RequiredArgsConstructor
 @Table(name = "Media")
 @Inheritance(strategy = InheritanceType.JOINED)
-//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public abstract class Medium extends BaseModel {
 
     @Column(nullable = false, length = 200)
@@ -44,19 +50,27 @@ public abstract class Medium extends BaseModel {
     @OneToMany(mappedBy = "medium")
     private Set<Comment> comments;
 
-    @JsonManagedReference
+    //@JsonManagedReference ("media-collections")
     @ManyToMany(mappedBy = "media")
     Set<Collection> collections;
 
-    @JsonManagedReference
-    @ManyToMany(mappedBy = "media")
+    //@JsonManagedReference ("media-genres")
+    @ManyToMany(mappedBy = "media", cascade = CascadeType.ALL)
     Set<Genre> genres;
 
-    @JsonManagedReference
-    @ManyToMany(mappedBy = "media")
+    @JsonInclude
+    @Transient
+    List<String> genreStrings;
+
+    //@JsonManagedReference ("media-languages")
+    @ManyToMany(mappedBy = "media", cascade = CascadeType.ALL)
     Set<Language> languages;
 
-    @JsonManagedReference
+    @JsonInclude
+    @Transient
+    List<String> languageStrings;
+
+    //@JsonBackReference("media-person")
     @OneToMany (mappedBy = "medium")
     private List<PersonAssignment> personAssignments;
 }

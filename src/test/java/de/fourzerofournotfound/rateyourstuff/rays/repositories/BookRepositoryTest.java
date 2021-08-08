@@ -6,8 +6,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -57,7 +55,6 @@ public class BookRepositoryTest {
         //Given
         Book given = new Book("Harry Potter und der Orden des Phönix", "bestes Buch der Reihe", LocalDate.now(), "3551555559", true, true, 1021);
         Book saved = bookRepository.save(given);
-        String initialDescription = saved.getShortDescription();
 
         //When
         String updatedShortDescription = "Ok, zweitbestes Halbblutprinz hat gerockt";

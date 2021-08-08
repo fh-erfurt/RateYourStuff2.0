@@ -1,5 +1,6 @@
 package de.fourzerofournotfound.rateyourstuff.rays.models;
 
+//TODO: to be commented
 public class AuthenticationRequest {
 
     private String username;

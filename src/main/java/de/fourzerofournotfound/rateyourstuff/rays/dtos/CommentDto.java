@@ -1,12 +1,10 @@
 package de.fourzerofournotfound.rateyourstuff.rays.dtos;
 
-import de.fourzerofournotfound.rateyourstuff.rays.models.Comment;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Set;
 
 @Getter
 @Setter

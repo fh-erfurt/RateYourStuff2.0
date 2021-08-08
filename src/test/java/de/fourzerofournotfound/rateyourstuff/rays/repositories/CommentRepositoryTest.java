@@ -7,8 +7,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.time.LocalDateTime;
-
 @SpringBootTest(properties = "spring.profiles.active=test")
 public class CommentRepositoryTest {
 
@@ -22,8 +20,6 @@ public class CommentRepositoryTest {
     public void should_save_comment(){
 
         //Given
-        LocalDateTime localDateTime = LocalDateTime.now();
-
         Comment given = Comment.builder()
                 .textOfComment("Ich bin ein blöder Kommentar den eh keiner liest.")
                 .build();

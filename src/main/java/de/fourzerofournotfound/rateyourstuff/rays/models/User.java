@@ -7,6 +7,13 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.Set;
 
+/**
+ * <h1>User</h1>
+ * @author Christoph Frischmuth
+ * @author John Klippstein
+ * @author Mickey Knop
+ * @author Robin Beck
+ */
 @Builder
 @Getter
 @Setter
@@ -25,7 +32,7 @@ public class User extends BaseModel {
     @Column(length = 200)
     private String lastName;
 
-    @Column(length = 200, nullable = true) //Mark: Changed to nullable | 26.05.2021
+    @Column(length = 200)
     private String secondName;
 
     @Column(length = 200, nullable = false, unique = true)

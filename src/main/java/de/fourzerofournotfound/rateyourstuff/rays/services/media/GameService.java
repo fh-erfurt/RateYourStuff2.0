@@ -9,8 +9,12 @@ import org.springframework.stereotype.Service;
 
 @Service("gameService")
 public class GameService {
+    private final ModelMapper modelMapper;
+
     @Autowired
-    ModelMapper modelMapper;
+    public GameService(ModelMapper modelMapper) {
+        this.modelMapper = modelMapper;
+    }
 
     /**
      * Converts a given game to a gameDTO object to limit the data that gets sent to the client

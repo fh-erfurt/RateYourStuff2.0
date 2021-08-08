@@ -17,7 +17,7 @@ public class FileUploadService {
      * @param uploadDir     the target directory
      * @param fileName      the desired name of the file
      * @param multipartFile the file that should be uploaded
-     * @throws IOException
+     * @throws IOException if the saving process encounters problems
      */
     public void saveFile(String uploadDir, String fileName, MultipartFile multipartFile) throws IOException {
         Path uploadPath = Paths.get(uploadDir);

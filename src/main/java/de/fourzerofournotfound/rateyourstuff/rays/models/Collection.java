@@ -7,6 +7,14 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.Set;
 
+/**
+ * <h1>Collection</h1>
+ * <p>This Model represents a Collection. A Collection is a set of different media (e. g. books, games, series)</p>
+ * @author Christoph Frischmuth
+ * @author John Klippstein
+ * @author Mickey Knop
+ * @author Robin Beck
+ */
 @Getter
 @Setter
 @Entity

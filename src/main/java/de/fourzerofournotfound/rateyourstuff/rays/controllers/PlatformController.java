@@ -8,14 +8,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
-@RequestMapping("/platforms-rest")
+@RequestMapping("/rest/platforms")
 public class PlatformController {
 
+    private final PlatformRepository repository;
+
     @Autowired
-    PlatformRepository repository;
+    public PlatformController(PlatformRepository repository) {
+        this.repository = repository;
+    }
 
     @GetMapping("/all")
     ResponseEntity<List<Platform>> getAll() {

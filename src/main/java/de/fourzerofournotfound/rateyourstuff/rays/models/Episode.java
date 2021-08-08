@@ -1,21 +1,22 @@
 package de.fourzerofournotfound.rateyourstuff.rays.models;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Set;
 
+/**
+ * <h1>Episode</h1>
+ * @author Christoph Frischmuth
+ * @author John Klippstein
+ * @author Mickey Knop
+ * @author Robin Beck
+ */
 @Getter
 @Setter
 @Entity
 @AllArgsConstructor
 @RequiredArgsConstructor
-//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Table(name = "Episodes")
 public class Episode extends Medium {
 

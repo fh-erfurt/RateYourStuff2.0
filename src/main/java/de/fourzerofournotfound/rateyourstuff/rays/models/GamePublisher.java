@@ -11,8 +11,15 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
+/**
+ * <h1>GamePublisher</h1>
+ * <p>This Model represents a game publisher. Each game can have one publisher</p>
+ * @author Christoph Frischmuth
+ * @author John Klippstein
+ * @author Mickey Knop
+ * @author Robin Beck
+ */
 @Entity
 @Getter
 @Setter
@@ -24,12 +31,9 @@ public class GamePublisher extends BaseModel {
     @Column
     private String gamePublisherTitle;
 
-    @JsonBackReference
+    //@JsonBackReference
     @OneToMany (mappedBy = "gamePublisher")
     private List<Game> games = new ArrayList<>();
-
-    /*@ManyToMany
-    Set<Game> games;*/
 
     @Builder
     public GamePublisher(String gamePublisherTitle) {

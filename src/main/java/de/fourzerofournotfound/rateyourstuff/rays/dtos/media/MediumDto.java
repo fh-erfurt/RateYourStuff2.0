@@ -42,7 +42,7 @@ public abstract class MediumDto {
 
     public void setLanguages(Set<Language> languages) {
         if(languages != null) {
-            this.languages = languages.stream().map(o -> o.getLanguage()).collect(Collectors.toList());
+            this.languages = languages.stream().map(Language::getLanguage).collect(Collectors.toList());
         } else {
             this.languages = new ArrayList<>();
         }
@@ -51,7 +51,7 @@ public abstract class MediumDto {
 
     public void setGenres(Set<Genre> genres) {
         if(genres != null) {
-            this.genres = genres.stream().map(o -> o.getGenreName()).collect(Collectors.toList());
+            this.genres = genres.stream().map(Genre::getGenreName).collect(Collectors.toList());
         } else {
             this.genres = new ArrayList<>();
         }
@@ -59,9 +59,9 @@ public abstract class MediumDto {
 
     public void setAverageRating(Set<Rating> mediumRatings) {
         if(mediumRatings != null) {
-            int ratingSum = mediumRatings.stream().mapToInt(o -> o.getGivenPoints()).sum();
+            int ratingSum = mediumRatings.stream().mapToInt(Rating::getGivenPoints).sum();
             if(mediumRatings.size() > 0) {
-                this.averageRating = ratingSum / mediumRatings.size();
+                this.averageRating = (float)ratingSum / mediumRatings.size();
             }
         } else {
             averageRating = 0;

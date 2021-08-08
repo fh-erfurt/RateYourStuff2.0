@@ -1,20 +1,23 @@
 package de.fourzerofournotfound.rateyourstuff.rays.models;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
+/**
+ * <h1>Movie</h1>
+ * @author Christoph Frischmuth
+ * @author John Klippstein
+ * @author Mickey Knop
+ * @author Robin Beck
+ */
 @Getter
 @Setter
 @Entity
 @AllArgsConstructor
 @RequiredArgsConstructor
-//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Table(name = "Movies")
 public class Movie extends Medium {
 
@@ -26,6 +29,7 @@ public class Movie extends Medium {
     @Column
     private Integer ageRestriction;
 
+    //@JsonManagedReference(value="movies-networks")
     @ManyToOne (cascade = CascadeType.PERSIST)
     @JoinColumn(name = "networkId", referencedColumnName = "id")
     private Network network;
