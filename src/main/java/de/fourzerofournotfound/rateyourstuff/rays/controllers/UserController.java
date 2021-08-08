@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.Optional;
 
 import de.fourzerofournotfound.rateyourstuff.rays.services.UserSecurityService;
 import de.fourzerofournotfound.rateyourstuff.rays.services.UserService;
@@ -45,7 +46,7 @@ public class UserController {
     @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/check/is={userName}")
     ResponseEntity<Boolean> getUsername(@PathVariable String userName) throws UserAlreadyExistsException {
-        Optional<User> user = repository.findByUserNameIgnoreCase(userName);
+        Optional<User> user = userRepository.findByUserNameIgnoreCase(userName);
         if(user.isPresent()){
             throw new UserAlreadyExistsException("User tried to sign up with already taken userName: @" + userName);
         } else {
