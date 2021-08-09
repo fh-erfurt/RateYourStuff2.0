@@ -29,7 +29,7 @@ public class Genre extends BaseModel {
     @Column(nullable = false, length = 45)
     private String genreName;
 
-    //@JsonManagedReference(value="media-genres")
+    @JsonBackReference(value="media-genres")
     @ManyToMany
     Set<Medium> media;
 }

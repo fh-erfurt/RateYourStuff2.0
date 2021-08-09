@@ -2,18 +2,24 @@ package de.fourzerofournotfound.rateyourstuff.rays.services.media;
 
 import de.fourzerofournotfound.rateyourstuff.rays.dtos.media.MovieDto;
 import de.fourzerofournotfound.rateyourstuff.rays.models.Movie;
+import de.fourzerofournotfound.rateyourstuff.rays.models.Network;
 import de.fourzerofournotfound.rateyourstuff.rays.models.Rating;
+import de.fourzerofournotfound.rateyourstuff.rays.repositories.NetworkRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service("mos")
 public class MovieService {
     private final ModelMapper modelMapper;
+    private final NetworkRepository networkRepository;
 
     @Autowired
-    public MovieService(ModelMapper modelMapper) {
+    public MovieService(ModelMapper modelMapper, NetworkRepository networkRepository) {
         this.modelMapper = modelMapper;
+        this.networkRepository = networkRepository;
     }
 
     /**
@@ -30,5 +36,13 @@ public class MovieService {
         movieDto.setNumberOfComments(movie.getComments());
         movieDto.setNumberOfCollections(movie.getCollections());
         return movieDto;
+    }
+
+    public Network getNetwork(String networkTitle, Movie movie) {
+        Optional<Network> network = networkRepository.findByNetworkTitle(networkTitle);
+        if(network.isPresent()) {
+            return network.get();
+        }
+        return null;
     }
 }

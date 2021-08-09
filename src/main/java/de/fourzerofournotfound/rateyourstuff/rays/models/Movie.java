@@ -1,10 +1,12 @@
 package de.fourzerofournotfound.rateyourstuff.rays.models;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  * <h1>Movie</h1>
@@ -33,6 +35,10 @@ public class Movie extends Medium {
     @ManyToOne (cascade = CascadeType.PERSIST)
     @JoinColumn(name = "networkId", referencedColumnName = "id")
     private Network network;
+
+    @JsonInclude
+    @Transient
+    String networkTitle;
 
     @Builder
     public Movie(String mediumName, String shortDescription, LocalDate releaseDate, Integer length, Integer ageRestriction) {
