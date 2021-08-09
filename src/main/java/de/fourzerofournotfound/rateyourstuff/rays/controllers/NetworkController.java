@@ -1,47 +1,46 @@
 package de.fourzerofournotfound.rateyourstuff.rays.controllers;
 
+import de.fourzerofournotfound.rateyourstuff.rays.dtos.media.NetworkDto;
+import de.fourzerofournotfound.rateyourstuff.rays.models.Genre;
 import de.fourzerofournotfound.rateyourstuff.rays.models.Network;
-import de.fourzerofournotfound.rateyourstuff.rays.models.errors.NetworkNotFoundException;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.NetworkRepository;
+import de.fourzerofournotfound.rateyourstuff.rays.services.PageableService;
+import de.fourzerofournotfound.rateyourstuff.rays.services.media.NetworkService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/networks-rest")
+@RequestMapping("/rest/networks")
 public class NetworkController {
 
     private final NetworkRepository networkRepository;
+    private final PageableService pageableService;
+    private final NetworkService networkService;
 
     @Autowired
-    public NetworkController(NetworkRepository repository) {
+    public NetworkController(NetworkRepository repository, PageableService pageableService, NetworkService networkService) {
         this.networkRepository = repository;
+        this.pageableService = pageableService;
+        this.networkService = networkService;
     }
 
     @GetMapping("/all")
-    ResponseEntity<List<Network>> getAll() {
-        return ResponseEntity.ok(this.networkRepository.findAll());
-    }
+    ResponseEntity<List<NetworkDto>> getAll(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "50") int size,
+            @RequestParam(defaultValue = "") String orderBy,
+            @RequestParam(defaultValue = "asc") String order
+    ) {
+        Pageable pageable = pageableService.createPageable(orderBy, order, page, size);
+        List<Network> networks = this.networkRepository.findAll(pageable).getContent();
 
-    @GetMapping("/{id}")
-    ResponseEntity<Network> getById (@PathVariable Long id) throws NetworkNotFoundException {
-        return ResponseEntity.ok(this.networkRepository.findById(id).orElseThrow(() -> new NetworkNotFoundException("No Network found for id " + id)));
-    }
-
-    @PostMapping(path="/add", consumes= "application/json", produces="application/json")
-    ResponseEntity<Network> add(@RequestBody Network network) {
-        return ResponseEntity.ok(this.networkRepository.save(network));
-    }
-
-    @PutMapping(consumes="application/json", produces="application/json")
-    ResponseEntity<Network> update(@RequestBody Network network) {
-        return ResponseEntity.ok(this.networkRepository.save(network));
-    }
-
-    @DeleteMapping("/{id}")
-    void delete (@PathVariable Long id) {
-        this.networkRepository.deleteById(id);
+        return ResponseEntity.ok(networks.stream()
+                .map(networkService::convertToDto)
+                .collect(Collectors.toList()));
     }
 }

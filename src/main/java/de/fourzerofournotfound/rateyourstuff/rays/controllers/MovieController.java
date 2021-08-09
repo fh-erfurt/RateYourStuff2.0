@@ -87,6 +87,7 @@ public class MovieController {
             this.movieRepository.save(movie);
             movie.setGenres(this.mediaService.getGenresSet(movie.getGenreStrings(), movie));
             movie.setLanguages(this.mediaService.getLanguageSet(movie.getLanguageStrings(), movie));
+            movie.setNetwork(this.movieService.getNetwork(movie.getNetworkTitle(), movie));
             return ResponseEntity.ok(this.movieRepository.save(movie));
         } else {
             throw new DuplicateMediumException("The Movie " + movie.getMediumName() + " already exists.");
