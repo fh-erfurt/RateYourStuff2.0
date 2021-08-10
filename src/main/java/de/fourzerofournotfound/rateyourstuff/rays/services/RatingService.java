@@ -29,6 +29,7 @@ public class RatingService {
         this.modelMapper = modelMapper;
     }
 
+
     /**
      * Limits the given Points of a given Rating to the defined minimum and maximum
      * @param rating    the rating object that should be corrected
