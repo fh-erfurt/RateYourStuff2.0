@@ -14,6 +14,7 @@ public interface RatingRepository extends JpaRepository<Rating, Long> {
     Page<Rating> findAllByMediumId(Long mediumId, Pageable pageable);
     Page<Rating> findAllByUserId(Long userId, Pageable pageable);
 
+    Long countAllByMediumId(Long mediumId );
 
     Optional<Rating> findByGivenPoints(Integer givenPoints);
 }

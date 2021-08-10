@@ -66,6 +66,9 @@ public class RatingService {
      * @return          the corresponding dtoObject
      */
     public RatingDto convertToDto(Rating rating) {
-        return modelMapper.map(rating, RatingDto.class);
+                RatingDto ratingDto = modelMapper.map(rating, RatingDto.class);
+                ratingDto.setMIN_POINTS(Rating.MIN_POINTS);
+                ratingDto.setMAX_POINTS(Rating.MAX_POINTS);
+                return ratingDto;
     }
 }
