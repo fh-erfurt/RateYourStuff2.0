@@ -6,7 +6,9 @@ import de.fourzerofournotfound.rateyourstuff.rays.models.Game;
 import de.fourzerofournotfound.rateyourstuff.rays.models.errors.GameNotFoundException;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.GameRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.services.FileUploadService;
+import de.fourzerofournotfound.rateyourstuff.rays.services.MediaService;
 import de.fourzerofournotfound.rateyourstuff.rays.services.PageableService;
+import de.fourzerofournotfound.rateyourstuff.rays.services.errors.DuplicateMediumException;
 import de.fourzerofournotfound.rateyourstuff.rays.services.media.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -26,22 +28,21 @@ import java.util.stream.Collectors;
 public class GameController {
 
     final GameRepository gameRepository;
-
     final FileUploadService fileUploadService;
-
     final PageableService pageableService;
-
     final GameService gameService;
+    private final MediaService mediaService;
 
     @Autowired
     public GameController(GameRepository gameRepository,
                           FileUploadService fileUploadService,
                           PageableService pageableService,
-                          GameService gameService) {
+                          GameService gameService, MediaService mediaService) {
         this.gameRepository = gameRepository;
         this.fileUploadService = fileUploadService;
         this.pageableService = pageableService;
         this.gameService = gameService;
+        this.mediaService = mediaService;
     }
 
     @GetMapping("/all")
@@ -80,8 +81,17 @@ public class GameController {
     }
 
     @PostMapping(path="/add", consumes= "application/json", produces="application/json")
-    ResponseEntity<Game> add(@RequestBody Game game) {
-        return ResponseEntity.ok(this.gameRepository.save(game));
+    ResponseEntity<Game> add(@RequestBody Game game) throws DuplicateMediumException {
+        if(this.mediaService.isValidGame(game)) {
+            this.gameRepository.save(game);
+            game.setGenres(this.mediaService.getGenresSet(game.getGenreStrings(), game));
+            game.setLanguages(this.mediaService.getLanguageSet(game.getLanguageStrings(), game));
+            game.setGamePublisher(this.gameService.getPublisher(game.getPublisherTitle(), game));
+            game.setPlatforms(this.gameService.getPlatformSet(game.getPlatformStrings(), game));
+            return ResponseEntity.ok(this.gameRepository.save(game));
+        } else {
+            throw new DuplicateMediumException("The Game " + game.getMediumName() + " already exists.");
+        }
     }
 
     @PutMapping(consumes="application/json", produces="application/json")
@@ -94,7 +104,7 @@ public class GameController {
         this.gameRepository.deleteById(id);
     }
 
-    @PutMapping("/images/{id}")
+    @PostMapping("/images/{id}")
     ResponseEntity<Game> addImage(@RequestParam("image") MultipartFile multipartFile, @PathVariable Long id) throws IOException {
         String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
         Optional<Game> game = this.gameRepository.findById(id);
