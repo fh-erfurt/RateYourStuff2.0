@@ -5,6 +5,7 @@ import de.fourzerofournotfound.rateyourstuff.rays.models.Book;
 import de.fourzerofournotfound.rateyourstuff.rays.models.errors.BookNotFoundException;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.BookRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.services.FileUploadService;
+import de.fourzerofournotfound.rateyourstuff.rays.services.MediaService;
 import de.fourzerofournotfound.rateyourstuff.rays.services.PageableService;
 import de.fourzerofournotfound.rateyourstuff.rays.services.isbn.ISBNCheckService;
 import de.fourzerofournotfound.rateyourstuff.rays.services.isbn.InvalidISBNException;
@@ -27,22 +28,20 @@ import java.util.stream.Collectors;
 public class BookController {
 
     private final BookRepository bookRepository;
-
     private final FileUploadService fileUploadService;
-
     private final ISBNCheckService isbnCheckService;
-
     private final PageableService pageableService;
-
     private final BookService bookService;
+    private final MediaService mediaService;
 
     @Autowired
-    public BookController(BookRepository bookRepository, FileUploadService fileUploadService, ISBNCheckService isbnCheckService, PageableService pageableService, BookService bookService) {
+    public BookController(BookRepository bookRepository, FileUploadService fileUploadService, ISBNCheckService isbnCheckService, PageableService pageableService, BookService bookService, MediaService mediaService) {
         this.bookRepository = bookRepository;
         this.fileUploadService = fileUploadService;
         this.isbnCheckService = isbnCheckService;
         this.pageableService = pageableService;
         this.bookService = bookService;
+        this.mediaService = mediaService;
     }
 
     @GetMapping("/all")
@@ -82,7 +81,11 @@ public class BookController {
 
     @PostMapping(path="/add", consumes= "application/json", produces="application/json")
     ResponseEntity<Book> add(@RequestBody Book book) throws InvalidISBNException {
-        if(isbnCheckService.checkIfISBNisValid(book)) {
+        if(isbnCheckService.checkIfISBNisValid(book) && mediaService.isValidBook(book)) {
+            this.bookRepository.save(book);
+            book.setGenres(this.mediaService.getGenresSet(book.getGenreStrings(), book));
+            book.setLanguages(this.mediaService.getLanguageSet(book.getLanguageStrings(), book));
+            book.setBookPublisher(this.bookService.getPublisher(book.getPublisherString(), book));
             return ResponseEntity.ok(this.bookRepository.save(book));
         } else {
             throw new InvalidISBNException("The ISBN " + book.getIsbn() + " is not valid");
@@ -103,7 +106,7 @@ public class BookController {
         this.bookRepository.deleteById(id);
     }
 
-    @PutMapping("/images/{id}")
+    @PostMapping("/images/{id}")
     ResponseEntity<Book> addImage(@RequestParam("image") MultipartFile multipartFile, @PathVariable Long id) throws IOException {
             String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
             Optional<Book> book = this.bookRepository.findById(id);

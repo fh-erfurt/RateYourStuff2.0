@@ -16,8 +16,8 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
     List<Book> findAllByBookPublisher(BookPublisher bookPublisher);
 
-    Optional<Book> findBookByMediumNameIgnoreCaseAndReleaseDate(String mediumName, LocalDate releaseDate);
+    Optional<Book> findBookByMediumNameIgnoreCaseAndReleaseDateOrIsbn(String mediumName, LocalDate releaseDate, String isbn);
 
-    Optional<Book> findBookByIdNotAndMediumNameIgnoreCaseAndReleaseDate(Long id, String mediaName, LocalDate releaseDate);
+    Optional<Book> findBookByIdNotAndMediumNameIgnoreCaseAndReleaseDateOrIsbn(Long id, String mediaName, LocalDate releaseDate, String isbn);
 
 }

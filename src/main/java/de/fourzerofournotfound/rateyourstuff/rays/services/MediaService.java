@@ -53,9 +53,9 @@ public class MediaService {
         Optional<Book> optionalBook;
         if(Objects.nonNull(book.getId()))
         {
-            optionalBook = bookRepository.findBookByIdNotAndMediumNameIgnoreCaseAndReleaseDate(book.getId(), book.getMediumName(), book.getReleaseDate());
+            optionalBook = bookRepository.findBookByIdNotAndMediumNameIgnoreCaseAndReleaseDateOrIsbn(book.getId(), book.getMediumName(), book.getReleaseDate(), book.getIsbn());
         } else {
-            optionalBook = bookRepository.findBookByMediumNameIgnoreCaseAndReleaseDate(book.getMediumName(), book.getReleaseDate());
+            optionalBook = bookRepository.findBookByMediumNameIgnoreCaseAndReleaseDateOrIsbn(book.getMediumName(), book.getReleaseDate(), book.getIsbn());
         }
         return optionalBook.isEmpty();
     }

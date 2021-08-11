@@ -1,5 +1,6 @@
 package de.fourzerofournotfound.rateyourstuff.rays.models;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Builder;
 import lombok.Getter;
@@ -39,10 +40,13 @@ public class Book extends Medium{
     @Column(nullable = false)
     private Integer numberOfPages;
 
-    //@JsonManagedReference
     @ManyToOne (cascade = CascadeType.PERSIST)
     @JoinColumn(name = "bookPublisherId", referencedColumnName = "id")
     private BookPublisher bookPublisher;
+
+    @Transient
+    @JsonInclude
+    private String publisherString;
 
     @Builder
     public Book(String mediumName,
