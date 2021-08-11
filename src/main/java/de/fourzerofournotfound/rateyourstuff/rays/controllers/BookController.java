@@ -81,7 +81,7 @@ public class BookController {
 
     @PostMapping(path="/add", consumes= "application/json", produces="application/json")
     ResponseEntity<Book> add(@RequestBody Book book) throws InvalidISBNException {
-        if(isbnCheckService.checkIfISBNisValid(book)) {
+        if(isbnCheckService.checkIfISBNisValid(book) && mediaService.isValidBook(book)) {
             this.bookRepository.save(book);
             book.setGenres(this.mediaService.getGenresSet(book.getGenreStrings(), book));
             book.setLanguages(this.mediaService.getLanguageSet(book.getLanguageStrings(), book));
@@ -106,7 +106,7 @@ public class BookController {
         this.bookRepository.deleteById(id);
     }
 
-    @PutMapping("/images/{id}")
+    @PostMapping("/images/{id}")
     ResponseEntity<Book> addImage(@RequestParam("image") MultipartFile multipartFile, @PathVariable Long id) throws IOException {
             String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
             Optional<Book> book = this.bookRepository.findById(id);
