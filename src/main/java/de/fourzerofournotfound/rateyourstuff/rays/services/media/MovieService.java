@@ -42,7 +42,10 @@ public class MovieService {
         Optional<Network> network = networkRepository.findByNetworkTitle(networkTitle);
         if(network.isPresent()) {
             return network.get();
+        } else {
+            Network newNetwork = new Network();
+            newNetwork.setNetworkTitle(networkTitle);
+            return networkRepository.save(newNetwork);
         }
-        return null;
     }
 }
