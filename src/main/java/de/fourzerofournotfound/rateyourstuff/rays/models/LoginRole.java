@@ -3,9 +3,7 @@ package de.fourzerofournotfound.rateyourstuff.rays.models;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -20,6 +18,8 @@ import javax.persistence.*;
  */
 @Entity
 @Builder
+@Getter
+@Setter
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Table(name = "LoginRoles")
