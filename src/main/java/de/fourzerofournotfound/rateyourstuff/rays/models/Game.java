@@ -1,5 +1,6 @@
 package de.fourzerofournotfound.rateyourstuff.rays.models;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Builder;
 import lombok.Getter;
@@ -9,6 +10,7 @@ import lombok.AllArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -49,6 +51,14 @@ public class Game extends Medium{
 
     @Column(nullable = false)
     private Integer ageRestriction;
+
+    @JsonInclude
+    @Transient
+    String publisherTitle;
+
+    @JsonInclude
+    @Transient
+    List<String> platformStrings;
 
     @Builder
     public Game(String mediumName,
