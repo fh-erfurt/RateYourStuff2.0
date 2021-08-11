@@ -1,5 +1,6 @@
 package de.fourzerofournotfound.rateyourstuff.rays.models;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -43,6 +44,10 @@ public class Series extends Medium {
 
     @OneToMany (mappedBy = "medium", cascade = CascadeType.ALL)
     private Set<Season> seasons = new HashSet<>();
+
+    @JsonInclude
+    @Transient
+    String networkTitle;
 
     @Builder
     public Series(String mediumName, String shortDescription, LocalDate releaseDate, Integer averageLength, Integer ageRestriction, Boolean isCompleted) {

@@ -5,7 +5,9 @@ import de.fourzerofournotfound.rateyourstuff.rays.models.Series;
 import de.fourzerofournotfound.rateyourstuff.rays.models.errors.SeriesNotFoundException;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.SeriesRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.services.FileUploadService;
+import de.fourzerofournotfound.rateyourstuff.rays.services.MediaService;
 import de.fourzerofournotfound.rateyourstuff.rays.services.PageableService;
+import de.fourzerofournotfound.rateyourstuff.rays.services.errors.DuplicateMediumException;
 import de.fourzerofournotfound.rateyourstuff.rays.services.media.SeriesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -28,13 +30,15 @@ public class SeriesController {
     private final FileUploadService fileUploadService;
     private final PageableService pageableService;
     private final SeriesService seriesService;
+    private final MediaService mediaService;
 
     @Autowired
-    public SeriesController(SeriesRepository seriesRepository, FileUploadService fileUploadService, PageableService pageableService, SeriesService seriesService) {
+    public SeriesController(SeriesRepository seriesRepository, FileUploadService fileUploadService, PageableService pageableService, SeriesService seriesService, MediaService mediaService) {
         this.seriesRepository = seriesRepository;
         this.fileUploadService = fileUploadService;
         this.pageableService = pageableService;
         this.seriesService = seriesService;
+        this.mediaService = mediaService;
     }
 
     @GetMapping("/all")
@@ -73,8 +77,16 @@ public class SeriesController {
     }
 
     @PostMapping(path="/add", consumes= "application/json", produces="application/json")
-    ResponseEntity<Series> add(@RequestBody Series series) {
-        return ResponseEntity.ok(this.seriesRepository.save(series));
+    ResponseEntity<Series> add(@RequestBody Series series) throws DuplicateMediumException {
+        if(this.mediaService.isValidSeries(series)) {
+            this.seriesRepository.save(series);
+            series.setGenres(this.mediaService.getGenresSet(series.getGenreStrings(), series));
+            series.setLanguages(this.mediaService.getLanguageSet(series.getLanguageStrings(), series));
+            series.setNetwork(this.seriesService.getNetwork(series.getNetworkTitle(), series));
+            return ResponseEntity.ok(this.seriesRepository.save(series));
+        } else {
+            throw new DuplicateMediumException("The Series " + series.getMediumName() + " already exists.");
+        }
     }
 
     @PutMapping(consumes="application/json", produces="application/json")
@@ -87,7 +99,7 @@ public class SeriesController {
         this.seriesRepository.deleteById(id);
     }
 
-    @PutMapping("/images/{id}")
+    @PostMapping("/images/{id}")
     ResponseEntity<Series> addImage(@RequestParam("image") MultipartFile multipartFile, @PathVariable Long id) throws IOException {
         String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
         Optional<Series> series = this.seriesRepository.findById(id);

@@ -92,7 +92,6 @@ public class MovieController {
         } else {
             throw new DuplicateMediumException("The Movie " + movie.getMediumName() + " already exists.");
         }
-
     }
 
     @PutMapping(consumes="application/json", produces="application/json")
