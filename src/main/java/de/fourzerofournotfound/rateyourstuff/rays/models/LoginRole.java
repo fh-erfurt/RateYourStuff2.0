@@ -26,11 +26,11 @@ import javax.persistence.*;
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class LoginRole extends BaseModel {
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "loginID", referencedColumnName = "id")
     private Login login;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "roleId", referencedColumnName = "id")
     private Role role;
 

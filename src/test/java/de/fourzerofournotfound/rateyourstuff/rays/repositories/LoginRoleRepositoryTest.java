@@ -1,6 +1,8 @@
 package de.fourzerofournotfound.rateyourstuff.rays.repositories;
 
+import de.fourzerofournotfound.rateyourstuff.rays.models.Login;
 import de.fourzerofournotfound.rateyourstuff.rays.models.LoginRole;
+import de.fourzerofournotfound.rateyourstuff.rays.models.Role;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,18 +23,27 @@ class LoginRoleRepositoryTest {
     public void BeforeEach(){loginRoleRepository.deleteAll();}
 
 
-    @AfterEach
-    public void AfterEach(){loginRoleRepository.deleteAll();}
-
     @Test
     public void should_add_LoginRole()
     {
         //Given
-        LoginRole given = LoginRole.builder()
+        Login givenLogin = Login.builder()
+                .email("siggi@rays.de")
+                .passwordHash("1234Hallo4567")
+                .isEnabled(true)
+                .build();
+
+        Role givenRole = Role.builder()
+                .roleName("Admin")
+                .build();
+
+        LoginRole givenLoginRole = LoginRole.builder()
+                .login(givenLogin)
+                .role(givenRole)
                 .build();
 
         //When
-        LoginRole result = loginRoleRepository.save(given);
+        LoginRole result = loginRoleRepository.save(givenLoginRole);
 
         //Then
         Assertions.assertThat(result.getId()).isNotNull();
@@ -43,12 +54,24 @@ class LoginRoleRepositoryTest {
     public void should_delete_LoginRole()
     {
         //Given
-        LoginRole given = LoginRole.builder()
+        Login givenLogin = Login.builder()
+                .email("siggi@rays.de")
+                .passwordHash("1234Hallo4567")
+                .isEnabled(true)
                 .build();
-        LoginRole saved = loginRoleRepository.save(given);
+
+        Role givenRole = Role.builder()
+                .roleName("Admin")
+                .build();
+
+        LoginRole givenLoginRole = LoginRole.builder()
+                .login(givenLogin)
+                .role(givenRole)
+                .build();
+        LoginRole saved = loginRoleRepository.save(givenLoginRole);
 
         //When
-        Long savedId = saved.getId();
+        Long savedId = givenLoginRole.getId();
         loginRoleRepository.delete(saved);
         Optional<LoginRole> result = loginRoleRepository.findById(savedId);
 
