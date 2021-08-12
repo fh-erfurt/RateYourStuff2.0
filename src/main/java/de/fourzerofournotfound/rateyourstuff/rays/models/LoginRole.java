@@ -26,7 +26,8 @@ import javax.persistence.*;
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class LoginRole extends BaseModel {
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "loginID", referencedColumnName = "id")
     private Login login;
 

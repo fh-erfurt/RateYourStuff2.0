@@ -2,6 +2,7 @@ package de.fourzerofournotfound.rateyourstuff.rays.controllers;
 
 import de.fourzerofournotfound.rateyourstuff.rays.models.Login;
 import de.fourzerofournotfound.rateyourstuff.rays.models.LoginRole;
+import de.fourzerofournotfound.rateyourstuff.rays.models.errors.LoginNotFoundException;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.LoginRoleRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.services.LoginRoleService;
 import de.fourzerofournotfound.rateyourstuff.rays.services.errors.InvalidLoginRoleException;
@@ -25,8 +26,9 @@ public class LoginRoleController {
 
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping(path = "/add", consumes = "application/json", produces = "application/json")
-    ResponseEntity<LoginRole> add(@RequestBody LoginRole loginRole) throws InvalidRoleException {
+    ResponseEntity<LoginRole> add(@RequestBody LoginRole loginRole) throws InvalidRoleException, LoginNotFoundException {
         loginRoleService.setRoleId(loginRole);
+        //loginRoleService.setLoginId(loginRole);
         return ResponseEntity.ok(this.loginRoleRepository.save(loginRole));
     }
 
