@@ -29,7 +29,4 @@ public class Role extends BaseModel {
     @Column(nullable = false)
     private String roleName;
 
-    @OneToMany(mappedBy = "role")
-    private List<LoginRole> loginRoles;
-
 }
