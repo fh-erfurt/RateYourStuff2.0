@@ -2,8 +2,12 @@ package de.fourzerofournotfound.rateyourstuff.rays.services.media;
 
 import de.fourzerofournotfound.rateyourstuff.rays.dtos.media.GameDto;
 import de.fourzerofournotfound.rateyourstuff.rays.models.*;
-import de.fourzerofournotfound.rateyourstuff.rays.repositories.GamePublisherRepository;
-import de.fourzerofournotfound.rateyourstuff.rays.repositories.PlatformRepository;
+import de.fourzerofournotfound.rateyourstuff.rays.models.media.Game;
+import de.fourzerofournotfound.rateyourstuff.rays.models.media.GamePublisher;
+import de.fourzerofournotfound.rateyourstuff.rays.models.media.Medium;
+import de.fourzerofournotfound.rateyourstuff.rays.models.media.Platform;
+import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.GamePublisherRepository;
+import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.PlatformRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -53,7 +57,7 @@ public class GameService {
             } else {
                 Platform newPlatform = new Platform();
                 newPlatform.setPlatformTitle(platform);
-                newPlatform.setGames(new HashSet<Medium>());
+                newPlatform.setGames(new HashSet<>());
                 newPlatform.getGames().add(game);
                 platforms.add(platformRepository.save(newPlatform));
             }

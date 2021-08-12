@@ -1,10 +1,10 @@
 package de.fourzerofournotfound.rateyourstuff.rays.services.media;
 
 import de.fourzerofournotfound.rateyourstuff.rays.dtos.media.SeriesDto;
-import de.fourzerofournotfound.rateyourstuff.rays.models.Network;
+import de.fourzerofournotfound.rateyourstuff.rays.models.media.Network;
 import de.fourzerofournotfound.rateyourstuff.rays.models.Rating;
-import de.fourzerofournotfound.rateyourstuff.rays.models.Series;
-import de.fourzerofournotfound.rateyourstuff.rays.repositories.NetworkRepository;
+import de.fourzerofournotfound.rateyourstuff.rays.models.media.Series;
+import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.NetworkRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

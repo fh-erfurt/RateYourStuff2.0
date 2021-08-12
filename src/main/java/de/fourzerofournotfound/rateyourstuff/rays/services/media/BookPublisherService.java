@@ -1,7 +1,7 @@
 package de.fourzerofournotfound.rateyourstuff.rays.services.media;
 
 import de.fourzerofournotfound.rateyourstuff.rays.dtos.media.BookPublisherDto;
-import de.fourzerofournotfound.rateyourstuff.rays.models.BookPublisher;
+import de.fourzerofournotfound.rateyourstuff.rays.models.media.BookPublisher;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +14,6 @@ public class BookPublisherService {
     }
 
     public BookPublisherDto convertToDto(BookPublisher publisher) {
-        BookPublisherDto publisherDto = modelMapper.map(publisher, BookPublisherDto.class);
-        return publisherDto;
+        return modelMapper.map(publisher, BookPublisherDto.class);
     }
 }

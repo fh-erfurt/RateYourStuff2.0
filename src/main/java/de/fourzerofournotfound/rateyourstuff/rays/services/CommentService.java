@@ -2,10 +2,10 @@ package de.fourzerofournotfound.rateyourstuff.rays.services;
 
 import de.fourzerofournotfound.rateyourstuff.rays.dtos.CommentDto;
 import de.fourzerofournotfound.rateyourstuff.rays.models.Comment;
-import de.fourzerofournotfound.rateyourstuff.rays.models.Medium;
+import de.fourzerofournotfound.rateyourstuff.rays.models.media.Medium;
 import de.fourzerofournotfound.rateyourstuff.rays.models.User;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.CommentRepository;
-import de.fourzerofournotfound.rateyourstuff.rays.repositories.MediaRepository;
+import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.MediaRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.UserRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.services.errors.InvalidCommentException;
 import org.modelmapper.ModelMapper;

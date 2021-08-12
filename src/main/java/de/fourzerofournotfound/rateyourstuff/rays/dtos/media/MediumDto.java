@@ -1,6 +1,9 @@
 package de.fourzerofournotfound.rateyourstuff.rays.dtos.media;
 
 import de.fourzerofournotfound.rateyourstuff.rays.models.*;
+import de.fourzerofournotfound.rateyourstuff.rays.models.media.Collection;
+import de.fourzerofournotfound.rateyourstuff.rays.models.media.Genre;
+import de.fourzerofournotfound.rateyourstuff.rays.models.media.Language;
 import lombok.Getter;
 import lombok.Setter;
 
