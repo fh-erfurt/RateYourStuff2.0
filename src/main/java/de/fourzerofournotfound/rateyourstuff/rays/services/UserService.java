@@ -51,4 +51,5 @@ public class UserService {
             throw new InvalidLoginException("The given login must have a valid loginId");
         }
     }
+
 }

@@ -47,7 +47,7 @@ public class LoginController {
     @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/check/is={email}")
     ResponseEntity<Boolean> getUsername(@PathVariable String email) throws EmailAlreadyExistsException {
-        Optional<Login> login = repository.findLoginByEmailNotIgnoreCase(email);
+        Optional<Login> login = repository.findLoginByEmailIgnoreCase(email);
         if(login.isPresent()){
             throw new EmailAlreadyExistsException("User tried to sign up with already taken enauk: @" + email);
         } else {
