@@ -1,7 +1,7 @@
 package de.fourzerofournotfound.rateyourstuff.rays.services.media;
 
 import de.fourzerofournotfound.rateyourstuff.rays.dtos.media.NetworkDto;
-import de.fourzerofournotfound.rateyourstuff.rays.models.Network;
+import de.fourzerofournotfound.rateyourstuff.rays.models.media.Network;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +16,6 @@ public class NetworkService {
     }
 
     public NetworkDto convertToDto(Network network) {
-        NetworkDto networkDto = modelMapper.map(network, NetworkDto.class);
-        return networkDto;
+        return modelMapper.map(network, NetworkDto.class);
     }
 }

@@ -127,17 +127,6 @@ INSERT INTO `movies` (`age_restriction`, `length`, `id`, `network_id`) VALUES
 (16, 177, 12, NULL),
 (12, 98, 13, NULL);
 
-
-INSERT INTO `persons` (`id`, `created_at`, `updated_at`, `birth_date`, `first_name`, `last_name`) VALUES
-(2, '2021-06-21 19:25:27', '2021-06-21 19:25:27', '1971-10-10', 'Markus', 'Heitz'),
-(3, '2021-06-21 19:27:09', '2021-06-21 19:27:09', '1968-04-11', 'Sergei', 'Lukjanenko');
-
-
-INSERT INTO `person_assignments` (`id`, `created_at`, `updated_at`, `is_actor`, `is_author`, `is_director`, `is_producer`, `medium_id`, `person_id`) VALUES
-(5, '2021-06-21 19:18:28', '2021-06-21 19:18:28', b'0', b'1', b'0', b'0', NULL, 2),
-(13, '2021-06-21 19:28:05', '2021-06-21 19:28:05', NULL, b'1', NULL, NULL, NULL, 3);
-
-
 INSERT INTO `roles` (`id`, `created_at`, `updated_at`, `role_name`) VALUES
 (1, '2021-06-21 19:17:34', '2021-06-21 19:17:34', 'User'),
 (2, '2021-06-21 19:17:34', '2021-06-21 19:17:34', 'Admin'),

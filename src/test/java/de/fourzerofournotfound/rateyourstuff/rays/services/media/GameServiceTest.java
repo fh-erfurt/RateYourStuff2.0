@@ -1,8 +1,8 @@
 package de.fourzerofournotfound.rateyourstuff.rays.services.media;
 
 import de.fourzerofournotfound.rateyourstuff.rays.dtos.media.GameDto;
-import de.fourzerofournotfound.rateyourstuff.rays.models.Game;
-import de.fourzerofournotfound.rateyourstuff.rays.repositories.GameRepository;
+import de.fourzerofournotfound.rateyourstuff.rays.models.media.Game;
+import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.GameRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

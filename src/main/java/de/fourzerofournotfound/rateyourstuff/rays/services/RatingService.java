@@ -1,11 +1,10 @@
 package de.fourzerofournotfound.rateyourstuff.rays.services;
 
 import de.fourzerofournotfound.rateyourstuff.rays.dtos.RatingDto;
-import de.fourzerofournotfound.rateyourstuff.rays.models.Medium;
+import de.fourzerofournotfound.rateyourstuff.rays.models.media.Medium;
 import de.fourzerofournotfound.rateyourstuff.rays.models.Rating;
 import de.fourzerofournotfound.rateyourstuff.rays.models.User;
-import de.fourzerofournotfound.rateyourstuff.rays.repositories.MediaRepository;
-import de.fourzerofournotfound.rateyourstuff.rays.repositories.RatingRepository;
+import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.MediaRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.UserRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.services.errors.InvalidRatingException;
 import org.modelmapper.ModelMapper;

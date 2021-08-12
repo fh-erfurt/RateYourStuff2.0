@@ -2,6 +2,7 @@ package de.fourzerofournotfound.rateyourstuff.rays.models;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import de.fourzerofournotfound.rateyourstuff.rays.models.media.Collection;
 import lombok.*;
 
 import javax.persistence.*;
@@ -55,13 +56,7 @@ public class User extends BaseModel {
     private Set<Comment> comments;
 
     @OneToMany(mappedBy = "user")
-    private Set<Progress> progresses;
-
-    @OneToMany(mappedBy = "user")
     private Set<Collection> collections;
-
-    @ManyToMany
-    private Set<User> friendList;
 
     public void setProfilePicturePath(String profilePicturePath) {
         this.profilePicturePath = profilePicturePath.replace(IMAGE_PATH_PREFIX, "");

@@ -1,6 +1,6 @@
 package de.fourzerofournotfound.rateyourstuff.rays.dtos.media;
 
-import de.fourzerofournotfound.rateyourstuff.rays.models.BookPublisher;
+import de.fourzerofournotfound.rateyourstuff.rays.models.media.BookPublisher;
 import lombok.Getter;
 import lombok.Setter;
 
