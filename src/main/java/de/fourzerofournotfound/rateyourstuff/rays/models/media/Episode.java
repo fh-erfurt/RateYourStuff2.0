@@ -1,5 +1,6 @@
 package de.fourzerofournotfound.rateyourstuff.rays.models.media;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
 import javax.persistence.*;
@@ -31,6 +32,10 @@ public class Episode extends Medium {
     @ManyToOne
     @JoinColumn(name = "seasonId", referencedColumnName = "id")
     private Season season;
+
+    @Transient
+    @JsonInclude
+    private Long seasonMappingId;
 
     @Builder
     public Episode(String mediumName, String shortDescription, LocalDate releaseDate, Integer episodeNumber, Integer length) {

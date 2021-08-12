@@ -1,11 +1,15 @@
 package de.fourzerofournotfound.rateyourstuff.rays.controllers.media;
 
 import de.fourzerofournotfound.rateyourstuff.rays.dtos.media.EpisodeDto;
+import de.fourzerofournotfound.rateyourstuff.rays.models.errors.media.SeasonNotFoundException;
 import de.fourzerofournotfound.rateyourstuff.rays.models.media.Episode;
 import de.fourzerofournotfound.rateyourstuff.rays.models.errors.media.EpisodeNotFoundException;
+import de.fourzerofournotfound.rateyourstuff.rays.models.media.Season;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.EpisodeRepository;
+import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.SeasonRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.services.FileUploadService;
 import de.fourzerofournotfound.rateyourstuff.rays.services.PageableService;
+import de.fourzerofournotfound.rateyourstuff.rays.services.errors.DuplicateMediumException;
 import de.fourzerofournotfound.rateyourstuff.rays.services.media.EpisodeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -28,29 +32,20 @@ public class EpisodeController {
     private final FileUploadService fus;
     private final PageableService pageableService;
     private final EpisodeService episodeService;
+    private final SeasonRepository seasonRepository;
+    private final EpisodeRepository episodeRepository;
 
     @Autowired
     public EpisodeController(EpisodeRepository repository,
                              FileUploadService fus,
                              PageableService pageableService,
-                             EpisodeService episodeService) {
+                             EpisodeService episodeService, SeasonRepository seasonRepository, EpisodeRepository episodeRepository) {
         this.repository = repository;
         this.fus = fus;
         this.pageableService = pageableService;
         this.episodeService = episodeService;
-    }
-
-    @GetMapping("/all")
-    ResponseEntity<List<EpisodeDto>> getAll(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "50") int size,
-            @RequestParam(defaultValue = "") String orderBy,
-            @RequestParam(defaultValue = "asc") String order
-    ) {
-        Pageable pageable = pageableService.createPageable(orderBy, order, page, size);
-        List<Episode> episodes = this.repository.findAll(pageable).getContent();
-        return ResponseEntity.ok(
-                episodes.stream().map(episodeService::convertToDto).collect(Collectors.toList()));
+        this.seasonRepository = seasonRepository;
+        this.episodeRepository = episodeRepository;
     }
 
     @GetMapping("/season/{id}")
@@ -90,8 +85,17 @@ public class EpisodeController {
     }
 
     @PostMapping(path = "/add", consumes = "application/json", produces = "application/json")
-    ResponseEntity<Episode> add(@RequestBody Episode episode) {
-        return ResponseEntity.ok(this.repository.save(episode));
+    ResponseEntity<Episode> add(@RequestBody Episode episode) throws DuplicateMediumException, SeasonNotFoundException {
+        if(episodeService.isValidEpisode(episode)) {
+            Optional<Season> targetSeason = seasonRepository.findById(episode.getSeasonMappingId());
+            if(targetSeason.isPresent()) {
+                episode.setSeason(targetSeason.get());
+                return ResponseEntity.ok(this.episodeRepository.save(episode));
+            } else {
+                throw new SeasonNotFoundException("There is no season with Id " + episode.getSeasonMappingId());
+            }
+        }
+        throw new DuplicateMediumException("The Episode " + episode.getMediumName() + " with number " + episode.getEpisodeNumber() + " already exists!");
     }
 
     @PutMapping(consumes = "application/json", produces = "application/json")
@@ -104,9 +108,9 @@ public class EpisodeController {
         this.repository.deleteById(id);
     }
 
-    @PutMapping("/images/{id}")
+    @PostMapping("/images/{id}")
     ResponseEntity<Episode> addImage(@RequestParam("image") MultipartFile multipartFile, @PathVariable Long id) throws IOException {
-        String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
+        String fileName = StringUtils.cleanPath(Objects.requireNonNull("poster.jpg"));
         Optional<Episode> episode = this.repository.findById(id);
         //check if the given movie exists
         if (episode.isPresent()) {

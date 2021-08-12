@@ -83,7 +83,7 @@ public class MovieController {
 
     @PostMapping(path="/add", consumes= "application/json", produces="application/json")
     ResponseEntity<Movie> add(@RequestBody Movie movie) throws DuplicateMediumException {
-        if(this.mediaService.isValidMovie(movie)) {
+        if(this.movieService.isValidMovie(movie)) {
             this.movieRepository.save(movie);
             movie.setGenres(this.mediaService.getGenresSet(movie.getGenreStrings(), movie));
             movie.setLanguages(this.mediaService.getLanguageSet(movie.getLanguageStrings(), movie));

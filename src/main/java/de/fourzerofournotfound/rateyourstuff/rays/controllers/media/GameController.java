@@ -82,7 +82,7 @@ public class GameController {
 
     @PostMapping(path="/add", consumes= "application/json", produces="application/json")
     ResponseEntity<Game> add(@RequestBody Game game) throws DuplicateMediumException {
-        if(this.mediaService.isValidGame(game)) {
+        if(this.gameService.isValidGame(game)) {
             this.gameRepository.save(game);
             game.setGenres(this.mediaService.getGenresSet(game.getGenreStrings(), game));
             game.setLanguages(this.mediaService.getLanguageSet(game.getLanguageStrings(), game));

@@ -78,7 +78,7 @@ public class SeriesController {
 
     @PostMapping(path="/add", consumes= "application/json", produces="application/json")
     ResponseEntity<Series> add(@RequestBody Series series) throws DuplicateMediumException {
-        if(this.mediaService.isValidSeries(series)) {
+        if(this.seriesService.isValidSeries(series)) {
             this.seriesRepository.save(series);
             series.setGenres(this.mediaService.getGenresSet(series.getGenreStrings(), series));
             series.setLanguages(this.mediaService.getLanguageSet(series.getLanguageStrings(), series));

@@ -81,7 +81,7 @@ public class BookController {
 
     @PostMapping(path="/add", consumes= "application/json", produces="application/json")
     ResponseEntity<Book> add(@RequestBody Book book) throws InvalidISBNException {
-        if(isbnCheckService.checkIfISBNisValid(book) && mediaService.isValidBook(book)) {
+        if(isbnCheckService.checkIfISBNisValid(book) && bookService.isValidBook(book)) {
             this.bookRepository.save(book);
             book.setGenres(this.mediaService.getGenresSet(book.getGenreStrings(), book));
             book.setLanguages(this.mediaService.getLanguageSet(book.getLanguageStrings(), book));
