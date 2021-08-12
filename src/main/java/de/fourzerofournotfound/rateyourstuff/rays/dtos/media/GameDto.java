@@ -22,7 +22,7 @@ public class GameDto extends MediumDto{
 
     private List<String> platforms;
 
-    private GamePublisher gamePublisher;
+    private String gamePublisherGamePublisherTitle;
 
     private Integer ageRestriction;
 

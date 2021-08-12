@@ -94,9 +94,19 @@ public class GameController {
         }
     }
 
+    @CrossOrigin(origins = "*")
     @PutMapping(consumes="application/json", produces="application/json")
-    ResponseEntity<Game> update(@RequestBody Game game) {
-        return ResponseEntity.ok(this.gameRepository.save(game));
+    ResponseEntity<Game> update(@RequestBody Game game) throws DuplicateMediumException {
+        if(this.gameService.isValidGame(game)) {
+            game.setGamePublisher(this.gameService.getPublisher(game.getPublisherTitle(), game));
+            this.gameRepository.save(game);
+            game.setGenres(this.mediaService.getGenresSet(game.getGenreStrings(), game));
+            game.setLanguages(this.mediaService.getLanguageSet(game.getLanguageStrings(), game));
+            game.setPlatforms(this.gameService.getPlatformSet(game.getPlatformStrings(), game));
+            return ResponseEntity.ok(this.gameRepository.save(game));
+        } else {
+            throw new DuplicateMediumException("The Game " + game.getMediumName() + " already exists.");
+        }
     }
 
     @DeleteMapping("/{id}")
