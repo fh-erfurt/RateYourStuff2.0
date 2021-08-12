@@ -38,8 +38,6 @@ public abstract class MediumDto {
 
     List<String> languages;
 
-    private List<PersonAssignment> personAssignments;
-
     public void setLanguages(Set<Language> languages) {
         if(languages != null) {
             this.languages = languages.stream().map(Language::getLanguage).collect(Collectors.toList());

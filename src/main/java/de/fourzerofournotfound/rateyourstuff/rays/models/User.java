@@ -55,13 +55,7 @@ public class User extends BaseModel {
     private Set<Comment> comments;
 
     @OneToMany(mappedBy = "user")
-    private Set<Progress> progresses;
-
-    @OneToMany(mappedBy = "user")
     private Set<Collection> collections;
-
-    @ManyToMany
-    private Set<User> friendList;
 
     public void setProfilePicturePath(String profilePicturePath) {
         this.profilePicturePath = profilePicturePath.replace(IMAGE_PATH_PREFIX, "");

@@ -45,9 +45,6 @@ public abstract class Medium extends BaseModel {
     private Set<Rating> mediumRatings;
 
     @OneToMany(mappedBy = "medium")
-    private Set<Progress> progresses;
-
-    @OneToMany(mappedBy = "medium")
     private Set<Comment> comments;
 
     //@JsonManagedReference ("media-collections")
@@ -69,9 +66,5 @@ public abstract class Medium extends BaseModel {
     @JsonInclude
     @Transient
     List<String> languageStrings;
-
-    //@JsonBackReference("media-person")
-    @OneToMany (mappedBy = "medium")
-    private List<PersonAssignment> personAssignments;
 }
 
