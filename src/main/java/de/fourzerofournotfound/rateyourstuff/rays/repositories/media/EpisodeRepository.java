@@ -16,7 +16,10 @@ public interface EpisodeRepository extends JpaRepository<Episode, Long> {
 
     Optional<Episode> findByMediumName (String episodeTitle);
 
+    Optional<Episode> findEpisodeByIdNotAndEpisodeNumberAndSeasonId(Long id, Integer episodeNumber, Long seasonId);
+    Optional<Episode> findEpisodeByEpisodeNumberAndSeasonId(Integer episodeNumber, Long seasonId);
+
     Optional<Episode> findEpisodeByIdNotAndMediumNameIgnoreCaseAndReleaseDateAndSeasonIdNot(Long id, String mediumName, LocalDate releaseDate, Long seasonId);
 
-    Optional<Episode> findEpisodeByMediumNameIgnoreCaseAndReleaseDateAndEpisodeNumber(String mediumName, LocalDate releaseDate, int episodeNumber);
+    Optional<Episode> findEpisodeByMediumNameIgnoreCaseAndReleaseDateAndEpisodeNumberAndSeasonIdNot(String mediumName, LocalDate releaseDate, int episodeNumber, Long seasonId);
 }

@@ -15,24 +15,31 @@ import java.time.LocalDate;
 class MediaServiceTest {
     @Autowired
     BookRepository bookRepository;
-
     @Autowired
     GameRepository gameRepository;
-
     @Autowired
     MovieRepository movieRepository;
-
     @Autowired
     SeriesRepository seriesRepository;
-
     @Autowired
     SeasonRepository seasonRepository;
-
     @Autowired
     EpisodeRepository episodeRepository;
-
     @Autowired
     MediaService mediaService;
+    @Autowired
+    BookService bookService;
+    @Autowired
+    GameService gameService;
+    @Autowired
+    SeriesService seriesService;
+    @Autowired
+    EpisodeService episodeService;
+    @Autowired
+    SeasonService seasonService;
+    @Autowired
+    MovieService movieService;
+
 
     @BeforeEach
     void beforeEach()
@@ -64,15 +71,15 @@ class MediaServiceTest {
 
         //When
         Book saved = bookRepository.save(testMedia);
-        mediaService.isValidBook(saved);
+        bookService.isValidBook(saved);
 
 
         //Then
 
         //false if media is already existent
-        Assertions.assertFalse(mediaService.isValidBook(testMedia));
+        Assertions.assertFalse(bookService.isValidBook(testMedia));
         //false if media is already existent
-        Assertions.assertFalse(mediaService.isValidBook(saved));
+        Assertions.assertFalse(bookService.isValidBook(saved));
     }
 
     @Test
@@ -93,9 +100,9 @@ class MediaServiceTest {
         Game result = gameRepository.save(testGame);
 
         // Then
-        Assertions.assertTrue(mediaService.isValidGame(testGame));
+        Assertions.assertTrue(gameService.isValidGame(testGame));
 
-        Assertions.assertTrue(mediaService.isValidGame(result));
+        Assertions.assertTrue(gameService.isValidGame(result));
     }
 
     //TODO: TestCase for isValidMovie -> shouldFindDuplicationOfGivenMovie
@@ -116,9 +123,9 @@ class MediaServiceTest {
         Movie result = movieRepository.save(testMovie);
 
         // Then
-        Assertions.assertTrue(mediaService.isValidMovie(testMovie));
+        Assertions.assertTrue(movieService.isValidMovie(testMovie));
 
-        Assertions.assertTrue(mediaService.isValidMovie(result));
+        Assertions.assertTrue(movieService.isValidMovie(result));
     }
 
     @Test
@@ -177,13 +184,13 @@ class MediaServiceTest {
 
 
         //Then
-        Assertions.assertTrue(mediaService.isValidSeries(givenSeries));
+        Assertions.assertTrue(seriesService.isValidSeries(givenSeries));
 
-        Assertions.assertTrue(mediaService.isValidSeries(result));
+        Assertions.assertTrue(seriesService.isValidSeries(result));
 
-        Assertions.assertTrue(mediaService.isValidSeries(givenSeriesNotToStore));
+        Assertions.assertTrue(seriesService.isValidSeries(givenSeriesNotToStore));
         //TODO: Outsource to an unique test
-        Assertions.assertFalse(mediaService.isValidSeries(givenSeries2));
+        Assertions.assertFalse(seriesService.isValidSeries(givenSeries2));
     }
 
     @Test
@@ -211,9 +218,9 @@ class MediaServiceTest {
         Season result = seasonRepository.save(givenSeason);
 
         // Then
-        Assertions.assertTrue(mediaService.isValidSeason(givenSeason));
+        Assertions.assertTrue(seasonService.isValidSeason(givenSeason));
 
-        Assertions.assertTrue(mediaService.isValidSeason(result));
+        Assertions.assertTrue(seasonService.isValidSeason(result));
     }
 
     @Test
@@ -253,7 +260,7 @@ class MediaServiceTest {
         seriesRepository.save(givenSeries);
 
         //Then
-        Assertions.assertTrue(mediaService.isValidEpisode(givenEpisode));
+        Assertions.assertTrue(episodeService.isValidEpisode(givenEpisode));
     }
 
 }

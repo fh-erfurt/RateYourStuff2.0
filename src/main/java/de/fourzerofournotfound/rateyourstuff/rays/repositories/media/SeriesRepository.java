@@ -17,4 +17,6 @@ public interface SeriesRepository extends JpaRepository<Series, Long> {
     Optional<Series> findSeriesByMediumNameIgnoreCaseAndReleaseDate(String mediumName, LocalDate releaseDate);
 
     Optional<Series> findSeriesByIdNotAndMediumNameIgnoreCaseAndReleaseDate(Long id, String mediumName, LocalDate releaseDate);
+
+
 }

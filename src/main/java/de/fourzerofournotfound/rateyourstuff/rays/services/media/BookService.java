@@ -5,21 +5,42 @@ import de.fourzerofournotfound.rateyourstuff.rays.models.media.Book;
 import de.fourzerofournotfound.rateyourstuff.rays.models.media.BookPublisher;
 import de.fourzerofournotfound.rateyourstuff.rays.models.Rating;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.BookPublisherRepository;
+import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.BookRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
 import java.util.Optional;
 
 @Service("bookService")
 public class BookService {
     private final ModelMapper modelMapper;
     private final BookPublisherRepository publisherRepository;
+    private final BookRepository bookRepository;
 
     @Autowired
-    public BookService(ModelMapper modelMapper, BookPublisherRepository publisherRepository) {
+    public BookService(ModelMapper modelMapper, BookPublisherRepository publisherRepository, BookRepository bookRepository) {
         this.modelMapper = modelMapper;
         this.publisherRepository = publisherRepository;
+        this.bookRepository = bookRepository;
+    }
+
+    /**
+     * This service is used to check if a given book-object(checked by its attributes) is already stored in database
+     * @param book - object which is streamed via rest api
+     * @return true if a object is already stored in database (the entry of this book-object is valid)
+     */
+    public boolean isValidBook(Book book)
+    {
+        Optional<Book> optionalBook;
+        if(Objects.nonNull(book.getId()))
+        {
+            optionalBook = bookRepository.findBookByIdNotAndMediumNameIgnoreCaseAndReleaseDateOrIsbn(book.getId(), book.getMediumName(), book.getReleaseDate(), book.getIsbn());
+        } else {
+            optionalBook = bookRepository.findBookByMediumNameIgnoreCaseAndReleaseDateOrIsbn(book.getMediumName(), book.getReleaseDate(), book.getIsbn());
+        }
+        return optionalBook.isEmpty();
     }
 
     /**
