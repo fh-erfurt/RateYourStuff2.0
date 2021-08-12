@@ -7,6 +7,7 @@ import de.fourzerofournotfound.rateyourstuff.rays.models.BaseModel;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -32,6 +33,6 @@ public class Language extends BaseModel {
     private String language;
 
     //@JsonManagedReference(value="media-languages")
-    @ManyToMany(mappedBy="languages")
-    Set<Medium> media;
+    @ManyToMany
+    Set<Medium> media = new HashSet<>();
 }

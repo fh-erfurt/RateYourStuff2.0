@@ -7,6 +7,7 @@ import de.fourzerofournotfound.rateyourstuff.rays.models.BaseModel;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -30,6 +31,6 @@ public class Genre extends BaseModel {
     private String genreName;
 
     @JsonBackReference(value="media-genres")
-    @ManyToMany(mappedBy = "genres")
-    Set<Medium> media;
+    @ManyToMany
+    Set<Medium> media = new HashSet<>();
 }

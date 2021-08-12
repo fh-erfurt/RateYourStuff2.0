@@ -56,7 +56,7 @@ public abstract class Medium extends BaseModel {
     Set<Collection> collections;
 
     //@JsonManagedReference ("media-genres")
-    @ManyToMany
+    @ManyToMany(mappedBy="media", cascade = CascadeType.ALL)
     Set<Genre> genres = new HashSet<>();
 
     @JsonInclude
@@ -64,7 +64,7 @@ public abstract class Medium extends BaseModel {
     List<String> genreStrings;
 
     //@JsonManagedReference ("media-languages")
-    @ManyToMany
+    @ManyToMany(mappedBy="media", cascade = CascadeType.ALL)
     Set<Language> languages = new HashSet<>();
 
     @JsonInclude
