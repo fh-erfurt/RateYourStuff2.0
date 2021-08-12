@@ -31,6 +31,6 @@ public class Genre extends BaseModel {
     private String genreName;
 
     @JsonBackReference(value="media-genres")
-    @ManyToMany
+    @ManyToMany(mappedBy="genres")
     Set<Medium> media = new HashSet<>();
 }

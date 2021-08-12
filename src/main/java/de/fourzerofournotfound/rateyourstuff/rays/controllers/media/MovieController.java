@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -100,8 +101,11 @@ public class MovieController {
         if(this.movieService.isValidMovie(movie)) {
             movie.setNetwork(this.movieService.getNetwork(movie.getNetworkTitle(), movie));
             this.movieRepository.save(movie);
+            System.out.println(movie.getGenres().size());
             movie.setGenres(this.mediaService.getGenresSet(movie.getGenreStrings(), movie));
             movie.setLanguages(this.mediaService.getLanguageSet(movie.getLanguageStrings(), movie));
+
+            System.out.println(movie.getGenres().size());
             return ResponseEntity.ok(this.movieRepository.save(movie));
         } else {
             throw new DuplicateMediumException("The Movie " + movie.getMediumName() + " already exists.");

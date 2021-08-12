@@ -33,6 +33,6 @@ public class Language extends BaseModel {
     private String language;
 
     //@JsonManagedReference(value="media-languages")
-    @ManyToMany
+    @ManyToMany(mappedBy="languages")
     Set<Medium> media = new HashSet<>();
 }

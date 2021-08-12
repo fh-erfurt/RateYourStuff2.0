@@ -16,6 +16,7 @@ public class MediaService {
 
     private final GenreRepository genreRepository;
     private final LanguageRepository languageRepository;
+    private final MediaRepository mediaRepository;
 
     @Autowired
     public MediaService(BookRepository bookRepository,
@@ -25,14 +26,16 @@ public class MediaService {
                         EpisodeRepository episodeRepository,
                         SeasonRepository seasonRepository,
                         GenreRepository genreRepository,
-                        LanguageRepository languageRepository)
+                        LanguageRepository languageRepository, MediaRepository mediaRepository)
     {
         this.genreRepository = genreRepository;
         this.languageRepository = languageRepository;
+        this.mediaRepository = mediaRepository;
     }
 
     public Set<Genre> getGenresSet(List<String> genreStrings, Medium medium) {
         Set<Genre> genres = new HashSet<>();
+
         for(String genre : genreStrings) {
             Optional<Genre> foundGenre = genreRepository.findGenreByGenreName(genre);
             if(foundGenre.isPresent()) {
@@ -41,8 +44,6 @@ public class MediaService {
             } else {
                 Genre newGenre = new Genre();
                 newGenre.setGenreName(genre);
-                newGenre.setMedia(new HashSet<>());
-                newGenre.getMedia().add(medium);
                 genres.add(genreRepository.save(newGenre));
             }
         }
@@ -51,6 +52,7 @@ public class MediaService {
 
     public Set<Language> getLanguageSet(List<String> languageStrings, Medium medium) {
         Set<Language> languages = new HashSet<>();
+
         for(String language:  languageStrings) {
             Optional<Language> foundLanguage = languageRepository.findLanguageByLanguage(language);
             if(foundLanguage.isPresent()) {
@@ -59,12 +61,11 @@ public class MediaService {
             } else {
                 Language newLanguage = new Language();
                 newLanguage.setLanguage(language);
-                newLanguage.setMedia(new HashSet<>());
-                newLanguage.getMedia().add(medium);
                 languages.add(languageRepository.save(newLanguage));
             }
         }
         return languages;
     }
+
 }
 
