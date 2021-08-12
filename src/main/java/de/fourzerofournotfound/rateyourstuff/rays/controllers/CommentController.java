@@ -131,4 +131,9 @@ public class CommentController {
         this.commentRepository.deleteById(id);
     }
 
+    @GetMapping("/count/{mediumId}")
+    ResponseEntity<Long> countComments (@PathVariable Long mediumId){
+        return ResponseEntity.ok(this.commentRepository.countAllByMediumId(mediumId));
+    }
+
 }
