@@ -58,6 +58,10 @@ public class User extends BaseModel {
     @OneToMany(mappedBy = "user")
     private Set<Collection> collections;
 
+    @ManyToOne
+    @JoinColumn(name="roleId", referencedColumnName = "id", nullable = false)
+    private Role role;
+
     public void setProfilePicturePath(String profilePicturePath) {
         this.profilePicturePath = profilePicturePath.replace(IMAGE_PATH_PREFIX, "");
     }

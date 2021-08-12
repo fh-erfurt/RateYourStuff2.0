@@ -160,7 +160,7 @@ INSERT INTO `genres` (`id`, `created_at`, `updated_at`, `genre_name`) VALUES
 -- Daten für Tabelle `genres_media`
 --
 
-INSERT INTO `genres_media` (`genres_id`, `media_id`) VALUES
+INSERT INTO `media_genres` (`genres_id`, `media_id`) VALUES
 (1, 7),
 (1, 8),
 (1, 9),
@@ -189,7 +189,7 @@ INSERT INTO `languages` (`id`, `created_at`, `updated_at`, `language`) VALUES
 -- Daten für Tabelle `languages_media`
 --
 
-INSERT INTO `languages_media` (`languages_id`, `media_id`) VALUES
+INSERT INTO `media_languages` (`languages_id`, `media_id`) VALUES
 (1, 1),
 (1, 2),
 (1, 3),
