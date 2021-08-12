@@ -92,9 +92,14 @@ public class BookController {
         }
     }
 
+    @CrossOrigin(origins = "*")
     @PutMapping(consumes="application/json", produces="application/json")
     ResponseEntity<Book> update(@RequestBody Book book) throws InvalidISBNException {
-        if(isbnCheckService.checkIfISBNisValid(book)) {
+        if(isbnCheckService.checkIfISBNisValid(book) && bookService.isValidBook(book)) {
+            book.setBookPublisher(this.bookService.getPublisher(book.getPublisherString(), book));
+            this.bookRepository.save(book);
+            book.setGenres(this.mediaService.getGenresSet(book.getGenreStrings(), book));
+            book.setLanguages(this.mediaService.getLanguageSet(book.getLanguageStrings(), book));
             return ResponseEntity.ok(this.bookRepository.save(book));
         } else {
             throw new InvalidISBNException("The ISBN " + book.getIsbn() + " is not valid");

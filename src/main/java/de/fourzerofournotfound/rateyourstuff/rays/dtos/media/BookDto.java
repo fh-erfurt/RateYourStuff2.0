@@ -15,5 +15,5 @@ public class BookDto extends MediumDto{
 
     private Integer numberOfPages;
 
-    private BookPublisher bookPublisher;
+    private String bookPublisherBookPublisherTitle;
 }

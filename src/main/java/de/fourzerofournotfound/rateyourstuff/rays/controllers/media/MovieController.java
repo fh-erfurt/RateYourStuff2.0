@@ -101,11 +101,8 @@ public class MovieController {
         if(this.movieService.isValidMovie(movie)) {
             movie.setNetwork(this.movieService.getNetwork(movie.getNetworkTitle(), movie));
             this.movieRepository.save(movie);
-            System.out.println(movie.getGenres().size());
             movie.setGenres(this.mediaService.getGenresSet(movie.getGenreStrings(), movie));
             movie.setLanguages(this.mediaService.getLanguageSet(movie.getLanguageStrings(), movie));
-
-            System.out.println(movie.getGenres().size());
             return ResponseEntity.ok(this.movieRepository.save(movie));
         } else {
             throw new DuplicateMediumException("The Movie " + movie.getMediumName() + " already exists.");

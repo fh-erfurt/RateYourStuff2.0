@@ -36,7 +36,7 @@ public class BookService {
         Optional<Book> optionalBook;
         if(Objects.nonNull(book.getId()))
         {
-            optionalBook = bookRepository.findBookByIdNotAndMediumNameIgnoreCaseAndReleaseDateOrIsbn(book.getId(), book.getMediumName(), book.getReleaseDate(), book.getIsbn());
+            optionalBook = bookRepository.findBookByIdNotAndIsbn(book.getId(), book.getIsbn());
         } else {
             optionalBook = bookRepository.findBookByMediumNameIgnoreCaseAndReleaseDateOrIsbn(book.getMediumName(), book.getReleaseDate(), book.getIsbn());
         }
