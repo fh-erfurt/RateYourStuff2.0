@@ -11,5 +11,5 @@ public class MovieDto extends MediumDto{
 
     private Integer ageRestriction;
 
-    private Network network;
+    private String networkNetworkTitle;
 }

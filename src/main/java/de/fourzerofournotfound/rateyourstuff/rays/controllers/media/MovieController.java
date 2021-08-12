@@ -94,9 +94,18 @@ public class MovieController {
         }
     }
 
+    @CrossOrigin(origins = "*")
     @PutMapping(consumes="application/json", produces="application/json")
-    ResponseEntity<Movie> update(@RequestBody Movie movie) {
-        return ResponseEntity.ok(this.movieRepository.save(movie));
+    ResponseEntity<Movie> update(@RequestBody Movie movie) throws DuplicateMediumException {
+        if(this.movieService.isValidMovie(movie)) {
+            movie.setNetwork(this.movieService.getNetwork(movie.getNetworkTitle(), movie));
+            this.movieRepository.save(movie);
+            movie.setGenres(this.mediaService.getGenresSet(movie.getGenreStrings(), movie));
+            movie.setLanguages(this.mediaService.getLanguageSet(movie.getLanguageStrings(), movie));
+            return ResponseEntity.ok(this.movieRepository.save(movie));
+        } else {
+            throw new DuplicateMediumException("The Movie " + movie.getMediumName() + " already exists.");
+        }
     }
 
     @DeleteMapping("/{id}")

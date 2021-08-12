@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -55,16 +56,16 @@ public abstract class Medium extends BaseModel {
     Set<Collection> collections;
 
     //@JsonManagedReference ("media-genres")
-    @ManyToMany(mappedBy = "media", cascade = CascadeType.ALL)
-    Set<Genre> genres;
+    @ManyToMany
+    Set<Genre> genres = new HashSet<>();
 
     @JsonInclude
     @Transient
     List<String> genreStrings;
 
     //@JsonManagedReference ("media-languages")
-    @ManyToMany(mappedBy = "media", cascade = CascadeType.ALL)
-    Set<Language> languages;
+    @ManyToMany
+    Set<Language> languages = new HashSet<>();
 
     @JsonInclude
     @Transient
