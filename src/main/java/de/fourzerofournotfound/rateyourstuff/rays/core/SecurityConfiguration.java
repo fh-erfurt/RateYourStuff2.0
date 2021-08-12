@@ -64,7 +64,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         try{
             web.ignoring()
-                    .antMatchers("/rest/**", "/images/media/**", "/user/add", "/user/check/**");
+                    .antMatchers("/rest/**", "/images/media/**", "/user/add", "/user/check/**", "/swagger-ui/**", "/v3/api-docs/**");
         } catch(Exception e) {
             throw new Exception("Cant ignore URL", e);
         }
