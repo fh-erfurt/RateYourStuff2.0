@@ -1,6 +1,6 @@
 package de.fourzerofournotfound.rateyourstuff.rays.services.isbn;
 
-import de.fourzerofournotfound.rateyourstuff.rays.models.Book;
+import de.fourzerofournotfound.rateyourstuff.rays.models.media.Book;
 import org.springframework.stereotype.Service;
 
 @Service("ics")

@@ -1,10 +1,10 @@
 package de.fourzerofournotfound.rateyourstuff.rays.services.media;
 
 import de.fourzerofournotfound.rateyourstuff.rays.dtos.media.BookDto;
-import de.fourzerofournotfound.rateyourstuff.rays.models.Book;
-import de.fourzerofournotfound.rateyourstuff.rays.models.BookPublisher;
+import de.fourzerofournotfound.rateyourstuff.rays.models.media.Book;
+import de.fourzerofournotfound.rateyourstuff.rays.models.media.BookPublisher;
 import de.fourzerofournotfound.rateyourstuff.rays.models.Rating;
-import de.fourzerofournotfound.rateyourstuff.rays.repositories.BookPublisherRepository;
+import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.BookPublisherRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

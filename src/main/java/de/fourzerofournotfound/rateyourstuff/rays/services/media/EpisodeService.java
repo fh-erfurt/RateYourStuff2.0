@@ -1,7 +1,7 @@
 package de.fourzerofournotfound.rateyourstuff.rays.services.media;
 
 import de.fourzerofournotfound.rateyourstuff.rays.dtos.media.EpisodeDto;
-import de.fourzerofournotfound.rateyourstuff.rays.models.Episode;
+import de.fourzerofournotfound.rateyourstuff.rays.models.media.Episode;
 import de.fourzerofournotfound.rateyourstuff.rays.models.Rating;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;

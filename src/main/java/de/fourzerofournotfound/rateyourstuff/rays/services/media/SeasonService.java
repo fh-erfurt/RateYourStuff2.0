@@ -1,7 +1,7 @@
 package de.fourzerofournotfound.rateyourstuff.rays.services.media;
 
 import de.fourzerofournotfound.rateyourstuff.rays.dtos.media.SeasonDto;
-import de.fourzerofournotfound.rateyourstuff.rays.models.Season;
+import de.fourzerofournotfound.rateyourstuff.rays.models.media.Season;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
