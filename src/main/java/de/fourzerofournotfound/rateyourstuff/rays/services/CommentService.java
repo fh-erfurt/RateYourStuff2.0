@@ -40,13 +40,16 @@ public class CommentService {
      * @throws InvalidCommentException  If either mediumId or userId are invalid
      */
     public Comment addReferencesToComment(Comment comment) throws InvalidCommentException {
+
+        System.out.println(comment.getMediumMappingId() + "" + comment.getUserMappingId());
+
         Optional<Comment> parentComment = Optional.empty();
         if(comment.getParentMappingId() != null) {
             parentComment = commentRepository.findById(comment.getParentMappingId());
         }
 
         Optional<Medium> referencedMedium = mediaRepository.findById(comment.getMediumMappingId());
-        Optional<User> referencedUser = userRepository.findById(comment.getMediumMappingId());
+        Optional<User> referencedUser = userRepository.findById(comment.getUserMappingId());
 
         if(referencedMedium.isPresent() && referencedUser.isPresent()) {
             comment.setMedium(referencedMedium.get());
