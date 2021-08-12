@@ -157,7 +157,7 @@ INSERT INTO `genres` (`id`, `created_at`, `updated_at`, `genre_name`) VALUES
 (10, '2021-06-21 20:45:25', '2021-06-21 20:45:25', 'Adventure');
 
 --
--- Daten für Tabelle `genres_media`
+-- Daten für Tabelle `media_genres`
 --
 
 INSERT INTO `media_genres` (`genres_id`, `media_id`) VALUES
@@ -186,7 +186,7 @@ INSERT INTO `languages` (`id`, `created_at`, `updated_at`, `language`) VALUES
 (10, '2021-06-21 20:43:48', '2021-06-21 20:43:48', 'Türkisch');
 
 --
--- Daten für Tabelle `languages_media`
+-- Daten für Tabelle `media_languages`
 --
 
 INSERT INTO `media_languages` (`languages_id`, `media_id`) VALUES
@@ -233,10 +233,10 @@ INSERT INTO `logins` (`id`, `created_at`, `updated_at`, `email`, `failed_login_c
 --
 
 INSERT INTO `users` (`id`, `created_at`, `updated_at`, `first_name`, `gender`, `last_name`, `profile_picture_path`, `second_name`, `user_name`, `login_id`, `role_id`) VALUES
-(1, '2021-06-30 20:35:49', '2021-06-30 20:35:49', 'Christoph', 'male', 'Frischmuth', NULL, '', 'ChrisTheSquirrel', 1,2,
-(2, '2021-06-30 20:38:56', '2021-06-30 20:38:56', 'Robin', 'male', 'beck', NULL, '', 'LittleBigPlaye', 2,2,
-(3, '2021-06-30 20:39:20', '2021-06-30 20:39:20', 'Mickey', 'male', 'Knop', NULL, '', 'mikmin', 3,2,
-(4, '2021-06-30 20:39:41', '2021-06-30 20:39:41', 'John', 'male', 'Klippstein', NULL, '', 'Avartos', 4,2,
+(1, '2021-06-30 20:35:49', '2021-06-30 20:35:49', 'Christoph', 'male', 'Frischmuth', NULL, '', 'ChrisTheSquirrel', 1,2),
+(2, '2021-06-30 20:38:56', '2021-06-30 20:38:56', 'Robin', 'male', 'beck', NULL, '', 'LittleBigPlaye', 2,2),
+(3, '2021-06-30 20:39:20', '2021-06-30 20:39:20', 'Mickey', 'male', 'Knop', NULL, '', 'mikmin', 3,2),
+(4, '2021-06-30 20:39:41', '2021-06-30 20:39:41', 'John', 'male', 'Klippstein', NULL, '', 'Avartos', 4,2),
 (5, '2021-06-30 20:40:12', '2021-06-30 20:40:12', 'Saskia', 'female', 'Wohlers', NULL, '', 'Schnoernia', 5,1),
 (6, '2021-06-30 20:40:47', '2021-06-30 20:40:47', 'Rolf', 'male', 'Kruse', NULL, '', 'Rolf_Kruse', 6,1);
 COMMIT;
