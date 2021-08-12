@@ -34,8 +34,7 @@ public class MovieService {
     public boolean isValidMovie(Movie movie)
     {
         Optional<Movie> optionalMovie;
-        if(Objects.nonNull(movie.getId()))
-        {
+        if(Objects.nonNull(movie.getId())) {
             optionalMovie = movieRepository.findMovieByIdNotAndMediumNameIgnoreCaseAndReleaseDate(movie.getId(), movie.getMediumName(), movie.getReleaseDate());
         } else {
             optionalMovie = movieRepository.findMovieByMediumNameIgnoreCaseAndReleaseDate(movie.getMediumName(), movie.getReleaseDate());
