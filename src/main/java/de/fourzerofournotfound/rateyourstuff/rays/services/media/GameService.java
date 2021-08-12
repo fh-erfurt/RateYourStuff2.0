@@ -68,13 +68,10 @@ public class GameService {
         for (String platform : platformStrings) {
             Optional<Platform> foundPlatform = platformRepository.findByPlatformTitle(platform);
             if (foundPlatform.isPresent()) {
-                foundPlatform.get().getGames().add(game);
-                platforms.add(foundPlatform.get());
+                  platforms.add(foundPlatform.get());
             } else {
                 Platform newPlatform = new Platform();
                 newPlatform.setPlatformTitle(platform);
-                newPlatform.setGames(new HashSet<>());
-                newPlatform.getGames().add(game);
                 platforms.add(platformRepository.save(newPlatform));
             }
         }

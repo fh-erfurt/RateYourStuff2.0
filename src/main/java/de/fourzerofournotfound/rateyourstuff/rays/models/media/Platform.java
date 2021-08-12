@@ -29,9 +29,8 @@ public class Platform extends BaseModel {
     @Column (length = 250)
     private String platformTitle;
 
-    //@JsonBackReference
-    @ManyToMany
-    Set<Medium> games;
+    @ManyToMany(mappedBy="platforms")
+    Set<Game> games;
 
     @Builder
     public Platform(String platformTitle) {
