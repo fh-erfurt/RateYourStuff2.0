@@ -121,11 +121,11 @@ public class MediaService {
         Optional<Season> optionalSeason;
         if(Objects.nonNull(season.getId()))
         {
-            optionalSeason = seasonRepository.findSeasonByIdNotAndSeasonTitleIgnoreCaseAndSeasonNumber(season.getId(), season.getSeasonTitle(), season.getSeasonNumber());
+            optionalSeason = seasonRepository.findSeasonSeasonByIdNotAndSeasonNumberAndMediumId(season.getId(), season.getSeasonNumber(), season.getSeriesMappingId());
         }
         else
         {
-            optionalSeason = seasonRepository.findSeasonBySeasonTitleIgnoreCaseAndSeasonNumber(season.getSeasonTitle(), season.getSeasonNumber());
+            optionalSeason = seasonRepository.findSeasonBySeasonNumberAndMediumId(season.getSeasonNumber(), season.getSeriesMappingId());
         }
         return optionalSeason.isEmpty();
     }
@@ -159,7 +159,7 @@ public class MediaService {
             } else {
                 Genre newGenre = new Genre();
                 newGenre.setGenreName(genre);
-                newGenre.setMedia(new HashSet<Medium>());
+                newGenre.setMedia(new HashSet<>());
                 newGenre.getMedia().add(medium);
                 genres.add(genreRepository.save(newGenre));
             }

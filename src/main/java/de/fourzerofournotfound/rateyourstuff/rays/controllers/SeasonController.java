@@ -1,13 +1,25 @@
 package de.fourzerofournotfound.rateyourstuff.rays.controllers;
 
+import de.fourzerofournotfound.rateyourstuff.rays.dtos.media.MovieDto;
+import de.fourzerofournotfound.rateyourstuff.rays.dtos.media.SeasonDto;
 import de.fourzerofournotfound.rateyourstuff.rays.models.Season;
+import de.fourzerofournotfound.rateyourstuff.rays.models.Series;
+import de.fourzerofournotfound.rateyourstuff.rays.models.errors.InvalidSeriesException;
+import de.fourzerofournotfound.rateyourstuff.rays.models.errors.MediumAlreadyExistsException;
 import de.fourzerofournotfound.rateyourstuff.rays.models.errors.SeasonNotFoundException;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.SeasonRepository;
+import de.fourzerofournotfound.rateyourstuff.rays.repositories.SeriesRepository;
+import de.fourzerofournotfound.rateyourstuff.rays.services.MediaService;
+import de.fourzerofournotfound.rateyourstuff.rays.services.PageableService;
+import de.fourzerofournotfound.rateyourstuff.rays.services.media.SeasonService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @RestController
@@ -15,15 +27,20 @@ import java.util.List;
 public class SeasonController {
 
     private final SeasonRepository seasonRepository;
+    private final MediaService mediaService;
+    private final SeriesRepository seriesRepository;
+    private final PageableService pageableService;
+    private final SeasonService seasonService;
 
     @Autowired
-    public SeasonController(SeasonRepository seasonRepository) {
+    public SeasonController(SeasonRepository seasonRepository,
+                            MediaService mediaService,
+                            SeriesRepository seriesRepository, PageableService pageableService, SeasonService seasonService) {
         this.seasonRepository = seasonRepository;
-    }
-
-    @GetMapping("/all")
-    ResponseEntity<List<Season>> getAll() {
-        return ResponseEntity.ok(this.seasonRepository.findAll());
+        this.mediaService = mediaService;
+        this.seriesRepository = seriesRepository;
+        this.pageableService = pageableService;
+        this.seasonService = seasonService;
     }
 
     @GetMapping("/{id}")
@@ -32,13 +49,35 @@ public class SeasonController {
     }
 
     @GetMapping("/series/{id}")
-    ResponseEntity<List<Season>> getByMediumId (@PathVariable Long id) throws SeasonNotFoundException {
-        return ResponseEntity.ok(this.seasonRepository.findAllByMediumId(id));
+    ResponseEntity<List<SeasonDto>> getAll(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "50") int size,
+            @RequestParam(defaultValue = "") String orderBy,
+            @RequestParam(defaultValue = "asc") String order
+    ) {
+        Pageable pageable = pageableService.createPageable(orderBy, order, page, size);
+        List<Season> seasons = this.seasonRepository.findAll(pageable).getContent();
+
+        return ResponseEntity.ok(
+                seasons.stream()
+                        .map(seasonService::convertToDto)
+                        .collect(Collectors.toList())
+        );
     }
 
     @PostMapping(path="/add", consumes= "application/json", produces="application/json")
-    ResponseEntity<Season> add(@RequestBody Season season) {
-        return ResponseEntity.ok(this.seasonRepository.save(season));
+    @CrossOrigin
+    ResponseEntity<Season> add(@RequestBody Season season) throws InvalidSeriesException, MediumAlreadyExistsException {
+        if(mediaService.isValidSeason(season)) {
+            Optional<Series> targetSeries = seriesRepository.findById(season.getSeriesMappingId());
+            if(targetSeries.isPresent()) {
+                season.setMedium(targetSeries.get());
+                return ResponseEntity.ok(this.seasonRepository.save(season));
+            } else {
+                throw new InvalidSeriesException("There is no series with Id " + season.getSeriesMappingId());
+            }
+        }
+        throw new MediumAlreadyExistsException("The Season " + season.getSeasonTitle() + " with number " + season.getSeasonNumber() + " already exists!");
     }
 
     @PutMapping(consumes="application/json", produces="application/json")

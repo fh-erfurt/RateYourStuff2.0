@@ -2,6 +2,7 @@ package de.fourzerofournotfound.rateyourstuff.rays.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 
@@ -33,12 +34,15 @@ public class Season extends BaseModel {
     @Column(length=250)
     private String seasonTitle;
 
+    @JsonInclude
+    @Transient
+    private Long seriesMappingId;
+
     public Season(Integer seasonNumber, String seasonTitle) {
         this.seasonNumber = seasonNumber;
         this.seasonTitle = seasonTitle;
     }
 
-    //@JsonBackReference
     @ManyToOne (cascade = CascadeType.PERSIST)
     @JoinColumn(name = "seriesId", referencedColumnName = "id")
     private Medium medium;

@@ -15,6 +15,8 @@ public interface SeasonRepository extends JpaRepository<Season, Long> {
     List<Season> findAllByMediumId(Long id);
 
     Optional<Season> findSeasonByIdNotAndSeasonTitleIgnoreCaseAndSeasonNumber(Long id, String seasonTitle, int seasonNumber);
+    Optional<Season> findSeasonSeasonByIdNotAndSeasonNumberAndMediumId(Long id, Integer seasonNumber, Long mediumId);
 
     Optional<Season> findSeasonBySeasonTitleIgnoreCaseAndSeasonNumber(String seasonTitle, int seasonNumber);
+    Optional<Season> findSeasonBySeasonNumberAndMediumId(Integer seasonNumber, Long mediumId);
 }
