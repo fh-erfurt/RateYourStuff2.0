@@ -77,9 +77,9 @@ class MediaServiceTest {
         //Then
 
         //false if media is already existent
-        Assertions.assertFalse(bookService.isValidBook(testMedia));
+        Assertions.assertTrue(bookService.isValidBook(testMedia));
         //false if media is already existent
-        Assertions.assertFalse(bookService.isValidBook(saved));
+        Assertions.assertTrue(bookService.isValidBook(saved));
     }
 
     @Test
