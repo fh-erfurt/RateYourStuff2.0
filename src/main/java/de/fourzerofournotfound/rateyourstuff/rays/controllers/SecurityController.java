@@ -58,7 +58,7 @@ public class SecurityController {
         user.ifPresent(value -> validUser = value);
 
         final String jwt = jwtTokenUtil.generateToken(userDetails, validUser);
-        
+
         return ResponseEntity.ok(new AuthenticationResponse(jwt));
     }
 }
