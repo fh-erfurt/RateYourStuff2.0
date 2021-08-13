@@ -36,6 +36,7 @@ public class EpisodeService {
         episodeDto.setNumberOfComments(episode.getComments());
         episodeDto.setNumberOfCollections(episode.getCollections());
         episodeDto.setSeriesId(episode.getSeason());
+        episodeDto.setSeriesTitle(episode.getSeason());
         return episodeDto;
     }
 
