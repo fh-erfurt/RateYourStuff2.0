@@ -8,6 +8,7 @@ import de.fourzerofournotfound.rateyourstuff.rays.repositories.LoginRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.RoleRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.UserRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.services.errors.InvalidLoginException;
+import de.fourzerofournotfound.rateyourstuff.rays.services.errors.InvalidRoleException;
 import de.fourzerofournotfound.rateyourstuff.rays.services.errors.InvalidUserException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,8 +38,10 @@ public class UserService {
     public User addReferencesToUser(User user) throws InvalidUserException {
         Optional<User> tempUser = userRepository.findById(user.getId());
         Optional<Login> tempLogin = loginRepository.findById(tempUser.get().getLogin().getId());
+        Optional<Role> tempRole = roleRepository.findRoleByRoleNameIgnoreCase(tempUser.get().getRole().getRoleName());
         if(tempLogin.isPresent()){
             user.setLogin(tempLogin.get());
+            user.getRole().setId(tempRole.get().getId());
             user.setCreatedAt(tempUser.get().getCreatedAt());
             return user;
         } else {
@@ -57,12 +60,16 @@ public class UserService {
         }
     }
 
-    public void setRoleId(User user) throws RoleNotFoundException {
+    /**
+     * Is setting the RoleId of a User Object
+     * @param user given user object from Web-API
+     */
+    public void setRoleId(User user) {
         Optional<Role> potentialRole = roleRepository.findRoleByRoleNameIgnoreCase(user.getRole().getRoleName());
+        System.out.println("PotentialRole: " + potentialRole.get().getRoleName());
         if(potentialRole.isPresent()){
             user.getRole().setId(potentialRole.get().getId());
         }
-        throw new RoleNotFoundException("Given role not found in Database");
     }
 
 }

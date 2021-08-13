@@ -58,7 +58,7 @@ public class User extends BaseModel {
     @OneToMany(mappedBy = "user")
     private Set<Collection> collections;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name="roleId", referencedColumnName = "id", nullable = false)
     private Role role;
 

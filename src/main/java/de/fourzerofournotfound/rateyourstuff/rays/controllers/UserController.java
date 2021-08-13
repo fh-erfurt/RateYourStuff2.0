@@ -3,6 +3,7 @@ package de.fourzerofournotfound.rateyourstuff.rays.controllers;
 import de.fourzerofournotfound.rateyourstuff.rays.models.User;
 import de.fourzerofournotfound.rateyourstuff.rays.models.errors.UserNotFoundException;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.UserRepository;
+import de.fourzerofournotfound.rateyourstuff.rays.services.errors.InvalidRoleException;
 import de.fourzerofournotfound.rateyourstuff.rays.services.errors.InvalidUserException;
 import de.fourzerofournotfound.rateyourstuff.rays.services.errors.UserAlreadyExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,8 @@ import java.util.Optional;
 
 import de.fourzerofournotfound.rateyourstuff.rays.services.UserSecurityService;
 import de.fourzerofournotfound.rateyourstuff.rays.services.UserService;
+
+import javax.management.relation.RoleNotFoundException;
 
 
 @RestController
@@ -57,6 +60,7 @@ public class UserController {
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping(path = "/add", consumes = "application/json", produces = "application/json")
     ResponseEntity<User> add(@RequestBody User user) {
+        userService.setRoleId(user);
         userSecurityService.hashPasswordOfSignUp(user);
         return ResponseEntity.ok(this.userRepository.save(user));
     }
