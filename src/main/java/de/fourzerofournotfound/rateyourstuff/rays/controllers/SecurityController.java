@@ -56,6 +56,8 @@ public class SecurityController {
 
         //Save Optional User in User Object validUser
         user.ifPresent(value -> validUser = value);
+        System.out.println("ROLE-Name: "+validUser.getRole().getRoleName());
+
 
         final String jwt = jwtTokenUtil.generateToken(userDetails, validUser);
 
