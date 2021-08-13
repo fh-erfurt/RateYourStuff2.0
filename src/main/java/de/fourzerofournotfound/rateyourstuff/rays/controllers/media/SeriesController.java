@@ -89,9 +89,18 @@ public class SeriesController {
         }
     }
 
+    @CrossOrigin("*")
     @PutMapping(consumes="application/json", produces="application/json")
-    ResponseEntity<Series> update(@RequestBody Series series) {
-        return ResponseEntity.ok(this.seriesRepository.save(series));
+    ResponseEntity<Series> update(@RequestBody Series series) throws DuplicateMediumException {
+        if(this.seriesService.isValidSeries(series)) {
+            series.setNetwork(this.seriesService.getNetwork(series.getNetworkTitle(), series));
+            this.seriesRepository.save(series);
+            series.setGenres(this.mediaService.getGenresSet(series.getGenreStrings(), series));
+            series.setLanguages(this.mediaService.getLanguageSet(series.getLanguageStrings(), series));
+            return ResponseEntity.ok(this.seriesRepository.save(series));
+        } else {
+            throw new DuplicateMediumException("The Series " + series.getMediumName() + " already exists.");
+        }
     }
 
     @DeleteMapping("/{id}")
