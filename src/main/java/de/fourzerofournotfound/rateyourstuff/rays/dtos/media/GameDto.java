@@ -1,8 +1,7 @@
 package de.fourzerofournotfound.rateyourstuff.rays.dtos.media;
 
-import de.fourzerofournotfound.rateyourstuff.rays.models.GamePublisher;
-import de.fourzerofournotfound.rateyourstuff.rays.models.Language;
-import de.fourzerofournotfound.rateyourstuff.rays.models.Platform;
+import de.fourzerofournotfound.rateyourstuff.rays.models.media.GamePublisher;
+import de.fourzerofournotfound.rateyourstuff.rays.models.media.Platform;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,7 +22,7 @@ public class GameDto extends MediumDto{
 
     private List<String> platforms;
 
-    private GamePublisher gamePublisher;
+    private String gamePublisherGamePublisherTitle;
 
     private Integer ageRestriction;
 

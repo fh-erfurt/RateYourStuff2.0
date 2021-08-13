@@ -1,11 +1,10 @@
 package de.fourzerofournotfound.rateyourstuff.rays.services;
 
 import de.fourzerofournotfound.rateyourstuff.rays.dtos.RatingDto;
-import de.fourzerofournotfound.rateyourstuff.rays.models.Medium;
+import de.fourzerofournotfound.rateyourstuff.rays.models.media.Medium;
 import de.fourzerofournotfound.rateyourstuff.rays.models.Rating;
 import de.fourzerofournotfound.rateyourstuff.rays.models.User;
-import de.fourzerofournotfound.rateyourstuff.rays.repositories.MediaRepository;
-import de.fourzerofournotfound.rateyourstuff.rays.repositories.RatingRepository;
+import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.MediaRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.UserRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.services.errors.InvalidRatingException;
 import org.modelmapper.ModelMapper;
@@ -28,6 +27,7 @@ public class RatingService {
         this.mediaRepository = mediaRepository;
         this.modelMapper = modelMapper;
     }
+
 
     /**
      * Limits the given Points of a given Rating to the defined minimum and maximum
@@ -66,6 +66,9 @@ public class RatingService {
      * @return          the corresponding dtoObject
      */
     public RatingDto convertToDto(Rating rating) {
-        return modelMapper.map(rating, RatingDto.class);
+                RatingDto ratingDto = modelMapper.map(rating, RatingDto.class);
+                ratingDto.setMIN_POINTS(Rating.MIN_POINTS);
+                ratingDto.setMAX_POINTS(Rating.MAX_POINTS);
+                return ratingDto;
     }
 }

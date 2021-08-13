@@ -108,5 +108,11 @@ public class RatingController {
         this.ratingRepository.deleteById(id);
     }
 
+    @GetMapping("/count/{mediumId}")
+    ResponseEntity<Long> countRatings (@PathVariable Long mediumId){
+        return ResponseEntity.ok(this.ratingRepository.countAllByMediumId(mediumId));
+    }
+
+
 
 }

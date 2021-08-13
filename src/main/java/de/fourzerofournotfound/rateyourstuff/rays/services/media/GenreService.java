@@ -1,7 +1,7 @@
 package de.fourzerofournotfound.rateyourstuff.rays.services.media;
 
 import de.fourzerofournotfound.rateyourstuff.rays.dtos.media.GenreDto;
-import de.fourzerofournotfound.rateyourstuff.rays.models.Genre;
+import de.fourzerofournotfound.rateyourstuff.rays.models.media.Genre;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +17,6 @@ public class GenreService {
     }
 
     public GenreDto convertToDto(Genre genre) {
-        GenreDto genreDto = modelMapper.map(genre, GenreDto.class);
-        return genreDto;
+        return modelMapper.map(genre, GenreDto.class);
     }
 }

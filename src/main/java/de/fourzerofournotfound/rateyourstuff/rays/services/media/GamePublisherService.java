@@ -1,7 +1,7 @@
 package de.fourzerofournotfound.rateyourstuff.rays.services.media;
 
 import de.fourzerofournotfound.rateyourstuff.rays.dtos.media.GamePublisherDto;
-import de.fourzerofournotfound.rateyourstuff.rays.models.GamePublisher;
+import de.fourzerofournotfound.rateyourstuff.rays.models.media.GamePublisher;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

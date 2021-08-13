@@ -157,10 +157,10 @@ INSERT INTO `genres` (`id`, `created_at`, `updated_at`, `genre_name`) VALUES
 (10, '2021-06-21 20:45:25', '2021-06-21 20:45:25', 'Adventure');
 
 --
--- Daten für Tabelle `genres_media`
+-- Daten für Tabelle `media_genres`
 --
 
-INSERT INTO `genres_media` (`genres_id`, `media_id`) VALUES
+INSERT INTO `media_genres` (`genres_id`, `media_id`) VALUES
 (1, 7),
 (1, 8),
 (1, 9),
@@ -186,10 +186,10 @@ INSERT INTO `languages` (`id`, `created_at`, `updated_at`, `language`) VALUES
 (10, '2021-06-21 20:43:48', '2021-06-21 20:43:48', 'Türkisch');
 
 --
--- Daten für Tabelle `languages_media`
+-- Daten für Tabelle `media_languages`
 --
 
-INSERT INTO `languages_media` (`languages_id`, `media_id`) VALUES
+INSERT INTO `media_languages` (`languages_id`, `media_id`) VALUES
 (1, 1),
 (1, 2),
 (1, 3),
@@ -205,25 +205,6 @@ INSERT INTO `movies` (`age_restriction`, `length`, `id`, `network_id`) VALUES
 (16, 177, 12, NULL),
 (12, 98, 13, NULL);
 
---
--- Daten für Tabelle `persons`
---
-
-INSERT INTO `persons` (`id`, `created_at`, `updated_at`, `birth_date`, `first_name`, `last_name`) VALUES
-(2, '2021-06-21 19:25:27', '2021-06-21 19:25:27', '1971-10-10', 'Markus', 'Heitz'),
-(3, '2021-06-21 19:27:09', '2021-06-21 19:27:09', '1968-04-11', 'Sergei', 'Lukjanenko');
-
---
--- Daten für Tabelle `person_assignments`
---
-
--- INSERT INTO `person_assignments` (`id`, `created_at`, `updated_at`, `is_actor`, `is_author`, `is_director`, `is_producer`, `medium_id`, `person_id`) VALUES
--- (5, '2021-06-21 19:18:28', '2021-06-21 19:18:28', b'0', b'1', b'0', b'0', NULL, 2),
--- (13, '2021-06-21 19:28:05', '2021-06-21 19:28:05', NULL, b'1', NULL, NULL, NULL, 3);
-
---
--- Daten für Tabelle `platforms_media`
---
 
 --
 -- Daten für Tabelle `roles`
@@ -233,7 +214,7 @@ INSERT INTO `roles` (`id`, `created_at`, `updated_at`, `role_name`) VALUES
 (1, '2021-06-21 19:17:34', '2021-06-21 19:17:34', 'User'),
 (2, '2021-06-21 19:17:34', '2021-06-21 19:17:34', 'Admin'),
 (3, '2021-06-21 19:17:34', '2021-06-21 19:17:34', 'Moderator'),
-(4, '2021-06-21 19:17:34', '2021-06-21 19:17:34', 'Customer');
+(4, '2021-06-21 19:17:34', '2021-06-21 19:17:34', 'Business');
 
 --
 -- Daten für Tabelle `logins`
@@ -251,13 +232,13 @@ INSERT INTO `logins` (`id`, `created_at`, `updated_at`, `email`, `failed_login_c
 -- Daten für Tabelle `users`
 --
 
-INSERT INTO `users` (`id`, `created_at`, `updated_at`, `first_name`, `gender`, `last_name`, `profile_picture_path`, `second_name`, `user_name`, `login_id`) VALUES
-(1, '2021-06-30 20:35:49', '2021-06-30 20:35:49', 'Christoph', 'male', 'Frischmuth', NULL, '', 'ChrisTheSquirrel', 1),
-(2, '2021-06-30 20:38:56', '2021-06-30 20:38:56', 'Robin', 'male', 'beck', NULL, '', 'LittleBigPlaye', 2),
-(3, '2021-06-30 20:39:20', '2021-06-30 20:39:20', 'Mickey', 'male', 'Knop', NULL, '', 'mikmin', 3),
-(4, '2021-06-30 20:39:41', '2021-06-30 20:39:41', 'John', 'male', 'Klippstein', NULL, '', 'Avartos', 4),
-(5, '2021-06-30 20:40:12', '2021-06-30 20:40:12', 'Saskia', 'female', 'Wohlers', NULL, '', 'Schnoernia', 5),
-(6, '2021-06-30 20:40:47', '2021-06-30 20:40:47', 'Rolf', 'male', 'Kruse', NULL, '', 'Rolf_Kruse', 6);
+INSERT INTO `users` (`id`, `created_at`, `updated_at`, `first_name`, `gender`, `last_name`, `profile_picture_path`, `second_name`, `user_name`, `login_id`, `role_id`) VALUES
+(1, '2021-06-30 20:35:49', '2021-06-30 20:35:49', 'Christoph', 'male', 'Frischmuth', NULL, '', 'ChrisTheSquirrel', 1,2),
+(2, '2021-06-30 20:38:56', '2021-06-30 20:38:56', 'Robin', 'male', 'beck', NULL, '', 'LittleBigPlaye', 2,2),
+(3, '2021-06-30 20:39:20', '2021-06-30 20:39:20', 'Mickey', 'male', 'Knop', NULL, '', 'mikmin', 3,2),
+(4, '2021-06-30 20:39:41', '2021-06-30 20:39:41', 'John', 'male', 'Klippstein', NULL, '', 'Avartos', 4,2),
+(5, '2021-06-30 20:40:12', '2021-06-30 20:40:12', 'Saskia', 'female', 'Wohlers', NULL, '', 'Schnoernia', 5,1),
+(6, '2021-06-30 20:40:47', '2021-06-30 20:40:47', 'Rolf', 'male', 'Kruse', NULL, '', 'Rolf_Kruse', 6,1);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

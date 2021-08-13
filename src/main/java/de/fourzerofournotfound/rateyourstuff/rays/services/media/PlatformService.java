@@ -1,7 +1,7 @@
 package de.fourzerofournotfound.rateyourstuff.rays.services.media;
 
 import de.fourzerofournotfound.rateyourstuff.rays.dtos.media.PlatformDto;
-import de.fourzerofournotfound.rateyourstuff.rays.models.Platform;
+import de.fourzerofournotfound.rateyourstuff.rays.models.media.Platform;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 

@@ -2,10 +2,10 @@ package de.fourzerofournotfound.rateyourstuff.rays.services;
 
 import de.fourzerofournotfound.rateyourstuff.rays.dtos.CommentDto;
 import de.fourzerofournotfound.rateyourstuff.rays.models.Comment;
-import de.fourzerofournotfound.rateyourstuff.rays.models.Medium;
+import de.fourzerofournotfound.rateyourstuff.rays.models.media.Medium;
 import de.fourzerofournotfound.rateyourstuff.rays.models.User;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.CommentRepository;
-import de.fourzerofournotfound.rateyourstuff.rays.repositories.MediaRepository;
+import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.MediaRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.UserRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.services.errors.InvalidCommentException;
 import org.modelmapper.ModelMapper;
@@ -40,13 +40,16 @@ public class CommentService {
      * @throws InvalidCommentException  If either mediumId or userId are invalid
      */
     public Comment addReferencesToComment(Comment comment) throws InvalidCommentException {
+
+        System.out.println(comment.getMediumMappingId() + "" + comment.getUserMappingId());
+
         Optional<Comment> parentComment = Optional.empty();
         if(comment.getParentMappingId() != null) {
             parentComment = commentRepository.findById(comment.getParentMappingId());
         }
 
         Optional<Medium> referencedMedium = mediaRepository.findById(comment.getMediumMappingId());
-        Optional<User> referencedUser = userRepository.findById(comment.getMediumMappingId());
+        Optional<User> referencedUser = userRepository.findById(comment.getUserMappingId());
 
         if(referencedMedium.isPresent() && referencedUser.isPresent()) {
             comment.setMedium(referencedMedium.get());

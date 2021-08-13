@@ -1,8 +1,10 @@
 package de.fourzerofournotfound.rateyourstuff.rays.dtos.media;
 
-import de.fourzerofournotfound.rateyourstuff.rays.models.Season;
+import de.fourzerofournotfound.rateyourstuff.rays.models.media.Season;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.Objects;
 
 @Getter
 @Setter
@@ -18,9 +20,17 @@ public class EpisodeDto extends MediumDto{
 
     private Long seriesId;
 
+    private String seriesTitle;
+
     public void setSeriesId(Season season) {
-        if(season != null) {
+        if(Objects.nonNull(season) && Objects.nonNull(season.getMedium())) {
             this.seriesId = season.getMedium().getId();
+        }
+    }
+
+    public void setSeriesTitle(Season season) {
+        if(Objects.nonNull(season) && Objects.nonNull(season.getMedium())) {
+            this.seriesTitle = season.getMedium().getMediumName();
         }
     }
 }

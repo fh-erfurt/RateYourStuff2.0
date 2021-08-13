@@ -2,28 +2,48 @@ package de.fourzerofournotfound.rateyourstuff.rays.services.media;
 
 import de.fourzerofournotfound.rateyourstuff.rays.dtos.media.GameDto;
 import de.fourzerofournotfound.rateyourstuff.rays.models.*;
-import de.fourzerofournotfound.rateyourstuff.rays.repositories.GamePublisherRepository;
-import de.fourzerofournotfound.rateyourstuff.rays.repositories.PlatformRepository;
+import de.fourzerofournotfound.rateyourstuff.rays.models.media.Game;
+import de.fourzerofournotfound.rateyourstuff.rays.models.media.GamePublisher;
+import de.fourzerofournotfound.rateyourstuff.rays.models.media.Platform;
+import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.GamePublisherRepository;
+import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.GameRepository;
+import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.PlatformRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service("gameService")
 public class GameService {
     private final ModelMapper modelMapper;
     private final PlatformRepository platformRepository;
     private final GamePublisherRepository gamePublisherRepository;
+    private final GameRepository gameRepository;
 
     @Autowired
-    public GameService(ModelMapper modelMapper, PlatformRepository platformRepository, GamePublisherRepository gamePublisherRepository) {
+    public GameService(ModelMapper modelMapper, PlatformRepository platformRepository, GamePublisherRepository gamePublisherRepository, GameRepository gameRepository) {
         this.modelMapper = modelMapper;
         this.platformRepository = platformRepository;
         this.gamePublisherRepository = gamePublisherRepository;
+        this.gameRepository = gameRepository;
+    }
+
+    /**
+     * This service is used to check if a given game-object(checked by its attributes) is already stored in database
+     * @param game - object which is streamed via rest api
+     * @return true if a object is already stored in database (the entry of this game-object is valid)
+     */
+    public boolean isValidGame(Game game)
+    {
+        Optional<Game> optionalGame;
+        if(Objects.nonNull(game.getId()))
+        {
+            optionalGame = gameRepository.findGameByIdNotAndMediumNameIgnoreCaseAndReleaseDate(game.getId(), game.getMediumName(), game.getReleaseDate());
+        } else {
+            optionalGame = gameRepository.findGameByMediumNameIgnoreCaseAndReleaseDate(game.getMediumName(), game.getReleaseDate());
+        }
+        return optionalGame.isEmpty();
     }
 
     /**
@@ -48,13 +68,10 @@ public class GameService {
         for (String platform : platformStrings) {
             Optional<Platform> foundPlatform = platformRepository.findByPlatformTitle(platform);
             if (foundPlatform.isPresent()) {
-                foundPlatform.get().getGames().add(game);
-                platforms.add(foundPlatform.get());
+                  platforms.add(foundPlatform.get());
             } else {
                 Platform newPlatform = new Platform();
                 newPlatform.setPlatformTitle(platform);
-                newPlatform.setGames(new HashSet<Medium>());
-                newPlatform.getGames().add(game);
                 platforms.add(platformRepository.save(newPlatform));
             }
         }
