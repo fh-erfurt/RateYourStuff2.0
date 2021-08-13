@@ -36,7 +36,7 @@ public class SeasonService {
         Optional<Season> optionalSeason;
         if(Objects.nonNull(season.getId()))
         {
-            optionalSeason = seasonRepository.findSeasonSeasonByIdNotAndSeasonNumberAndMediumId(season.getId(), season.getSeasonNumber(), season.getSeriesMappingId());
+            optionalSeason = seasonRepository.findSeasonByIdNotAndSeasonNumberAndMediumId(season.getId(), season.getSeasonNumber(), season.getSeriesMappingId());
         }
         else
         {
