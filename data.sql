@@ -5,17 +5,28 @@ SET time_zone = "+00:00";
 INSERT INTO `book_publishers` (`id`, `created_at`, `updated_at`, `book_publisher_title`) VALUES
 (1, '2021-06-21 19:12:59', '2021-06-21 19:12:59', 'Knaur'),
 (2, '2021-06-21 19:12:59', '2021-06-21 19:12:59', 'Heyne'),
-(3, '2021-06-21 19:12:59', '2021-06-21 19:12:59', 'Hanser');
+(3, '2021-06-21 19:12:59', '2021-06-21 19:12:59', 'Hanser'),
+(4, '2021-07-04 16:08:18', '2021-07-04 16:08:18', 'Anaconda'),
+(5, '2021-07-04 16:08:43', '2021-07-04 16:08:43', 'ullstein');
 
 INSERT INTO `game_publishers` (`id`, `created_at`, `updated_at`, `game_publisher_title`) VALUES
 (1, '2021-06-21 19:14:05', '2021-06-21 19:14:05', 'Square Enix'),
 (2, '2021-06-21 19:14:05', '2021-06-21 19:14:05', 'Electronic Arts'),
-(3, '2021-06-21 19:14:05', '2021-06-21 19:14:05', 'Blizzard');
+(3, '2021-06-21 19:14:05', '2021-06-21 19:14:05', 'Blizzard'),
+(4, '2021-07-04 16:04:22', '2021-07-04 16:04:22', 'Bandai Namco Games'),
+(5, '2021-07-04 16:05:26', '2021-07-04 16:05:26', 'Nintendo');
 
 INSERT INTO `networks` (`id`, `created_at`, `updated_at`, `network_title`) VALUES
 (1, '2021-06-21 19:14:50', '2021-06-21 19:14:50', 'HBO'),
 (2, '2021-06-21 19:14:50', '2021-06-21 19:14:50', 'CBS'),
-(3, '2021-06-21 19:14:50', '2021-06-21 19:14:50', 'Marvel');
+(3, '2021-06-21 19:14:50', '2021-06-21 19:14:50', 'Marvel'),
+(4, '2021-07-04 15:56:14', '2021-07-04 15:56:14', 'Pixar'),
+(5, '2021-07-04 15:58:28', '2021-07-04 15:58:28', 'Paramount Pictures'),
+(6, '2021-07-04 16:00:30', '2021-07-04 16:00:30', 'Ternion'),
+(7, '2021-07-04 16:15:11', '2021-07-04 16:15:11', 'Nickelodeon'),
+(8, '2021-07-04 16:17:34', '2021-07-04 16:17:34', 'Netflix'),
+(9, '2021-07-04 16:20:01', '2021-07-04 16:20:01', 'Adult Swim'),
+(10, '2021-07-04 16:21:39', '2021-07-04 16:21:39', 'NBC');
 
 INSERT INTO `platforms` (`id`, `created_at`, `updated_at`, `platform_title`) VALUES
 (1, '2021-06-21 19:15:42', '2021-06-21 19:15:42', 'Playstation'),
@@ -54,28 +65,77 @@ INSERT INTO `media` (`id`, `created_at`, `updated_at`, `medium_name`, `picture_p
 (10, '2021-06-21 20:28:16', '2021-06-21 20:28:16', 'Mein Kunstfehler', '10/poster.jpg', '2001-10-02', 'Turk hat neuerdings nur Augen für Carla'),
 (11, '2021-06-21 20:52:29', '2021-06-21 20:52:29', 'Tucker and Dale vs. Evil', '11/poster.jpg', '2011-02-10', '\r\nFür ein friedliches Wochenende machen sich Tucker und Dale auf den Weg zu ihrer Ferienhütte in der Wildnis. Als sie auf dem Freeway fast mit einer Gruppe Collegekids kollidieren, ahnen die gutherzigen Hinterwäldler nichts Böses. Doch Dales schüchterne Einfalt und die Vorbehalte der Studenten gegen das rustikale Äußere der Hillbillies lenken eigentlich harmlose Ereignisse in eine fatale Richtung.'),
 (12, '2021-06-21 20:52:29', '2021-06-21 20:52:29', 'Braveheart', '12/poster.jpg', '1995-10-05', 'Schottland im 13. Jahrhundert. Der englische König Edward I. führt ein brutales Regiment über das Land. Als William Wallaces Frau von Truppen ermordet wird, schwört er auf Rache.'),
-(13, '2021-06-21 20:52:29', '2021-06-21 20:52:29', 'Rush Hour', '13/poster.jpg', '1998-09-18', 'Als diese beiden Cops aus völlig unterschiedlichen Welten temperamentvoll aneinander geraten, sorgt der Kulturschock für die Erkenntnis, dass sie nur Eines gemeinsam haben.');
+(13, '2021-06-21 20:52:29', '2021-06-21 20:52:29', 'Rush Hour', '13/poster.jpg', '1998-09-18', 'Als diese beiden Cops aus völlig unterschiedlichen Welten temperamentvoll aneinander geraten, sorgt der Kulturschock für die Erkenntnis, dass sie nur Eines gemeinsam haben.'),
+(14, '2021-07-04 14:06:47', '2021-07-04 14:06:47', 'Transformers', '14/poster.jpg', '2007-07-04', 'Auf dem Planeten Cybertron lebte eine Rasse intelligenter, eigenständig agierender Roboter, die über die Fähigkeit verfügen, ihre Körper in andere Formen zu verwandeln. Einst regierten Optimus Prime und Megatron gemeinsam den Planeten, doch insgeheim scharte der machthungrige Megatron eine Armee ihm treu ergebener Gefolgsleute, die Decepticons, um sich. Er verfolgt das Ziel, Macht über das gesamte Universum zu erlangen. Das soll verhindert werden.'),
+(15, '2021-07-04 14:10:12', '2021-07-04 14:10:12', 'Toy Story 2', '15/poster.jpg', '2000-02-03', 'Woody wird von einem fanatischen Spielzeugsammler entführt. Seine einzige Hoffnung besteht nun darin, dass Buzz Lightyear und seine Freunde ihn durch eine halsbrecherische Rettungsaktion aus den Fängen des bösen Spielzeugsammlers befreien. Währenddessen trifft Woody auf drei andere Wild-West-Spielzeuge, die gemeinsam mit ihm an ein Spielzeugmuseum in Tokio verkauft werden sollen. Woody will fliehen, da er Andy und seine Freunde vermisst.'),
+(16, '2021-07-04 14:12:25', '2021-07-04 14:12:25', 'Interstellar', '16/poster.jpg', '2014-11-06', 'Die Menschheit steht bereits kurz vor ihrer Auslöschung durch Klimawandel und Nahrungsmangel, als ein mysteriöser Riss im Raum-Zeit-Gewebe entdeckt wird, der eine Chance zum Überleben verheißt. Der ehemalige NASA-Pilot Cooper wird mit einem Forscherteam auf eine Mission durch das Wurmloch in ein anderes Sonnensystem geschickt, um nach neuen Lebensräumen zu suchen. Es ist eine Reise ins Ungewisse, denn Wurmlöcher sind noch kaum erforscht, und niemand weiß, was auf der anderen Seite wartet.'),
+(17, '2021-07-04 14:13:47', '2021-07-04 14:13:47', 'Idiocracy', '17/poster.jpg', '2007-01-25', 'Joe Bowers arbeitet als Bibliothekar bei der Army und ist nicht unbedingt der intelligenteste Zeitgenosse. Ein optimales Versuchskaninchen also für das streng geheime Projekt des Pentagons. Ein Experiment, bei dem Menschen in einen Winterschlaf versetzt werden, um sie zu einem späteren Zeitpunkt wieder zum Leben zu erwecken. Das auf ein Jahr angesetzte Projekt gerät in Vergessenheit und Joe Bowers und die ihm damals als fruchtbare Partnerin zugeteilte Prostituierte Rita erwachen im Jahre 2505.'),
+(18, '2021-07-04 14:15:47', '2021-07-04 14:15:47', 'Final Fantasy X', '18/poster.jpg', '2001-07-19', 'Die Handlung dieses Rollenspiels dreht sich um die Reise von Tidus und Yuna, die Sin besiegen wollen. Sin stellt gewissermaßen das Übel in der Welt von Spira dar.'),
+(19, '2021-07-04 14:17:40', '2021-07-04 14:17:40', 'Dark Souls', '19/poster.jpg', '2011-09-22', 'Die ganze Geschichte von Dark Souls: Gwyn zerteilt seine Seele. Um den Zerfall der Ersten Flamme aufzuhalten, zerteilt Gwyn seine Seele und gibt diese Stücke an seine Getreuen. Ein Stück erhält Seath, der Schuppenlose. Das andere erhalten die Vier Könige, die über Neu Londo wachten.'),
+(20, '2021-07-04 14:19:06', '2021-07-04 14:19:06', 'The Legend of Zelda: Breath of the Wild', '20/poster.jpg', '2017-03-03', 'Nachdem die Verheerung Ganon in ihren Reinkarnationen immer wieder das Land Hyrule angreift, kann 10.000 Jahre vor Einsetzen der Handlung von Breath of the Wild der Zyklus durch die Konstruktion von vier Maschinen, den sogenannte Titanen, und zahlreichen kleineren Maschinen, den Wächtern, unterbrochen werden.'),
+(21, '2021-07-04 14:21:13', '2021-07-04 14:21:13', 'Dante die göttliche Komödie', '21/poster.jpg', '2005-04-30', 'Dantes Versepos erzählt die Läuterung eines empfindsamen, oft schwermütigen Icherzählers durch die drei Reiche der jenseitigen Welt - durch die Hölle (Inferno), das Fegefeuer (Purgatorio) und das Paradies (Paradiso). Der römische Dichter Vergil führt den Helden sicher durch die Reiche des Jenseits.'),
+(22, '2021-07-04 14:22:36', '2021-07-04 14:22:36', 'Isaac Asimov Die Foundation-Trilogie', '22/poster.jpg', '1963-01-01', 'Der Foundation-Zyklus ist Teil des Werkes des Science-Fiction-Schriftstellers Isaac Asimov. Den bekanntesten und ursprünglich zentralen Teil bildet die Foundation-Trilogie, die den Untergang eines galaktischen Imperiums und den darauffolgenden Neuaufbau einer interstellaren menschlichen Zivilisation beschreibt.'),
+(23, '2021-07-04 14:29:24', '2021-07-04 14:29:24', '1984', '23/poster.jpg', '1949-06-01', 'Im totalitären Staat Ozeanien lebt der kleine Angestellte Winston Smith ein erbärmliches Leben unter den alles überwachenden Augen des regierenden Großen Bruders, dessen Kameras und Mikrofone jede Bewegung seiner Untertanen verfolgen. Tagsüber ist Winstons Smiths Aufgabe, im Ministerium für Wahrheit die Geschichte zu fälschen, indem er alte Nachrichtenmeldungen und Dokumente rückwirkend so ändert, dass sie der geänderten offiziellen Sichtweise des Staates entsprechen.'),
+(24, '2021-07-04 14:31:32', '2021-07-04 14:31:32', 'Avatar der Herr der Elemente', '24/poster.jpg', '2005-02-21', 'In dieser Serie muss der zwölfjährige Aang der Welt Frieden und Gleichgewicht bringen, indem er den Krieg der Feuernation mit dem Rest der Welt beendet. Im Laufe der Handlung trifft er auf Freunde, Gefährten und Verbündete, die ihn unterstützen, wird aber ständig von der Feuernation gejagt.'),
+(25, '2021-07-04 14:32:38', '2021-07-04 14:32:38', 'Enthüllungen zu Mitternacht ', '25/poster.jpg', '2020-04-20', 'Die Serie dreht sich um den Spacecaster Clancy, der Interviews mit anderen Wesen aus verschiedenen Welten des Multiversums führt.'),
+(26, '2021-07-04 14:34:28', '2021-07-04 14:34:28', 'Love Death & Robots', '26/poster.jpg', '2019-03-15', 'Sie besteht aus animierten Kurzfilmen verschiedener Künstler aus der ganzen Welt. Jeder Kurzfilm hat eine in sich abgeschlossene Handlung.'),
+(27, '2021-07-04 14:38:25', '2021-07-04 14:38:25', 'Rick and Morty', '27/poster.jpg', '2013-12-02', 'Rick and Morty erzählt von einem genialen Wissenschaftler und Erfinder und seinem weniger genialen Enkelsohn. Gemeinsam bestreiten die beiden täglich neue Abenteuer – ganz zum Missfallen von Mortys Eltern, die in Rick eher einen potentiellen Störenfried sehen.'),
+(28, '2021-07-04 14:40:43', '2021-07-04 14:40:43', 'Mein Rundumschlag', '28/poster.jpg', '2002-09-26', 'Nach Jordans Enthüllungen stehen sich die Kollegen distanziert gegenüber.'),
+(29, '2021-07-04 14:42:37', '2021-07-04 14:42:37', 'Mein Nachtdienst', '29/poster.jpg', '2002-10-03', 'J.D., Turk und Elliot absolvieren zum ersten Mal alleine eine Nachschicht.'),
+(30, '2021-07-04 14:44:42', '2021-07-04 14:44:42', 'Mein drittes Jahr', '30/poster.jpg', '2003-10-02', 'Elliot entscheidet sich für eine radikale Persöhnlichkeitsänderung.');
 
 INSERT INTO `series` (`age_restriction`, `average_length`, `is_completed`, `id`, `network_id`) VALUES
-(12, NULL, b'1', 7, NULL);
+(12, 22, b'1', 7, 10),
+(6, 23, b'1', 24, 7),
+(16, 23, b'0', 25, 8),
+(17, 12, b'0', 26, 8),
+(16, 22, b'0', 27, 9);
 
 INSERT INTO `seasons` (`id`, `created_at`, `updated_at`, `season_number`, `season_title`, `series_id`) VALUES
-(1, '2021-06-21 20:25:06', '2021-06-21 20:25:06', 1, 'Staffel 1', 7);
+(1, '2021-06-21 20:25:06', '2021-06-21 20:25:06', 1, 'Staffel 1', 7),
+(2, '2021-07-04 16:22:34', '2021-07-04 16:22:34', 2, 'Staffel 2', 7),
+(3, '2021-07-04 16:23:22', '2021-07-04 16:23:22', 3, 'Staffel 3', 7),
+(4, '2021-07-04 16:23:38', '2021-07-04 16:23:38', 4, 'Staffel 4', 7),
+(5, '2021-07-04 16:23:52', '2021-07-04 16:23:52', 5, 'Staffel 5', 7),
+(6, '2021-07-04 16:24:02', '2021-07-04 16:24:02', 6, 'Staffel 6', 7),
+(7, '2021-07-04 16:24:12', '2021-07-04 16:24:12', 7, 'Staffel 7', 7),
+(8, '2021-07-04 16:24:21', '2021-07-04 16:24:21', 8, 'Staffel 8', 7),
+(9, '2021-07-04 16:24:35', '2021-07-04 16:24:35', 9, 'Staffel 9', 7),
+(10, '2021-07-04 16:25:00', '2021-07-04 16:25:00', 1, 'Wasser', 24),
+(11, '2021-07-04 16:26:14', '2021-07-04 16:26:14', 2, 'Erde', 24),
+(12, '2021-07-04 16:26:23', '2021-07-04 16:26:23', 3, 'Feuer', 24),
+(13, '2021-07-04 16:28:00', '2021-07-04 16:28:00', 1, 'Staffel 1', 25),
+(14, '2021-07-04 16:28:17', '2021-07-04 16:28:17', 1, 'Staffel 1', 26),
+(15, '2021-07-04 16:28:34', '2021-07-04 16:28:34', 2, 'Staffel 2', 26),
+(16, '2021-07-04 16:29:00', '2021-07-04 16:29:00', 1, 'Staffel 1', 27),
+(17, '2021-07-04 16:29:13', '2021-07-04 16:29:13', 2, 'Staffel 2', 27),
+(18, '2021-07-04 16:29:22', '2021-07-04 16:29:22', 3, 'Staffel 3', 27),
+(19, '2021-07-04 16:29:32', '2021-07-04 16:29:32', 4, 'Staffel 4', 27),
+(20, '2021-07-04 16:29:42', '2021-07-04 16:29:42', 5, 'Staffel 5', 27);
 
 INSERT INTO `books` (`isebook`, `is_print`, `isbn`, `number_of_pages`, `id`, `book_publisher_id`) VALUES
 (b'1', b'1', '978-3-426-51861-8', 600, 1, 1),
 (b'1', b'1', '978-3-641-06578-2', 528, 2, 2),
-(b'1', b'1', '978-3-446-45793-5', 435, 3, 3);
+(b'1', b'1', '978-3-446-45793-5', 435, 3, 3),
+(b'1', b'1', '978-3-938484-11-1', 544, 21, 4),
+(b'1', b'1', '978-3-453-31867', 879, 22, 2),
+(b'1', b'1', '978-3-548-23410-6', 383, 23, 5);
 
 INSERT INTO `episodes` (`episode_number`, `length`, `id`, `season_id`) VALUES
 (1, 22, 8, 1),
 (2, 21, 9, 1),
-(3, 21, 10, 1);
+(3, 21, 10, 1),
+(1, 20, 28, 2),
+(2, 20, 29, 2),
+(1, 20, 30, 3);
 
 INSERT INTO `games` (`age_restriction`, `average_playtime`, `max_number_of_gamers`, `min_number_of_gamers`, `id`, `game_publisher_id`) VALUES
 (12, NULL, NULL, 1, 4, 3),
 (12, 17, 2, 2, 5, 2),
-(12, 40, 4, 1, 6, 1);
+(12, 40, 4, 1, 6, 1),
+(12, 80, NULL, 1, 18, 1),
+(16, 60, NULL, 1, 19, 4),
+(12, 50, NULL, 1, 20, 5);
 
 
 INSERT INTO `genres` (`id`, `created_at`, `updated_at`, `genre_name`) VALUES
@@ -125,7 +185,11 @@ INSERT INTO `media_languages` (`languages_id`, `media_id`) VALUES
 INSERT INTO `movies` (`age_restriction`, `length`, `id`, `network_id`) VALUES
 (16, 89, 11, NULL),
 (16, 177, 12, NULL),
-(12, 98, 13, NULL);
+(12, 98, 13, NULL),
+(12, 143, 14, NULL),
+(0, 89, 15, 4),
+(12, 169, 16, 5),
+(12, 84, 17, 6);
 
 INSERT INTO `roles` (`id`, `created_at`, `updated_at`, `role_name`) VALUES
 (1, '2021-06-21 19:17:34', '2021-06-21 19:17:34', 'User'),

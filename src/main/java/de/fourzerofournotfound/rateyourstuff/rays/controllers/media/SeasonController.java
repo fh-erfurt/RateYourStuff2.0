@@ -49,13 +49,14 @@ public class SeasonController {
 
     @GetMapping("/series/{id}")
     ResponseEntity<List<SeasonDto>> getAll(
+            @PathVariable Long id,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "50") int size,
             @RequestParam(defaultValue = "") String orderBy,
             @RequestParam(defaultValue = "asc") String order
     ) {
         Pageable pageable = pageableService.createPageable(orderBy, order, page, size);
-        List<Season> seasons = this.seasonRepository.findAll(pageable).getContent();
+        List<Season> seasons = this.seasonRepository.findAllByMediumId(id, pageable).getContent();
 
         return ResponseEntity.ok(
                 seasons.stream()
