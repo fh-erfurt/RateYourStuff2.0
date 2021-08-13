@@ -1,7 +1,9 @@
 package de.fourzerofournotfound.rateyourstuff.rays.repositories;
 
 import de.fourzerofournotfound.rateyourstuff.rays.models.Login;
+import de.fourzerofournotfound.rateyourstuff.rays.models.Role;
 import de.fourzerofournotfound.rateyourstuff.rays.models.User;
+import de.fourzerofournotfound.rateyourstuff.rays.services.UserService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,12 +11,17 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import javax.management.relation.RoleNotFoundException;
 import java.util.Optional;
 
 @SpringBootTest(properties = "spring.profiles.active=test")
 public class UserRepositoryTest {
     @Autowired
     UserRepository repository;
+    RoleRepository roleRepository;
+
+    @Autowired
+    UserService userService;
 
     @BeforeEach
     public void beforeEach() {
@@ -30,12 +37,24 @@ public class UserRepositoryTest {
     public void should_add_new_user()
     {
         //Given
+        Login givenLogin = Login.builder()
+                .email("siggi@rays.de")
+                .passwordHash("1234Hallo4567")
+                .isEnabled(true)
+                .build();
+
+        Role givenRole = Role.builder()
+                .roleName("User")
+                .build();
+
         User given = User.builder()
                 .firstName("Kurt")
                 .lastName("Mustermann")
                 .secondName("Ryan")
                 .userName("Kurt_der_Schnurrt")
                 .gender("male")
+                .login(givenLogin)
+                .role(givenRole)
                 .build();
 
         //When
@@ -49,12 +68,24 @@ public class UserRepositoryTest {
     public void should_find_user_by_userName()
     {
         //Given
+        Login givenLogin = Login.builder()
+                .email("siggi@rays.de")
+                .passwordHash("1234Hallo4567")
+                .isEnabled(true)
+                .build();
+
+        Role givenRole = Role.builder()
+                .roleName("User")
+                .build();
+
         User given = User.builder()
                 .firstName("Heinrich")
                 .secondName("Muster")
                 .lastName("Mustermann")
                 .userName("Heiner34")
                 .gender("male")
+                .login(givenLogin)
+                .role(givenRole)
                 .build();
 
         //When
@@ -65,13 +96,16 @@ public class UserRepositoryTest {
     }
 
     @Test
-    public void should_add_login()
-    {
+    public void should_add_login() throws RoleNotFoundException {
         //Given
         Login givenLogin = Login.builder()
                 .email("siggi@rays.de")
                 .passwordHash("1234Hallo4567")
                 .isEnabled(true)
+                .build();
+
+        Role givenRole = Role.builder()
+                .roleName("User")
                 .build();
 
         User given = User.builder()
@@ -81,12 +115,14 @@ public class UserRepositoryTest {
                 .userName("Siggi1234")
                 .gender("male")
                 .login(givenLogin)
+                .role(givenRole)
                 .build();
 
         //When
         User result = repository.save(given);
 
         //Then
+        System.out.println(result.getRole().getId());
         Assertions.assertThat(result.getLogin().getId()).isNotNull();
     }
 
@@ -94,12 +130,24 @@ public class UserRepositoryTest {
     public void should_update_lastName()
     {
         //Given
+        Login givenLogin = Login.builder()
+                .email("siggi@rays.de")
+                .passwordHash("1234Hallo4567")
+                .isEnabled(true)
+                .build();
+
+        Role givenRole = Role.builder()
+                .roleName("User")
+                .build();
+
         User given = User.builder()
                 .firstName("Simone")
                 .secondName("Muster")
                 .lastName("Mustermann")
                 .userName("Simme1234")
                 .gender("female")
+                .login(givenLogin)
+                .role(givenRole)
                 .build();
         User saved = repository.save(given);
 
@@ -117,12 +165,24 @@ public class UserRepositoryTest {
     public void should_delete_user()
     {
         //Given
+        Login givenLogin = Login.builder()
+                .email("siggi@rays.de")
+                .passwordHash("1234Hallo4567")
+                .isEnabled(true)
+                .build();
+
+        Role givenRole = Role.builder()
+                .roleName("User")
+                .build();
+
         User given = User.builder()
                 .firstName("Simon")
                 .secondName("Muster")
                 .lastName("Mustermann")
                 .userName("Simmo1234")
                 .gender("male")
+                .login(givenLogin)
+                .role(givenRole)
                 .build();
         User saved = repository.save(given);
 

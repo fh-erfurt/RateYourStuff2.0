@@ -1,26 +1,31 @@
 package de.fourzerofournotfound.rateyourstuff.rays.services;
 
 import de.fourzerofournotfound.rateyourstuff.rays.models.Login;
+import de.fourzerofournotfound.rateyourstuff.rays.models.Role;
 import de.fourzerofournotfound.rateyourstuff.rays.models.User;
 import de.fourzerofournotfound.rateyourstuff.rays.models.errors.UserNotFoundException;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.LoginRepository;
+import de.fourzerofournotfound.rateyourstuff.rays.repositories.RoleRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.UserRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.services.errors.InvalidLoginException;
 import de.fourzerofournotfound.rateyourstuff.rays.services.errors.InvalidUserException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.management.relation.RoleNotFoundException;
 import java.util.Optional;
 
 @Service("us")
 public class UserService {
     private final UserRepository userRepository;
     private final LoginRepository loginRepository;
+    private final RoleRepository roleRepository;
 
     @Autowired
-    public UserService(UserRepository userRepository, LoginRepository loginRepository) {
+    public UserService(UserRepository userRepository, LoginRepository loginRepository, RoleRepository roleRepository) {
         this.userRepository = userRepository;
         this.loginRepository = loginRepository;
+        this.roleRepository = roleRepository;
     }
 
     /**
@@ -50,6 +55,14 @@ public class UserService {
         } else {
             throw new InvalidLoginException("The given login must have a valid loginId");
         }
+    }
+
+    public void setRoleId(User user) throws RoleNotFoundException {
+        Optional<Role> potentialRole = roleRepository.findRoleByRoleNameIgnoreCase(user.getRole().getRoleName());
+        if(potentialRole.isPresent()){
+            user.getRole().setId(potentialRole.get().getId());
+        }
+        throw new RoleNotFoundException("Given role not found in Database");
     }
 
 }

@@ -46,7 +46,7 @@ public class User extends BaseModel {
     private String profilePicturePath;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "loginId", referencedColumnName = "id")
+    @JoinColumn(name = "loginId", referencedColumnName = "id", nullable = false)
     private Login login;
 
     @OneToMany(mappedBy = "user")
@@ -58,7 +58,7 @@ public class User extends BaseModel {
     @OneToMany(mappedBy = "user")
     private Set<Collection> collections;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name="roleId", referencedColumnName = "id", nullable = false)
     private Role role;
 
