@@ -1,6 +1,7 @@
 package de.fourzerofournotfound.rateyourstuff.rays.services.media;
 
 import de.fourzerofournotfound.rateyourstuff.rays.dtos.media.CollectionDto;
+import de.fourzerofournotfound.rateyourstuff.rays.dtos.media.ReducedCollectionDto;
 import de.fourzerofournotfound.rateyourstuff.rays.models.User;
 import de.fourzerofournotfound.rateyourstuff.rays.models.errors.UserNotFoundException;
 import de.fourzerofournotfound.rateyourstuff.rays.models.media.Collection;
@@ -42,5 +43,9 @@ public class CollectionService {
         collectionDto.setMedia(collection.getMedia().stream().map(mediaService::convertToDto).collect(Collectors.toList()));
 
         return collectionDto;
+    }
+
+    public ReducedCollectionDto convertToReducedDto(Collection collection) {
+        return modelMapper.map(collection, ReducedCollectionDto.class);
     }
 }
