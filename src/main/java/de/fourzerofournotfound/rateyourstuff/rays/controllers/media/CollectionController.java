@@ -10,6 +10,7 @@ import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.CollectionR
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.MediaRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.services.PageableService;
 import de.fourzerofournotfound.rateyourstuff.rays.services.media.CollectionService;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -117,5 +118,31 @@ public class CollectionController {
             return ResponseEntity.ok(collectionService.convertToReducedDto(savedCollection));
         }
         throw new CollectionNotFoundException("There is not collection with id " + collection.getId());
+    }
+
+    @DeleteMapping(path="/{id}/medium/{mediumId}")
+    ResponseEntity<CollectionDto> deleteMediumFromCollection (@PathVariable Long id, @PathVariable Long mediumId) throws CollectionNotFoundException {
+        Optional<Collection> targetCollection = collectionRepository.findById(id);
+        if(targetCollection.isPresent()) {
+            targetCollection.get().getMedia().removeIf(e->e.getId().equals(mediumId));
+            Collection savedCollection = collectionRepository.save(targetCollection.get());
+            return ResponseEntity.ok(collectionService.convertToDto(savedCollection));
+        }
+        throw new CollectionNotFoundException("There is no collection with id " + id);
+    }
+
+    @PutMapping(path="/{id}/medium/{mediumId}")
+    ResponseEntity<CollectionDto> addMediumToCollection(@PathVariable Long id, @PathVariable Long mediumId) throws CollectionNotFoundException {
+        Optional<Medium> medium = mediaRepository.findById(mediumId);
+        Optional<Collection> collection = collectionRepository.findById(id);
+
+        if(collection.isPresent()) {
+            if(medium.isPresent()) {
+                collection.get().getMedia().add(medium.get());
+                Collection savedCollection = collectionRepository.save(collection.get());
+                return ResponseEntity.ok(collectionService.convertToDto(savedCollection));
+            }
+        }
+        throw new CollectionNotFoundException("There is no collection with id " + id);
     }
 }
