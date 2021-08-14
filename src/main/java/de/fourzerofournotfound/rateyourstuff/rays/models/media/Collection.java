@@ -1,6 +1,7 @@
 package de.fourzerofournotfound.rateyourstuff.rays.models.media;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import de.fourzerofournotfound.rateyourstuff.rays.models.BaseModel;
 import de.fourzerofournotfound.rateyourstuff.rays.models.User;
@@ -26,10 +27,17 @@ import java.util.Set;
 @Table(name = "Collections")
 public class Collection extends BaseModel {
 
+    @Column
+    private String title;
+
     @ManyToOne
     @JoinColumn(name = "userId", referencedColumnName = "id")
     private User user;
 
     @ManyToMany
     Set<Medium> media;
+
+    @Transient
+    @JsonInclude
+    private Long userMappingId;
 }
