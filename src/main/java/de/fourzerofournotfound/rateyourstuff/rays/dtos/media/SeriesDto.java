@@ -9,7 +9,7 @@ import lombok.Setter;
 public class SeriesDto extends MediumDto {
     private Integer averageLength;
 
-    private Network network;
+    private String networkNetworkTitle;
 
     private Integer ageRestriction;
 

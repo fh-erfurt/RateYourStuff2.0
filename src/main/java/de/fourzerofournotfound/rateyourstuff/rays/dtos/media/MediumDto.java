@@ -4,6 +4,7 @@ import de.fourzerofournotfound.rateyourstuff.rays.models.*;
 import de.fourzerofournotfound.rateyourstuff.rays.models.media.Collection;
 import de.fourzerofournotfound.rateyourstuff.rays.models.media.Genre;
 import de.fourzerofournotfound.rateyourstuff.rays.models.media.Language;
+import de.fourzerofournotfound.rateyourstuff.rays.models.media.Medium;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,7 +15,7 @@ import java.util.stream.Collectors;
 
 @Setter
 @Getter
-public abstract class MediumDto {
+public class MediumDto {
     Long id;
     String mediumName;
 
@@ -41,13 +42,14 @@ public abstract class MediumDto {
 
     List<String> languages;
 
+    private String mediaType;
+
     public void setLanguages(Set<Language> languages) {
         if(languages != null) {
             this.languages = languages.stream().map(Language::getLanguage).collect(Collectors.toList());
         } else {
             this.languages = new ArrayList<>();
         }
-
     }
 
     public void setGenres(Set<Genre> genres) {

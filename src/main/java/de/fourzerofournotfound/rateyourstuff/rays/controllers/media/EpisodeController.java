@@ -11,6 +11,7 @@ import de.fourzerofournotfound.rateyourstuff.rays.services.FileUploadService;
 import de.fourzerofournotfound.rateyourstuff.rays.services.PageableService;
 import de.fourzerofournotfound.rateyourstuff.rays.services.errors.DuplicateMediumException;
 import de.fourzerofournotfound.rateyourstuff.rays.services.media.EpisodeService;
+import de.fourzerofournotfound.rateyourstuff.rays.services.media.MediaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +26,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
+@CrossOrigin("*")
 @RequestMapping("/rest/episodes")
 public class EpisodeController {
 
@@ -34,18 +36,20 @@ public class EpisodeController {
     private final EpisodeService episodeService;
     private final SeasonRepository seasonRepository;
     private final EpisodeRepository episodeRepository;
+    private final MediaService mediaService;
 
     @Autowired
     public EpisodeController(EpisodeRepository repository,
                              FileUploadService fus,
                              PageableService pageableService,
-                             EpisodeService episodeService, SeasonRepository seasonRepository, EpisodeRepository episodeRepository) {
+                             EpisodeService episodeService, SeasonRepository seasonRepository, EpisodeRepository episodeRepository, MediaService mediaService) {
         this.repository = repository;
         this.fus = fus;
         this.pageableService = pageableService;
         this.episodeService = episodeService;
         this.seasonRepository = seasonRepository;
         this.episodeRepository = episodeRepository;
+        this.mediaService = mediaService;
     }
 
     @GetMapping("/season/{id}")
@@ -90,6 +94,8 @@ public class EpisodeController {
             Optional<Season> targetSeason = seasonRepository.findById(episode.getSeasonMappingId());
             if(targetSeason.isPresent()) {
                 episode.setSeason(targetSeason.get());
+                episode.setGenres(mediaService.getGenresSet(episode.getGenreStrings(), episode));
+                episode.setLanguages(mediaService.getLanguageSet(episode.getLanguageStrings(),episode));
                 return ResponseEntity.ok(this.episodeRepository.save(episode));
             } else {
                 throw new SeasonNotFoundException("There is no season with Id " + episode.getSeasonMappingId());
@@ -99,8 +105,19 @@ public class EpisodeController {
     }
 
     @PutMapping(consumes = "application/json", produces = "application/json")
-    ResponseEntity<Episode> update(@RequestBody Episode episode) {
-        return ResponseEntity.ok(this.repository.save(episode));
+    ResponseEntity<Episode> update(@RequestBody Episode episode) throws SeasonNotFoundException, DuplicateMediumException {
+        if(episodeService.isValidEpisode(episode)) {
+            Optional<Season> targetSeason = seasonRepository.findById(episode.getSeasonMappingId());
+            if(targetSeason.isPresent()) {
+                episode.setSeason(targetSeason.get());
+                episode.setGenres(mediaService.getGenresSet(episode.getGenreStrings(), episode));
+                episode.setLanguages(mediaService.getLanguageSet(episode.getLanguageStrings(),episode));
+                return ResponseEntity.ok(this.episodeRepository.save(episode));
+            } else {
+                throw new SeasonNotFoundException("There is no season with Id " + episode.getSeasonMappingId());
+            }
+        }
+        throw new DuplicateMediumException("The Episode " + episode.getMediumName() + " with number " + episode.getEpisodeNumber() + " already exists!");
     }
 
     @DeleteMapping("/{id}")

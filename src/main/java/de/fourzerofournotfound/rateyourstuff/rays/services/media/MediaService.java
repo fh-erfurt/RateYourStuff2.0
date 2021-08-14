@@ -1,7 +1,10 @@
 package de.fourzerofournotfound.rateyourstuff.rays.services.media;
 
+import de.fourzerofournotfound.rateyourstuff.rays.dtos.media.MediumDto;
+import de.fourzerofournotfound.rateyourstuff.rays.models.Rating;
 import de.fourzerofournotfound.rateyourstuff.rays.models.media.*;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.*;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +20,7 @@ public class MediaService {
     private final GenreRepository genreRepository;
     private final LanguageRepository languageRepository;
     private final MediaRepository mediaRepository;
+    private final ModelMapper modelMapper;
 
     @Autowired
     public MediaService(BookRepository bookRepository,
@@ -26,11 +30,24 @@ public class MediaService {
                         EpisodeRepository episodeRepository,
                         SeasonRepository seasonRepository,
                         GenreRepository genreRepository,
-                        LanguageRepository languageRepository, MediaRepository mediaRepository)
+                        LanguageRepository languageRepository, MediaRepository mediaRepository, ModelMapper modelMapper)
     {
         this.genreRepository = genreRepository;
         this.languageRepository = languageRepository;
         this.mediaRepository = mediaRepository;
+        this.modelMapper = modelMapper;
+    }
+
+    public MediumDto convertToDto(Medium medium) {
+        MediumDto mediumDto = modelMapper.map(medium, MediumDto.class);
+        mediumDto.setMediaType(medium.getClass().getSimpleName().toLowerCase());
+        mediumDto.setAverageRating(medium.getMediumRatings());
+        mediumDto.setNumberOfRatings(medium.getMediumRatings());
+        mediumDto.setMIN_RATING_POINTS(Rating.MIN_POINTS);
+        mediumDto.setMAX_RATING_POINTS(Rating.MAX_POINTS);
+        mediumDto.setNumberOfComments(medium.getComments());
+        mediumDto.setNumberOfCollections(medium.getCollections());
+        return mediumDto;
     }
 
     public Set<Genre> getGenresSet(List<String> genreStrings, Medium medium) {
