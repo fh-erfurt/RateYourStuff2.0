@@ -12,7 +12,7 @@ import javax.persistence.MappedSuperclass;
 import java.time.LocalDateTime;
 
 /**
- * <h1>Base Model</h1>
+ * Base Model
  * <p>This Model represents the base of all Models.
  * It provides an id and attributes for created-at and updated-at timestamps</p>
  * @author Christoph Frischmuth

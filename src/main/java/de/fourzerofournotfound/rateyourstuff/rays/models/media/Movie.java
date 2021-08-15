@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 /**
- * <h1>Movie</h1>
+ * Movie
  * @author Christoph Frischmuth
  * @author John Klippstein
  * @author Mickey Knop

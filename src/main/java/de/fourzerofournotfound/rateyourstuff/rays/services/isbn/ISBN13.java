@@ -7,7 +7,10 @@ import java.util.regex.Pattern;
  * ISBN13
  * <p>This class represents the ISBN13 and contains methods to validate isbn13 und transform isbn10 to isbn13</p>
  * @author Robin Beck, Christoph Frischmuth, Mickey Knop, John Klippstein
- *
+ * @author Christoph Frischmuth
+ * @author John Klippstein
+ * @author Mickey Knop
+ * @author Robin Beck
  * */
 public class ISBN13 {
     //region Attributes
@@ -114,6 +117,7 @@ public class ISBN13 {
      * converts an ISBN10 object to an ISBN13 object
      * @param isbn10    valid isbn10 object
      * @return          isbn13 object
+     * @throws InvalidISBNException if the isbn is not valid
      */
     public static ISBN13 toISBN13(ISBN10 isbn10) throws InvalidISBNException {
         String isbn13;

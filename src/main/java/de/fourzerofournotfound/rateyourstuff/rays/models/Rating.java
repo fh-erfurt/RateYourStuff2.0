@@ -9,7 +9,7 @@ import lombok.*;
 import javax.persistence.*;
 
 /**
- * <h1>Rating</h1>
+ * Rating
  * <p>This Model represents a Rating.</p>
  * @author Christoph Frischmuth
  * @author John Klippstein

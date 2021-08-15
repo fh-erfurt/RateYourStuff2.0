@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 /**
- * <h1>Login</h1>
+ * Login
  * <p>This Model represents a Login. A login contains the login information for a specific user, such as the password</p>
  * @author Christoph Frischmuth
  * @author John Klippstein
@@ -54,8 +54,5 @@ public class Login extends BaseModel {
 
     @OneToOne(mappedBy = "login")
     private User user;
-
-    @OneToMany(mappedBy = "login")
-    private List<LoginRole> loginRoles;
 
 }

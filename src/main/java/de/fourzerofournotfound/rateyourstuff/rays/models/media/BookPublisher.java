@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * <h1>BookPublisher</h1>
+ * BookPublisher
  * <p>This Model represents a book publisher. Each book can have one publisher</p>
  * @author Christoph Frischmuth
  * @author John Klippstein

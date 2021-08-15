@@ -1,13 +1,13 @@
 package de.fourzerofournotfound.rateyourstuff.rays.controllers.media;
 
 import de.fourzerofournotfound.rateyourstuff.rays.dtos.media.SeasonDto;
+import de.fourzerofournotfound.rateyourstuff.rays.models.errors.media.SeriesNotFoundException;
 import de.fourzerofournotfound.rateyourstuff.rays.models.media.Season;
 import de.fourzerofournotfound.rateyourstuff.rays.models.media.Series;
-import de.fourzerofournotfound.rateyourstuff.rays.models.errors.media.InvalidSeriesException;
-import de.fourzerofournotfound.rateyourstuff.rays.models.errors.media.MediumAlreadyExistsException;
 import de.fourzerofournotfound.rateyourstuff.rays.models.errors.media.SeasonNotFoundException;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.SeasonRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.SeriesRepository;
+import de.fourzerofournotfound.rateyourstuff.rays.services.errors.DuplicateMediumException;
 import de.fourzerofournotfound.rateyourstuff.rays.services.media.MediaService;
 import de.fourzerofournotfound.rateyourstuff.rays.services.PageableService;
 import de.fourzerofournotfound.rateyourstuff.rays.services.media.SeasonService;
@@ -20,7 +20,14 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@CrossOrigin("*")
+/**
+ * Season Controller
+ * <p>This Controller provides basic REST Interfaces to interact with Season entities from the database</p>
+ * @author Christoph Frischmuth
+ * @author John Klippstein
+ * @author Mickey Knop
+ * @author Robin Beck
+ */
 @RestController
 @RequestMapping("/rest/seasons")
 public class SeasonController {
@@ -42,6 +49,12 @@ public class SeasonController {
         this.seasonService = seasonService;
     }
 
+    /**
+     * This method is used to get a single season by its id
+     * @param id    the id of the season
+     * @return      the found seasonDTO
+     * @throws SeasonNotFoundException if there is no season with the given id
+     */
     @GetMapping("/{id}")
     ResponseEntity<SeasonDto> getById (@PathVariable Long id) throws SeasonNotFoundException {
         Optional<Season> season = this.seasonRepository.findById(id);
@@ -51,6 +64,15 @@ public class SeasonController {
         throw new SeasonNotFoundException("No Season found for id " + id);
     }
 
+    /**
+     * This Method returns all seasons that belong to a series from the database
+     * @param id        the id of the series
+     * @param page      the current page (optional)
+     * @param size      the number of items per page
+     * @param orderBy   the attributed that should be ordered
+     * @param order     the order (asc, desc)
+     * @return          a list of SeasonDTOs
+     */
     @GetMapping("/series/{id}")
     ResponseEntity<List<SeasonDto>> getAll(
             @PathVariable Long id,
@@ -69,38 +91,45 @@ public class SeasonController {
         );
     }
 
+    /**
+     * This method is used to add a new season to a series
+     * @param season    the season that should be added
+     * @return          the newly added season
+     * @throws SeriesNotFoundException  if there is no series with the given id
+     * @throws DuplicateMediumException if there is already the same season in the database
+     */
     @PostMapping(path="/add", consumes= "application/json", produces="application/json")
-    @CrossOrigin
-    ResponseEntity<Season> add(@RequestBody Season season) throws InvalidSeriesException, MediumAlreadyExistsException {
+    ResponseEntity<Season> add(@RequestBody Season season) throws SeriesNotFoundException, DuplicateMediumException {
         if(seasonService.isValidSeason(season)) {
             Optional<Series> targetSeries = seriesRepository.findById(season.getSeriesMappingId());
             if(targetSeries.isPresent()) {
                 season.setMedium(targetSeries.get());
                 return ResponseEntity.ok(this.seasonRepository.save(season));
             } else {
-                throw new InvalidSeriesException("There is no series with Id " + season.getSeriesMappingId());
+                throw new SeriesNotFoundException("There is no series with Id " + season.getSeriesMappingId());
             }
         }
-        throw new MediumAlreadyExistsException("The Season " + season.getSeasonTitle() + " with number " + season.getSeasonNumber() + " already exists!");
+        throw new DuplicateMediumException("The Season " + season.getSeasonTitle() + " with number " + season.getSeasonNumber() + " already exists!");
     }
 
+    /**
+     * This method is used to update an existing season
+     * @param season    the season that should be updated
+     * @return          the updated season
+     * @throws SeriesNotFoundException  if there is no series with the given id
+     * @throws DuplicateMediumException if there is already the same season in the database
+     */
     @PutMapping(consumes="application/json", produces="application/json")
-    ResponseEntity<Season> update(@RequestBody Season season) throws InvalidSeriesException, MediumAlreadyExistsException {
+    ResponseEntity<Season> update(@RequestBody Season season) throws SeriesNotFoundException, DuplicateMediumException {
         if(seasonService.isValidSeason(season)) {
             Optional<Series> targetSeries = seriesRepository.findById(season.getSeriesMappingId());
             if(targetSeries.isPresent()) {
                 season.setMedium(targetSeries.get());
                 return ResponseEntity.ok(this.seasonRepository.save(season));
             } else {
-                throw new InvalidSeriesException("There is no series with Id " + season.getSeriesMappingId());
+                throw new SeriesNotFoundException("There is no series with Id " + season.getSeriesMappingId());
             }
         }
-        throw new MediumAlreadyExistsException("The Season " + season.getSeasonTitle() + " with number " + season.getSeasonNumber() + " already exists!");
+        throw new DuplicateMediumException("The Season " + season.getSeasonTitle() + " with number " + season.getSeasonNumber() + " already exists!");
     }
-
-    @DeleteMapping("/{id}")
-    void deleteSeason (@PathVariable Long id) {
-        this.seasonRepository.deleteById(id);
-    }
-
 }

@@ -33,6 +33,11 @@ Der Server ist anschließend unter dem Port 5000 erreichbar.
 Über http://localhost:5000/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config können die zur Verfügung stehenden Schnittstellen eingesehen werden.
 
 #### Frontend:
+Um das Frontend zu nutzen, gibt es zwei Varianten:
+##### Deployte Version
+Über https://avartos.github.io/rateyourstufffrontendwebapp/ ist eine fertig deployte Version des Frontends verfügbar. Hierbei müssen keine zusätzlichen Installationen von nodejs und diversen modulen vorgenommen werden. Es gilt jedoch zu beachten, dass ggf. Verlinkungen, die die Seite neu laden auf eine 404 Seite von Github verweisen.
+
+##### Manuelle Installation
 Das Frontend kann über das Repository https://github.com/Avartos/rateyourstufffrontendwebapp heruntergeladen werden.
 Bitte beachten Sie, dass zum Ausführen des Frontends nodejs benötigt wird. Sobald das Frontend heruntergeladen wurde, müssen mithilfe des Befehls 
 ```

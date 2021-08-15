@@ -13,6 +13,14 @@ import org.springframework.stereotype.Service;
 import java.util.Objects;
 import java.util.Optional;
 
+/**
+ * SeriesService
+ * <p>This service provides methods to the {@link de.fourzerofournotfound.rateyourstuff.rays.controllers.media.SeriesController SeriesController}</p>
+ * @author Christoph Frischmuth
+ * @author John Klippstein
+ * @author Mickey Knop
+ * @author Robin Beck
+ */
 @Service("seriesService")
 public class SeriesService {
     private final ModelMapper modelMapper;
@@ -27,9 +35,9 @@ public class SeriesService {
     }
 
     /**
-     * This service is used to check if a given series-object(checked by its attributes) is already stored in database
-     * @param series - object which is streamed via rest api
-     * @return true if a object is already stored in database (the entry of this series-object is valid)
+     * Checks if a series can be stored within the database without causing duplicates
+     * @param series the series that should be checked
+     * @return true if the series is not already stored in the database
      */
     public boolean isValidSeries(Series series)
     {
@@ -60,7 +68,12 @@ public class SeriesService {
         return seriesDto;
     }
 
-    public Network getNetwork(String networkTitle, Series series) {
+    /**
+     * Returns the reference of a network by its name. Creates the network, if there is no network with the given name.
+     * @param networkTitle  the network name that should be searched within the database
+     * @return              the found network entity
+     */
+    public Network getNetwork(String networkTitle) {
         Optional<Network> network = networkRepository.findByNetworkTitle(networkTitle);
         if(network.isPresent()) {
             return network.get();

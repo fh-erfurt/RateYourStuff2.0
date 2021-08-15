@@ -56,15 +56,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     /**
-     * Method configure which URL´s been ignored by the Spring Security filter
-     * @param web
-     * @throws Exception
+     * Method configure which URLs been ignored by the Spring Security filter
+     * @param web       the web security instance
+     * @throws Exception if it is not possible to ignore urls
      */
     @Override
     public void configure(WebSecurity web) throws Exception {
         try{
             web.ignoring()
-                    .antMatchers("/rest/**", "/images/media/**", "/user/add", "/user/check/**", "/swagger-ui/**", "/v3/api-docs/**");
+                    .antMatchers("/rest/**", "/images/media/**", "/user/add", "/user/check/**", "/swagger-ui/**", "/v3/api-docs/**", "/login/check/**");
+
         } catch(Exception e) {
             throw new Exception("Cant ignore URL", e);
         }

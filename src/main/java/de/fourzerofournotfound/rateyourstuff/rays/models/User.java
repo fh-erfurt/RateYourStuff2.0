@@ -9,7 +9,7 @@ import javax.persistence.*;
 import java.util.Set;
 
 /**
- * <h1>User</h1>
+ * User
  * @author Christoph Frischmuth
  * @author John Klippstein
  * @author Mickey Knop
@@ -46,7 +46,7 @@ public class User extends BaseModel {
     private String profilePicturePath;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "loginId", referencedColumnName = "id")
+    @JoinColumn(name = "loginId", referencedColumnName = "id", nullable = false)
     private Login login;
 
     @OneToMany(mappedBy = "user")
@@ -57,6 +57,10 @@ public class User extends BaseModel {
 
     @OneToMany(mappedBy = "user")
     private Set<Collection> collections;
+
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name="roleId", referencedColumnName = "id", nullable = false)
+    private Role role;
 
     public void setProfilePicturePath(String profilePicturePath) {
         this.profilePicturePath = profilePicturePath.replace(IMAGE_PATH_PREFIX, "");

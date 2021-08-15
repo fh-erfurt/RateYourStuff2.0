@@ -1,6 +1,5 @@
 package de.fourzerofournotfound.rateyourstuff.rays.dtos.media;
 
-import de.fourzerofournotfound.rateyourstuff.rays.models.media.GamePublisher;
 import de.fourzerofournotfound.rateyourstuff.rays.models.media.Platform;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,18 +9,26 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * Game DTO
+ * <p>The GameDTO is used to provide less information to the client</p>
+ * @author Christoph Frischmuth
+ * @author John Klippstein
+ * @author Mickey Knop
+ * @author Robin Beck
+ */
 @Getter
 @Setter
 public class GameDto extends MediumDto{
-
+    //average time that is needed to finish the game (in hours)
     private Float averagePlaytime;
-
+    //minimum number of players that are needed in order to play the game
     private Integer minNumberOfGamers;
-
+    //maximum number of players that can play the game together
     private Integer maxNumberOfGamers;
-
+    //all platform names the game is available for
     private List<String> platforms;
-
+    //name of the publisher
     private String gamePublisherGamePublisherTitle;
 
     private Integer ageRestriction;
@@ -32,6 +39,5 @@ public class GameDto extends MediumDto{
         } else {
             this.platforms = new ArrayList<>();
         }
-
     }
 }

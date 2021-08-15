@@ -11,6 +11,14 @@ import org.springframework.stereotype.Service;
 import java.util.Objects;
 import java.util.Optional;
 
+/**
+ * Episode Service
+ * <p>This Service is used to provide methods for the {@link de.fourzerofournotfound.rateyourstuff.rays.controllers.media.EpisodeController EpisodeController}</p>
+ * @author Christoph Frischmuth
+ * @author John Klippstein
+ * @author Mickey Knop
+ * @author Robin Beck
+ */
 @Service("episodeService")
 public class EpisodeService {
     private final ModelMapper modelMapper;
@@ -41,9 +49,9 @@ public class EpisodeService {
     }
 
     /**
-     * This service is used to check if a given episode-object(checked by its attributes) is already stored in database
-     * @param episode - object which is streamed via rest api
-     * @return true if a object is already stored in database (the entry of this episode-object is valid)
+     * Checks if a episode can be stored within the database without causing duplicates
+     * @param episode the episode that should be checked
+     * @return true if the episode is not already stored in the database
      */
     public boolean isValidEpisode(Episode episode) {
         Optional<Episode> optionalEpisode;

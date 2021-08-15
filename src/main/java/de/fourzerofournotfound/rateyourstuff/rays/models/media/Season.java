@@ -12,7 +12,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * <h1>Season</h1>
+ * Season
  * <p>This Model represents a season. A season can ionclue multiple episodes.</p>
  * @author Christoph Frischmuth
  * @author John Klippstein
