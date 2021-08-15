@@ -7,20 +7,30 @@ import lombok.Setter;
 
 import java.util.Objects;
 
+/**
+ * Series DTO
+ * <p>The Series DTO is used to provide less information to the client.</p>
+ * @author Christoph Frischmuth
+ * @author John Klippstein
+ * @author Mickey Knop
+ * @author Robin Beck
+ */
 @Getter
 @Setter
+
 public class EpisodeDto extends MediumDto{
 
     private Integer episodeNumber;
 
+    //length of the episode in full minutes
     private Integer length;
 
     private Long seasonId;
-
+    //name of the season the episode belongs to
     private String seasonTitle;
 
     private Long seriesId;
-
+    //title of the series the episode belongs to
     private String seriesTitle;
 
     public void setSeriesId(Season season) {

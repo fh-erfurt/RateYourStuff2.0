@@ -9,7 +9,7 @@ import javax.persistence.*;
 import java.util.Set;
 
 /**
- * <h1>Platform</h1>
+ * Platform
  * <p>This Model represents a platform. A platform defines the device on which a game can be played.</p>
  * @author Christoph Frischmuth
  * @author John Klippstein

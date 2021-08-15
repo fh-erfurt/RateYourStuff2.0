@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * <h1>User</h1>
+ * User
  * @author Christoph Frischmuth
  * @author John Klippstein
  * @author Mickey Knop

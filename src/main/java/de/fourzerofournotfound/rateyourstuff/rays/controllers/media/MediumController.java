@@ -13,6 +13,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Medium Controller
+ * <p>This Controller provides basic REST Interfaces to interact with Medium entities from the database</p>
+ * @author Christoph Frischmuth
+ * @author John Klippstein
+ * @author Mickey Knop
+ * @author Robin Beck
+ */
 @RestController
 @RequestMapping("/rest/media/")
 public class MediumController {
@@ -27,16 +35,25 @@ public class MediumController {
         this.mediaService = mediaService;
     }
 
-    @GetMapping(path = "/collection/{id}")
+    /**
+     * This Method is used to list all media that belongs to a given Collection
+     * @param collectionId    the id of the collection
+     * @param page      the current page (optional)
+     * @param size      the number of items per page
+     * @param orderBy   the attributed that should be ordered
+     * @param order     the order (asc, desc)
+     * @return          a list of found GameDTOs
+     */
+    @GetMapping(path = "/collection/{collectionId}")
     ResponseEntity<List<MediumDto>> getAllByCollection(
-            @PathVariable Long id,
+            @PathVariable Long collectionId,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "50") int size,
             @RequestParam(defaultValue = "") String orderBy,
             @RequestParam(defaultValue = "asc") String order
     ) {
         Pageable pageable = pageableService.createPageable(orderBy, order, page, size);
-        List<Medium> media = this.mediaRepository.findAllByCollectionsId(id, pageable).getContent();
+        List<Medium> media = this.mediaRepository.findAllByCollectionsId(collectionId, pageable).getContent();
 
         return ResponseEntity.ok(
                 media.stream()

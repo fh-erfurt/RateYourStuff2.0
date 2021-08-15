@@ -15,6 +15,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * GamePublisher Controller
+ * <p>This Controller provides basic REST Interfaces to interact with GamePublisher entities from the database</p>
+ * @author Christoph Frischmuth
+ * @author John Klippstein
+ * @author Mickey Knop
+ * @author Robin Beck
+ */
 @RestController
 @RequestMapping("/rest/gamePublisher")
 public class GamePublisherController {
@@ -30,6 +38,14 @@ public class GamePublisherController {
         this.gamePublisherService = gamePublisherService;
     }
 
+    /**
+     * This Method returns all GamePublishers from the database
+     * @param page      the current page (optional)
+     * @param size      the number of items per page
+     * @param orderBy   the attributed that should be ordered
+     * @param order     the order (asc, desc)
+     * @return          a list of GamePublisherDTOs
+     */
     @GetMapping("/all")
     ResponseEntity<List<GamePublisherDto>> getAll(
             @RequestParam(defaultValue = "0") int page,
@@ -45,6 +61,12 @@ public class GamePublisherController {
                 .collect(Collectors.toList()));
     }
 
+    /**
+     * This method is used to return a single GamePublisher by its id
+     * @param id    the id of the gamePublisher
+     * @return      the found GamePublisherDTO
+     * @throws GamePublisherNotFoundException if there is no GamePublisher with the given id
+     */
     @GetMapping("/{id}")
     ResponseEntity<GamePublisher> getById(@PathVariable Long id) throws GamePublisherNotFoundException {
         return ResponseEntity.ok(this.gamePublisherRepository.findById(id).orElseThrow(() -> new GamePublisherNotFoundException("No Publisher found for id " + id))); }

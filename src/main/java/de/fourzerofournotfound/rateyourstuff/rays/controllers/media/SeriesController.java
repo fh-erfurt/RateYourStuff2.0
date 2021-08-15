@@ -22,6 +22,14 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * Comment Controller
+ * <p>This Controller provides basic REST Interfaces to interact with Comment entities from the database</p>
+ * @author Christoph Frischmuth
+ * @author John Klippstein
+ * @author Mickey Knop
+ * @author Robin Beck
+ */
 @RestController
 @RequestMapping("/rest/series")
 public class SeriesController {
@@ -41,6 +49,14 @@ public class SeriesController {
         this.mediaService = mediaService;
     }
 
+    /**
+     * This Method returns all series from the database
+     * @param page      the current page (optional)
+     * @param size      the number of items per page
+     * @param orderBy   the attributed that should be ordered
+     * @param order     the order (asc, desc)
+     * @return          a list of SeriesDTOs
+     */
     @GetMapping("/all")
     ResponseEntity<List<SeriesDto>> getAll(
             @RequestParam(defaultValue = "0") int page,
@@ -54,6 +70,12 @@ public class SeriesController {
                 series.stream().map(seriesService::convertToDto).collect(Collectors.toList()));
     }
 
+    /**
+     * This method is used to get a single series by its id
+     * @param id    the id of the series
+     * @return      the found SeriesDto
+     * @throws SeriesNotFoundException if there is no series with the given id
+     */
     @GetMapping("/{id}")
     ResponseEntity<SeriesDto> getById (@PathVariable Long id) throws SeriesNotFoundException {
         Optional<Series> series = this.seriesRepository.findById(id);
@@ -65,52 +87,55 @@ public class SeriesController {
         }
     }
 
-    @GetMapping()
-    ResponseEntity<SeriesDto> findByTitle(@RequestParam(value="title") String title) throws SeriesNotFoundException {
-        Optional<Series> series = this.seriesRepository.findByMediumName(title);
-        if(series.isPresent()) {
-            SeriesDto seriesDto = seriesService.convertToDto(series.get());
-            return ResponseEntity.ok(seriesDto);
-        } else {
-            throw new SeriesNotFoundException("No Series with title " +title );
-        }
-    }
-
+    /**
+     * This method is used to add a new series to the database
+     * @param series    the series that should be added
+     * @return          the newly added series
+     * @throws DuplicateMediumException if there is already the same series in the database
+     */
     @PostMapping(path="/add", consumes= "application/json", produces="application/json")
     ResponseEntity<Series> add(@RequestBody Series series) throws DuplicateMediumException {
         if(this.seriesService.isValidSeries(series)) {
             this.seriesRepository.save(series);
-            series.setGenres(this.mediaService.getGenresSet(series.getGenreStrings(), series));
-            series.setLanguages(this.mediaService.getLanguageSet(series.getLanguageStrings(), series));
-            series.setNetwork(this.seriesService.getNetwork(series.getNetworkTitle(), series));
+            series.setGenres(this.mediaService.getGenresSet(series.getGenreStrings()));
+            series.setLanguages(this.mediaService.getLanguageSet(series.getLanguageStrings()));
+            series.setNetwork(this.seriesService.getNetwork(series.getNetworkTitle()));
             return ResponseEntity.ok(this.seriesRepository.save(series));
         } else {
             throw new DuplicateMediumException("The Series " + series.getMediumName() + " already exists.");
         }
     }
 
-    @CrossOrigin("*")
+    /**
+     * This method is used to update an existing series
+     * @param series    the series that should be updated
+     * @return          the updated series
+     * @throws DuplicateMediumException if there is already the same series in the database
+     */
     @PutMapping(consumes="application/json", produces="application/json")
     ResponseEntity<Series> update(@RequestBody Series series) throws DuplicateMediumException {
         if(this.seriesService.isValidSeries(series)) {
-            series.setNetwork(this.seriesService.getNetwork(series.getNetworkTitle(), series));
+            series.setNetwork(this.seriesService.getNetwork(series.getNetworkTitle()));
             this.seriesRepository.save(series);
-            series.setGenres(this.mediaService.getGenresSet(series.getGenreStrings(), series));
-            series.setLanguages(this.mediaService.getLanguageSet(series.getLanguageStrings(), series));
+            series.setGenres(this.mediaService.getGenresSet(series.getGenreStrings()));
+            series.setLanguages(this.mediaService.getLanguageSet(series.getLanguageStrings()));
             return ResponseEntity.ok(this.seriesRepository.save(series));
         } else {
             throw new DuplicateMediumException("The Series " + series.getMediumName() + " already exists.");
         }
     }
 
-    @DeleteMapping("/{id}")
-    void deleteSeries (@PathVariable Long id) {
-        this.seriesRepository.deleteById(id);
-    }
-
+    /**
+     * This method is used to attach a poster to an existing series
+     * @param multipartFile the image file that should be uploaded
+     * @param id            the id of the series
+     * @return              the updated Series
+     * @throws IOException  if the upload fails
+     * @throws SeriesNotFoundException if there is no series with the given id
+     */
     @PostMapping("/images/{id}")
-    ResponseEntity<Series> addImage(@RequestParam("image") MultipartFile multipartFile, @PathVariable Long id) throws IOException {
-        String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
+    ResponseEntity<Series> addImage(@RequestParam("image") MultipartFile multipartFile, @PathVariable Long id) throws IOException, SeriesNotFoundException {
+        String fileName = StringUtils.cleanPath("poster." + fileUploadService.getFileExtension(multipartFile));
         Optional<Series> series = this.seriesRepository.findById(id);
         //check if the given movie exists
         if(series.isPresent()) {
@@ -121,7 +146,7 @@ public class SeriesController {
             fileUploadService.saveFile(uploadDir, fileName, multipartFile);
             return ResponseEntity.ok(this.seriesRepository.save(series.get()));
         }
-        return ResponseEntity.badRequest().build();
+        throw new SeriesNotFoundException("There is no series with the id " + id);
     }
 
 }

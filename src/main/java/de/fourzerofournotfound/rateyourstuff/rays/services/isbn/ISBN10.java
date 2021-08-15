@@ -7,8 +7,10 @@ import java.util.regex.Pattern;
 /**
  * ISBN10
  * <p>This class represents the old ISBN10 standard</p>
- * @author Robin Beck, Christoph Frischmuth, Mickey Knop, John Klippstein
- *
+ * @author Christoph Frischmuth
+ * @author John Klippstein
+ * @author Mickey Knop
+ * @author Robin Beck
  * */
 public class ISBN10 {
 
@@ -24,6 +26,7 @@ public class ISBN10 {
     /**
      * creates a valid isbn10
      * @param isbn10 isbn10 string, separated by "-"
+     * @throws InvalidISBNException if the isbn is not valid
      */
     public ISBN10(String isbn10) throws InvalidISBNException {
         if (isValid(isbn10)) {
