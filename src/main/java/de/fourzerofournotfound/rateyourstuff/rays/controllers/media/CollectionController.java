@@ -10,7 +10,6 @@ import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.CollectionR
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.MediaRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.services.PageableService;
 import de.fourzerofournotfound.rateyourstuff.rays.services.media.CollectionService;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;

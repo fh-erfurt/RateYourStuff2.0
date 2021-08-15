@@ -94,7 +94,6 @@ public class GameController {
         }
     }
 
-    @CrossOrigin(origins = "*")
     @PutMapping(consumes="application/json", produces="application/json")
     ResponseEntity<Game> update(@RequestBody Game game) throws DuplicateMediumException {
         if(this.gameService.isValidGame(game)) {
@@ -116,7 +115,8 @@ public class GameController {
 
     @PostMapping("/images/{id}")
     ResponseEntity<Game> addImage(@RequestParam("image") MultipartFile multipartFile, @PathVariable Long id) throws IOException {
-        String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
+        String fileName = StringUtils.cleanPath("poster." + fileUploadService.getFileExtension(multipartFile));
+
         Optional<Game> game = this.gameRepository.findById(id);
         //check if the given movie exists
         if(game.isPresent()) {

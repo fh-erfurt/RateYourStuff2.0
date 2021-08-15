@@ -1,5 +1,6 @@
 package de.fourzerofournotfound.rateyourstuff.rays.services;
 
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -9,6 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+
 
 @Service("fus")
 public class FileUploadService {
@@ -34,5 +36,9 @@ public class FileUploadService {
         } catch (IOException e) {
             throw new IOException("Could not save image file: " + fileName, e);
         }
+    }
+
+    public String getFileExtension(MultipartFile multipartFile) {
+        return FilenameUtils.getExtension(multipartFile.getOriginalFilename());
     }
 }

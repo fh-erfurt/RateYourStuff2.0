@@ -21,17 +21,15 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-@CrossOrigin("*")
 @RequestMapping("/rest/episodes")
 public class EpisodeController {
 
     private final EpisodeRepository repository;
-    private final FileUploadService fus;
+    private final FileUploadService fileUploadService;
     private final PageableService pageableService;
     private final EpisodeService episodeService;
     private final SeasonRepository seasonRepository;
@@ -44,7 +42,7 @@ public class EpisodeController {
                              PageableService pageableService,
                              EpisodeService episodeService, SeasonRepository seasonRepository, EpisodeRepository episodeRepository, MediaService mediaService) {
         this.repository = repository;
-        this.fus = fus;
+        this.fileUploadService = fus;
         this.pageableService = pageableService;
         this.episodeService = episodeService;
         this.seasonRepository = seasonRepository;
@@ -127,7 +125,7 @@ public class EpisodeController {
 
     @PostMapping("/images/{id}")
     ResponseEntity<Episode> addImage(@RequestParam("image") MultipartFile multipartFile, @PathVariable Long id) throws IOException {
-        String fileName = StringUtils.cleanPath(Objects.requireNonNull("poster.jpg"));
+        String fileName = StringUtils.cleanPath("poster." + fileUploadService.getFileExtension(multipartFile));
         Optional<Episode> episode = this.repository.findById(id);
         //check if the given movie exists
         if (episode.isPresent()) {
@@ -135,7 +133,7 @@ public class EpisodeController {
             //define the target path
             String uploadDir = Episode.IMAGE_PATH_PREFIX + id;
             //upload the file
-            fus.saveFile(uploadDir, fileName, multipartFile);
+            fileUploadService.saveFile(uploadDir, fileName, multipartFile);
             return ResponseEntity.ok(this.repository.save(episode.get()));
         }
         return ResponseEntity.badRequest().build();
