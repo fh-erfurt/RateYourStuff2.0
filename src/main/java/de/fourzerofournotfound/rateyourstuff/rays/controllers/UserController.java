@@ -35,7 +35,7 @@ public class UserController {
     }
 
 
-    @CrossOrigin(origins = "http://localhost:3000")
+    //@CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/all")
     ResponseEntity<List<User>> getAll(){
         return ResponseEntity.ok(this.userRepository.findAll());
@@ -46,7 +46,7 @@ public class UserController {
         return ResponseEntity.ok((this.userRepository.findById(id).orElseThrow(()-> new UserNotFoundException("No User found for given id"))));
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
+    //@CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/check/is={userName}")
     ResponseEntity<Boolean> getUsername(@PathVariable String userName) throws UserAlreadyExistsException {
         Optional<User> user = userRepository.findByUserNameIgnoreCase(userName);
@@ -57,7 +57,7 @@ public class UserController {
         }
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
+    //@CrossOrigin(origins = "http://localhost:3000")
     @PostMapping(path = "/add", consumes = "application/json", produces = "application/json")
     ResponseEntity<User> add(@RequestBody User user) {
         userService.setRoleId(user);
@@ -65,14 +65,14 @@ public class UserController {
         return ResponseEntity.ok(this.userRepository.save(user));
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
+    //@CrossOrigin(origins = "http://localhost:3000")
     @PutMapping(consumes = "application/json", produces = "application/json")
     ResponseEntity<User> update(@RequestBody User user) throws InvalidUserException {
         userService.addReferencesToUser(user);
         return ResponseEntity.ok(this.userRepository.save(user));
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
+    //@CrossOrigin(origins = "http://localhost:3000")
     @DeleteMapping("/{id}")
     void deleteUser(@PathVariable Long id) {this.userRepository.deleteById(id);}
 }
