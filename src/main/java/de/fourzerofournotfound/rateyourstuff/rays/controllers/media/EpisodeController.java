@@ -92,8 +92,8 @@ public class EpisodeController {
             Optional<Season> targetSeason = seasonRepository.findById(episode.getSeasonMappingId());
             if(targetSeason.isPresent()) {
                 episode.setSeason(targetSeason.get());
-                episode.setGenres(mediaService.getGenresSet(episode.getGenreStrings(), episode));
-                episode.setLanguages(mediaService.getLanguageSet(episode.getLanguageStrings(),episode));
+                episode.setGenres(mediaService.getGenresSet(episode.getGenreStrings()));
+                episode.setLanguages(mediaService.getLanguageSet(episode.getLanguageStrings()));
                 return ResponseEntity.ok(this.episodeRepository.save(episode));
             } else {
                 throw new SeasonNotFoundException("There is no season with Id " + episode.getSeasonMappingId());
@@ -108,8 +108,8 @@ public class EpisodeController {
             Optional<Season> targetSeason = seasonRepository.findById(episode.getSeasonMappingId());
             if(targetSeason.isPresent()) {
                 episode.setSeason(targetSeason.get());
-                episode.setGenres(mediaService.getGenresSet(episode.getGenreStrings(), episode));
-                episode.setLanguages(mediaService.getLanguageSet(episode.getLanguageStrings(),episode));
+                episode.setGenres(mediaService.getGenresSet(episode.getGenreStrings()));
+                episode.setLanguages(mediaService.getLanguageSet(episode.getLanguageStrings()));
                 return ResponseEntity.ok(this.episodeRepository.save(episode));
             } else {
                 throw new SeasonNotFoundException("There is no season with Id " + episode.getSeasonMappingId());

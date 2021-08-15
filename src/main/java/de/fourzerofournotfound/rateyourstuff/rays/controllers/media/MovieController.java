@@ -86,9 +86,9 @@ public class MovieController {
     ResponseEntity<Movie> add(@RequestBody Movie movie) throws DuplicateMediumException {
         if(this.movieService.isValidMovie(movie)) {
             this.movieRepository.save(movie);
-            movie.setGenres(this.mediaService.getGenresSet(movie.getGenreStrings(), movie));
-            movie.setLanguages(this.mediaService.getLanguageSet(movie.getLanguageStrings(), movie));
-            movie.setNetwork(this.movieService.getNetwork(movie.getNetworkTitle(), movie));
+            movie.setGenres(this.mediaService.getGenresSet(movie.getGenreStrings()));
+            movie.setLanguages(this.mediaService.getLanguageSet(movie.getLanguageStrings()));
+            movie.setNetwork(this.movieService.getNetwork(movie.getNetworkTitle()));
             return ResponseEntity.ok(this.movieRepository.save(movie));
         } else {
             throw new DuplicateMediumException("The Movie " + movie.getMediumName() + " already exists.");
@@ -98,10 +98,10 @@ public class MovieController {
     @PutMapping(consumes="application/json", produces="application/json")
     ResponseEntity<Movie> update(@RequestBody Movie movie) throws DuplicateMediumException {
         if(this.movieService.isValidMovie(movie)) {
-            movie.setNetwork(this.movieService.getNetwork(movie.getNetworkTitle(), movie));
+            movie.setNetwork(this.movieService.getNetwork(movie.getNetworkTitle()));
             this.movieRepository.save(movie);
-            movie.setGenres(this.mediaService.getGenresSet(movie.getGenreStrings(), movie));
-            movie.setLanguages(this.mediaService.getLanguageSet(movie.getLanguageStrings(), movie));
+            movie.setGenres(this.mediaService.getGenresSet(movie.getGenreStrings()));
+            movie.setLanguages(this.mediaService.getLanguageSet(movie.getLanguageStrings()));
             return ResponseEntity.ok(this.movieRepository.save(movie));
         } else {
             throw new DuplicateMediumException("The Movie " + movie.getMediumName() + " already exists.");

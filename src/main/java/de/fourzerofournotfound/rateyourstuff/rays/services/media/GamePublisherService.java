@@ -6,6 +6,10 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/**
+ * <h1>GamePublisherService</h1>
+ * <p>This Service is used to provide methods to the {@link de.fourzerofournotfound.rateyourstuff.rays.controllers.media.GamePublisherController GamePublisherController}</p>
+ */
 @Service
 public class GamePublisherService {
     private final ModelMapper modelMapper;
@@ -15,6 +19,11 @@ public class GamePublisherService {
         this.modelMapper = modelMapper;
     }
 
+    /**
+     * Converts a given GamePublisher to a GamePublisherDTO
+     * @param publisher the publisher that should be converted
+     * @return          the converted publisher
+     */
     public GamePublisherDto convertToDto(GamePublisher publisher) {
         return (modelMapper.map(publisher, GamePublisherDto.class));
     }

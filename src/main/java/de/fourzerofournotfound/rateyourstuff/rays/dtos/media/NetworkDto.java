@@ -3,6 +3,11 @@ package de.fourzerofournotfound.rateyourstuff.rays.dtos.media;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * <h1>Network DTO</h1>
+ * <p>The Network DTO is used to provide reduced information to the client</p>
+ * <p>A network can be either a tv channel or a studio that released a movie</p>
+ */
 @Getter
 @Setter
 public class NetworkDto {

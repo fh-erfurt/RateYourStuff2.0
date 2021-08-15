@@ -6,6 +6,11 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
+/**
+ * <h1>PlatformRepository</h1>
+ * <p>This Interface can be used to find Platform entities in the database.</p>
+ * <p>It also provides all functions of the {@link JpaRepository JpaRepository}</p>
+ */
 @Repository
 public interface PlatformRepository extends JpaRepository<Platform, Long> {
     Optional<Platform> findByPlatformTitle (String platformTitle);

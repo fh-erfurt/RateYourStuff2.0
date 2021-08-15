@@ -1,13 +1,13 @@
 package de.fourzerofournotfound.rateyourstuff.rays.controllers.media;
 
 import de.fourzerofournotfound.rateyourstuff.rays.dtos.media.SeasonDto;
+import de.fourzerofournotfound.rateyourstuff.rays.models.errors.media.SeriesNotFoundException;
 import de.fourzerofournotfound.rateyourstuff.rays.models.media.Season;
 import de.fourzerofournotfound.rateyourstuff.rays.models.media.Series;
-import de.fourzerofournotfound.rateyourstuff.rays.models.errors.media.InvalidSeriesException;
-import de.fourzerofournotfound.rateyourstuff.rays.models.errors.media.MediumAlreadyExistsException;
 import de.fourzerofournotfound.rateyourstuff.rays.models.errors.media.SeasonNotFoundException;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.SeasonRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.SeriesRepository;
+import de.fourzerofournotfound.rateyourstuff.rays.services.errors.DuplicateMediumException;
 import de.fourzerofournotfound.rateyourstuff.rays.services.media.MediaService;
 import de.fourzerofournotfound.rateyourstuff.rays.services.PageableService;
 import de.fourzerofournotfound.rateyourstuff.rays.services.media.SeasonService;
@@ -70,31 +70,31 @@ public class SeasonController {
     }
 
     @PostMapping(path="/add", consumes= "application/json", produces="application/json")
-    ResponseEntity<Season> add(@RequestBody Season season) throws InvalidSeriesException, MediumAlreadyExistsException {
+    ResponseEntity<Season> add(@RequestBody Season season) throws SeriesNotFoundException, DuplicateMediumException {
         if(seasonService.isValidSeason(season)) {
             Optional<Series> targetSeries = seriesRepository.findById(season.getSeriesMappingId());
             if(targetSeries.isPresent()) {
                 season.setMedium(targetSeries.get());
                 return ResponseEntity.ok(this.seasonRepository.save(season));
             } else {
-                throw new InvalidSeriesException("There is no series with Id " + season.getSeriesMappingId());
+                throw new SeriesNotFoundException("There is no series with Id " + season.getSeriesMappingId());
             }
         }
-        throw new MediumAlreadyExistsException("The Season " + season.getSeasonTitle() + " with number " + season.getSeasonNumber() + " already exists!");
+        throw new DuplicateMediumException("The Season " + season.getSeasonTitle() + " with number " + season.getSeasonNumber() + " already exists!");
     }
 
     @PutMapping(consumes="application/json", produces="application/json")
-    ResponseEntity<Season> update(@RequestBody Season season) throws InvalidSeriesException, MediumAlreadyExistsException {
+    ResponseEntity<Season> update(@RequestBody Season season) throws SeriesNotFoundException, DuplicateMediumException {
         if(seasonService.isValidSeason(season)) {
             Optional<Series> targetSeries = seriesRepository.findById(season.getSeriesMappingId());
             if(targetSeries.isPresent()) {
                 season.setMedium(targetSeries.get());
                 return ResponseEntity.ok(this.seasonRepository.save(season));
             } else {
-                throw new InvalidSeriesException("There is no series with Id " + season.getSeriesMappingId());
+                throw new SeriesNotFoundException("There is no series with Id " + season.getSeriesMappingId());
             }
         }
-        throw new MediumAlreadyExistsException("The Season " + season.getSeasonTitle() + " with number " + season.getSeasonNumber() + " already exists!");
+        throw new DuplicateMediumException("The Season " + season.getSeasonTitle() + " with number " + season.getSeasonNumber() + " already exists!");
     }
 
     @DeleteMapping("/{id}")

@@ -13,6 +13,10 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * <h1>Medium DTO</h1>
+ * <p>The Medium DTO is used to provide reduced information to the client</p>
+ */
 @Setter
 @Getter
 public class MediumDto {
@@ -23,6 +27,7 @@ public class MediumDto {
 
     private String shortDescription;
 
+    //path of the image file for the media poster
     private String picturePath;
 
     private float averageRating;
@@ -38,10 +43,13 @@ public class MediumDto {
 
     private int numberOfCollections;
 
+    //names of all genres the medium is related to
     List<String> genres;
 
+    //names of all languages the medium is related to
     List<String> languages;
 
+    //used to determine which type of media has been sent to the client
     private String mediaType;
 
     public void setLanguages(Set<Language> languages) {

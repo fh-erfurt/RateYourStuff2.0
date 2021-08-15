@@ -6,6 +6,10 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/**
+ * <h1>NetworkService</h1>
+ * <p>This service provides methods to the {@link de.fourzerofournotfound.rateyourstuff.rays.controllers.media.NetworkController NetworkController}</p>
+ */
 @Service("networkService")
 public class NetworkService {
     private final ModelMapper modelMapper;
@@ -15,6 +19,11 @@ public class NetworkService {
         this.modelMapper = modelMapper;
     }
 
+    /**
+     * Converts a given Network to a NetworkDTO
+     * @param network   the Network that should be converted
+     * @return          the converted NetworkDTO
+     */
     public NetworkDto convertToDto(Network network) {
         return modelMapper.map(network, NetworkDto.class);
     }

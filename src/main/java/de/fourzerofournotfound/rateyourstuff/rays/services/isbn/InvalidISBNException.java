@@ -1,12 +1,15 @@
 package de.fourzerofournotfound.rateyourstuff.rays.services.isbn;
 
 /**
- *
- * Invalid ISBN Exception
- * <p>This class is used to throw an exception, if an ISBN is not valid</p>
- * @author Robin Beck, Christoph Frischmuth, Mickey Knop, John Klippstein
- *
- * */
+ * <h1>DuplicateMediumException</h1>
+ * <p>Signals that an attempt to create a medium that already exists.</p>
+ * <p>This Exception will be thrown by:
+ *     <li>{@link de.fourzerofournotfound.rateyourstuff.rays.controllers.media.BookController BookController}</li>
+ *     <li>{@link ISBN10 ISBN10}</li>
+ *     <li>{@link ISBN13 ISBN13}</li>
+ * <ul></p>
+ */
+
 public class InvalidISBNException extends Exception{
     public InvalidISBNException() {
         super();

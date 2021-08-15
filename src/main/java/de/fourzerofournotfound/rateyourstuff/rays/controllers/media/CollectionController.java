@@ -39,7 +39,7 @@ public class CollectionController {
 
     @PostMapping(path = "/add", consumes = "application/json", produces = "application/json")
     ResponseEntity<Collection> add(@RequestBody Collection collection) throws UserNotFoundException {
-        collection = this.collectionService.addReferencesToCollection(collection);
+        collection = this.collectionService.addReferencesToCollection(collection, collection.getUserMappingId());
         return ResponseEntity.ok(this.collectionRepository.save(collection));
     }
 

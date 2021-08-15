@@ -1,6 +1,12 @@
 package de.fourzerofournotfound.rateyourstuff.rays.models.errors.media;
 
-public class SeasonNotFoundException extends Exception{
+/**
+ * <h1>SeasonNotFoundException</h1>
+ * <p>Signals that an attempt to get a certain season from the database has failed.</p>
+ * <p>This Exception will be thrown by the {@link de.fourzerofournotfound.rateyourstuff.rays.controllers.media.SeasonController} and
+ * the {@link de.fourzerofournotfound.rateyourstuff.rays.controllers.media.EpisodeController EpisodeController}</p>
+ */
+public class SeasonNotFoundException extends Exception {
     public SeasonNotFoundException(String message) {
         super(message);
     }
