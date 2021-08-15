@@ -12,7 +12,15 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
 
-@Service("fus")
+/**
+ * <h1>FileUploadService</h1>
+ * <p>This service is used to upload imagepart files to the server.</p>
+ * @author Christoph Frischmuth
+ * @author John Klippstein
+ * @author Mickey Knop
+ * @author Robin Beck
+ */
+@Service("fileUploadService")
 public class FileUploadService {
     /**
      * This method uploads the given file to the given path

@@ -16,6 +16,10 @@ import java.util.Optional;
 /**
  * <h1>MovieService</h1>
  * <p>This service provides methods to the {@link de.fourzerofournotfound.rateyourstuff.rays.controllers.media.MovieController MovieController}</p>
+ * @author Christoph Frischmuth
+ * @author John Klippstein
+ * @author Mickey Knop
+ * @author Robin Beck
  */
 @Service("movieService")
 public class MovieService {

@@ -5,6 +5,7 @@ import de.fourzerofournotfound.rateyourstuff.rays.models.media.Book;
 import de.fourzerofournotfound.rateyourstuff.rays.models.errors.media.BookNotFoundException;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.BookRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.services.FileUploadService;
+import de.fourzerofournotfound.rateyourstuff.rays.services.errors.DuplicateMediumException;
 import de.fourzerofournotfound.rateyourstuff.rays.services.media.MediaService;
 import de.fourzerofournotfound.rateyourstuff.rays.services.PageableService;
 import de.fourzerofournotfound.rateyourstuff.rays.services.isbn.ISBNCheckService;
@@ -23,6 +24,14 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * <h1>Book Controller</h1>
+ * <p>This Controller provides basic REST Interfaces to interact with Book entities from the database</p>
+ * @author Christoph Frischmuth
+ * @author John Klippstein
+ * @author Mickey Knop
+ * @author Robin Beck
+ */
 @RestController
 @RequestMapping("/rest/books")
 public class BookController {
@@ -35,7 +44,12 @@ public class BookController {
     private final MediaService mediaService;
 
     @Autowired
-    public BookController(BookRepository bookRepository, FileUploadService fileUploadService, ISBNCheckService isbnCheckService, PageableService pageableService, BookService bookService, MediaService mediaService) {
+    public BookController(BookRepository bookRepository,
+                          FileUploadService fileUploadService,
+                          ISBNCheckService isbnCheckService,
+                          PageableService pageableService,
+                          BookService bookService,
+                          MediaService mediaService) {
         this.bookRepository = bookRepository;
         this.fileUploadService = fileUploadService;
         this.isbnCheckService = isbnCheckService;
@@ -44,6 +58,14 @@ public class BookController {
         this.mediaService = mediaService;
     }
 
+    /**
+     * This Method returns all books from the database
+     * @param page      the current page (optional)
+     * @param size      the number of items per page
+     * @param orderBy   the attributed that should be ordered
+     * @param order     the order (asc, desc)
+     * @return          a list of BookDTOs
+     */
     @GetMapping("/all")
     ResponseEntity<List<BookDto>> getAll(
             @RequestParam(defaultValue = "0") int page,
@@ -57,6 +79,12 @@ public class BookController {
                 books.stream().map(bookService::convertToDto).collect(Collectors.toList()));
     }
 
+    /**
+     * This Method returns a book by a given id
+     * @param id    the id of the book that should be returned
+     * @return      the found book
+     * @throws BookNotFoundException if there is no book with the given id
+     */
     @GetMapping("/{id}")
     ResponseEntity<BookDto> getById(@PathVariable Long id) throws BookNotFoundException {
         Optional<Book> book = this.bookRepository.findById(id);
@@ -68,50 +96,62 @@ public class BookController {
         }
     }
 
-    @GetMapping()
-    ResponseEntity<BookDto> findByTitle(@RequestParam(value = "title") String title) throws BookNotFoundException {
-        Optional<Book> book = this.bookRepository.findByMediumName(title);
-        if(book.isPresent()) {
-            BookDto bookDto = bookService.convertToDto(book.get());
-            return ResponseEntity.ok(bookDto);
-        } else {
-            throw new BookNotFoundException("No Book with title " + title);
-        }
-    }
-
+    /**
+     * This Method is used to add a new book to the database.
+     * @param book  the book that should be added
+     * @return      the saved book entity
+     * @throws InvalidISBNException     if the given ISBN does not match the standard
+     * @throws DuplicateMediumException if there is already a book with the given isbn
+     */
     @PostMapping(path="/add", consumes= "application/json", produces="application/json")
-    ResponseEntity<Book> add(@RequestBody Book book) throws InvalidISBNException {
-        if(isbnCheckService.checkIfISBNisValid(book) && bookService.isValidBook(book)) {
-            this.bookRepository.save(book);
-            book.setGenres(this.mediaService.getGenresSet(book.getGenreStrings()));
-            book.setLanguages(this.mediaService.getLanguageSet(book.getLanguageStrings()));
-            book.setBookPublisher(this.bookService.getPublisher(book.getPublisherString()));
-            return ResponseEntity.ok(this.bookRepository.save(book));
+    ResponseEntity<Book> add(@RequestBody Book book) throws InvalidISBNException, DuplicateMediumException {
+        if(isbnCheckService.checkIfISBNisValid(book)) {
+            if( bookService.isValidBook(book)) {
+                this.bookRepository.save(book);
+                book.setGenres(this.mediaService.getGenresSet(book.getGenreStrings()));
+                book.setLanguages(this.mediaService.getLanguageSet(book.getLanguageStrings()));
+                book.setBookPublisher(this.bookService.getPublisher(book.getPublisherString()));
+                return ResponseEntity.ok(this.bookRepository.save(book));
+            }
+            throw new DuplicateMediumException("There is already a book with the ISBN" + book.getIsbn());
         } else {
             throw new InvalidISBNException("The ISBN " + book.getIsbn() + " is not valid");
         }
     }
 
+    /**
+     * This Method is used to update an existing Book.
+     * @param book  the book that should be updated
+     * @throws InvalidISBNException     if the given ISBN does not match the standard
+     * @throws DuplicateMediumException if there is already a book with the given isbn
+     */
     @PutMapping(consumes="application/json", produces="application/json")
-    ResponseEntity<Book> update(@RequestBody Book book) throws InvalidISBNException {
-        if(isbnCheckService.checkIfISBNisValid(book) && bookService.isValidBook(book)) {
-            book.setBookPublisher(this.bookService.getPublisher(book.getPublisherString()));
-            this.bookRepository.save(book);
-            book.setGenres(this.mediaService.getGenresSet(book.getGenreStrings()));
-            book.setLanguages(this.mediaService.getLanguageSet(book.getLanguageStrings()));
-            return ResponseEntity.ok(this.bookRepository.save(book));
+    ResponseEntity<Book> update(@RequestBody Book book) throws InvalidISBNException, DuplicateMediumException {
+        if(isbnCheckService.checkIfISBNisValid(book)) {
+            if(bookService.isValidBook(book)) {
+                book.setBookPublisher(this.bookService.getPublisher(book.getPublisherString()));
+                this.bookRepository.save(book);
+                book.setGenres(this.mediaService.getGenresSet(book.getGenreStrings()));
+                book.setLanguages(this.mediaService.getLanguageSet(book.getLanguageStrings()));
+                return ResponseEntity.ok(this.bookRepository.save(book));
+            }
+            throw new DuplicateMediumException("There is already a book with the ISBN" + book.getIsbn());
         } else {
             throw new InvalidISBNException("The ISBN " + book.getIsbn() + " is not valid");
         }
     }
 
-    @DeleteMapping("/{id}")
-    void deleteBook (@PathVariable Long id) {
-        this.bookRepository.deleteById(id);
-    }
 
+    /**
+     * This method is used to add a image to an existing book
+     * @param multipartFile the image file that should be uploaded
+     * @param id    the id of the book that should be updated
+     * @return      the updated book entity
+     * @throws IOException           if the file cannot be uploaded
+     * @throws BookNotFoundException if there is no book with the given id
+     */
     @PostMapping("/images/{id}")
-    ResponseEntity<Book> addImage(@RequestParam("image") MultipartFile multipartFile, @PathVariable Long id) throws IOException {
+    ResponseEntity<Book> addImage(@RequestParam("image") MultipartFile multipartFile, @PathVariable Long id) throws IOException, BookNotFoundException {
         String fileName = StringUtils.cleanPath("poster." + fileUploadService.getFileExtension(multipartFile));
             Optional<Book> book = this.bookRepository.findById(id);
             //check if the given movie exists
@@ -123,6 +163,6 @@ public class BookController {
                 fileUploadService.saveFile(uploadDir, fileName, multipartFile);
                 return ResponseEntity.ok(this.bookRepository.save(book.get()));
             }
-        return ResponseEntity.badRequest().build();
+        throw new BookNotFoundException("There is no book with id " + id);
     }
 }

@@ -6,6 +6,10 @@ import org.springframework.stereotype.Service;
 /**
  * <h1>ISBN CheckService</h1>
  * <p>This service is used to check if an given isbn is valid and can be saved in the database</p>
+ * @author Christoph Frischmuth
+ * @author John Klippstein
+ * @author Mickey Knop
+ * @author Robin Beck
  */
 @Service("isbnCheckService")
 public class ISBNCheckService {

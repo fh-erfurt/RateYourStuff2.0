@@ -10,6 +10,10 @@ import java.util.Optional;
  * <h1>GamePublisherRepository</h1>
  * <p>This Interface can be used to find GamePublisher entities in the database.</p>
  * <p>It also provides all functions of the {@link JpaRepository JpaRepository}</p>
+ * @author Christoph Frischmuth
+ * @author John Klippstein
+ * @author Mickey Knop
+ * @author Robin Beck
  */
 @Repository
 public interface GamePublisherRepository extends JpaRepository<GamePublisher, Long> {

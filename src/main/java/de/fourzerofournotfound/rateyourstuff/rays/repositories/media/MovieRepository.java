@@ -16,6 +16,10 @@ import java.util.Optional;
  * <h1>MovieRepository</h1>
  * <p>This Interface can be used to find Movie entities in the database.</p>
  * <p>It also provides all functions of the {@link JpaRepository JpaRepository}</p>
+ * @author Christoph Frischmuth
+ * @author John Klippstein
+ * @author Mickey Knop
+ * @author Robin Beck
  */
 @Repository
 public interface MovieRepository extends JpaRepository<Movie, Long> {
