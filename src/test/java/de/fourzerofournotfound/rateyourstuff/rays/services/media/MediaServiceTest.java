@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
+import java.util.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest(properties = "spring.profiles.active = test")
 class MediaServiceTest {
@@ -25,6 +28,8 @@ class MediaServiceTest {
     SeasonRepository seasonRepository;
     @Autowired
     EpisodeRepository episodeRepository;
+    @Autowired
+    MediaRepository mediaRepository;
     @Autowired
     MediaService mediaService;
     @Autowired
@@ -263,4 +268,35 @@ class MediaServiceTest {
         Assertions.assertTrue(episodeService.isValidEpisode(givenEpisode));
     }
 
+    @Test
+    public void givenPartialTitle_WhenFindByMediumNameLikeIgnoreCase_ThenMoviesShouldReturn() {
+
+        //Given
+        Movie given1 = Movie.builder()
+                .mediumName("Zurück in die Zukunft")
+                .shortDescription("[...]")
+                .releaseDate(LocalDate.now())
+                .length(90)
+                .ageRestriction(6)
+                .build();
+
+        Movie given2 = Movie.builder()
+                .mediumName("Zwiebeljack räumt auf")
+                .shortDescription("[...]")
+                .releaseDate(LocalDate.now())
+                .length(85)
+                .ageRestriction(12)
+                .build();
+
+        String givenInput = "zurück in räumt zukU";
+
+
+        //When
+        mediaRepository.save(given1);
+        mediaRepository.save(given2);
+
+
+        //Then
+        assertEquals(2, mediaService.getSearchResult(givenInput).size());
+    }
 }

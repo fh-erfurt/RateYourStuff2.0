@@ -4,9 +4,11 @@ import de.fourzerofournotfound.rateyourstuff.rays.dtos.media.MediumDto;
 import de.fourzerofournotfound.rateyourstuff.rays.models.Rating;
 import de.fourzerofournotfound.rateyourstuff.rays.models.media.*;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.*;
+import net.minidev.json.JSONUtil;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.w3c.dom.stylesheets.MediaList;
 
 import java.util.*;
 
@@ -82,6 +84,50 @@ public class MediaService {
             }
         }
         return languages;
+    }
+
+    public ArrayList<Medium> getSearchResult(String givenInput){
+        ArrayList<String> separatedInput = new ArrayList<String>();
+        Collections.addAll(separatedInput,givenInput.split(" "));
+        int minLengthForValidWord = 4;
+        Iterator<String> iterator = separatedInput.iterator();
+        while (iterator.hasNext()) {
+            String currentString = iterator.next();
+            if(currentString.length() < minLengthForValidWord)
+            {
+                iterator.remove();
+            }
+        }
+        ArrayList<String> alteredInputList = new ArrayList<String>();
+
+        for(String s: separatedInput)
+        {
+            //System.out.println("test: " + s);
+            String forLikeliness = "%";
+            String alteredInput = forLikeliness+s+forLikeliness;
+            //System.out.println("test: " + alteredInput);
+            alteredInputList.add(alteredInput);
+        }
+
+        HashSet<Medium> allMediaMatches = new HashSet<>();
+        //HashSet mediaListMatchingSearchParams = new HashSet();
+        for(String a: alteredInputList)
+        {
+            List<Medium> results = mediaRepository.findByMediumNameLikeIgnoreCase(a);
+            System.out.println(results.size());
+            for(Medium match: results)
+            {
+                boolean mediumIsPresent = allMediaMatches.stream().map(Medium::getId).filter(match.getId()::equals).findFirst().isPresent();
+                if(!mediumIsPresent) {
+                    allMediaMatches.add(match);
+                    //mediaListMatchingSearchParams.add(match);
+                }
+            }
+        }
+        ArrayList<Medium> mediaListMatchingSearch = new ArrayList<Medium>(allMediaMatches);
+        System.out.println(mediaListMatchingSearch.size());
+        return mediaListMatchingSearch;
+        //return mediaListMatchingSearchParams;
     }
 
 }

@@ -2,12 +2,6 @@ package de.fourzerofournotfound.rateyourstuff.rays.repositories.media;
 
 import de.fourzerofournotfound.rateyourstuff.rays.models.media.Movie;
 import de.fourzerofournotfound.rateyourstuff.rays.models.media.Network;
-import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.MovieRepository;
-import de.fourzerofournotfound.rateyourstuff.rays.models.Collection;
-import de.fourzerofournotfound.rateyourstuff.rays.models.Movie;
-import de.fourzerofournotfound.rateyourstuff.rays.models.Network;
-import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +10,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
 import java.util.*;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest(properties = "spring.profiles.active=test")
 public class MovieRepositoryTest {
@@ -186,156 +178,5 @@ public class MovieRepositoryTest {
 
         //Then
         Assertions.assertThat(result).isNotPresent();
-    }
-
-    @Test
-    public void givenPartialMediumName_WhenFindByMediumNameContaining_ThenMoviesShouldReturn() {
-        Movie given1 = Movie.builder()
-                .mediumName("Zurück in die Zukunft")
-                .shortDescription("[...]")
-                .releaseDate(LocalDate.now())
-                .length(90)
-                .ageRestriction(6)
-                .build();
-
-        Movie given2 = Movie.builder()
-                .mediumName("Zwiebeljack räumt auf")
-                .shortDescription("[...]")
-                .releaseDate(LocalDate.now())
-                .length(85)
-                .ageRestriction(12)
-                .build();
-
-        repository.save(given1);
-        repository.save(given2);
-
-        List<Movie> results = repository.findByMediumNameContaining("Zukunft");
-        assertEquals(1, results.size());
-
-        results = repository.findByMediumNameLike("%Zukunft%");
-        assertEquals(1, results.size());
-
-        results = repository.findByMediumNameIsContaining("Z");
-        assertEquals(2, results.size());
-
-        results = repository.findByMediumNameContains("Z");
-        assertEquals(2, results.size());
-    }
-
-    @Test
-    public void givenPartialTitle_WhenFindByMediumNameContainingIgnoreCase_ThenMoviesShouldReturn() {
-        Movie given1 = Movie.builder()
-                .mediumName("Zurück in die Zukunft")
-                .shortDescription("[...]")
-                .releaseDate(LocalDate.now())
-                .length(90)
-                .ageRestriction(6)
-                .build();
-
-        Movie given2 = Movie.builder()
-                .mediumName("Zwiebeljack räumt auf")
-                .shortDescription("[...]")
-                .releaseDate(LocalDate.now())
-                .length(85)
-                .ageRestriction(12)
-                .build();
-
-        repository.save(given1);
-        repository.save(given2);
-
-        List<Movie> results = repository.findByMediumNameContainingIgnoreCase("zUKuNfT");
-        assertEquals(1, results.size());
-    }
-
-    @Test
-    public void givenPartialTitle_WhenSearchByMediumNameLike_ThenMoviesShouldReturn() {
-        Movie given1 = Movie.builder()
-                .mediumName("Zurück in die Zukunft")
-                .shortDescription("[...]")
-                .releaseDate(LocalDate.now())
-                .length(90)
-                .ageRestriction(6)
-                .build();
-
-        Movie given2 = Movie.builder()
-                .mediumName("Zwiebeljack räumt auf")
-                .shortDescription("[...]")
-                .releaseDate(LocalDate.now())
-                .length(85)
-                .ageRestriction(12)
-                .build();
-
-        repository.save(given1);
-        repository.save(given2);
-
-        List<Movie> results = repository.searchByMediumNameLike("Zuk");
-        assertEquals(1, results.size());
-    }
-
-    @Test
-    public void givenPartialTitle_WhenFindByMediumNameLikeIgnoreCase_ThenMoviesShouldReturn() {
-        Movie given1 = Movie.builder()
-                .mediumName("Zurück in die Zukunft")
-                .shortDescription("[...]")
-                .releaseDate(LocalDate.now())
-                .length(90)
-                .ageRestriction(6)
-                .build();
-
-        Movie given2 = Movie.builder()
-                .mediumName("Zwiebeljack räumt auf")
-                .shortDescription("[...]")
-                .releaseDate(LocalDate.now())
-                .length(85)
-                .ageRestriction(12)
-                .build();
-
-        String givenInput = "zurück in räumt zukU";
-
-
-        ArrayList<String> separatedInput = new ArrayList<String>();
-        Collections.addAll(separatedInput,givenInput.split(" "));
-        System.out.println(separatedInput.size());
-
-        int minLengthForValidWord = 4;
-        Iterator<String> iterator = separatedInput.iterator();
-        while (iterator.hasNext()) {
-            String currentString = iterator.next();
-            if(currentString.length() < minLengthForValidWord)
-            {
-                iterator.remove();
-            }
-        }
-
-
-        ArrayList<String> alteredInputList = new ArrayList<String>();
-
-        ArrayList<Movie> allMoviesThatFit = new ArrayList<Movie>();
-        repository.save(given1);
-        repository.save(given2);
-
-        //List<Movie> results;
-
-        for(String s: separatedInput)
-        {
-            System.out.println("test: " + s);
-            String forLikeliness = "%";
-            String alteredInput = forLikeliness+s+forLikeliness;
-            System.out.println("test: " + alteredInput);
-            alteredInputList.add(alteredInput);
-        }
-
-
-        HashSet allMovies = new HashSet();
-        for(String a: alteredInputList)
-        {
-            List<Movie> results = repository.findByMediumNameLikeIgnoreCase(a);
-
-            for(Movie match: results)
-            {
-                allMovies.add(match.getId());
-            }
-        }
-        assertEquals(2, allMovies.size());
     }
 }
