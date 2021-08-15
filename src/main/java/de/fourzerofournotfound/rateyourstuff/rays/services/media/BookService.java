@@ -14,7 +14,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * <h1>BookService</h1>
+ * BookService
  * <p>This Service is used to provide different book-handling methods to the {@link de.fourzerofournotfound.rateyourstuff.rays.controllers.media.BookController BookController}</p>
  * @author Christoph Frischmuth
  * @author John Klippstein

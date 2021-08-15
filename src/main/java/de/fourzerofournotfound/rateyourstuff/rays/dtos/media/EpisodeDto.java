@@ -8,7 +8,7 @@ import lombok.Setter;
 import java.util.Objects;
 
 /**
- * <h1>Series DTO</h1>
+ * Series DTO
  * <p>The Series DTO is used to provide less information to the client.</p>
  * @author Christoph Frischmuth
  * @author John Klippstein

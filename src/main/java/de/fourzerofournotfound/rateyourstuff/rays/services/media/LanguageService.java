@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- * <h1>LanguageService</h1>
+ * LanguageService
  * <p>This Service provides methods to the {@link de.fourzerofournotfound.rateyourstuff.rays.controllers.media.LanguageController LanguageController}</p>
  * @author Christoph Frischmuth
  * @author John Klippstein

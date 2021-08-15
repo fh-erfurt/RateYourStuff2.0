@@ -9,7 +9,7 @@ import javax.persistence.*;
 import java.util.List;
 
 /**
- * <h1>Role</h1>
+ * Role
  * <p>This Model represents a role. A role defines the "group" of an user. e. g. administrator, moderator, user,...</p>
  * @author Christoph Frischmuth
  * @author John Klippstein

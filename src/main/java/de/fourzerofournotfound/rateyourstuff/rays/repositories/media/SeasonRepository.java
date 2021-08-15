@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 /**
- * <h1>SeasonRepository</h1>
+ * SeasonRepository
  * <p>This Interface can be used to find Season entities in the database.</p>
  * <p>It also provides all functions of the {@link JpaRepository JpaRepository}</p>
  * @author Christoph Frischmuth

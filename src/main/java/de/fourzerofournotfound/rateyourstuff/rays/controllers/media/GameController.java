@@ -24,7 +24,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
- * <h1>Game Controller</h1>
+ * Game Controller
  * <p>This Controller provides basic REST Interfaces to interact with Game entities from the database</p>
  * @author Christoph Frischmuth
  * @author John Klippstein

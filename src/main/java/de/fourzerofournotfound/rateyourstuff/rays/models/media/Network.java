@@ -9,7 +9,7 @@ import javax.persistence.*;
 import java.util.List;
 
 /**
- * <h1>Network</h1>
+ * Network
  * <p>This Model represents a network.
  * A network is the publisher of a series. (e.g. CBS, CWS, ABC, BBC...)</p>
  * @author Christoph Frischmuth

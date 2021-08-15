@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * <h1>Reduced Collection DTO</h1>
+ * Reduced Collection DTO
  * <p>The Reduced Collection DTO is used to provide reduced information to the client.</p>
  * <p>It does not contain a list of media that is associated to it. Therefore it can be used if the client only needs a list of collections without any detail of its contents.</p>
  * @author Christoph Frischmuth

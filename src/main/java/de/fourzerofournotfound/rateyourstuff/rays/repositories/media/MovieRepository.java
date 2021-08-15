@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * <h1>MovieRepository</h1>
+ * MovieRepository
  * <p>This Interface can be used to find Movie entities in the database.</p>
  * <p>It also provides all functions of the {@link JpaRepository JpaRepository}</p>
  * @author Christoph Frischmuth

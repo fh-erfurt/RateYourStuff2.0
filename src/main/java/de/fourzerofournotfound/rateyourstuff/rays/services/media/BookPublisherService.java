@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- * <h1>BookPublisherService</h1>
+ * BookPublisherService
  * <p>This service is provides methods for the {@link de.fourzerofournotfound.rateyourstuff.rays.controllers.media.BookPublisherController BookPublisherController}</p>
  * @author Christoph Frischmuth
  * @author John Klippstein

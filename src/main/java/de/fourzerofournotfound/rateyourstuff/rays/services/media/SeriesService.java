@@ -14,7 +14,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * <h1>SeriesService</h1>
+ * SeriesService
  * <p>This service provides methods to the {@link de.fourzerofournotfound.rateyourstuff.rays.controllers.media.SeriesController SeriesController}</p>
  * @author Christoph Frischmuth
  * @author John Klippstein

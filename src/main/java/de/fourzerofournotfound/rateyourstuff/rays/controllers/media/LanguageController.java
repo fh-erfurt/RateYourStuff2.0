@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * <h1>Language Controller</h1>
+ * Language Controller
  * <p>This Controller provides basic REST Interfaces to interact with Language entities from the database</p>
  * @author Christoph Frischmuth
  * @author John Klippstein

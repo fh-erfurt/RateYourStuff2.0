@@ -13,7 +13,7 @@ import java.nio.file.StandardCopyOption;
 
 
 /**
- * <h1>FileUploadService</h1>
+ * FileUploadService
  * <p>This service is used to upload imagepart files to the server.</p>
  * @author Christoph Frischmuth
  * @author John Klippstein

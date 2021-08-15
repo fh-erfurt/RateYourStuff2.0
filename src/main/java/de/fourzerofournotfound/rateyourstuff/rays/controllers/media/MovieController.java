@@ -24,7 +24,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
- * <h1>Movie Controller</h1>
+ * Movie Controller
  * <p>This Controller provides basic REST Interfaces to interact with Movie entities from the database</p>
  * @author Christoph Frischmuth
  * @author John Klippstein

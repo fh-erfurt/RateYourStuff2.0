@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * <h1>Game Publisher DTO</h1>
+ * Game Publisher DTO
  * <p>The Game Publisher DTO is used to provide less information to the client.</p>
  * @author Christoph Frischmuth
  * @author John Klippstein

@@ -25,7 +25,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
- * <h1>EpisodeController</h1>
+ * EpisodeController
  * <p>This Controller provides basic REST Interfaces to interact with Episode entities from the database</p>
  * @author Christoph Frischmuth
  * @author John Klippstein
@@ -60,6 +60,7 @@ public class EpisodeController {
 
     /**
      * This Method returns all episodes thet belong to a certain season from the database
+     * @param id        the id of the season
      * @param page      the current page (optional)
      * @param size      the number of items per page
      * @param orderBy   the attributed that should be ordered

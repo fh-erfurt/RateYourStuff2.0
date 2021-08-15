@@ -21,7 +21,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
- * <h1>Season Controller</h1>
+ * Season Controller
  * <p>This Controller provides basic REST Interfaces to interact with Season entities from the database</p>
  * @author Christoph Frischmuth
  * @author John Klippstein
@@ -66,6 +66,7 @@ public class SeasonController {
 
     /**
      * This Method returns all seasons that belong to a series from the database
+     * @param id        the id of the series
      * @param page      the current page (optional)
      * @param size      the number of items per page
      * @param orderBy   the attributed that should be ordered

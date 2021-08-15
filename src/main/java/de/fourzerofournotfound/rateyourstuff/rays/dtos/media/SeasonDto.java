@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * <h1>Season DTO</h1>
+ * Season DTO
  * <p>The Season DTO is used to provide reduced data to the client.</p>
  * @author Christoph Frischmuth
  * @author John Klippstein

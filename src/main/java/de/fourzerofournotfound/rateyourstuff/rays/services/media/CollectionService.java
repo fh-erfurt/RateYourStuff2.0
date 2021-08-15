@@ -16,7 +16,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * <h1>Collection Service</h1>
+ * Collection Service
  * <p>This Service is used to provide methods to the {@link de.fourzerofournotfound.rateyourstuff.rays.controllers.media.CollectionController CollectionController}</p>
  * @author Christoph Frischmuth
  * @author John Klippstein

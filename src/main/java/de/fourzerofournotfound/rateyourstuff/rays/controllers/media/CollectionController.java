@@ -22,7 +22,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * <h1>CollectionController</h1>
+ * CollectionController
  * <p>This Controller provides basic REST Interfaces to interact with Collection entities from the database</p>
  * @author Christoph Frischmuth
  * @author John Klippstein

@@ -8,7 +8,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 /**
- * <h1>Resource Configuration</h1>
  * <p>This configuration is used to set the path of accessible image files</p>
  * @author Christoph Frischmuth
  * @author John Klippstein

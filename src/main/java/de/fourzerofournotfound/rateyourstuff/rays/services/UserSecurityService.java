@@ -15,7 +15,7 @@ public class UserSecurityService {
 
     /**
      * Method receives User and hashes clear password string to hash from User object
-     * @param user
+     * @param user the user that should get a hashed password
      */
     public void hashPasswordOfSignUp(User user)
     {
@@ -24,7 +24,7 @@ public class UserSecurityService {
 
     /**
      * Method receives Login Object and hashes password from clear password string
-     * @param login
+     * @param login the login that has the clear password
      */
     public void hashPasswordOfLogin(Login login)
     {

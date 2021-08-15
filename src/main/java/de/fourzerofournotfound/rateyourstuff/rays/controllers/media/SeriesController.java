@@ -23,7 +23,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
- * <h1>Comment Controller</h1>
+ * Comment Controller
  * <p>This Controller provides basic REST Interfaces to interact with Comment entities from the database</p>
  * @author Christoph Frischmuth
  * @author John Klippstein

@@ -13,7 +13,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * <h1>Series</h1>
+ * Series
  * @author Christoph Frischmuth
  * @author John Klippstein
  * @author Mickey Knop

@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * <h1>BookPublisherController</h1>
+ * BookPublisherController
  * <p>This Controller provides basic REST Interfaces to interact with BookPublisher entities from the database</p>
  * @author Christoph Frischmuth
  * @author John Klippstein

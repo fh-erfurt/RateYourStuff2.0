@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Set;
 
 /**
- * <h1>CollectionRepository</h1>
+ * CollectionRepository
  * <p>This Interface can be used to find colelction entities in the database.</p>
  * <p>It also provides all functions of the {@link JpaRepository JpaRepository}</p>
  * @author Christoph Frischmuth

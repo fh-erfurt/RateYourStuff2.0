@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * <h1>Network Controller</h1>
+ * Network Controller
  * <p>This Controller provides basic REST Interfaces to interact with Network entities from the database</p>
  * @author Christoph Frischmuth
  * @author John Klippstein

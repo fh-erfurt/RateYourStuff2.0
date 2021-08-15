@@ -11,7 +11,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * <h1>Language</h1>
+ * Language
  * <p>This Model represents a language. The language described in which languages a medium is available in.
  * A medium can have multiple languages.</p>
  * @author Christoph Frischmuth

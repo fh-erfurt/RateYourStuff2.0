@@ -10,7 +10,7 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 /**
- * <h1>GameRepository</h1>
+ * GameRepository
  * <p>This Interface can be used to find Game entities in the database.</p>
  * <p>It also provides all functions of the {@link JpaRepository JpaRepository}</p>
  * @author Christoph Frischmuth

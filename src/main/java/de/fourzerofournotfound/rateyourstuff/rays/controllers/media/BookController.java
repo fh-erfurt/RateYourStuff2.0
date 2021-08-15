@@ -25,7 +25,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
- * <h1>Book Controller</h1>
+ * Book Controller
  * <p>This Controller provides basic REST Interfaces to interact with Book entities from the database</p>
  * @author Christoph Frischmuth
  * @author John Klippstein
@@ -124,6 +124,7 @@ public class BookController {
      * @param book  the book that should be updated
      * @throws InvalidISBNException     if the given ISBN does not match the standard
      * @throws DuplicateMediumException if there is already a book with the given isbn
+     * @return the updated book
      */
     @PutMapping(consumes="application/json", produces="application/json")
     ResponseEntity<Book> update(@RequestBody Book book) throws InvalidISBNException, DuplicateMediumException {

@@ -11,7 +11,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * <h1>SeasonService</h1>
+ * SeasonService
  * <p>This Service provides methods to the {@link de.fourzerofournotfound.rateyourstuff.rays.controllers.media.SeasonController SeasonController}</p>
  * @author Christoph Frischmuth
  * @author John Klippstein

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
- * <h1>ISBNInvalidAdvice</h1>
+ * ISBNInvalidAdvice
  * <p>This Advice is used by the {@link de.fourzerofournotfound.rateyourstuff.rays.controllers.media.BookController BookController}
  * @author Christoph Frischmuth
  * @author John Klippstein

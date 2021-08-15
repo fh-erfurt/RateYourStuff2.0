@@ -8,15 +8,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
- * <h1>DuplicateMediumAdvice</h1>
- * <p>This Advice is used by the <ul>
+ * DuplicateMediumAdvice
+ * <p>This Advice is used by the </p><ul>
  *     <li>{@link de.fourzerofournotfound.rateyourstuff.rays.controllers.media.BookController BookController}</li>
  *     <li>{@link de.fourzerofournotfound.rateyourstuff.rays.controllers.media.EpisodeController EpisodeController}</li>
  *     <li>{@link de.fourzerofournotfound.rateyourstuff.rays.controllers.media.GameController GameCOntroller}</li>
  *     <li>{@link de.fourzerofournotfound.rateyourstuff.rays.controllers.media.MovieController MovieController}</li>
  *     <li>{@link de.fourzerofournotfound.rateyourstuff.rays.controllers.media.SeasonController SeasonController}</li>
  *     <li>{@link de.fourzerofournotfound.rateyourstuff.rays.controllers.media.SeriesController SeriesController}</li>
- * </ul></p>
+ * </ul>
  * @author Christoph Frischmuth
  * @author John Klippstein
  * @author Mickey Knop

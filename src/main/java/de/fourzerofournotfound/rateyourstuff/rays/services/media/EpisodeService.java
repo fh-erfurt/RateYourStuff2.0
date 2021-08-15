@@ -12,7 +12,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * <h1>Episode Service</h1>
+ * Episode Service
  * <p>This Service is used to provide methods for the {@link de.fourzerofournotfound.rateyourstuff.rays.controllers.media.EpisodeController EpisodeController}</p>
  * @author Christoph Frischmuth
  * @author John Klippstein

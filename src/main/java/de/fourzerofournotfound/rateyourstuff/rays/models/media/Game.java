@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * <h1>Game</h1>
+ * Game
  * @author Christoph Frischmuth
  * @author John Klippstein
  * @author Mickey Knop

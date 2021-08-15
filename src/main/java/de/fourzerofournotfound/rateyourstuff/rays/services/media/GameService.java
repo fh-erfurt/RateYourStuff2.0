@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 /**
- * <h1>Game Service</h1>
+ * Game Service
  * <p>This Service provides methods to the {@link de.fourzerofournotfound.rateyourstuff.rays.controllers.media.GameController GameController}</p>
  * @author Christoph Frischmuth
  * @author John Klippstein
