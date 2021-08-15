@@ -1,15 +1,19 @@
 package de.fourzerofournotfound.rateyourstuff.rays.services.media;
 
 import de.fourzerofournotfound.rateyourstuff.rays.dtos.media.CollectionDto;
+import de.fourzerofournotfound.rateyourstuff.rays.dtos.media.ReducedCollectionDto;
 import de.fourzerofournotfound.rateyourstuff.rays.models.User;
 import de.fourzerofournotfound.rateyourstuff.rays.models.errors.UserNotFoundException;
 import de.fourzerofournotfound.rateyourstuff.rays.models.media.Collection;
+import de.fourzerofournotfound.rateyourstuff.rays.models.media.Medium;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -42,5 +46,19 @@ public class CollectionService {
         collectionDto.setMedia(collection.getMedia().stream().map(mediaService::convertToDto).collect(Collectors.toList()));
 
         return collectionDto;
+    }
+
+    public ReducedCollectionDto convertToReducedDto(Collection collection) {
+        return modelMapper.map(collection, ReducedCollectionDto.class);
+    }
+
+    public Set<Collection> removeCollectionsWithMediaId(Set<Collection> collections, Long mediumId){
+        return collections
+                .stream().filter(collection -> !checkIfMediaIdIsInMediaList(collection.getMedia(), mediumId))
+                .collect(Collectors.toSet());
+    }
+
+    private boolean checkIfMediaIdIsInMediaList (Set<Medium> media, Long mediumId) {
+       return media.stream().anyMatch(medium -> medium.getId().equals(mediumId));
     }
 }

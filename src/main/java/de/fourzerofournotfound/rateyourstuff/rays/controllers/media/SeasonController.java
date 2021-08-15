@@ -70,7 +70,6 @@ public class SeasonController {
     }
 
     @PostMapping(path="/add", consumes= "application/json", produces="application/json")
-    @CrossOrigin
     ResponseEntity<Season> add(@RequestBody Season season) throws InvalidSeriesException, MediumAlreadyExistsException {
         if(seasonService.isValidSeason(season)) {
             Optional<Series> targetSeries = seriesRepository.findById(season.getSeriesMappingId());

@@ -92,7 +92,6 @@ public class BookController {
         }
     }
 
-    @CrossOrigin(origins = "*")
     @PutMapping(consumes="application/json", produces="application/json")
     ResponseEntity<Book> update(@RequestBody Book book) throws InvalidISBNException {
         if(isbnCheckService.checkIfISBNisValid(book) && bookService.isValidBook(book)) {
@@ -113,7 +112,7 @@ public class BookController {
 
     @PostMapping("/images/{id}")
     ResponseEntity<Book> addImage(@RequestParam("image") MultipartFile multipartFile, @PathVariable Long id) throws IOException {
-            String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
+        String fileName = StringUtils.cleanPath("poster." + fileUploadService.getFileExtension(multipartFile));
             Optional<Book> book = this.bookRepository.findById(id);
             //check if the given movie exists
             if(book.isPresent()) {

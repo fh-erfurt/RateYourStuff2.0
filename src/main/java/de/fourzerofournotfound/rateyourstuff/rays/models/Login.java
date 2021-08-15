@@ -55,7 +55,4 @@ public class Login extends BaseModel {
     @OneToOne(mappedBy = "login")
     private User user;
 
-    @OneToMany(mappedBy = "login")
-    private List<LoginRole> loginRoles;
-
 }

@@ -89,7 +89,6 @@ public class SeriesController {
         }
     }
 
-    @CrossOrigin("*")
     @PutMapping(consumes="application/json", produces="application/json")
     ResponseEntity<Series> update(@RequestBody Series series) throws DuplicateMediumException {
         if(this.seriesService.isValidSeries(series)) {
@@ -103,14 +102,9 @@ public class SeriesController {
         }
     }
 
-    @DeleteMapping("/{id}")
-    void deleteSeries (@PathVariable Long id) {
-        this.seriesRepository.deleteById(id);
-    }
-
     @PostMapping("/images/{id}")
     ResponseEntity<Series> addImage(@RequestParam("image") MultipartFile multipartFile, @PathVariable Long id) throws IOException {
-        String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
+        String fileName = StringUtils.cleanPath("poster." + fileUploadService.getFileExtension(multipartFile));
         Optional<Series> series = this.seriesRepository.findById(id);
         //check if the given movie exists
         if(series.isPresent()) {

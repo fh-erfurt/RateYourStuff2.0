@@ -10,16 +10,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
  * This configuration is used to disable CORS for all mappings
  */
 @Configuration
-public class GlobalCORSConfiguration {
-
-    @Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurerAdapter() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**");
-            }
-        };
+public class GlobalCORSConfiguration implements WebMvcConfigurer{
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**").allowedMethods("*");
     }
 }
 

@@ -6,8 +6,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Set;
+
 @Repository
 public interface CollectionRepository extends JpaRepository<Collection, Long> {
-    public Page<Collection> findAllByUserId(Long id, Pageable pageable);
-    public Page<Collection> findAllByMediaId(Long id, Pageable pageable);
+    Page<Collection> findAllByUserId(Long id, Pageable pageable);
+    Set<Collection> findAllByUserId(Long id);
+    Page<Collection> findAllByMediaId(Long id, Pageable pageable);
 }
