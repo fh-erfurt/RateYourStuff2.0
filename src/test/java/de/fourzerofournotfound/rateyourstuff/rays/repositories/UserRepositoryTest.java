@@ -18,6 +18,7 @@ import java.util.Optional;
 public class UserRepositoryTest {
     @Autowired
     UserRepository repository;
+    @Autowired
     RoleRepository roleRepository;
 
     @Autowired
@@ -46,6 +47,7 @@ public class UserRepositoryTest {
         Role givenRole = Role.builder()
                 .roleName("User")
                 .build();
+        Role savedRole = roleRepository.save(givenRole);
 
         User given = User.builder()
                 .firstName("Kurt")
@@ -54,7 +56,7 @@ public class UserRepositoryTest {
                 .userName("Kurt_der_Schnurrt")
                 .gender("male")
                 .login(givenLogin)
-                .role(givenRole)
+                .role(savedRole)
                 .build();
 
         //When
@@ -77,6 +79,7 @@ public class UserRepositoryTest {
         Role givenRole = Role.builder()
                 .roleName("User")
                 .build();
+        Role savedRole = roleRepository.save(givenRole);
 
         User given = User.builder()
                 .firstName("Heinrich")
@@ -85,7 +88,7 @@ public class UserRepositoryTest {
                 .userName("Heiner34")
                 .gender("male")
                 .login(givenLogin)
-                .role(givenRole)
+                .role(savedRole)
                 .build();
 
         //When
@@ -107,6 +110,7 @@ public class UserRepositoryTest {
         Role givenRole = Role.builder()
                 .roleName("User")
                 .build();
+        Role savedRole = roleRepository.save(givenRole);
 
         User given = User.builder()
                 .firstName("Sigfried")
@@ -115,7 +119,7 @@ public class UserRepositoryTest {
                 .userName("Siggi1234")
                 .gender("male")
                 .login(givenLogin)
-                .role(givenRole)
+                .role(savedRole)
                 .build();
 
         //When
@@ -139,6 +143,7 @@ public class UserRepositoryTest {
         Role givenRole = Role.builder()
                 .roleName("User")
                 .build();
+        Role savedRole = roleRepository.save(givenRole);
 
         User given = User.builder()
                 .firstName("Simone")
@@ -147,8 +152,9 @@ public class UserRepositoryTest {
                 .userName("Simme1234")
                 .gender("female")
                 .login(givenLogin)
-                .role(givenRole)
+                .role(savedRole)
                 .build();
+
         User saved = repository.save(given);
 
 
@@ -174,6 +180,7 @@ public class UserRepositoryTest {
         Role givenRole = Role.builder()
                 .roleName("User")
                 .build();
+        Role savedRole = roleRepository.save(givenRole);
 
         User given = User.builder()
                 .firstName("Simon")
@@ -182,7 +189,7 @@ public class UserRepositoryTest {
                 .userName("Simmo1234")
                 .gender("male")
                 .login(givenLogin)
-                .role(givenRole)
+                .role(savedRole)
                 .build();
         User saved = repository.save(given);
 
