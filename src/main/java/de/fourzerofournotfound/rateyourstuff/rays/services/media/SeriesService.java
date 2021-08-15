@@ -16,6 +16,10 @@ import java.util.Optional;
 /**
  * <h1>SeriesService</h1>
  * <p>This service provides methods to the {@link de.fourzerofournotfound.rateyourstuff.rays.controllers.media.SeriesController SeriesController}</p>
+ * @author Christoph Frischmuth
+ * @author John Klippstein
+ * @author Mickey Knop
+ * @author Robin Beck
  */
 @Service("seriesService")
 public class SeriesService {

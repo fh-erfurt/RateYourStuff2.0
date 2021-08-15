@@ -13,6 +13,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * <h1>Network Controller</h1>
+ * <p>This Controller provides basic REST Interfaces to interact with Network entities from the database</p>
+ * @author Christoph Frischmuth
+ * @author John Klippstein
+ * @author Mickey Knop
+ * @author Robin Beck
+ */
 @RestController
 @RequestMapping("/rest/networks")
 public class NetworkController {
@@ -28,6 +36,14 @@ public class NetworkController {
         this.networkService = networkService;
     }
 
+    /**
+     * This Method returns all Networks from the database
+     * @param page      the current page (optional)
+     * @param size      the number of items per page
+     * @param orderBy   the attributed that should be ordered
+     * @param order     the order (asc, desc)
+     * @return          a list of NetworkDTOs
+     */
     @GetMapping("/all")
     ResponseEntity<List<NetworkDto>> getAll(
             @RequestParam(defaultValue = "0") int page,

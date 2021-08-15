@@ -7,6 +7,15 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+/**
+ * <h1>SeriesNotFoundAdvice</h1>
+ * <p>This Advice is used by the {@link de.fourzerofournotfound.rateyourstuff.rays.controllers.media.SeriesController SeriesController} and
+ * the {@link de.fourzerofournotfound.rateyourstuff.rays.controllers.media.SeasonController SeasonController}
+ * @author Christoph Frischmuth
+ * @author John Klippstein
+ * @author Mickey Knop
+ * @author Robin Beck
+ */
 @ControllerAdvice
 public class SeriesNotFoundAdvice {
     @ResponseBody

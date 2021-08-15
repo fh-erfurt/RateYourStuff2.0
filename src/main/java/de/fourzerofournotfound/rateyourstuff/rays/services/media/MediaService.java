@@ -13,6 +13,10 @@ import java.util.*;
 /**
  * <h1>MediaService</h1>
  * <p>This Service provides methods to the {@link de.fourzerofournotfound.rateyourstuff.rays.controllers.media.MediumController MediumController}</p>
+ * @author Christoph Frischmuth
+ * @author John Klippstein
+ * @author Mickey Knop
+ * @author Robin Beck
  */
 @Service("mediaService")
 public class MediaService {

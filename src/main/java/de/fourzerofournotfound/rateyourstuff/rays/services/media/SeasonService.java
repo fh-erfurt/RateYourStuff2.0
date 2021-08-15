@@ -13,6 +13,10 @@ import java.util.Optional;
 /**
  * <h1>SeasonService</h1>
  * <p>This Service provides methods to the {@link de.fourzerofournotfound.rateyourstuff.rays.controllers.media.SeasonController SeasonController}</p>
+ * @author Christoph Frischmuth
+ * @author John Klippstein
+ * @author Mickey Knop
+ * @author Robin Beck
  */
 @Service("seasonService")
 public class SeasonService {

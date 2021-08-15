@@ -9,6 +9,10 @@ import org.springframework.stereotype.Service;
 /**
  * <h1>NetworkService</h1>
  * <p>This service provides methods to the {@link de.fourzerofournotfound.rateyourstuff.rays.controllers.media.NetworkController NetworkController}</p>
+ * @author Christoph Frischmuth
+ * @author John Klippstein
+ * @author Mickey Knop
+ * @author Robin Beck
  */
 @Service("networkService")
 public class NetworkService {

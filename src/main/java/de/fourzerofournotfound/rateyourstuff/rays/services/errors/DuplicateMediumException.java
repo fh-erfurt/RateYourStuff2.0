@@ -11,6 +11,10 @@ package de.fourzerofournotfound.rateyourstuff.rays.services.errors;
  *     <li>{@link de.fourzerofournotfound.rateyourstuff.rays.controllers.media.SeasonController SeasonController}</li>
  *     <li>{@link de.fourzerofournotfound.rateyourstuff.rays.controllers.media.SeriesController SeriesController}</li>
  * </ul></p>
+ * @author Christoph Frischmuth
+ * @author John Klippstein
+ * @author Mickey Knop
+ * @author Robin Beck
  */
 public class DuplicateMediumException extends Exception{
     public DuplicateMediumException(String message) {

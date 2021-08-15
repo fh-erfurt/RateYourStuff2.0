@@ -12,6 +12,10 @@ import java.util.stream.Collectors;
 /**
  * <h1>Game DTO</h1>
  * <p>The GameDTO is used to provide less information to the client</p>
+ * @author Christoph Frischmuth
+ * @author John Klippstein
+ * @author Mickey Knop
+ * @author Robin Beck
  */
 @Getter
 @Setter

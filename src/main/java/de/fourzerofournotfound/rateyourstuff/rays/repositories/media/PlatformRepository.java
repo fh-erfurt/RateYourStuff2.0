@@ -10,6 +10,10 @@ import java.util.Optional;
  * <h1>PlatformRepository</h1>
  * <p>This Interface can be used to find Platform entities in the database.</p>
  * <p>It also provides all functions of the {@link JpaRepository JpaRepository}</p>
+ * @author Christoph Frischmuth
+ * @author John Klippstein
+ * @author Mickey Knop
+ * @author Robin Beck
  */
 @Repository
 public interface PlatformRepository extends JpaRepository<Platform, Long> {

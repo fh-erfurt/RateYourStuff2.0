@@ -6,6 +6,10 @@ import lombok.Setter;
 /**
  * <h1>Book DTO</h1>
  * <p>The Book DTO is used to send book entities with less information to the client.</p>
+ * @author Christoph Frischmuth
+ * @author John Klippstein
+ * @author Mickey Knop
+ * @author Robin Beck
  */
 @Getter
 @Setter

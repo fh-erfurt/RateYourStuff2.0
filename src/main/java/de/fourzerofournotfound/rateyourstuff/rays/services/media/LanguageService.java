@@ -9,6 +9,10 @@ import org.springframework.stereotype.Service;
 /**
  * <h1>LanguageService</h1>
  * <p>This Service provides methods to the {@link de.fourzerofournotfound.rateyourstuff.rays.controllers.media.LanguageController LanguageController}</p>
+ * @author Christoph Frischmuth
+ * @author John Klippstein
+ * @author Mickey Knop
+ * @author Robin Beck
  */
 @Service("languageService")
 public class LanguageService {

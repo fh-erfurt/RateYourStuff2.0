@@ -7,7 +7,10 @@ import java.util.regex.Pattern;
  * ISBN13
  * <p>This class represents the ISBN13 and contains methods to validate isbn13 und transform isbn10 to isbn13</p>
  * @author Robin Beck, Christoph Frischmuth, Mickey Knop, John Klippstein
- *
+ * @author Christoph Frischmuth
+ * @author John Klippstein
+ * @author Mickey Knop
+ * @author Robin Beck
  * */
 public class ISBN13 {
     //region Attributes

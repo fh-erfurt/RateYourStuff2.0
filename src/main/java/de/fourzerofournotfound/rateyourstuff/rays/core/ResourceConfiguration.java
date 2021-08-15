@@ -7,6 +7,14 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+/**
+ * <h1>Resource Configuration</h1>
+ * <p>This configuration is used to set the path of accessible image files</p>
+ * @author Christoph Frischmuth
+ * @author John Klippstein
+ * @author Mickey Knop
+ * @author Robin Beck
+ */
 @Configuration
 public class ResourceConfiguration implements WebMvcConfigurer {
     @Override
@@ -16,8 +24,8 @@ public class ResourceConfiguration implements WebMvcConfigurer {
 
     /**
      * This method is used to make the passed directory publicly available
-     * @param dirName
-     * @param registry
+     * @param dirName    the name of the directory where the file should be uploaded
+     * @param registry   the resource handler
      */
     public void exposeDirectory(String dirName, ResourceHandlerRegistry registry) {
         Path uploadDir = Paths.get(dirName);

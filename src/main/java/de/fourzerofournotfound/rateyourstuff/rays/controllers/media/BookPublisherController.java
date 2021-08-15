@@ -15,6 +15,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * <h1>BookPublisherController</h1>
+ * <p>This Controller provides basic REST Interfaces to interact with BookPublisher entities from the database</p>
+ * @author Christoph Frischmuth
+ * @author John Klippstein
+ * @author Mickey Knop
+ * @author Robin Beck
+ */
 @RestController
 @RequestMapping("/rest/bookPublishers")
 public class BookPublisherController {
@@ -30,6 +38,14 @@ public class BookPublisherController {
         this.pageableService = pageableService;
     }
 
+    /**
+     * This Method returns all BookPublishers from the database
+     * @param page      the current page (optional)
+     * @param size      the number of items per page
+     * @param orderBy   the attributed that should be ordered
+     * @param order     the order (asc, desc)
+     * @return          a list of BookDTOs
+     */
     @GetMapping("/all")
     ResponseEntity<List<BookPublisherDto>> getAll(
             @RequestParam(defaultValue = "0") int page,
@@ -43,10 +59,5 @@ public class BookPublisherController {
         return ResponseEntity.ok(publishers.stream()
                 .map(bookPublisherService::convertToDto)
                 .collect(Collectors.toList()));
-    }
-
-    @GetMapping()
-    ResponseEntity<BookPublisher> findByTitle(@RequestParam(value = "title") String title) throws BookPublisherNotFoundException {
-        return ResponseEntity.ok(this.bookPublisherRepository.findByBookPublisherTitle(title).orElseThrow(() -> new BookPublisherNotFoundException("No Publisher with title " + title)));
     }
 }

@@ -9,6 +9,10 @@ import org.springframework.stereotype.Service;
 /**
  * <h1>PlatformService</h1>
  * <p>This Service provides methods for the {@link de.fourzerofournotfound.rateyourstuff.rays.controllers.media.PlatformController PlatformController}</p>
+ * @author Christoph Frischmuth
+ * @author John Klippstein
+ * @author Mickey Knop
+ * @author Robin Beck
  */
 @Service("platformService")
 public class PlatformService {

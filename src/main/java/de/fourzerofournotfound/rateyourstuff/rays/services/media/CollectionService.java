@@ -18,6 +18,10 @@ import java.util.stream.Collectors;
 /**
  * <h1>Collection Service</h1>
  * <p>This Service is used to provide methods to the {@link de.fourzerofournotfound.rateyourstuff.rays.controllers.media.CollectionController CollectionController}</p>
+ * @author Christoph Frischmuth
+ * @author John Klippstein
+ * @author Mickey Knop
+ * @author Robin Beck
  */
 @Service
 public class CollectionService {
