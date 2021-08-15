@@ -13,7 +13,11 @@ import org.springframework.stereotype.Service;
 import java.util.Objects;
 import java.util.Optional;
 
-@Service("mos")
+/**
+ * <h1>MovieService</h1>
+ * <p>This service provides methods to the {@link de.fourzerofournotfound.rateyourstuff.rays.controllers.media.MovieController MovieController}</p>
+ */
+@Service("movieService")
 public class MovieService {
     private final ModelMapper modelMapper;
     private final NetworkRepository networkRepository;
@@ -27,9 +31,9 @@ public class MovieService {
     }
 
     /**
-     * This service is used to check if a given movie-object(checked by its attributes) is already stored in database
-     * @param movie - object which is streamed via rest api
-     * @return true if a object is already stored in database (the entry of this movie-object is valid)
+     * Checks if a movie can be stored within the database without causing duplicates
+     * @param movie the movie that should be checked
+     * @return true if the movie is not already stored in the database
      */
     public boolean isValidMovie(Movie movie)
     {
@@ -58,7 +62,12 @@ public class MovieService {
         return movieDto;
     }
 
-    public Network getNetwork(String networkTitle, Movie movie) {
+    /**
+     * Returns a reference to the given network by its title. Creates the network, if it does not exist.
+     * @param networkTitle  the title that should be searched within the database
+     * @return              the entity of the network
+     */
+    public Network getNetwork(String networkTitle) {
         Optional<Network> network = networkRepository.findByNetworkTitle(networkTitle);
         if(network.isPresent()) {
             return network.get();

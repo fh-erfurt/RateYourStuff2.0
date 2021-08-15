@@ -80,9 +80,9 @@ public class SeriesController {
     ResponseEntity<Series> add(@RequestBody Series series) throws DuplicateMediumException {
         if(this.seriesService.isValidSeries(series)) {
             this.seriesRepository.save(series);
-            series.setGenres(this.mediaService.getGenresSet(series.getGenreStrings(), series));
-            series.setLanguages(this.mediaService.getLanguageSet(series.getLanguageStrings(), series));
-            series.setNetwork(this.seriesService.getNetwork(series.getNetworkTitle(), series));
+            series.setGenres(this.mediaService.getGenresSet(series.getGenreStrings()));
+            series.setLanguages(this.mediaService.getLanguageSet(series.getLanguageStrings()));
+            series.setNetwork(this.seriesService.getNetwork(series.getNetworkTitle()));
             return ResponseEntity.ok(this.seriesRepository.save(series));
         } else {
             throw new DuplicateMediumException("The Series " + series.getMediumName() + " already exists.");
@@ -92,10 +92,10 @@ public class SeriesController {
     @PutMapping(consumes="application/json", produces="application/json")
     ResponseEntity<Series> update(@RequestBody Series series) throws DuplicateMediumException {
         if(this.seriesService.isValidSeries(series)) {
-            series.setNetwork(this.seriesService.getNetwork(series.getNetworkTitle(), series));
+            series.setNetwork(this.seriesService.getNetwork(series.getNetworkTitle()));
             this.seriesRepository.save(series);
-            series.setGenres(this.mediaService.getGenresSet(series.getGenreStrings(), series));
-            series.setLanguages(this.mediaService.getLanguageSet(series.getLanguageStrings(), series));
+            series.setGenres(this.mediaService.getGenresSet(series.getGenreStrings()));
+            series.setLanguages(this.mediaService.getLanguageSet(series.getLanguageStrings()));
             return ResponseEntity.ok(this.seriesRepository.save(series));
         } else {
             throw new DuplicateMediumException("The Series " + series.getMediumName() + " already exists.");

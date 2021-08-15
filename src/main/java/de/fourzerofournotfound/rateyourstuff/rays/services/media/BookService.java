@@ -13,6 +13,10 @@ import org.springframework.stereotype.Service;
 import java.util.Objects;
 import java.util.Optional;
 
+/**
+ * <h1>BookService</h1>
+ * <p>This Service is used to provide different book-handling methods to the {@link de.fourzerofournotfound.rateyourstuff.rays.controllers.media.BookController BookController}</p>
+ */
 @Service("bookService")
 public class BookService {
     private final ModelMapper modelMapper;
@@ -27,9 +31,9 @@ public class BookService {
     }
 
     /**
-     * This service is used to check if a given book-object(checked by its attributes) is already stored in database
-     * @param book - object which is streamed via rest api
-     * @return true if a object is already stored in database (the entry of this book-object is valid)
+     * Checks if a book can be stored within the database without causing duplicates
+     * @param book the book that should be checked
+     * @return true if the book is not already stored in the database
      */
     public boolean isValidBook(Book book)
     {
@@ -59,7 +63,13 @@ public class BookService {
         return bookDto;
     }
 
-    public BookPublisher getPublisher(String publisherString, Book book) {
+    /**
+     * Returns the entity of a book publisher from the database. Creates a new Book publisher, if there is no
+     * publisher with the given string as title
+     * @param publisherString   the publisher title that should be searched within the database
+     * @return  the valid book publisher entity from the database
+     */
+    public BookPublisher getPublisher(String publisherString) {
         Optional<BookPublisher> publisher = publisherRepository.findByBookPublisherTitle(publisherString);
         if(publisher.isPresent()) {
             return publisher.get();

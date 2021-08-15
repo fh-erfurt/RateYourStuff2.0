@@ -83,9 +83,9 @@ public class BookController {
     ResponseEntity<Book> add(@RequestBody Book book) throws InvalidISBNException {
         if(isbnCheckService.checkIfISBNisValid(book) && bookService.isValidBook(book)) {
             this.bookRepository.save(book);
-            book.setGenres(this.mediaService.getGenresSet(book.getGenreStrings(), book));
-            book.setLanguages(this.mediaService.getLanguageSet(book.getLanguageStrings(), book));
-            book.setBookPublisher(this.bookService.getPublisher(book.getPublisherString(), book));
+            book.setGenres(this.mediaService.getGenresSet(book.getGenreStrings()));
+            book.setLanguages(this.mediaService.getLanguageSet(book.getLanguageStrings()));
+            book.setBookPublisher(this.bookService.getPublisher(book.getPublisherString()));
             return ResponseEntity.ok(this.bookRepository.save(book));
         } else {
             throw new InvalidISBNException("The ISBN " + book.getIsbn() + " is not valid");
@@ -95,10 +95,10 @@ public class BookController {
     @PutMapping(consumes="application/json", produces="application/json")
     ResponseEntity<Book> update(@RequestBody Book book) throws InvalidISBNException {
         if(isbnCheckService.checkIfISBNisValid(book) && bookService.isValidBook(book)) {
-            book.setBookPublisher(this.bookService.getPublisher(book.getPublisherString(), book));
+            book.setBookPublisher(this.bookService.getPublisher(book.getPublisherString()));
             this.bookRepository.save(book);
-            book.setGenres(this.mediaService.getGenresSet(book.getGenreStrings(), book));
-            book.setLanguages(this.mediaService.getLanguageSet(book.getLanguageStrings(), book));
+            book.setGenres(this.mediaService.getGenresSet(book.getGenreStrings()));
+            book.setLanguages(this.mediaService.getLanguageSet(book.getLanguageStrings()));
             return ResponseEntity.ok(this.bookRepository.save(book));
         } else {
             throw new InvalidISBNException("The ISBN " + book.getIsbn() + " is not valid");

@@ -9,6 +9,11 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDate;
 import java.util.Optional;
 
+/**
+ * <h1>SeriesRepository</h1>
+ * <p>This Interface can be used to find Series entities in the database.</p>
+ * <p>It also provides all functions of the {@link JpaRepository JpaRepository}</p>
+ */
 @Repository
 public interface SeriesRepository extends JpaRepository<Series, Long> {
     Page<Series> findAll(Pageable pageable);

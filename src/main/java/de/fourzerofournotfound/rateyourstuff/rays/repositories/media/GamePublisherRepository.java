@@ -6,6 +6,11 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
+/**
+ * <h1>GamePublisherRepository</h1>
+ * <p>This Interface can be used to find GamePublisher entities in the database.</p>
+ * <p>It also provides all functions of the {@link JpaRepository JpaRepository}</p>
+ */
 @Repository
 public interface GamePublisherRepository extends JpaRepository<GamePublisher, Long> {
     Optional<GamePublisher> findByGamePublisherTitle(String gamePublisherTitle);

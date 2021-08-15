@@ -12,6 +12,11 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * <h1>MovieRepository</h1>
+ * <p>This Interface can be used to find Movie entities in the database.</p>
+ * <p>It also provides all functions of the {@link JpaRepository JpaRepository}</p>
+ */
 @Repository
 public interface MovieRepository extends JpaRepository<Movie, Long> {
     Page<Movie> findAll(Pageable pageable);

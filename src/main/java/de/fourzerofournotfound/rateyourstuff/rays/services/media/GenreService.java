@@ -6,6 +6,10 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/**
+ * <h1>GenreService</h1>
+ * <p>This Service provides methods to the {@link de.fourzerofournotfound.rateyourstuff.rays.controllers.media.GenreController GenreController}</p>
+ */
 @Service("genreService")
 public class GenreService {
 
@@ -16,6 +20,11 @@ public class GenreService {
         this.modelMapper = modelMapper;
     }
 
+    /**
+     * Converts the given Genre to a GenreDTO
+     * @param genre the Genre that should be converted
+     * @return      the converted GenreDTO
+     */
     public GenreDto convertToDto(Genre genre) {
         return modelMapper.map(genre, GenreDto.class);
     }

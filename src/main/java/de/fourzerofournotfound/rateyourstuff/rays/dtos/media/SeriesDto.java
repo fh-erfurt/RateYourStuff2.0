@@ -1,9 +1,12 @@
 package de.fourzerofournotfound.rateyourstuff.rays.dtos.media;
 
-import de.fourzerofournotfound.rateyourstuff.rays.models.media.Network;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * <h1>Series DTO</h1>
+ * <p>The Series DTO is used to provide reduced information to the client.</p>
+ */
 @Getter
 @Setter
 public class SeriesDto extends MediumDto {
