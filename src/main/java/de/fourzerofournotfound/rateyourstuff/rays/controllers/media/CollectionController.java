@@ -81,11 +81,11 @@ public class CollectionController {
 
     @GetMapping(path="/user/{userId}/medium/{mediumId}")
     ResponseEntity<List<ReducedCollectionDto>> getCollectionsByUserWithUnusedMedia(@PathVariable Long userId, @PathVariable Long mediumId) throws Exception {
-        System.out.println(mediumId);
         Optional<Medium> medium = mediaRepository.findById(mediumId);
 
         if(medium.isPresent()) {
-            Set<Collection> collections = collectionRepository.findAllByUserIdAndMediaNot(userId, medium.get());
+            Set<Collection> collections = collectionService.removeCollectionsWithMediaId(collectionRepository.findAllByUserId(userId), mediumId);
+
             return ResponseEntity.ok(
                     collections.stream()
                             .map(collectionService::convertToReducedDto)
