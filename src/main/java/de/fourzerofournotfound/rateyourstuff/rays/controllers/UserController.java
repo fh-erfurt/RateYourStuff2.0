@@ -9,6 +9,9 @@ import de.fourzerofournotfound.rateyourstuff.rays.services.errors.UserAlreadyExi
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.access.prepost.PreFilter;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -36,11 +39,14 @@ public class UserController {
 
 
     //@CrossOrigin(origins = "http://localhost:3000")
+    //@Secured({"ROLE_ADMIN", "ROLE_USER"})
+    @PreAuthorize("hasAuthority('Admin')")
     @GetMapping("/all")
     ResponseEntity<List<User>> getAll(){
         return ResponseEntity.ok(this.userRepository.findAll());
     }
 
+    @PreAuthorize("hasAuthority('User')")
     @GetMapping("/id={id}")
     ResponseEntity<User> getById(@PathVariable Long id) throws UserNotFoundException {
         return ResponseEntity.ok((this.userRepository.findById(id).orElseThrow(()-> new UserNotFoundException("No User found for given id"))));
@@ -66,6 +72,7 @@ public class UserController {
     }
 
     //@CrossOrigin(origins = "http://localhost:3000")
+    @PreAuthorize("hasAuthority('User')")
     @PutMapping(consumes = "application/json", produces = "application/json")
     ResponseEntity<User> update(@RequestBody User user) throws InvalidUserException {
         userService.addReferencesToUser(user);

@@ -26,7 +26,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import static java.text.MessageFormat.format;
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(securedEnabled = true, proxyTargetClass = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -49,13 +49,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.cors();
-        http.csrf().disable()
+        http.cors().and()
+        .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/authenticate").permitAll()
-                .antMatchers("/").permitAll()
-                .antMatchers("/user/**").hasAnyRole()
-                .antMatchers("/user/id**").hasRole("User")
+                .antMatchers("/authenticate", "/users/add").permitAll()
                 .anyRequest().authenticated()
                 .and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
