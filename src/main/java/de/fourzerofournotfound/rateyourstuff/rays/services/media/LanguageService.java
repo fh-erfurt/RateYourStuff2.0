@@ -2,9 +2,15 @@ package de.fourzerofournotfound.rateyourstuff.rays.services.media;
 
 import de.fourzerofournotfound.rateyourstuff.rays.dtos.media.LanguageDto;
 import de.fourzerofournotfound.rateyourstuff.rays.models.media.Language;
+import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.LanguageRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 /**
  * LanguageService
@@ -17,10 +23,13 @@ import org.springframework.stereotype.Service;
 @Service("languageService")
 public class LanguageService {
     private final ModelMapper modelMapper;
+    private final LanguageRepository languageRepository;
 
     @Autowired
-    public LanguageService(ModelMapper modelMapper) {
+    public LanguageService(ModelMapper modelMapper,
+                           LanguageRepository languageRepository) {
         this.modelMapper = modelMapper;
+        this.languageRepository = languageRepository;
     }
 
     /**
@@ -30,5 +39,26 @@ public class LanguageService {
      */
     public LanguageDto convertToDto(Language language) {
         return modelMapper.map(language, LanguageDto.class);
+    }
+
+    /**
+     * Returns references to the given languages. Creates languages that do not exist
+     * @param languageStrings  the list of language names that should be searched within the database
+     * @return              the list of language entities
+     */
+    public Set<Language> getLanguageSet(List<String> languageStrings) {
+        Set<Language> languages = new HashSet<>();
+
+        for(String language:  languageStrings) {
+            Optional<Language> foundLanguage = languageRepository.findLanguageByLanguage(language);
+            if(foundLanguage.isPresent()) {
+                languages.add(foundLanguage.get());
+            } else {
+                Language newLanguage = new Language();
+                newLanguage.setLanguage(language);
+                languages.add(languageRepository.save(newLanguage));
+            }
+        }
+        return languages;
     }
 }

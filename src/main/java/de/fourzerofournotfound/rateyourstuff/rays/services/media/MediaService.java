@@ -4,13 +4,12 @@ import de.fourzerofournotfound.rateyourstuff.rays.dtos.media.MediumDto;
 import de.fourzerofournotfound.rateyourstuff.rays.models.Rating;
 import de.fourzerofournotfound.rateyourstuff.rays.models.media.*;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.*;
-import net.minidev.json.JSONUtil;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.w3c.dom.stylesheets.MediaList;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * MediaService
@@ -56,81 +55,30 @@ public class MediaService {
         mediumDto.setNumberOfCollections(medium.getCollections());
         return mediumDto;
     }
-
-    /**
-     * Returns references to the given genres. Creates genres that do not exist
-     * @param genreStrings  the list of genre names that should be searched within the database
-     * @return              the list of genre entities
-     */
-    public Set<Genre> getGenresSet(List<String> genreStrings) {
-        Set<Genre> genres = new HashSet<>();
-
-        for(String genre : genreStrings) {
-            Optional<Genre> foundGenre = genreRepository.findGenreByGenreName(genre);
-            if(foundGenre.isPresent()) {
-                genres.add(foundGenre.get());
-            } else {
-                Genre newGenre = new Genre();
-                newGenre.setGenreName(genre);
-                genres.add(genreRepository.save(newGenre));
-            }
-        }
-        return genres;
-    }
-
-    /**
-     * Returns references to the given languages. Creates languages that do not exist
-     * @param languageStrings  the list of language names that should be searched within the database
-     * @return              the list of language entities
-     */
-    public Set<Language> getLanguageSet(List<String> languageStrings) {
-        Set<Language> languages = new HashSet<>();
-
-        for(String language:  languageStrings) {
-            Optional<Language> foundLanguage = languageRepository.findLanguageByLanguage(language);
-            if(foundLanguage.isPresent()) {
-                languages.add(foundLanguage.get());
-            } else {
-                Language newLanguage = new Language();
-                newLanguage.setLanguage(language);
-                languages.add(languageRepository.save(newLanguage));
-            }
-        }
-        return languages;
-    }
-
     /**
      * Returns a list containing all media that match the input by ignoring the Case and except also almost matching words(like)
      * @param givenInput taken from the SearchBar call altered through dividing and sorting out short words followed by adjusting to the "likefuntion" aspect with '%...%'
      * @return              an ArrayList of matching Media
      */
     public ArrayList<Medium> getSearchResult(String givenInput){
-        ArrayList<String> separatedInput = new ArrayList<>();
+        ArrayList<String> separatedInput = new ArrayList<String>();
         Collections.addAll(separatedInput,givenInput.split(" "));
+
         int minLengthForValidWord = 4;
-        separatedInput.removeIf(currentString -> currentString.length() < minLengthForValidWord);
-        ArrayList<String> alteredInputList = new ArrayList<>();
+        separatedInput.removeIf(s -> s.length() < minLengthForValidWord);
 
-        for(String s: separatedInput)
-        {
-            String forLikeliness = "%";
-            String alteredInput = forLikeliness+s+forLikeliness;
-            alteredInputList.add(alteredInput);
-        }
+        separatedInput.replaceAll(s -> "%" + s + "%");
 
-        HashSet<Medium> allMediaMatches = new HashSet<>();
-        for(String a: alteredInputList)
+        ArrayList<Medium> foundMedia = new ArrayList<>();
+        HashSet<Long> foundIds = new HashSet<>();
+
+        for(String a: separatedInput)
         {
             List<Medium> results = mediaRepository.findByMediumNameLikeIgnoreCase(a);
-            for(Medium match: results)
-            {
-                boolean mediumIsPresent = allMediaMatches.stream().map(Medium::getId).anyMatch(match.getId()::equals);
-                if(!mediumIsPresent) {
-                    allMediaMatches.add(match);
-                }
-            }
+            results.removeIf(r -> !foundIds.add(r.getId()));
+            foundMedia.addAll(results);
         }
-        return new ArrayList<>(allMediaMatches);
+        return foundMedia;
     }
 
 }

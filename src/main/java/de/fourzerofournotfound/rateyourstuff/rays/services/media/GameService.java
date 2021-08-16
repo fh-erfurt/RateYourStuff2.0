@@ -71,39 +71,7 @@ public class GameService {
         return gameDto;
     }
 
-    /**
-     * Returns references to the given platform names. Creates the platforms, if they do not exist
-     * @param platformStrings   the names of the platforms that should be references
-     * @return                  the entities of the platforms
-     */
-    public Set<Platform> getPlatformSet(List<String> platformStrings) {
-        Set<Platform> platforms = new HashSet<>();
-        for (String platform : platformStrings) {
-            Optional<Platform> foundPlatform = platformRepository.findByPlatformTitle(platform);
-            if (foundPlatform.isPresent()) {
-                  platforms.add(foundPlatform.get());
-            } else {
-                Platform newPlatform = new Platform();
-                newPlatform.setPlatformTitle(platform);
-                platforms.add(platformRepository.save(newPlatform));
-            }
-        }
-        return platforms;
-    }
 
-    /**
-     * Returns references to the given publisher names. Creates publishers, if they do not exist.
-     * @param publisherTitle    the names of the publishers that should be references
-     * @return                  the entities of the publishers
-     */
-    public GamePublisher getPublisher(String publisherTitle) {
-        Optional<GamePublisher> publisher = gamePublisherRepository.findByGamePublisherTitle(publisherTitle);
-        if(publisher.isPresent()) {
-            return publisher.get();
-        } else {
-            GamePublisher newPublisher = new GamePublisher();
-            newPublisher.setGamePublisherTitle(publisherTitle);
-            return gamePublisherRepository.save(newPublisher);
-        }
-    }
+
+
 }

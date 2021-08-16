@@ -21,6 +21,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
+@Builder
 @AllArgsConstructor
 @RequiredArgsConstructor
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
