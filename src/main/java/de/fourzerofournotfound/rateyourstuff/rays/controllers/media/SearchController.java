@@ -15,6 +15,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
+/**
+ * SearchController
+ * <p> This controller ensures that the input is passed on from the front end to the function in the back end and vice versa.</p>
+ * @author Christoph Frischmuth
+ * @author John Klippstein
+ * @author Mickey Knop
+ * @author Robin Beck
+ */
 @RestController
 @RequestMapping("/rest/searchResults")
 public class SearchController {
@@ -30,7 +39,7 @@ public class SearchController {
     ResponseEntity<List<MediumDto>> getMatchingMediaList(
             @RequestParam String s
     ) {
-        System.out.println(s);
+        //System.out.println(s);
         List<Medium> searchResults = mediaService.getSearchResult(s);
         return ResponseEntity.ok(searchResults.stream().map(mediaService::convertToDto).collect(Collectors.toList()));
     }

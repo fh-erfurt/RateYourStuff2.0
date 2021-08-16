@@ -99,48 +99,38 @@ public class MediaService {
         return languages;
     }
 
+    /**
+     * Returns a list containing all media that match the input by ignoring the Case and except also almost matching words(like)
+     * @param givenInput taken from the SearchBar call altered through dividing and sorting out short words followed by adjusting to the "likefuntion" aspect with '%...%'
+     * @return              an ArrayList of matching Media
+     */
     public ArrayList<Medium> getSearchResult(String givenInput){
-        ArrayList<String> separatedInput = new ArrayList<String>();
+        ArrayList<String> separatedInput = new ArrayList<>();
         Collections.addAll(separatedInput,givenInput.split(" "));
         int minLengthForValidWord = 4;
-        Iterator<String> iterator = separatedInput.iterator();
-        while (iterator.hasNext()) {
-            String currentString = iterator.next();
-            if(currentString.length() < minLengthForValidWord)
-            {
-                iterator.remove();
-            }
-        }
-        ArrayList<String> alteredInputList = new ArrayList<String>();
+        separatedInput.removeIf(currentString -> currentString.length() < minLengthForValidWord);
+        ArrayList<String> alteredInputList = new ArrayList<>();
 
         for(String s: separatedInput)
         {
-            //System.out.println("test: " + s);
             String forLikeliness = "%";
             String alteredInput = forLikeliness+s+forLikeliness;
-            //System.out.println("test: " + alteredInput);
             alteredInputList.add(alteredInput);
         }
 
         HashSet<Medium> allMediaMatches = new HashSet<>();
-        //HashSet mediaListMatchingSearchParams = new HashSet();
         for(String a: alteredInputList)
         {
             List<Medium> results = mediaRepository.findByMediumNameLikeIgnoreCase(a);
-            //System.out.println(results.size());
             for(Medium match: results)
             {
-                boolean mediumIsPresent = allMediaMatches.stream().map(Medium::getId).filter(match.getId()::equals).findFirst().isPresent();
+                boolean mediumIsPresent = allMediaMatches.stream().map(Medium::getId).anyMatch(match.getId()::equals);
                 if(!mediumIsPresent) {
                     allMediaMatches.add(match);
-                    //mediaListMatchingSearchParams.add(match);
                 }
             }
         }
-        ArrayList<Medium> mediaListMatchingSearch = new ArrayList<Medium>(allMediaMatches);
-        System.out.println(mediaListMatchingSearch.size());
-        return mediaListMatchingSearch;
-        //return mediaListMatchingSearchParams;
+        return new ArrayList<>(allMediaMatches);
     }
 
 }
