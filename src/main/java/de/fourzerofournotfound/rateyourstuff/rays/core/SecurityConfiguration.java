@@ -56,9 +56,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     /**
-     * Method configure which URL´s been ignored by the Spring Security filter
-     * @param web
-     * @throws Exception
+     * Method configure which URLs been ignored by the Spring Security filter
+     * @param web       the web security instance
+     * @throws Exception if it is not possible to ignore urls
      */
     @Override
     public void configure(WebSecurity web) throws Exception {

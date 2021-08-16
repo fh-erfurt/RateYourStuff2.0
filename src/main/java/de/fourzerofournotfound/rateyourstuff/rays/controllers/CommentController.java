@@ -121,9 +121,13 @@ public class CommentController {
     }
 
     @PutMapping(consumes="application/json", produces="application/json")
-    ResponseEntity<Comment> update(@RequestBody Comment comment) throws InvalidCommentException {
-        comment = commentService.addReferencesToComment(comment);
-        return ResponseEntity.ok(this.commentRepository.save(comment));
+    ResponseEntity<Comment> update(@RequestBody Comment comment) throws CommentNotFoundException {
+        Optional<Comment> foundComment = commentRepository.findById(comment.getId());
+        if(foundComment.isPresent()) {
+            foundComment.get().setTextOfComment(comment.getTextOfComment());
+            return ResponseEntity.ok(this.commentRepository.save(foundComment.get()));
+        }
+        throw new CommentNotFoundException("There is no comment with id " + comment.getId());
     }
 
     @DeleteMapping("/{id}")

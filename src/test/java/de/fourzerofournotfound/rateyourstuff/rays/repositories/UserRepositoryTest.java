@@ -18,6 +18,8 @@ import java.util.Optional;
 public class UserRepositoryTest {
     @Autowired
     UserRepository repository;
+
+    @Autowired
     RoleRepository roleRepository;
 
     @Autowired
@@ -26,11 +28,7 @@ public class UserRepositoryTest {
     @BeforeEach
     public void beforeEach() {
         repository.deleteAll();
-    }
-
-    @AfterEach
-    public void afterEach() {
-       //repository.deleteAll();
+        roleRepository.deleteAll();
     }
 
     @Test
@@ -46,6 +44,8 @@ public class UserRepositoryTest {
         Role givenRole = Role.builder()
                 .roleName("User")
                 .build();
+
+        roleRepository.save(givenRole);
 
         User given = User.builder()
                 .firstName("Kurt")
@@ -78,6 +78,8 @@ public class UserRepositoryTest {
                 .roleName("User")
                 .build();
 
+        roleRepository.save(givenRole);
+
         User given = User.builder()
                 .firstName("Heinrich")
                 .secondName("Muster")
@@ -107,6 +109,8 @@ public class UserRepositoryTest {
         Role givenRole = Role.builder()
                 .roleName("User")
                 .build();
+
+        roleRepository.save(givenRole);
 
         User given = User.builder()
                 .firstName("Sigfried")
@@ -139,6 +143,8 @@ public class UserRepositoryTest {
         Role givenRole = Role.builder()
                 .roleName("User")
                 .build();
+
+        roleRepository.save(givenRole);
 
         User given = User.builder()
                 .firstName("Simone")
@@ -174,6 +180,8 @@ public class UserRepositoryTest {
         Role givenRole = Role.builder()
                 .roleName("User")
                 .build();
+
+        roleRepository.save(givenRole);
 
         User given = User.builder()
                 .firstName("Simon")

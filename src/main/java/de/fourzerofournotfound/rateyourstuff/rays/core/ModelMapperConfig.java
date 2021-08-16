@@ -6,6 +6,10 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * This Config is used to provide a Model Mapper
+ * @author Christoph Frischmuth
+ * @author John Klippstein
+ * @author Mickey Knop
+ * @author Robin Beck
  */
 @Configuration
 public class ModelMapperConfig {

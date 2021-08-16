@@ -1,8 +1,10 @@
 package de.fourzerofournotfound.rateyourstuff.rays.services;
 
 import de.fourzerofournotfound.rateyourstuff.rays.models.Login;
+import de.fourzerofournotfound.rateyourstuff.rays.models.Role;
 import de.fourzerofournotfound.rateyourstuff.rays.models.User;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.LoginRepository;
+import de.fourzerofournotfound.rateyourstuff.rays.repositories.RoleRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,12 +23,16 @@ class UserSecurityServiceTest {
     LoginRepository loginRepository;
 
     @Autowired
+    RoleRepository roleRepository;
+
+    @Autowired
     UserSecurityService service;
 
     @BeforeEach
     public void beforeEach() {
         userRepository.deleteAll();
         loginRepository.deleteAll();
+        roleRepository.deleteAll();
     }
 
     @Test
@@ -39,6 +45,9 @@ class UserSecurityServiceTest {
                 .isEnabled(false)
                 .build();
 
+        Role userRole = Role.builder().roleName("User").build();
+        roleRepository.save(userRole);
+
         User givenUser = User.builder()
                 .firstName("Mickey")
                 .lastName("Knop")
@@ -46,6 +55,7 @@ class UserSecurityServiceTest {
                 .gender("m")
                 .userName("mikmin")
                 .login(givenLogin)
+                .role(userRole)
                 .build();
 
 
@@ -73,6 +83,9 @@ class UserSecurityServiceTest {
                 .isEnabled(false)
                 .build();
 
+        Role userRole = Role.builder().roleName("User").build();
+        roleRepository.save(userRole);
+
         User givenUser = User.builder()
                 .firstName("Mickey")
                 .lastName("Knop")
@@ -80,6 +93,7 @@ class UserSecurityServiceTest {
                 .gender("m")
                 .userName("mikmin")
                 .login(givenLogin)
+                .role(userRole)
                 .build();
         service.hashPasswordOfSignUp(givenUser);
         User saved = userRepository.save(givenUser);

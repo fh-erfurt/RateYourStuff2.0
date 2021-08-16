@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 /**
- * <h1>Episode</h1>
+ * Episode
  * @author Christoph Frischmuth
  * @author John Klippstein
  * @author Mickey Knop

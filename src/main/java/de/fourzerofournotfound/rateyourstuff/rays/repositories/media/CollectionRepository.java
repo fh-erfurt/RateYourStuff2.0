@@ -8,6 +8,15 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Set;
 
+/**
+ * CollectionRepository
+ * <p>This Interface can be used to find colelction entities in the database.</p>
+ * <p>It also provides all functions of the {@link JpaRepository JpaRepository}</p>
+ * @author Christoph Frischmuth
+ * @author John Klippstein
+ * @author Mickey Knop
+ * @author Robin Beck
+ */
 @Repository
 public interface CollectionRepository extends JpaRepository<Collection, Long> {
     Page<Collection> findAllByUserId(Long id, Pageable pageable);

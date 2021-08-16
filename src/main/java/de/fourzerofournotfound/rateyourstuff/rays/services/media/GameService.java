@@ -14,6 +14,14 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 
+/**
+ * Game Service
+ * <p>This Service provides methods to the {@link de.fourzerofournotfound.rateyourstuff.rays.controllers.media.GameController GameController}</p>
+ * @author Christoph Frischmuth
+ * @author John Klippstein
+ * @author Mickey Knop
+ * @author Robin Beck
+ */
 @Service("gameService")
 public class GameService {
     private final ModelMapper modelMapper;
@@ -30,9 +38,9 @@ public class GameService {
     }
 
     /**
-     * This service is used to check if a given game-object(checked by its attributes) is already stored in database
-     * @param game - object which is streamed via rest api
-     * @return true if a object is already stored in database (the entry of this game-object is valid)
+     * Checks if a game can be stored within the database without causing duplicates
+     * @param game the game that should be checked
+     * @return true if the game is not already stored in the database
      */
     public boolean isValidGame(Game game)
     {
@@ -63,7 +71,12 @@ public class GameService {
         return gameDto;
     }
 
-    public Set<Platform> getPlatformSet(List<String> platformStrings, Game game) {
+    /**
+     * Returns references to the given platform names. Creates the platforms, if they do not exist
+     * @param platformStrings   the names of the platforms that should be references
+     * @return                  the entities of the platforms
+     */
+    public Set<Platform> getPlatformSet(List<String> platformStrings) {
         Set<Platform> platforms = new HashSet<>();
         for (String platform : platformStrings) {
             Optional<Platform> foundPlatform = platformRepository.findByPlatformTitle(platform);
@@ -78,7 +91,12 @@ public class GameService {
         return platforms;
     }
 
-    public GamePublisher getPublisher(String publisherTitle, Game game) {
+    /**
+     * Returns references to the given publisher names. Creates publishers, if they do not exist.
+     * @param publisherTitle    the names of the publishers that should be references
+     * @return                  the entities of the publishers
+     */
+    public GamePublisher getPublisher(String publisherTitle) {
         Optional<GamePublisher> publisher = gamePublisherRepository.findByGamePublisherTitle(publisherTitle);
         if(publisher.isPresent()) {
             return publisher.get();

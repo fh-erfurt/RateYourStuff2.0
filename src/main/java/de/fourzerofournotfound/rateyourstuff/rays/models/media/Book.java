@@ -11,7 +11,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 /**
- * <h1>Book</h1>
+ * Book
  * @author Christoph Frischmuth
  * @author John Klippstein
  * @author Mickey Knop

@@ -8,7 +8,7 @@ import javax.persistence.*;
 import java.util.Set;
 
 /**
- * <h1>Comment</h1>
+ * Comment
  * <p>This Model represents a Comment. A Comment is assigned to a medium.
  * A comment can also have a parent comment.</p>
  * @author Christoph Frischmuth

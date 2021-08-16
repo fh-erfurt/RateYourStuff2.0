@@ -10,7 +10,15 @@ import org.springframework.stereotype.Service;
 import java.util.Objects;
 import java.util.Optional;
 
-@Service("SeasonService")
+/**
+ * SeasonService
+ * <p>This Service provides methods to the {@link de.fourzerofournotfound.rateyourstuff.rays.controllers.media.SeasonController SeasonController}</p>
+ * @author Christoph Frischmuth
+ * @author John Klippstein
+ * @author Mickey Knop
+ * @author Robin Beck
+ */
+@Service("seasonService")
 public class SeasonService {
 
     private final ModelMapper modelMapper;
@@ -27,9 +35,9 @@ public class SeasonService {
     }
 
     /**
-     * This service is used to check if a given season-object(checked by its attributes) is already stored in database
-     * @param season - object which is streamed via rest api
-     * @return true if a object is already stored in database (the entry of this season-object is valid)
+     * Checks if a given season can be stored within the database without causing duplicates
+     * @param season the season that should be checked
+     * @return true if there is not a similar season in the database
      */
     public boolean isValidSeason(Season season)
     {

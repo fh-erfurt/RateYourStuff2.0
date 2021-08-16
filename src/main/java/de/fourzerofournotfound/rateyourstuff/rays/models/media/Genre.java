@@ -11,7 +11,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * <h1>Genre</h1>
+ * Genre
  * <p>This Model represents a genre. Each medium can have multiple genres</p>
  * @author Christoph Frischmuth
  * @author John Klippstein
