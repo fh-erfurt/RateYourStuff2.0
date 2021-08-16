@@ -14,6 +14,7 @@ import de.fourzerofournotfound.rateyourstuff.rays.services.media.SeasonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -98,13 +99,15 @@ public class SeasonController {
      * @throws SeriesNotFoundException  if there is no series with the given id
      * @throws DuplicateMediumException if there is already the same season in the database
      */
+    @PreAuthorize("hasAuthority('User')")
     @PostMapping(path="/add", consumes= "application/json", produces="application/json")
-    ResponseEntity<Season> add(@RequestBody Season season) throws SeriesNotFoundException, DuplicateMediumException {
+    ResponseEntity<SeasonDto> add(@RequestBody Season season) throws SeriesNotFoundException, DuplicateMediumException {
         if(seasonService.isValidSeason(season)) {
             Optional<Series> targetSeries = seriesRepository.findById(season.getSeriesMappingId());
             if(targetSeries.isPresent()) {
                 season.setMedium(targetSeries.get());
-                return ResponseEntity.ok(this.seasonRepository.save(season));
+                Season savedSeason = this.seasonRepository.save(season);
+                return ResponseEntity.ok(seasonService.convertToDto(savedSeason));
             } else {
                 throw new SeriesNotFoundException("There is no series with Id " + season.getSeriesMappingId());
             }
@@ -119,13 +122,15 @@ public class SeasonController {
      * @throws SeriesNotFoundException  if there is no series with the given id
      * @throws DuplicateMediumException if there is already the same season in the database
      */
+    @PreAuthorize("hasAuthority('User')")
     @PutMapping(consumes="application/json", produces="application/json")
-    ResponseEntity<Season> update(@RequestBody Season season) throws SeriesNotFoundException, DuplicateMediumException {
+    ResponseEntity<SeasonDto> update(@RequestBody Season season) throws SeriesNotFoundException, DuplicateMediumException {
         if(seasonService.isValidSeason(season)) {
             Optional<Series> targetSeries = seriesRepository.findById(season.getSeriesMappingId());
             if(targetSeries.isPresent()) {
                 season.setMedium(targetSeries.get());
-                return ResponseEntity.ok(this.seasonRepository.save(season));
+                Season savedSeason = this.seasonRepository.save(season);
+                return ResponseEntity.ok(seasonService.convertToDto(savedSeason));
             } else {
                 throw new SeriesNotFoundException("There is no series with Id " + season.getSeriesMappingId());
             }

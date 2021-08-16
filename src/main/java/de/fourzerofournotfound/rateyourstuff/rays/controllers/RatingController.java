@@ -7,9 +7,11 @@ import de.fourzerofournotfound.rateyourstuff.rays.repositories.RatingRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.services.PageableService;
 import de.fourzerofournotfound.rateyourstuff.rays.services.RatingService;
 import de.fourzerofournotfound.rateyourstuff.rays.services.errors.InvalidRatingException;
+import de.fourzerofournotfound.rateyourstuff.rays.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,12 +25,14 @@ public class RatingController {
     private final RatingRepository ratingRepository;
     private final PageableService pageableService;
     private final RatingService ratingService;
+    private final JwtUtil jwtUtil;
 
     @Autowired
-    public RatingController(RatingRepository ratingRepository, PageableService pageableService, RatingService ratingService) {
+    public RatingController(RatingRepository ratingRepository, PageableService pageableService, RatingService ratingService, JwtUtil jwtUtil) {
         this.ratingRepository = ratingRepository;
         this.pageableService = pageableService;
         this.ratingService = ratingService;
+        this.jwtUtil = jwtUtil;
     }
 
     @GetMapping("/all")
@@ -91,6 +95,7 @@ public class RatingController {
         }
     }
 
+    @PreAuthorize("hasAuthority('User')")
     @PostMapping(path="/add", consumes= "application/json", produces="application/json")
     ResponseEntity<Rating> add(@RequestBody Rating rating) throws InvalidRatingException {
         rating = ratingService.addReferencesToRating(rating);

@@ -11,6 +11,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -121,9 +122,13 @@ public class CommentController {
     }
 
     @PutMapping(consumes="application/json", produces="application/json")
-    ResponseEntity<Comment> update(@RequestBody Comment comment) throws InvalidCommentException {
-        comment = commentService.addReferencesToComment(comment);
-        return ResponseEntity.ok(this.commentRepository.save(comment));
+    ResponseEntity<Comment> update(@RequestBody Comment comment) throws CommentNotFoundException {
+        Optional<Comment> foundComment = commentRepository.findById(comment.getId());
+        if(foundComment.isPresent()) {
+            foundComment.get().setTextOfComment(comment.getTextOfComment());
+            return ResponseEntity.ok(this.commentRepository.save(foundComment.get()));
+        }
+        throw new CommentNotFoundException("There is no comment with id " + comment.getId());
     }
 
     @DeleteMapping("/{id}")

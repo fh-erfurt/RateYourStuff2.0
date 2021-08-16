@@ -67,20 +67,4 @@ public class SeriesService {
         seriesDto.setNumberOfSeasons(series.getSeasons().size());
         return seriesDto;
     }
-
-    /**
-     * Returns the reference of a network by its name. Creates the network, if there is no network with the given name.
-     * @param networkTitle  the network name that should be searched within the database
-     * @return              the found network entity
-     */
-    public Network getNetwork(String networkTitle) {
-        Optional<Network> network = networkRepository.findByNetworkTitle(networkTitle);
-        if(network.isPresent()) {
-            return network.get();
-        } else {
-            Network newNetwork = new Network();
-            newNetwork.setNetworkTitle(networkTitle);
-            return networkRepository.save(newNetwork);
-        }
-    }
 }

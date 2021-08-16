@@ -6,20 +6,19 @@ import de.fourzerofournotfound.rateyourstuff.rays.models.media.Game;
 import de.fourzerofournotfound.rateyourstuff.rays.models.errors.media.GameNotFoundException;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.GameRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.services.FileUploadService;
-import de.fourzerofournotfound.rateyourstuff.rays.services.media.MediaService;
+import de.fourzerofournotfound.rateyourstuff.rays.services.media.*;
 import de.fourzerofournotfound.rateyourstuff.rays.services.PageableService;
 import de.fourzerofournotfound.rateyourstuff.rays.services.errors.DuplicateMediumException;
-import de.fourzerofournotfound.rateyourstuff.rays.services.media.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -39,18 +38,27 @@ public class GameController {
     final FileUploadService fileUploadService;
     final PageableService pageableService;
     final GameService gameService;
-    private final MediaService mediaService;
+    private final PlatformService platformService;
+    private final LanguageService languageService;
+    private final GenreService genreService;
+    private final GamePublisherService gamePublisherService;
 
     @Autowired
     public GameController(GameRepository gameRepository,
                           FileUploadService fileUploadService,
                           PageableService pageableService,
-                          GameService gameService, MediaService mediaService) {
+                          GameService gameService,
+                          PlatformService platformService,
+                          LanguageService languageService,
+                          GenreService genreService, GamePublisherService gamePublisherService) {
         this.gameRepository = gameRepository;
         this.fileUploadService = fileUploadService;
         this.pageableService = pageableService;
         this.gameService = gameService;
-        this.mediaService = mediaService;
+        this.platformService = platformService;
+        this.languageService = languageService;
+        this.genreService = genreService;
+        this.gamePublisherService = gamePublisherService;
     }
 
     /**
@@ -98,15 +106,17 @@ public class GameController {
      * @return      the GameDTO of the new game
      * @throws DuplicateMediumException if there is already the same game in the database
      */
+    @PreAuthorize("hasAuthority('User')")
     @PostMapping(path="/add", consumes= "application/json", produces="application/json")
-    ResponseEntity<Game> add(@RequestBody Game game) throws DuplicateMediumException {
+    ResponseEntity<GameDto> add(@RequestBody Game game) throws DuplicateMediumException {
         if(this.gameService.isValidGame(game)) {
             this.gameRepository.save(game);
-            game.setGenres(this.mediaService.getGenresSet(game.getGenreStrings()));
-            game.setLanguages(this.mediaService.getLanguageSet(game.getLanguageStrings()));
-            game.setGamePublisher(this.gameService.getPublisher(game.getPublisherTitle()));
-            game.setPlatforms(this.gameService.getPlatformSet(game.getPlatformStrings()));
-            return ResponseEntity.ok(this.gameRepository.save(game));
+            game.setGenres(this.genreService.getGenresSet(game.getGenreStrings()));
+            game.setLanguages(this.languageService.getLanguageSet(game.getLanguageStrings()));
+            game.setGamePublisher(this.gamePublisherService.getPublisher(game.getPublisherTitle()));
+            game.setPlatforms(this.platformService.getPlatformSet(game.getPlatformStrings()));
+            Game savedGame = this.gameRepository.save(game);
+            return ResponseEntity.ok(gameService.convertToDto(savedGame));
         } else {
             throw new DuplicateMediumException("The Game " + game.getMediumName() + " already exists.");
         }
@@ -118,15 +128,17 @@ public class GameController {
      * @return      the GameDTO of the updated game
      * @throws DuplicateMediumException if the change would conflict with another game
      */
+    @PreAuthorize("hasAuthority('User')")
     @PutMapping(consumes="application/json", produces="application/json")
-    ResponseEntity<Game> update(@RequestBody Game game) throws DuplicateMediumException {
+    ResponseEntity<GameDto> update(@RequestBody Game game) throws DuplicateMediumException {
         if(this.gameService.isValidGame(game)) {
-            game.setGamePublisher(this.gameService.getPublisher(game.getPublisherTitle()));
+            game.setGamePublisher(this.gamePublisherService.getPublisher(game.getPublisherTitle()));
             this.gameRepository.save(game);
-            game.setGenres(this.mediaService.getGenresSet(game.getGenreStrings()));
-            game.setLanguages(this.mediaService.getLanguageSet(game.getLanguageStrings()));
-            game.setPlatforms(this.gameService.getPlatformSet(game.getPlatformStrings()));
-            return ResponseEntity.ok(this.gameRepository.save(game));
+            game.setGenres(this.genreService.getGenresSet(game.getGenreStrings()));
+            game.setLanguages(this.languageService.getLanguageSet(game.getLanguageStrings()));
+            game.setPlatforms(this.platformService.getPlatformSet(game.getPlatformStrings()));
+            Game savedGame = this.gameRepository.save(game);
+            return ResponseEntity.ok(gameService.convertToDto(savedGame));
         } else {
             throw new DuplicateMediumException("The Game " + game.getMediumName() + " already exists.");
         }
@@ -141,8 +153,9 @@ public class GameController {
      * @throws IOException  if the upload fails
      * @throws GameNotFoundException if there is no game with the given id
      */
+    @PreAuthorize("hasAuthority('User')")
     @PostMapping("/images/{id}")
-    ResponseEntity<Game> addImage(@RequestParam("image") MultipartFile multipartFile, @PathVariable Long id) throws IOException, GameNotFoundException {
+    ResponseEntity<GameDto> addImage(@RequestParam("image") MultipartFile multipartFile, @PathVariable Long id) throws IOException, GameNotFoundException {
         String fileName = StringUtils.cleanPath("poster." + fileUploadService.getFileExtension(multipartFile));
 
         Optional<Game> game = this.gameRepository.findById(id);
@@ -153,7 +166,8 @@ public class GameController {
             String uploadDir = Game.IMAGE_PATH_PREFIX + id;
             //upload the file
             fileUploadService.saveFile(uploadDir, fileName, multipartFile);
-            return ResponseEntity.ok(this.gameRepository.save(game.get()));
+            Game savedGame = this.gameRepository.save(game.get());
+            return ResponseEntity.ok(gameService.convertToDto(savedGame));
         }
         throw new GameNotFoundException("There is no game with the id " + id);
     }

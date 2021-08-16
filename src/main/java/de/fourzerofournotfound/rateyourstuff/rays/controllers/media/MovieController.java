@@ -7,13 +7,13 @@ import de.fourzerofournotfound.rateyourstuff.rays.models.media.Movie;
 import de.fourzerofournotfound.rateyourstuff.rays.models.errors.media.MovieNotFoundException;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.MovieRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.services.FileUploadService;
-import de.fourzerofournotfound.rateyourstuff.rays.services.media.MediaService;
+import de.fourzerofournotfound.rateyourstuff.rays.services.media.*;
 import de.fourzerofournotfound.rateyourstuff.rays.services.PageableService;
 import de.fourzerofournotfound.rateyourstuff.rays.services.errors.DuplicateMediumException;
-import de.fourzerofournotfound.rateyourstuff.rays.services.media.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -38,15 +38,25 @@ public class MovieController {
     private final FileUploadService fileUploadService;
     private final PageableService pageableService;
     private final MovieService movieService;
-    private final MediaService mediaService;
+    private final NetworkService networkService;
+    private final LanguageService languageService;
+    private final GenreService genreService;
 
     @Autowired
-    public MovieController(MovieRepository repository, FileUploadService fus, PageableService pageableService, MovieService movieService, MediaService mediaService) {
+    public MovieController(MovieRepository repository,
+                           FileUploadService fus,
+                           PageableService pageableService,
+                           MovieService movieService,
+                           NetworkService networkService,
+                           LanguageService languageService,
+                           GenreService genreService) {
         this.movieRepository = repository;
         this.fileUploadService = fus;
         this.pageableService = pageableService;
         this.movieService = movieService;
-        this.mediaService = mediaService;
+        this.languageService = languageService;
+        this.genreService = genreService;
+        this.networkService = networkService;
     }
 
     /**
@@ -97,14 +107,16 @@ public class MovieController {
      * @return      the entity of the newly added movie
      * @throws DuplicateMediumException if there is already the same movie in the database
      */
+    @PreAuthorize("hasAuthority('User')")
     @PostMapping(path="/add", consumes= "application/json", produces="application/json")
-    ResponseEntity<Movie> add(@RequestBody Movie movie) throws DuplicateMediumException {
+    ResponseEntity<MovieDto> add(@RequestBody Movie movie) throws DuplicateMediumException {
         if(this.movieService.isValidMovie(movie)) {
             this.movieRepository.save(movie);
-            movie.setGenres(this.mediaService.getGenresSet(movie.getGenreStrings()));
-            movie.setLanguages(this.mediaService.getLanguageSet(movie.getLanguageStrings()));
-            movie.setNetwork(this.movieService.getNetwork(movie.getNetworkTitle()));
-            return ResponseEntity.ok(this.movieRepository.save(movie));
+            movie.setGenres(this.genreService.getGenresSet(movie.getGenreStrings()));
+            movie.setLanguages(this.languageService.getLanguageSet(movie.getLanguageStrings()));
+            movie.setNetwork(this.networkService.getNetwork(movie.getNetworkTitle()));
+            Movie savedMovie = this.movieRepository.save(movie);
+            return ResponseEntity.ok(movieService.convertToDto(savedMovie));
         } else {
             throw new DuplicateMediumException("The Movie " + movie.getMediumName() + " already exists.");
         }
@@ -116,14 +128,16 @@ public class MovieController {
      * @return      the updated movie
      * @throws DuplicateMediumException if the update would conflict another movie
      */
+    @PreAuthorize("hasAuthority('User')")
     @PutMapping(consumes="application/json", produces="application/json")
-    ResponseEntity<Movie> update(@RequestBody Movie movie) throws DuplicateMediumException {
+    ResponseEntity<MovieDto> update(@RequestBody Movie movie) throws DuplicateMediumException {
         if(this.movieService.isValidMovie(movie)) {
-            movie.setNetwork(this.movieService.getNetwork(movie.getNetworkTitle()));
+            movie.setNetwork(this.networkService.getNetwork(movie.getNetworkTitle()));
             this.movieRepository.save(movie);
-            movie.setGenres(this.mediaService.getGenresSet(movie.getGenreStrings()));
-            movie.setLanguages(this.mediaService.getLanguageSet(movie.getLanguageStrings()));
-            return ResponseEntity.ok(this.movieRepository.save(movie));
+            movie.setGenres(this.genreService.getGenresSet(movie.getGenreStrings()));
+            movie.setLanguages(this.languageService.getLanguageSet(movie.getLanguageStrings()));
+            Movie savedMovie = this.movieRepository.save(movie);
+            return ResponseEntity.ok(movieService.convertToDto(savedMovie));
         } else {
             throw new DuplicateMediumException("The Movie " + movie.getMediumName() + " already exists.");
         }
@@ -138,8 +152,9 @@ public class MovieController {
      * @throws IOException  if the upload fails
      * @throws MovieNotFoundException if there is no movie with the given id
      */
+    @PreAuthorize("hasAuthority('User')")
     @PostMapping("/images/{id}")
-    ResponseEntity<Movie> addImage(@RequestParam(name="image") MultipartFile multipartFile, @PathVariable Long id) throws IOException, MovieNotFoundException {
+    ResponseEntity<MovieDto> addImage(@RequestParam(name="image") MultipartFile multipartFile, @PathVariable Long id) throws IOException, MovieNotFoundException {
         String fileName = StringUtils.cleanPath("poster." + fileUploadService.getFileExtension(multipartFile));
         Optional<Movie> movie = this.movieRepository.findById(id);
         //check if the given movie exists
@@ -149,7 +164,9 @@ public class MovieController {
             String uploadDir = Movie.IMAGE_PATH_PREFIX + id;
             //upload the file
             fileUploadService.saveFile(uploadDir, fileName, multipartFile);
-            return ResponseEntity.ok(this.movieRepository.save(movie.get()));
+
+            Movie savedMovie = this.movieRepository.save(movie.get());
+            return ResponseEntity.ok(movieService.convertToDto(savedMovie));
         }
         throw new MovieNotFoundException("There is no movie with id " + id);
     }

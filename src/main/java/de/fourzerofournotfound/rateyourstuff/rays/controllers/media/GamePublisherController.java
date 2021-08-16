@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -68,6 +69,11 @@ public class GamePublisherController {
      * @throws GamePublisherNotFoundException if there is no GamePublisher with the given id
      */
     @GetMapping("/{id}")
-    ResponseEntity<GamePublisher> getById(@PathVariable Long id) throws GamePublisherNotFoundException {
-        return ResponseEntity.ok(this.gamePublisherRepository.findById(id).orElseThrow(() -> new GamePublisherNotFoundException("No Publisher found for id " + id))); }
+    ResponseEntity<GamePublisherDto> getById(@PathVariable Long id) throws GamePublisherNotFoundException {
+        Optional<GamePublisher> publisher = this.gamePublisherRepository.findById(id);
+        if (publisher.isPresent()) {
+            return ResponseEntity.ok(gamePublisherService.convertToDto(publisher.get()));
+        }
+        throw new GamePublisherNotFoundException("No Publisher found for id " + id);
+    }
 }

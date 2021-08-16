@@ -2,7 +2,6 @@ package de.fourzerofournotfound.rateyourstuff.rays.repositories.media;
 
 import de.fourzerofournotfound.rateyourstuff.rays.models.media.Movie;
 import de.fourzerofournotfound.rateyourstuff.rays.models.media.Network;
-import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.MovieRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,10 +9,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 @SpringBootTest(properties = "spring.profiles.active=test")
 public class MovieRepositoryTest {
@@ -183,5 +179,4 @@ public class MovieRepositoryTest {
         //Then
         Assertions.assertThat(result).isNotPresent();
     }
-
 }

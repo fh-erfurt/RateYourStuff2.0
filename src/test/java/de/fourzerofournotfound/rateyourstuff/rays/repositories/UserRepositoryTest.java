@@ -18,7 +18,12 @@ import java.util.Optional;
 public class UserRepositoryTest {
     @Autowired
     UserRepository repository;
+
+    @Autowired
     RoleRepository roleRepository;
+
+    @Autowired
+    LoginRepository loginRepository;
 
     @Autowired
     UserService userService;
@@ -26,11 +31,8 @@ public class UserRepositoryTest {
     @BeforeEach
     public void beforeEach() {
         repository.deleteAll();
-    }
-
-    @AfterEach
-    public void afterEach() {
-       //repository.deleteAll();
+        roleRepository.deleteAll();
+        loginRepository.deleteAll();
     }
 
     @Test
@@ -46,6 +48,8 @@ public class UserRepositoryTest {
         Role givenRole = Role.builder()
                 .roleName("User")
                 .build();
+
+        roleRepository.save(givenRole);
 
         User given = User.builder()
                 .firstName("Kurt")
@@ -78,6 +82,8 @@ public class UserRepositoryTest {
                 .roleName("User")
                 .build();
 
+        roleRepository.save(givenRole);
+
         User given = User.builder()
                 .firstName("Heinrich")
                 .secondName("Muster")
@@ -96,7 +102,7 @@ public class UserRepositoryTest {
     }
 
     @Test
-    public void should_add_login() throws RoleNotFoundException {
+    public void should_add_login() {
         //Given
         Login givenLogin = Login.builder()
                 .email("siggi@rays.de")
@@ -107,6 +113,8 @@ public class UserRepositoryTest {
         Role givenRole = Role.builder()
                 .roleName("User")
                 .build();
+
+        roleRepository.save(givenRole);
 
         User given = User.builder()
                 .firstName("Sigfried")
@@ -139,6 +147,8 @@ public class UserRepositoryTest {
         Role givenRole = Role.builder()
                 .roleName("User")
                 .build();
+
+        roleRepository.save(givenRole);
 
         User given = User.builder()
                 .firstName("Simone")
@@ -174,6 +184,8 @@ public class UserRepositoryTest {
         Role givenRole = Role.builder()
                 .roleName("User")
                 .build();
+
+        roleRepository.save(givenRole);
 
         User given = User.builder()
                 .firstName("Simon")
