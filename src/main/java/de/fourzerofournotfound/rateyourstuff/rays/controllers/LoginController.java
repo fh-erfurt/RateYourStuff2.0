@@ -46,10 +46,10 @@ public class LoginController {
 
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/check")
-    ResponseEntity<Boolean> getUsername(@RequestBody String email) throws EmailAlreadyExistsException {
+    ResponseEntity<Boolean> getEmail(@RequestBody String email) throws EmailAlreadyExistsException {
         Optional<Login> login = repository.findLoginByEmailIgnoreCase(email);
         if(login.isPresent()){
-            throw new EmailAlreadyExistsException("User tried to sign up with already taken enauk: @" + email);
+            throw new EmailAlreadyExistsException("User tried to sign up with already taken email: @" + email);
         } else {
             return ResponseEntity.ok(true);
         }

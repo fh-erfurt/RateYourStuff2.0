@@ -59,7 +59,7 @@ public class UserController {
             return ResponseEntity.ok(true);
         }
     }
-
+    @PreAuthorize("permitAll()")
     @PostMapping(path = "/add", consumes = "application/json", produces = "application/json")
     ResponseEntity<User> add(@RequestBody User user) {
         userService.setRoleId(user);
@@ -70,6 +70,8 @@ public class UserController {
     @PreAuthorize("hasAuthority('User')")
     @PutMapping(consumes = "application/json", produces = "application/json")
     ResponseEntity<User> update(@RequestBody User user) throws InvalidUserException {
+        System.out.println("User: " + user.getUserName());
+        System.out.println("Email: " + user.getLogin().getEmail());
         userService.addReferencesToUser(user);
         return ResponseEntity.ok(this.userRepository.save(user));
     }
