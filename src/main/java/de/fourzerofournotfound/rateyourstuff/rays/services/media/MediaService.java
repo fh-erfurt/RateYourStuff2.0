@@ -4,11 +4,9 @@ import de.fourzerofournotfound.rateyourstuff.rays.dtos.media.MediumDto;
 import de.fourzerofournotfound.rateyourstuff.rays.models.Rating;
 import de.fourzerofournotfound.rateyourstuff.rays.models.media.*;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.*;
-import net.minidev.json.JSONUtil;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.w3c.dom.stylesheets.MediaList;
 
 import java.util.*;
 
@@ -55,48 +53,6 @@ public class MediaService {
         mediumDto.setNumberOfComments(medium.getComments());
         mediumDto.setNumberOfCollections(medium.getCollections());
         return mediumDto;
-    }
-
-    /**
-     * Returns references to the given genres. Creates genres that do not exist
-     * @param genreStrings  the list of genre names that should be searched within the database
-     * @return              the list of genre entities
-     */
-    public Set<Genre> getGenresSet(List<String> genreStrings) {
-        Set<Genre> genres = new HashSet<>();
-
-        for(String genre : genreStrings) {
-            Optional<Genre> foundGenre = genreRepository.findGenreByGenreName(genre);
-            if(foundGenre.isPresent()) {
-                genres.add(foundGenre.get());
-            } else {
-                Genre newGenre = new Genre();
-                newGenre.setGenreName(genre);
-                genres.add(genreRepository.save(newGenre));
-            }
-        }
-        return genres;
-    }
-
-    /**
-     * Returns references to the given languages. Creates languages that do not exist
-     * @param languageStrings  the list of language names that should be searched within the database
-     * @return              the list of language entities
-     */
-    public Set<Language> getLanguageSet(List<String> languageStrings) {
-        Set<Language> languages = new HashSet<>();
-
-        for(String language:  languageStrings) {
-            Optional<Language> foundLanguage = languageRepository.findLanguageByLanguage(language);
-            if(foundLanguage.isPresent()) {
-                languages.add(foundLanguage.get());
-            } else {
-                Language newLanguage = new Language();
-                newLanguage.setLanguage(language);
-                languages.add(languageRepository.save(newLanguage));
-            }
-        }
-        return languages;
     }
 
     public ArrayList<Medium> getSearchResult(String givenInput){

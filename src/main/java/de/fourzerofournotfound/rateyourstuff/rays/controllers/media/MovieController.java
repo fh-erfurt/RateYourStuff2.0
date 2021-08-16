@@ -7,10 +7,9 @@ import de.fourzerofournotfound.rateyourstuff.rays.models.media.Movie;
 import de.fourzerofournotfound.rateyourstuff.rays.models.errors.media.MovieNotFoundException;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.MovieRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.services.FileUploadService;
-import de.fourzerofournotfound.rateyourstuff.rays.services.media.MediaService;
+import de.fourzerofournotfound.rateyourstuff.rays.services.media.*;
 import de.fourzerofournotfound.rateyourstuff.rays.services.PageableService;
 import de.fourzerofournotfound.rateyourstuff.rays.services.errors.DuplicateMediumException;
-import de.fourzerofournotfound.rateyourstuff.rays.services.media.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -38,15 +37,25 @@ public class MovieController {
     private final FileUploadService fileUploadService;
     private final PageableService pageableService;
     private final MovieService movieService;
-    private final MediaService mediaService;
+    private final NetworkService networkService;
+    private final LanguageService languageService;
+    private final GenreService genreService;
 
     @Autowired
-    public MovieController(MovieRepository repository, FileUploadService fus, PageableService pageableService, MovieService movieService, MediaService mediaService) {
+    public MovieController(MovieRepository repository,
+                           FileUploadService fus,
+                           PageableService pageableService,
+                           MovieService movieService,
+                           NetworkService networkService,
+                           LanguageService languageService,
+                           GenreService genreService) {
         this.movieRepository = repository;
         this.fileUploadService = fus;
         this.pageableService = pageableService;
         this.movieService = movieService;
-        this.mediaService = mediaService;
+        this.languageService = languageService;
+        this.genreService = genreService;
+        this.networkService = networkService;
     }
 
     /**
@@ -101,9 +110,9 @@ public class MovieController {
     ResponseEntity<MovieDto> add(@RequestBody Movie movie) throws DuplicateMediumException {
         if(this.movieService.isValidMovie(movie)) {
             this.movieRepository.save(movie);
-            movie.setGenres(this.mediaService.getGenresSet(movie.getGenreStrings()));
-            movie.setLanguages(this.mediaService.getLanguageSet(movie.getLanguageStrings()));
-            movie.setNetwork(this.movieService.getNetwork(movie.getNetworkTitle()));
+            movie.setGenres(this.genreService.getGenresSet(movie.getGenreStrings()));
+            movie.setLanguages(this.languageService.getLanguageSet(movie.getLanguageStrings()));
+            movie.setNetwork(this.networkService.getNetwork(movie.getNetworkTitle()));
             Movie savedMovie = this.movieRepository.save(movie);
             return ResponseEntity.ok(movieService.convertToDto(savedMovie));
         } else {
@@ -120,10 +129,10 @@ public class MovieController {
     @PutMapping(consumes="application/json", produces="application/json")
     ResponseEntity<MovieDto> update(@RequestBody Movie movie) throws DuplicateMediumException {
         if(this.movieService.isValidMovie(movie)) {
-            movie.setNetwork(this.movieService.getNetwork(movie.getNetworkTitle()));
+            movie.setNetwork(this.networkService.getNetwork(movie.getNetworkTitle()));
             this.movieRepository.save(movie);
-            movie.setGenres(this.mediaService.getGenresSet(movie.getGenreStrings()));
-            movie.setLanguages(this.mediaService.getLanguageSet(movie.getLanguageStrings()));
+            movie.setGenres(this.genreService.getGenresSet(movie.getGenreStrings()));
+            movie.setLanguages(this.languageService.getLanguageSet(movie.getLanguageStrings()));
             Movie savedMovie = this.movieRepository.save(movie);
             return ResponseEntity.ok(movieService.convertToDto(savedMovie));
         } else {

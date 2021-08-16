@@ -1,272 +1,63 @@
 package de.fourzerofournotfound.rateyourstuff.rays.services.media;
 
-import de.fourzerofournotfound.rateyourstuff.rays.models.media.*;
-import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.*;
-import de.fourzerofournotfound.rateyourstuff.rays.services.media.MediaService;
-import org.junit.jupiter.api.Assertions;
+import de.fourzerofournotfound.rateyourstuff.rays.dtos.media.MediumDto;
+
+
+import de.fourzerofournotfound.rateyourstuff.rays.models.media.Movie;
+import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.MediaRepository;
+import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.MovieRepository;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import javax.print.attribute.standard.Media;
 import java.time.LocalDate;
-import java.util.*;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest(properties = "spring.profiles.active = test")
 class MediaServiceTest {
-    @Autowired
-    BookRepository bookRepository;
-    @Autowired
-    GameRepository gameRepository;
-    @Autowired
-    MovieRepository movieRepository;
-    @Autowired
-    SeriesRepository seriesRepository;
-    @Autowired
-    SeasonRepository seasonRepository;
-    @Autowired
-    EpisodeRepository episodeRepository;
-    @Autowired
-    MediaRepository mediaRepository;
-    @Autowired
-    MediaService mediaService;
-    @Autowired
-    BookService bookService;
-    @Autowired
-    GameService gameService;
-    @Autowired
-    SeriesService seriesService;
-    @Autowired
-    EpisodeService episodeService;
-    @Autowired
-    SeasonService seasonService;
-    @Autowired
-    MovieService movieService;
 
+    @Autowired
+    private MovieRepository movieRepository;
+
+    @Autowired
+    private MediaRepository mediaRepository;
+
+    @Autowired
+    private MediaService mediaService;
 
     @BeforeEach
     void beforeEach()
     {
-        bookRepository.deleteAll();
-        gameRepository.deleteAll();
-        episodeRepository.deleteAll();
-        seasonRepository.deleteAll();
-        seriesRepository.deleteAll();
         movieRepository.deleteAll();
     }
 
-
     @Test
-    void shouldFindDuplicatesOfGivenBook()
-    {
+    void mediumDtoShouldMatchMedium () {
         //Given
-        LocalDate release = LocalDate.of(2005,2,7);
-
-        Book testMedia = Book.builder()
-                .mediumName("Halo - The fall of reach")
-                .releaseDate(release)
-                .shortDescription("The official prequel to the award-winning Xbox(TM) game, one of the bestselling computer games of recent years.")
-                .isEBook(false)
-                .isPrint(true)
-                .isbn("9781841494203")
-                .numberOfPages(352)
+        Movie given = Movie.builder()
+                .mediumName("Zurück in die Zukunft")
+                .shortDescription("[...]")
+                .releaseDate(LocalDate.now())
+                .length(90)
+                .ageRestriction(6)
                 .build();
+
+        movieRepository.save(given);
 
         //When
-        Book saved = bookRepository.save(testMedia);
-        bookService.isValidBook(saved);
-
+        MediumDto result = mediaService.convertToDto(given);
 
         //Then
-
-        //false if media is already existent
-        Assertions.assertTrue(bookService.isValidBook(testMedia));
-        //false if media is already existent
-        Assertions.assertTrue(bookService.isValidBook(saved));
+        Assertions.assertThat(result.getId()).isNotNull();
+        Assertions.assertThat(result.getId()).isEqualTo(given.getId());
+        Assertions.assertThat(result.getMediumName()).isEqualTo(given.getMediumName());
+        Assertions.assertThat(result.getNumberOfCollections()).isZero();
+        Assertions.assertThat(result.getNumberOfComments()).isZero();
+        Assertions.assertThat(result.getAverageRating()).isZero();
     }
 
-    @Test
-    void shouldDetectDuplicationsOfGames()
-    {
-        // Given
-        LocalDate releaseDate = LocalDate.of(2001, 11, 15);
-        Game testGame = Game.builder()
-                .mediumName("Halo - Combat Evolved")
-                .releaseDate(releaseDate)
-                .shortDescription("Halo: Combat Evolved, also known as Halo: CE, is a first-person shooter game developed by Bungie and published by Microsoft Game Studios.")
-                .ageRestriction(16)
-                .maxNumberOfGamers(16)
-                .minNumberOfGamers(1)
-                .build();
-
-        // When
-        Game result = gameRepository.save(testGame);
-
-        // Then
-        Assertions.assertTrue(gameService.isValidGame(testGame));
-
-        Assertions.assertTrue(gameService.isValidGame(result));
-    }
-
-    //TODO: TestCase for isValidMovie -> shouldFindDuplicationOfGivenMovie
-    @Test
-    void shouldDetectDuplicationOfGivenMovie()
-    {
-        // Given
-        LocalDate releaseDate = LocalDate.of(2009, 12, 17);
-        Movie testMovie = Movie.builder()
-                .mediumName("Avatar - Aufbruch nach Pandora")
-                .releaseDate(releaseDate)
-                .shortDescription("Avatar – Aufbruch nach Pandora (Originaltitel: Avatar, auch bekannt als James Cameron’s Avatar) ist ein US-amerikanischer Science-Fiction-Film des Regisseurs James Cameron, der weltweit am 17. und 18. Dezember 2009 startete.")
-                .ageRestriction(12)
-                .length(162)
-                .build();
-
-        // When
-        Movie result = movieRepository.save(testMovie);
-
-        // Then
-        Assertions.assertTrue(movieService.isValidMovie(testMovie));
-
-        Assertions.assertTrue(movieService.isValidMovie(result));
-    }
-
-    @Test
-    void shouldDetectDuplicationOfGivenSeries()
-    {
-        //Given
-        LocalDate releaseDate0 = LocalDate.of(2017, 9, 24);
-
-        Series givenSeries = Series.builder()
-                .mediumName("Star Trek: Discovery")
-                .ageRestriction(0)
-                .shortDescription("Star Trek: Discovery ist eine US-amerikanische Science-Fiction-Fernsehserie und die sechste Realfilm-Fernsehserie, die im fiktiven Star-Trek-Universum spielt. In der auch mit DSC abgekürzten Serie geht es um das titelgebende Sternenflottenraumschiff Discovery. ")
-                .averageLength(51)
-                .releaseDate(releaseDate0)
-                .isCompleted(false)
-                .build();
-
-        Series givenSeries2 = Series.builder()
-                .mediumName("Star Trek: Discovery")
-                .ageRestriction(0)
-                .shortDescription("StarTrek: Discovery ist eine US-amerikanische Science-Fiction-Fernsehserie und die sechste Realfilm-Fernsehserie, die im fiktiven Star-Trek-Universum spielt. In der auch mit DSC abgekürzten Serie geht es um das titelgebende Sternenflottenraumschiff Discovery. ")
-                .averageLength(51)
-                .releaseDate(releaseDate0)
-                .isCompleted(false)
-                .build();
-
-        Series givenSeriesNotToStore = Series.builder()
-                .mediumName("How i met your Mother")
-                .releaseDate(LocalDate.of(2005,9,19))
-                .shortDescription("[...]")
-                .ageRestriction(0)
-                .isCompleted(true)
-                .build();
-
-        Episode givenEpisodeOne = Episode.builder()
-                .mediumName("Leuchtfeuer")
-                .episodeNumber(1)
-                .shortDescription("[...]")
-                .releaseDate(releaseDate0)
-                .length(51)
-                .build();
-
-        Season starTrekDiscoverySeasonOne = Season.builder()
-                .seasonNumber(1)
-                .seasonTitle("Season 1")
-                .build();
-
-
-        givenEpisodeOne.setSeason(starTrekDiscoverySeasonOne);
-        starTrekDiscoverySeasonOne.getEpisodes().add(givenEpisodeOne);
-        givenSeries.getSeasons().add(starTrekDiscoverySeasonOne);
-
-
-        // When
-        Series result = seriesRepository.save(givenSeries);
-
-
-        //Then
-        Assertions.assertTrue(seriesService.isValidSeries(givenSeries));
-
-        Assertions.assertTrue(seriesService.isValidSeries(result));
-
-        Assertions.assertTrue(seriesService.isValidSeries(givenSeriesNotToStore));
-        //TODO: Outsource to an unique test
-        Assertions.assertFalse(seriesService.isValidSeries(givenSeries2));
-    }
-
-    @Test
-    void shouldDetectDuplicationOfGivenSeason()
-    {
-        // Given
-        LocalDate releaseDate0 = LocalDate.of(2017, 9, 26);
-
-        Episode givenEpisodeOne = Episode.builder()
-                .mediumName("Leuchtfeuer")
-                .episodeNumber(1)
-                .shortDescription("[...]")
-                .releaseDate(releaseDate0)
-                .length(51)
-                .build();
-
-        Season givenSeason = Season.builder()
-                .seasonTitle("Season")
-                .seasonNumber(1)
-                .build();
-
-        givenSeason.getEpisodes().add(givenEpisodeOne);
-
-        // When
-        Season result = seasonRepository.save(givenSeason);
-
-        // Then
-        Assertions.assertTrue(seasonService.isValidSeason(givenSeason));
-
-        Assertions.assertTrue(seasonService.isValidSeason(result));
-    }
-
-    @Test
-    void shouldDetectDuplicationOfGivenEpisode()
-    {
-        //Given
-        LocalDate releaseDate = LocalDate.of(2017, 9, 26);
-
-        Series givenSeries = Series.builder()
-                .mediumName("Star Trek: Discovery")
-                .ageRestriction(0)
-                .shortDescription("Star Trek: Discovery ist eine US-amerikanische Science-Fiction-Fernsehserie und die sechste Realfilm-Fernsehserie, die im fiktiven Star-Trek-Universum spielt. In der auch mit DSC abgekürzten Serie geht es um das titelgebende Sternenflottenraumschiff Discovery. ")
-                .averageLength(51)
-                .releaseDate(releaseDate)
-                .isCompleted(false)
-                .build();
-
-        Episode givenEpisode = Episode.builder()
-                .mediumName("Leuchtfeuer")
-                .episodeNumber(1)
-                .shortDescription("[...]")
-                .releaseDate(releaseDate)
-                .length(51)
-                .build();
-
-        Season givenSeason = Season.builder()
-                .seasonTitle("Season")
-                .seasonNumber(1)
-                .build();
-
-        givenEpisode.setSeason(givenSeason);
-        givenSeason.getEpisodes().add(givenEpisode);
-        givenSeries.getSeasons().add(givenSeason);
-
-
-        //When
-        seriesRepository.save(givenSeries);
-
-        //Then
-        Assertions.assertTrue(episodeService.isValidEpisode(givenEpisode));
-    }
 
     @Test
     public void givenPartialTitle_WhenFindByMediumNameLikeIgnoreCase_ThenMoviesShouldReturn() {
@@ -297,6 +88,6 @@ class MediaServiceTest {
 
 
         //Then
-        assertEquals(2, mediaService.getSearchResult(givenInput).size());
+        Assertions.assertThat(mediaService.getSearchResult(givenInput).size()).isEqualTo(2);
     }
 }
