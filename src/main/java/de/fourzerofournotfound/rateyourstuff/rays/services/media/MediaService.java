@@ -36,6 +36,7 @@ public class MediaService {
         this.genreRepository = genreRepository;
         this.languageRepository = languageRepository;
         this.modelMapper = modelMapper;
+        this.mediaRepository = mediaRepository;
     }
 
     /**
@@ -125,7 +126,7 @@ public class MediaService {
         for(String a: alteredInputList)
         {
             List<Medium> results = mediaRepository.findByMediumNameLikeIgnoreCase(a);
-            System.out.println(results.size());
+            //System.out.println(results.size());
             for(Medium match: results)
             {
                 boolean mediumIsPresent = allMediaMatches.stream().map(Medium::getId).filter(match.getId()::equals).findFirst().isPresent();
