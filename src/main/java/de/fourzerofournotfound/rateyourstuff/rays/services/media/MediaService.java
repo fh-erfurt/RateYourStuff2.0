@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * MediaService
@@ -58,45 +59,22 @@ public class MediaService {
     public ArrayList<Medium> getSearchResult(String givenInput){
         ArrayList<String> separatedInput = new ArrayList<String>();
         Collections.addAll(separatedInput,givenInput.split(" "));
+
         int minLengthForValidWord = 4;
-        Iterator<String> iterator = separatedInput.iterator();
-        while (iterator.hasNext()) {
-            String currentString = iterator.next();
-            if(currentString.length() < minLengthForValidWord)
-            {
-                iterator.remove();
-            }
-        }
-        ArrayList<String> alteredInputList = new ArrayList<String>();
+        separatedInput.removeIf(s -> s.length() < minLengthForValidWord);
 
-        for(String s: separatedInput)
-        {
-            //System.out.println("test: " + s);
-            String forLikeliness = "%";
-            String alteredInput = forLikeliness+s+forLikeliness;
-            //System.out.println("test: " + alteredInput);
-            alteredInputList.add(alteredInput);
-        }
+        separatedInput.replaceAll(s -> "%" + s + "%");
 
-        HashSet<Medium> allMediaMatches = new HashSet<>();
-        //HashSet mediaListMatchingSearchParams = new HashSet();
-        for(String a: alteredInputList)
+        ArrayList<Medium> foundMedia = new ArrayList<>();
+        HashSet<Long> foundIds = new HashSet<>();
+
+        for(String a: separatedInput)
         {
             List<Medium> results = mediaRepository.findByMediumNameLikeIgnoreCase(a);
-            //System.out.println(results.size());
-            for(Medium match: results)
-            {
-                boolean mediumIsPresent = allMediaMatches.stream().map(Medium::getId).filter(match.getId()::equals).findFirst().isPresent();
-                if(!mediumIsPresent) {
-                    allMediaMatches.add(match);
-                    //mediaListMatchingSearchParams.add(match);
-                }
-            }
+            results.removeIf(r -> !foundIds.add(r.getId()));
+            foundMedia.addAll(results);
         }
-        ArrayList<Medium> mediaListMatchingSearch = new ArrayList<Medium>(allMediaMatches);
-        System.out.println(mediaListMatchingSearch.size());
-        return mediaListMatchingSearch;
-        //return mediaListMatchingSearchParams;
+        return foundMedia;
     }
 
 }
