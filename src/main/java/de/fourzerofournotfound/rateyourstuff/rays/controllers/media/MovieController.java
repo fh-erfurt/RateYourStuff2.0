@@ -98,13 +98,14 @@ public class MovieController {
      * @throws DuplicateMediumException if there is already the same movie in the database
      */
     @PostMapping(path="/add", consumes= "application/json", produces="application/json")
-    ResponseEntity<Movie> add(@RequestBody Movie movie) throws DuplicateMediumException {
+    ResponseEntity<MovieDto> add(@RequestBody Movie movie) throws DuplicateMediumException {
         if(this.movieService.isValidMovie(movie)) {
             this.movieRepository.save(movie);
             movie.setGenres(this.mediaService.getGenresSet(movie.getGenreStrings()));
             movie.setLanguages(this.mediaService.getLanguageSet(movie.getLanguageStrings()));
             movie.setNetwork(this.movieService.getNetwork(movie.getNetworkTitle()));
-            return ResponseEntity.ok(this.movieRepository.save(movie));
+            Movie savedMovie = this.movieRepository.save(movie);
+            return ResponseEntity.ok(movieService.convertToDto(savedMovie));
         } else {
             throw new DuplicateMediumException("The Movie " + movie.getMediumName() + " already exists.");
         }
@@ -117,13 +118,14 @@ public class MovieController {
      * @throws DuplicateMediumException if the update would conflict another movie
      */
     @PutMapping(consumes="application/json", produces="application/json")
-    ResponseEntity<Movie> update(@RequestBody Movie movie) throws DuplicateMediumException {
+    ResponseEntity<MovieDto> update(@RequestBody Movie movie) throws DuplicateMediumException {
         if(this.movieService.isValidMovie(movie)) {
             movie.setNetwork(this.movieService.getNetwork(movie.getNetworkTitle()));
             this.movieRepository.save(movie);
             movie.setGenres(this.mediaService.getGenresSet(movie.getGenreStrings()));
             movie.setLanguages(this.mediaService.getLanguageSet(movie.getLanguageStrings()));
-            return ResponseEntity.ok(this.movieRepository.save(movie));
+            Movie savedMovie = this.movieRepository.save(movie);
+            return ResponseEntity.ok(movieService.convertToDto(savedMovie));
         } else {
             throw new DuplicateMediumException("The Movie " + movie.getMediumName() + " already exists.");
         }
@@ -139,7 +141,7 @@ public class MovieController {
      * @throws MovieNotFoundException if there is no movie with the given id
      */
     @PostMapping("/images/{id}")
-    ResponseEntity<Movie> addImage(@RequestParam(name="image") MultipartFile multipartFile, @PathVariable Long id) throws IOException, MovieNotFoundException {
+    ResponseEntity<MovieDto> addImage(@RequestParam(name="image") MultipartFile multipartFile, @PathVariable Long id) throws IOException, MovieNotFoundException {
         String fileName = StringUtils.cleanPath("poster." + fileUploadService.getFileExtension(multipartFile));
         Optional<Movie> movie = this.movieRepository.findById(id);
         //check if the given movie exists
@@ -149,7 +151,9 @@ public class MovieController {
             String uploadDir = Movie.IMAGE_PATH_PREFIX + id;
             //upload the file
             fileUploadService.saveFile(uploadDir, fileName, multipartFile);
-            return ResponseEntity.ok(this.movieRepository.save(movie.get()));
+
+            Movie savedMovie = this.movieRepository.save(movie.get());
+            return ResponseEntity.ok(movieService.convertToDto(savedMovie));
         }
         throw new MovieNotFoundException("There is no movie with id " + id);
     }
