@@ -17,6 +17,7 @@ public interface RatingRepository extends JpaRepository<Rating, Long> {
     Long countAllByMediumId(Long mediumId );
 
     Optional<Rating> findByGivenPoints(Integer givenPoints);
+
 }
 
 

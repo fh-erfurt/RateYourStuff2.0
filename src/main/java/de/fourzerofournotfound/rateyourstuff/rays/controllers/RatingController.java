@@ -103,11 +103,13 @@ public class RatingController {
         return ResponseEntity.ok(ratingRepository.save(rating));
     }
 
+    @PreAuthorize("hasAuthority('User')")
     @PutMapping(consumes="application/json", produces="application/json")
     ResponseEntity<Rating> update(@RequestBody Rating rating) {
         return ResponseEntity.ok(this.ratingRepository.save(rating));
     }
 
+    @PreAuthorize("hasAuthority('User')")
     @DeleteMapping("/{id}")
     void deleteRating (@PathVariable Long id) {
         this.ratingRepository.deleteById(id);
@@ -117,7 +119,5 @@ public class RatingController {
     ResponseEntity<Long> countRatings (@PathVariable Long mediumId){
         return ResponseEntity.ok(this.ratingRepository.countAllByMediumId(mediumId));
     }
-
-
 
 }
