@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * MediaService
@@ -23,6 +24,7 @@ public class MediaService {
 
     private final GenreRepository genreRepository;
     private final LanguageRepository languageRepository;
+    private final MediaRepository mediaRepository;
     private final ModelMapper modelMapper;
 
     @Autowired
@@ -34,6 +36,7 @@ public class MediaService {
         this.genreRepository = genreRepository;
         this.languageRepository = languageRepository;
         this.modelMapper = modelMapper;
+        this.mediaRepository = mediaRepository;
     }
 
     /**
@@ -52,47 +55,30 @@ public class MediaService {
         mediumDto.setNumberOfCollections(medium.getCollections());
         return mediumDto;
     }
-
     /**
-     * Returns references to the given genres. Creates genres that do not exist
-     * @param genreStrings  the list of genre names that should be searched within the database
-     * @return              the list of genre entities
+     * Returns a list containing all media that match the input by ignoring the Case and except also almost matching words(like)
+     * @param givenInput taken from the SearchBar call altered through dividing and sorting out short words followed by adjusting to the "likefuntion" aspect with '%...%'
+     * @return              an ArrayList of matching Media
      */
-    public Set<Genre> getGenresSet(List<String> genreStrings) {
-        Set<Genre> genres = new HashSet<>();
+    public ArrayList<Medium> getSearchResult(String givenInput){
+        ArrayList<String> separatedInput = new ArrayList<String>();
+        Collections.addAll(separatedInput,givenInput.split(" "));
 
-        for(String genre : genreStrings) {
-            Optional<Genre> foundGenre = genreRepository.findGenreByGenreName(genre);
-            if(foundGenre.isPresent()) {
-                genres.add(foundGenre.get());
-            } else {
-                Genre newGenre = new Genre();
-                newGenre.setGenreName(genre);
-                genres.add(genreRepository.save(newGenre));
-            }
+        int minLengthForValidWord = 4;
+        separatedInput.removeIf(s -> s.length() < minLengthForValidWord);
+
+        separatedInput.replaceAll(s -> "%" + s + "%");
+
+        ArrayList<Medium> foundMedia = new ArrayList<>();
+        HashSet<Long> foundIds = new HashSet<>();
+
+        for(String a: separatedInput)
+        {
+            List<Medium> results = mediaRepository.findByMediumNameLikeIgnoreCase(a);
+            results.removeIf(r -> !foundIds.add(r.getId()));
+            foundMedia.addAll(results);
         }
-        return genres;
-    }
-
-    /**
-     * Returns references to the given languages. Creates languages that do not exist
-     * @param languageStrings  the list of language names that should be searched within the database
-     * @return              the list of language entities
-     */
-    public Set<Language> getLanguageSet(List<String> languageStrings) {
-        Set<Language> languages = new HashSet<>();
-
-        for(String language:  languageStrings) {
-            Optional<Language> foundLanguage = languageRepository.findLanguageByLanguage(language);
-            if(foundLanguage.isPresent()) {
-                languages.add(foundLanguage.get());
-            } else {
-                Language newLanguage = new Language();
-                newLanguage.setLanguage(language);
-                languages.add(languageRepository.save(newLanguage));
-            }
-        }
-        return languages;
+        return foundMedia;
     }
 
 }

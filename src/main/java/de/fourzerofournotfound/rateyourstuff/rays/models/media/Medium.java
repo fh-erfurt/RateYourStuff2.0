@@ -72,3 +72,4 @@ public abstract class Medium extends BaseModel {
     List<String> languageStrings;
 }
 
+

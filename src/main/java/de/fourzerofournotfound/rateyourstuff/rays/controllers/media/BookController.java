@@ -6,11 +6,10 @@ import de.fourzerofournotfound.rateyourstuff.rays.models.errors.media.BookNotFou
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.BookRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.services.FileUploadService;
 import de.fourzerofournotfound.rateyourstuff.rays.services.errors.DuplicateMediumException;
-import de.fourzerofournotfound.rateyourstuff.rays.services.media.MediaService;
+import de.fourzerofournotfound.rateyourstuff.rays.services.media.*;
 import de.fourzerofournotfound.rateyourstuff.rays.services.PageableService;
 import de.fourzerofournotfound.rateyourstuff.rays.services.isbn.ISBNCheckService;
 import de.fourzerofournotfound.rateyourstuff.rays.services.isbn.InvalidISBNException;
-import de.fourzerofournotfound.rateyourstuff.rays.services.media.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +19,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -41,7 +39,9 @@ public class BookController {
     private final ISBNCheckService isbnCheckService;
     private final PageableService pageableService;
     private final BookService bookService;
-    private final MediaService mediaService;
+    private final GenreService genreService;
+    private final LanguageService languageService;
+    private final BookPublisherService bookPublisherService;
 
     @Autowired
     public BookController(BookRepository bookRepository,
@@ -49,13 +49,16 @@ public class BookController {
                           ISBNCheckService isbnCheckService,
                           PageableService pageableService,
                           BookService bookService,
-                          MediaService mediaService) {
+                          GenreService genreService,
+                          LanguageService languageService, BookPublisherService bookPublisherService) {
         this.bookRepository = bookRepository;
         this.fileUploadService = fileUploadService;
         this.isbnCheckService = isbnCheckService;
         this.pageableService = pageableService;
         this.bookService = bookService;
-        this.mediaService = mediaService;
+        this.genreService = genreService;
+        this.languageService = languageService;
+        this.bookPublisherService = bookPublisherService;
     }
 
     /**
@@ -104,14 +107,15 @@ public class BookController {
      * @throws DuplicateMediumException if there is already a book with the given isbn
      */
     @PostMapping(path="/add", consumes= "application/json", produces="application/json")
-    ResponseEntity<Book> add(@RequestBody Book book) throws InvalidISBNException, DuplicateMediumException {
+    ResponseEntity<BookDto> add(@RequestBody Book book) throws InvalidISBNException, DuplicateMediumException {
         if(isbnCheckService.checkIfISBNisValid(book)) {
             if( bookService.isValidBook(book)) {
                 this.bookRepository.save(book);
-                book.setGenres(this.mediaService.getGenresSet(book.getGenreStrings()));
-                book.setLanguages(this.mediaService.getLanguageSet(book.getLanguageStrings()));
-                book.setBookPublisher(this.bookService.getPublisher(book.getPublisherString()));
-                return ResponseEntity.ok(this.bookRepository.save(book));
+                book.setGenres(this.genreService.getGenresSet(book.getGenreStrings()));
+                book.setLanguages(this.languageService.getLanguageSet(book.getLanguageStrings()));
+                book.setBookPublisher(this.bookPublisherService.getPublisher(book.getPublisherString()));
+                Book savedBook = this.bookRepository.save(book);
+                return ResponseEntity.ok(bookService.convertToDto(savedBook));
             }
             throw new DuplicateMediumException("There is already a book with the ISBN" + book.getIsbn());
         } else {
@@ -127,14 +131,15 @@ public class BookController {
      * @return the updated book
      */
     @PutMapping(consumes="application/json", produces="application/json")
-    ResponseEntity<Book> update(@RequestBody Book book) throws InvalidISBNException, DuplicateMediumException {
+    ResponseEntity<BookDto> update(@RequestBody Book book) throws InvalidISBNException, DuplicateMediumException {
         if(isbnCheckService.checkIfISBNisValid(book)) {
             if(bookService.isValidBook(book)) {
-                book.setBookPublisher(this.bookService.getPublisher(book.getPublisherString()));
+                book.setBookPublisher(this.bookPublisherService.getPublisher(book.getPublisherString()));
                 this.bookRepository.save(book);
-                book.setGenres(this.mediaService.getGenresSet(book.getGenreStrings()));
-                book.setLanguages(this.mediaService.getLanguageSet(book.getLanguageStrings()));
-                return ResponseEntity.ok(this.bookRepository.save(book));
+                book.setGenres(this.genreService.getGenresSet(book.getGenreStrings()));
+                book.setLanguages(this.languageService.getLanguageSet(book.getLanguageStrings()));
+                Book savedBook = this.bookRepository.save(book);
+                return ResponseEntity.ok(bookService.convertToDto(savedBook));
             }
             throw new DuplicateMediumException("There is already a book with the ISBN" + book.getIsbn());
         } else {
@@ -152,7 +157,7 @@ public class BookController {
      * @throws BookNotFoundException if there is no book with the given id
      */
     @PostMapping("/images/{id}")
-    ResponseEntity<Book> addImage(@RequestParam("image") MultipartFile multipartFile, @PathVariable Long id) throws IOException, BookNotFoundException {
+    ResponseEntity<BookDto> addImage(@RequestParam("image") MultipartFile multipartFile, @PathVariable Long id) throws IOException, BookNotFoundException {
         String fileName = StringUtils.cleanPath("poster." + fileUploadService.getFileExtension(multipartFile));
             Optional<Book> book = this.bookRepository.findById(id);
             //check if the given movie exists
@@ -162,7 +167,8 @@ public class BookController {
                 String uploadDir = Book.IMAGE_PATH_PREFIX + id;
                 //upload the file
                 fileUploadService.saveFile(uploadDir, fileName, multipartFile);
-                return ResponseEntity.ok(this.bookRepository.save(book.get()));
+                Book savedBook = this.bookRepository.save(book.get());
+                return ResponseEntity.ok(bookService.convertToDto(savedBook));
             }
         throw new BookNotFoundException("There is no book with id " + id);
     }

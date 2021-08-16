@@ -18,8 +18,12 @@ import java.util.Optional;
 public class UserRepositoryTest {
     @Autowired
     UserRepository repository;
+
     @Autowired
     RoleRepository roleRepository;
+
+    @Autowired
+    LoginRepository loginRepository;
 
     @Autowired
     UserService userService;
@@ -27,11 +31,8 @@ public class UserRepositoryTest {
     @BeforeEach
     public void beforeEach() {
         repository.deleteAll();
-    }
-
-    @AfterEach
-    public void afterEach() {
-       //repository.deleteAll();
+        roleRepository.deleteAll();
+        loginRepository.deleteAll();
     }
 
     @Test
@@ -47,7 +48,8 @@ public class UserRepositoryTest {
         Role givenRole = Role.builder()
                 .roleName("User")
                 .build();
-        Role savedRole = roleRepository.save(givenRole);
+
+        roleRepository.save(givenRole);
 
         User given = User.builder()
                 .firstName("Kurt")
@@ -56,7 +58,7 @@ public class UserRepositoryTest {
                 .userName("Kurt_der_Schnurrt")
                 .gender("male")
                 .login(givenLogin)
-                .role(savedRole)
+                .role(givenRole)
                 .build();
 
         //When
@@ -79,7 +81,8 @@ public class UserRepositoryTest {
         Role givenRole = Role.builder()
                 .roleName("User")
                 .build();
-        Role savedRole = roleRepository.save(givenRole);
+
+        roleRepository.save(givenRole);
 
         User given = User.builder()
                 .firstName("Heinrich")
@@ -88,7 +91,7 @@ public class UserRepositoryTest {
                 .userName("Heiner34")
                 .gender("male")
                 .login(givenLogin)
-                .role(savedRole)
+                .role(givenRole)
                 .build();
 
         //When
@@ -99,7 +102,7 @@ public class UserRepositoryTest {
     }
 
     @Test
-    public void should_add_login() throws RoleNotFoundException {
+    public void should_add_login() {
         //Given
         Login givenLogin = Login.builder()
                 .email("siggi@rays.de")
@@ -110,7 +113,8 @@ public class UserRepositoryTest {
         Role givenRole = Role.builder()
                 .roleName("User")
                 .build();
-        Role savedRole = roleRepository.save(givenRole);
+
+        roleRepository.save(givenRole);
 
         User given = User.builder()
                 .firstName("Sigfried")
@@ -119,7 +123,7 @@ public class UserRepositoryTest {
                 .userName("Siggi1234")
                 .gender("male")
                 .login(givenLogin)
-                .role(savedRole)
+                .role(givenRole)
                 .build();
 
         //When
@@ -143,7 +147,8 @@ public class UserRepositoryTest {
         Role givenRole = Role.builder()
                 .roleName("User")
                 .build();
-        Role savedRole = roleRepository.save(givenRole);
+
+        roleRepository.save(givenRole);
 
         User given = User.builder()
                 .firstName("Simone")
@@ -152,9 +157,8 @@ public class UserRepositoryTest {
                 .userName("Simme1234")
                 .gender("female")
                 .login(givenLogin)
-                .role(savedRole)
+                .role(givenRole)
                 .build();
-
         User saved = repository.save(given);
 
 
@@ -180,7 +184,8 @@ public class UserRepositoryTest {
         Role givenRole = Role.builder()
                 .roleName("User")
                 .build();
-        Role savedRole = roleRepository.save(givenRole);
+
+        roleRepository.save(givenRole);
 
         User given = User.builder()
                 .firstName("Simon")
@@ -189,7 +194,7 @@ public class UserRepositoryTest {
                 .userName("Simmo1234")
                 .gender("male")
                 .login(givenLogin)
-                .role(savedRole)
+                .role(givenRole)
                 .build();
         User saved = repository.save(given);
 

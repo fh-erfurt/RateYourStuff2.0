@@ -2,7 +2,10 @@ package de.fourzerofournotfound.rateyourstuff.rays.services.media;
 
 import de.fourzerofournotfound.rateyourstuff.rays.dtos.media.MovieDto;
 import de.fourzerofournotfound.rateyourstuff.rays.models.media.Movie;
+import de.fourzerofournotfound.rateyourstuff.rays.models.media.Network;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.MovieRepository;
+import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.NetworkRepository;
+import org.assertj.core.api.Assert;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,6 +25,7 @@ public class MovieServiceTest {
 
     @BeforeEach
     void beforeEach() {
+
         movieRepository.deleteAll();
     }
 
@@ -50,5 +54,29 @@ public class MovieServiceTest {
         Assertions.assertThat(result.getLength()).isEqualTo(given.getLength());
         Assertions.assertThat(result.getAgeRestriction()).isEqualTo(given.getAgeRestriction());
     }
+
+    @Test
+    void shouldDetectDuplicationOfGivenMovie()
+    {
+        // Given
+        LocalDate releaseDate = LocalDate.of(2009, 12, 17);
+        Movie testMovie = Movie.builder()
+                .mediumName("Avatar - Aufbruch nach Pandora")
+                .releaseDate(releaseDate)
+                .shortDescription("Avatar – Aufbruch nach Pandora (Originaltitel: Avatar, auch bekannt als James Cameron’s Avatar) ist ein US-amerikanischer Science-Fiction-Film des Regisseurs James Cameron, der weltweit am 17. und 18. Dezember 2009 startete.")
+                .ageRestriction(12)
+                .length(162)
+                .build();
+
+        // When
+        Movie result = movieRepository.save(testMovie);
+
+        // Then
+        org.junit.jupiter.api.Assertions.assertTrue(movieService.isValidMovie(testMovie));
+
+        org.junit.jupiter.api.Assertions.assertTrue(movieService.isValidMovie(result));
+    }
+
+
 
 }
