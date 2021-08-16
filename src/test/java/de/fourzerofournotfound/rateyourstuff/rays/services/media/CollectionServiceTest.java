@@ -13,7 +13,6 @@ import de.fourzerofournotfound.rateyourstuff.rays.repositories.RoleRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.UserRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.CollectionRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.MovieRepository;
-import de.fourzerofournotfound.rateyourstuff.rays.services.UserService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
