@@ -32,8 +32,6 @@ public class SearchController {
     ) {
         System.out.println(s);
         List<Medium> searchResults = mediaService.getSearchResult(s);
-        return ResponseEntity.ok(searchResults.stream()
-                                    .map(mediaService::convertToDto)
-                                    .collect(Collectors.toList()));
+        return ResponseEntity.ok(searchResults.stream().map(mediaService::convertToDto).collect(Collectors.toList()));
     }
 }
