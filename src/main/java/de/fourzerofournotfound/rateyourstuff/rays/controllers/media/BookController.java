@@ -13,6 +13,7 @@ import de.fourzerofournotfound.rateyourstuff.rays.services.isbn.InvalidISBNExcep
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -106,6 +107,7 @@ public class BookController {
      * @throws InvalidISBNException     if the given ISBN does not match the standard
      * @throws DuplicateMediumException if there is already a book with the given isbn
      */
+    @PreAuthorize("hasAuthority('User')")
     @PostMapping(path="/add", consumes= "application/json", produces="application/json")
     ResponseEntity<BookDto> add(@RequestBody Book book) throws InvalidISBNException, DuplicateMediumException {
         if(isbnCheckService.checkIfISBNisValid(book)) {
@@ -130,6 +132,7 @@ public class BookController {
      * @throws DuplicateMediumException if there is already a book with the given isbn
      * @return the updated book
      */
+    @PreAuthorize("hasAuthority('User')")
     @PutMapping(consumes="application/json", produces="application/json")
     ResponseEntity<BookDto> update(@RequestBody Book book) throws InvalidISBNException, DuplicateMediumException {
         if(isbnCheckService.checkIfISBNisValid(book)) {
@@ -156,6 +159,7 @@ public class BookController {
      * @throws IOException           if the file cannot be uploaded
      * @throws BookNotFoundException if there is no book with the given id
      */
+    @PreAuthorize("hasAuthority('User')")
     @PostMapping("/images/{id}")
     ResponseEntity<BookDto> addImage(@RequestParam("image") MultipartFile multipartFile, @PathVariable Long id) throws IOException, BookNotFoundException {
         String fileName = StringUtils.cleanPath("poster." + fileUploadService.getFileExtension(multipartFile));

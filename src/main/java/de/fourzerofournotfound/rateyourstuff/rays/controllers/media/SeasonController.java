@@ -14,6 +14,7 @@ import de.fourzerofournotfound.rateyourstuff.rays.services.media.SeasonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -98,6 +99,7 @@ public class SeasonController {
      * @throws SeriesNotFoundException  if there is no series with the given id
      * @throws DuplicateMediumException if there is already the same season in the database
      */
+    @PreAuthorize("hasAuthority('User')")
     @PostMapping(path="/add", consumes= "application/json", produces="application/json")
     ResponseEntity<SeasonDto> add(@RequestBody Season season) throws SeriesNotFoundException, DuplicateMediumException {
         if(seasonService.isValidSeason(season)) {
@@ -120,6 +122,7 @@ public class SeasonController {
      * @throws SeriesNotFoundException  if there is no series with the given id
      * @throws DuplicateMediumException if there is already the same season in the database
      */
+    @PreAuthorize("hasAuthority('User')")
     @PutMapping(consumes="application/json", produces="application/json")
     ResponseEntity<SeasonDto> update(@RequestBody Season season) throws SeriesNotFoundException, DuplicateMediumException {
         if(seasonService.isValidSeason(season)) {

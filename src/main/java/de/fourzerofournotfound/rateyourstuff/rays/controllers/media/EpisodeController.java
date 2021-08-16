@@ -16,6 +16,7 @@ import de.fourzerofournotfound.rateyourstuff.rays.services.media.LanguageService
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -112,6 +113,7 @@ public class EpisodeController {
      * @throws DuplicateMediumException if the episode is already saved
      * @throws SeasonNotFoundException  if there is no season with the given season number
      */
+    @PreAuthorize("hasAuthority('User')")
     @PostMapping(path = "/add", consumes = "application/json", produces = "application/json")
     ResponseEntity<EpisodeDto> add(@RequestBody Episode episode) throws DuplicateMediumException, SeasonNotFoundException {
         if(episodeService.isValidEpisode(episode)) {
@@ -136,6 +138,7 @@ public class EpisodeController {
      * @throws SeasonNotFoundException  if there is no season with the given id
      * @throws DuplicateMediumException if the update would match another existing episode
      */
+    @PreAuthorize("hasAuthority('User')")
     @PutMapping(consumes = "application/json", produces = "application/json")
     ResponseEntity<EpisodeDto> update(@RequestBody Episode episode) throws SeasonNotFoundException, DuplicateMediumException {
         if(episodeService.isValidEpisode(episode)) {
@@ -162,6 +165,7 @@ public class EpisodeController {
      * @throws IOException  if the upload fails
      * @throws EpisodeNotFoundException if there is no episode with the given id
      */
+    @PreAuthorize("hasAuthority('User')")
     @PostMapping("/images/{id}")
     ResponseEntity<EpisodeDto> addImage(@RequestParam("image") MultipartFile multipartFile, @PathVariable Long id) throws IOException, EpisodeNotFoundException {
         String fileName = StringUtils.cleanPath("poster." + fileUploadService.getFileExtension(multipartFile));

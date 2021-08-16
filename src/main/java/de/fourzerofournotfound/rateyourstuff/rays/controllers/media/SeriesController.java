@@ -11,6 +11,7 @@ import de.fourzerofournotfound.rateyourstuff.rays.services.errors.DuplicateMediu
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -101,6 +102,7 @@ public class SeriesController {
      * @return          the newly added series
      * @throws DuplicateMediumException if there is already the same series in the database
      */
+    @PreAuthorize("hasAuthority('User')")
     @PostMapping(path="/add", consumes= "application/json", produces="application/json")
     ResponseEntity<SeriesDto> add(@RequestBody Series series) throws DuplicateMediumException {
         if(this.seriesService.isValidSeries(series)) {
@@ -121,6 +123,7 @@ public class SeriesController {
      * @return          the updated series
      * @throws DuplicateMediumException if there is already the same series in the database
      */
+    @PreAuthorize("hasAuthority('User')")
     @PutMapping(consumes="application/json", produces="application/json")
     ResponseEntity<SeriesDto> update(@RequestBody Series series) throws DuplicateMediumException {
         if(this.seriesService.isValidSeries(series)) {
@@ -143,11 +146,12 @@ public class SeriesController {
      * @throws IOException  if the upload fails
      * @throws SeriesNotFoundException if there is no series with the given id
      */
+    @PreAuthorize("hasAuthority('User')")
     @PostMapping("/images/{id}")
     ResponseEntity<SeriesDto> addImage(@RequestParam("image") MultipartFile multipartFile, @PathVariable Long id) throws IOException, SeriesNotFoundException {
         String fileName = StringUtils.cleanPath("poster." + fileUploadService.getFileExtension(multipartFile));
         Optional<Series> series = this.seriesRepository.findById(id);
-        //check if the given movie exists
+        //check if the given series exists
         if(series.isPresent()) {
             series.get().setPicturePath(series.get().getId() + "/" + fileName);
             //define the target path

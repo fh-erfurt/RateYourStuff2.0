@@ -14,6 +14,7 @@ import de.fourzerofournotfound.rateyourstuff.rays.services.media.CollectionServi
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -52,6 +53,7 @@ public class CollectionController {
      * @return              the new collection entity that has been added
      * @throws UserNotFoundException    if the user that should be creator of the collection does not exist
      */
+    @PreAuthorize("hasAuthority('User')")
     @PostMapping(path = "/add", consumes = "application/json", produces = "application/json")
     ResponseEntity<ReducedCollectionDto> add(@RequestBody Collection collection) throws UserNotFoundException {
         collection = this.collectionService.addReferencesToCollection(collection, collection.getUserMappingId());
@@ -161,6 +163,7 @@ public class CollectionController {
      * @return              the updated collection
      * @throws CollectionNotFoundException  if there is no colelction that matches the given id
      */
+    @PreAuthorize("hasAuthority('User')")
     @PutMapping(consumes="application/json", produces="application/json")
     ResponseEntity<ReducedCollectionDto> update(@RequestBody Collection collection) throws CollectionNotFoundException {
         Optional<Collection> targetCollection = collectionRepository.findById(collection.getId());
@@ -179,6 +182,7 @@ public class CollectionController {
      * @return                  the updated
      * @throws CollectionNotFoundException  if there is no collection with the given id
      */
+    @PreAuthorize("hasAuthority('User')")
     @DeleteMapping(path="/{collectionId}/medium/{mediumId}")
     ResponseEntity<CollectionDto> deleteMediumFromCollection (@PathVariable Long collectionId, @PathVariable Long mediumId) throws CollectionNotFoundException {
         Optional<Collection> targetCollection = collectionRepository.findById(collectionId);
@@ -197,6 +201,7 @@ public class CollectionController {
      * @return              the updated collection
      * @throws CollectionNotFoundException  if there is no collection with the given id
      */
+    @PreAuthorize("hasAuthority('User')")
     @PutMapping(path="/{collectionId}/medium/{mediumId}")
     ResponseEntity<CollectionDto> addMediumToCollection(@PathVariable Long collectionId, @PathVariable Long mediumId) throws CollectionNotFoundException {
         Optional<Medium> medium = mediaRepository.findById(mediumId);

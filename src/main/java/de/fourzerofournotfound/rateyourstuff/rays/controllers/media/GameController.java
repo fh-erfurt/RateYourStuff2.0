@@ -12,6 +12,7 @@ import de.fourzerofournotfound.rateyourstuff.rays.services.errors.DuplicateMediu
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -105,6 +106,7 @@ public class GameController {
      * @return      the GameDTO of the new game
      * @throws DuplicateMediumException if there is already the same game in the database
      */
+    @PreAuthorize("hasAuthority('User')")
     @PostMapping(path="/add", consumes= "application/json", produces="application/json")
     ResponseEntity<GameDto> add(@RequestBody Game game) throws DuplicateMediumException {
         if(this.gameService.isValidGame(game)) {
@@ -126,6 +128,7 @@ public class GameController {
      * @return      the GameDTO of the updated game
      * @throws DuplicateMediumException if the change would conflict with another game
      */
+    @PreAuthorize("hasAuthority('User')")
     @PutMapping(consumes="application/json", produces="application/json")
     ResponseEntity<GameDto> update(@RequestBody Game game) throws DuplicateMediumException {
         if(this.gameService.isValidGame(game)) {
@@ -150,6 +153,7 @@ public class GameController {
      * @throws IOException  if the upload fails
      * @throws GameNotFoundException if there is no game with the given id
      */
+    @PreAuthorize("hasAuthority('User')")
     @PostMapping("/images/{id}")
     ResponseEntity<GameDto> addImage(@RequestParam("image") MultipartFile multipartFile, @PathVariable Long id) throws IOException, GameNotFoundException {
         String fileName = StringUtils.cleanPath("poster." + fileUploadService.getFileExtension(multipartFile));

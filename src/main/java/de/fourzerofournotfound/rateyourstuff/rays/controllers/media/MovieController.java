@@ -13,6 +13,7 @@ import de.fourzerofournotfound.rateyourstuff.rays.services.errors.DuplicateMediu
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -106,6 +107,7 @@ public class MovieController {
      * @return      the entity of the newly added movie
      * @throws DuplicateMediumException if there is already the same movie in the database
      */
+    @PreAuthorize("hasAuthority('User')")
     @PostMapping(path="/add", consumes= "application/json", produces="application/json")
     ResponseEntity<MovieDto> add(@RequestBody Movie movie) throws DuplicateMediumException {
         if(this.movieService.isValidMovie(movie)) {
@@ -126,6 +128,7 @@ public class MovieController {
      * @return      the updated movie
      * @throws DuplicateMediumException if the update would conflict another movie
      */
+    @PreAuthorize("hasAuthority('User')")
     @PutMapping(consumes="application/json", produces="application/json")
     ResponseEntity<MovieDto> update(@RequestBody Movie movie) throws DuplicateMediumException {
         if(this.movieService.isValidMovie(movie)) {
@@ -149,6 +152,7 @@ public class MovieController {
      * @throws IOException  if the upload fails
      * @throws MovieNotFoundException if there is no movie with the given id
      */
+    @PreAuthorize("hasAuthority('User')")
     @PostMapping("/images/{id}")
     ResponseEntity<MovieDto> addImage(@RequestParam(name="image") MultipartFile multipartFile, @PathVariable Long id) throws IOException, MovieNotFoundException {
         String fileName = StringUtils.cleanPath("poster." + fileUploadService.getFileExtension(multipartFile));
