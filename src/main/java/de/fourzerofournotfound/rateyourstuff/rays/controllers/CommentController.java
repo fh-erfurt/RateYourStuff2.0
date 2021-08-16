@@ -114,7 +114,7 @@ public class CommentController {
             throw new CommentNotFoundException("No Comment found for id " + id);
         }
     }
-
+    @PreAuthorize("hasAuthority('User')")
     @PostMapping(path="/add", consumes= "application/json", produces="application/json")
     ResponseEntity<Comment> add(@RequestBody Comment comment) throws InvalidCommentException {
         comment = commentService.addReferencesToComment(comment);

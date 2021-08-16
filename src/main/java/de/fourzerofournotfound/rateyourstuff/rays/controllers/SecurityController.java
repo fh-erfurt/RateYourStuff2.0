@@ -39,7 +39,6 @@ public class SecurityController {
 
     User validUser;
 
-    @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
     public ResponseEntity<AuthenticationResponse> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
         try {
