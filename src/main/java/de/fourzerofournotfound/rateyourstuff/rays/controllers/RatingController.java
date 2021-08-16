@@ -10,6 +10,7 @@ import de.fourzerofournotfound.rateyourstuff.rays.services.errors.InvalidRatingE
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -91,6 +92,7 @@ public class RatingController {
         }
     }
 
+    @PreAuthorize("hasAuthority('Admin')")
     @PostMapping(path="/add", consumes= "application/json", produces="application/json")
     ResponseEntity<Rating> add(@RequestBody Rating rating) throws InvalidRatingException {
         rating = ratingService.addReferencesToRating(rating);

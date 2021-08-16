@@ -38,8 +38,6 @@ public class UserController {
     }
 
 
-    //@CrossOrigin(origins = "http://localhost:3000")
-    //@Secured({"ROLE_ADMIN", "ROLE_USER"})
     @PreAuthorize("hasAuthority('Admin')")
     @GetMapping("/all")
     ResponseEntity<List<User>> getAll(){
@@ -52,7 +50,6 @@ public class UserController {
         return ResponseEntity.ok((this.userRepository.findById(id).orElseThrow(()-> new UserNotFoundException("No User found for given id"))));
     }
 
-    //@CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/check/is={userName}")
     ResponseEntity<Boolean> getUsername(@PathVariable String userName) throws UserAlreadyExistsException {
         Optional<User> user = userRepository.findByUserNameIgnoreCase(userName);
@@ -63,7 +60,6 @@ public class UserController {
         }
     }
 
-    //@CrossOrigin(origins = "http://localhost:3000")
     @PostMapping(path = "/add", consumes = "application/json", produces = "application/json")
     ResponseEntity<User> add(@RequestBody User user) {
         userService.setRoleId(user);
@@ -71,7 +67,6 @@ public class UserController {
         return ResponseEntity.ok(this.userRepository.save(user));
     }
 
-    //@CrossOrigin(origins = "http://localhost:3000")
     @PreAuthorize("hasAuthority('User')")
     @PutMapping(consumes = "application/json", produces = "application/json")
     ResponseEntity<User> update(@RequestBody User user) throws InvalidUserException {
@@ -79,7 +74,7 @@ public class UserController {
         return ResponseEntity.ok(this.userRepository.save(user));
     }
 
-    //@CrossOrigin(origins = "http://localhost:3000")
+    @PreAuthorize("hasAnyAuthority()")
     @DeleteMapping("/{id}")
     void deleteUser(@PathVariable Long id) {this.userRepository.deleteById(id);}
 }
