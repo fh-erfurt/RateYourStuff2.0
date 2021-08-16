@@ -21,6 +21,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
+@Builder
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Table(name = "Genres")

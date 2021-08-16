@@ -23,12 +23,16 @@ public class UserRepositoryTest {
     RoleRepository roleRepository;
 
     @Autowired
+    LoginRepository loginRepository;
+
+    @Autowired
     UserService userService;
 
     @BeforeEach
     public void beforeEach() {
         repository.deleteAll();
         roleRepository.deleteAll();
+        loginRepository.deleteAll();
     }
 
     @Test
@@ -98,7 +102,7 @@ public class UserRepositoryTest {
     }
 
     @Test
-    public void should_add_login() throws RoleNotFoundException {
+    public void should_add_login() {
         //Given
         Login givenLogin = Login.builder()
                 .email("siggi@rays.de")

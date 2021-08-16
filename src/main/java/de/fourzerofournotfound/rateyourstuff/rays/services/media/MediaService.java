@@ -52,48 +52,5 @@ public class MediaService {
         mediumDto.setNumberOfCollections(medium.getCollections());
         return mediumDto;
     }
-
-    /**
-     * Returns references to the given genres. Creates genres that do not exist
-     * @param genreStrings  the list of genre names that should be searched within the database
-     * @return              the list of genre entities
-     */
-    public Set<Genre> getGenresSet(List<String> genreStrings) {
-        Set<Genre> genres = new HashSet<>();
-
-        for(String genre : genreStrings) {
-            Optional<Genre> foundGenre = genreRepository.findGenreByGenreName(genre);
-            if(foundGenre.isPresent()) {
-                genres.add(foundGenre.get());
-            } else {
-                Genre newGenre = new Genre();
-                newGenre.setGenreName(genre);
-                genres.add(genreRepository.save(newGenre));
-            }
-        }
-        return genres;
-    }
-
-    /**
-     * Returns references to the given languages. Creates languages that do not exist
-     * @param languageStrings  the list of language names that should be searched within the database
-     * @return              the list of language entities
-     */
-    public Set<Language> getLanguageSet(List<String> languageStrings) {
-        Set<Language> languages = new HashSet<>();
-
-        for(String language:  languageStrings) {
-            Optional<Language> foundLanguage = languageRepository.findLanguageByLanguage(language);
-            if(foundLanguage.isPresent()) {
-                languages.add(foundLanguage.get());
-            } else {
-                Language newLanguage = new Language();
-                newLanguage.setLanguage(language);
-                languages.add(languageRepository.save(newLanguage));
-            }
-        }
-        return languages;
-    }
-
 }
 

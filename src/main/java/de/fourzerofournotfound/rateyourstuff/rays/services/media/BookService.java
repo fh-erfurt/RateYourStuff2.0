@@ -67,20 +67,5 @@ public class BookService {
         return bookDto;
     }
 
-    /**
-     * Returns the entity of a book publisher from the database. Creates a new Book publisher, if there is no
-     * publisher with the given string as title
-     * @param publisherString   the publisher title that should be searched within the database
-     * @return  the valid book publisher entity from the database
-     */
-    public BookPublisher getPublisher(String publisherString) {
-        Optional<BookPublisher> publisher = publisherRepository.findByBookPublisherTitle(publisherString);
-        if(publisher.isPresent()) {
-            return publisher.get();
-        } else {
-            BookPublisher newPublisher = new BookPublisher();
-            newPublisher.setBookPublisherTitle(publisherString);
-            return publisherRepository.save(newPublisher);
-        }
-    }
+
 }

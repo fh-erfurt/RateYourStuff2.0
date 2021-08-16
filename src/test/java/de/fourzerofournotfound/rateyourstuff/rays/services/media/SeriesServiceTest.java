@@ -1,6 +1,8 @@
 package de.fourzerofournotfound.rateyourstuff.rays.services.media;
 
 import de.fourzerofournotfound.rateyourstuff.rays.dtos.media.SeriesDto;
+import de.fourzerofournotfound.rateyourstuff.rays.models.media.Episode;
+import de.fourzerofournotfound.rateyourstuff.rays.models.media.Season;
 import de.fourzerofournotfound.rateyourstuff.rays.models.media.Series;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.SeriesRepository;
 import org.assertj.core.api.Assertions;
@@ -51,5 +53,69 @@ public class SeriesServiceTest {
         Assertions.assertThat(result.getShortDescription()).isEqualTo(given.getShortDescription());
         Assertions.assertThat(result.getReleaseDate()).isEqualTo(given.getReleaseDate().toString());
 
+    }
+
+    @Test
+    void shouldDetectDuplicatesOfGivenSeries()
+    {
+        //Given
+        LocalDate releaseDate0 = LocalDate.of(2017, 9, 24);
+
+        Series givenSeries = Series.builder()
+                .mediumName("Star Trek: Discovery")
+                .ageRestriction(0)
+                .shortDescription("Star Trek: Discovery ist eine US-amerikanische Science-Fiction-Fernsehserie und die sechste Realfilm-Fernsehserie, die im fiktiven Star-Trek-Universum spielt. In der auch mit DSC abgekürzten Serie geht es um das titelgebende Sternenflottenraumschiff Discovery. ")
+                .averageLength(51)
+                .releaseDate(releaseDate0)
+                .isCompleted(false)
+                .build();
+
+        Series givenSeries2 = Series.builder()
+                .mediumName("Star Trek: Discovery")
+                .ageRestriction(0)
+                .shortDescription("StarTrek: Discovery ist eine US-amerikanische Science-Fiction-Fernsehserie und die sechste Realfilm-Fernsehserie, die im fiktiven Star-Trek-Universum spielt. In der auch mit DSC abgekürzten Serie geht es um das titelgebende Sternenflottenraumschiff Discovery. ")
+                .averageLength(51)
+                .releaseDate(releaseDate0)
+                .isCompleted(false)
+                .build();
+
+        Series givenSeriesNotToStore = Series.builder()
+                .mediumName("How i met your Mother")
+                .releaseDate(LocalDate.of(2005,9,19))
+                .shortDescription("[...]")
+                .ageRestriction(0)
+                .isCompleted(true)
+                .build();
+
+        Episode givenEpisodeOne = Episode.builder()
+                .mediumName("Leuchtfeuer")
+                .episodeNumber(1)
+                .shortDescription("[...]")
+                .releaseDate(releaseDate0)
+                .length(51)
+                .build();
+
+        Season starTrekDiscoverySeasonOne = Season.builder()
+                .seasonNumber(1)
+                .seasonTitle("Season 1")
+                .build();
+
+
+        givenEpisodeOne.setSeason(starTrekDiscoverySeasonOne);
+        starTrekDiscoverySeasonOne.getEpisodes().add(givenEpisodeOne);
+        givenSeries.getSeasons().add(starTrekDiscoverySeasonOne);
+
+
+        // When
+        Series result = seriesRepository.save(givenSeries);
+
+
+        //Then
+        org.junit.jupiter.api.Assertions.assertTrue(seriesService.isValidSeries(givenSeries));
+
+        org.junit.jupiter.api.Assertions.assertTrue(seriesService.isValidSeries(result));
+
+        org.junit.jupiter.api.Assertions.assertTrue(seriesService.isValidSeries(givenSeriesNotToStore));
+        org.junit.jupiter.api.Assertions.assertFalse(seriesService.isValidSeries(givenSeries2));
     }
 }

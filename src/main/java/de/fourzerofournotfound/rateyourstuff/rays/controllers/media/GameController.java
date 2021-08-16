@@ -6,10 +6,9 @@ import de.fourzerofournotfound.rateyourstuff.rays.models.media.Game;
 import de.fourzerofournotfound.rateyourstuff.rays.models.errors.media.GameNotFoundException;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.GameRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.services.FileUploadService;
-import de.fourzerofournotfound.rateyourstuff.rays.services.media.MediaService;
+import de.fourzerofournotfound.rateyourstuff.rays.services.media.*;
 import de.fourzerofournotfound.rateyourstuff.rays.services.PageableService;
 import de.fourzerofournotfound.rateyourstuff.rays.services.errors.DuplicateMediumException;
-import de.fourzerofournotfound.rateyourstuff.rays.services.media.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +18,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -39,18 +37,27 @@ public class GameController {
     final FileUploadService fileUploadService;
     final PageableService pageableService;
     final GameService gameService;
-    private final MediaService mediaService;
+    private final PlatformService platformService;
+    private final LanguageService languageService;
+    private final GenreService genreService;
+    private final GamePublisherService gamePublisherService;
 
     @Autowired
     public GameController(GameRepository gameRepository,
                           FileUploadService fileUploadService,
                           PageableService pageableService,
-                          GameService gameService, MediaService mediaService) {
+                          GameService gameService,
+                          PlatformService platformService,
+                          LanguageService languageService,
+                          GenreService genreService, GamePublisherService gamePublisherService) {
         this.gameRepository = gameRepository;
         this.fileUploadService = fileUploadService;
         this.pageableService = pageableService;
         this.gameService = gameService;
-        this.mediaService = mediaService;
+        this.platformService = platformService;
+        this.languageService = languageService;
+        this.genreService = genreService;
+        this.gamePublisherService = gamePublisherService;
     }
 
     /**
@@ -102,10 +109,10 @@ public class GameController {
     ResponseEntity<GameDto> add(@RequestBody Game game) throws DuplicateMediumException {
         if(this.gameService.isValidGame(game)) {
             this.gameRepository.save(game);
-            game.setGenres(this.mediaService.getGenresSet(game.getGenreStrings()));
-            game.setLanguages(this.mediaService.getLanguageSet(game.getLanguageStrings()));
-            game.setGamePublisher(this.gameService.getPublisher(game.getPublisherTitle()));
-            game.setPlatforms(this.gameService.getPlatformSet(game.getPlatformStrings()));
+            game.setGenres(this.genreService.getGenresSet(game.getGenreStrings()));
+            game.setLanguages(this.languageService.getLanguageSet(game.getLanguageStrings()));
+            game.setGamePublisher(this.gamePublisherService.getPublisher(game.getPublisherTitle()));
+            game.setPlatforms(this.platformService.getPlatformSet(game.getPlatformStrings()));
             Game savedGame = this.gameRepository.save(game);
             return ResponseEntity.ok(gameService.convertToDto(savedGame));
         } else {
@@ -122,11 +129,11 @@ public class GameController {
     @PutMapping(consumes="application/json", produces="application/json")
     ResponseEntity<GameDto> update(@RequestBody Game game) throws DuplicateMediumException {
         if(this.gameService.isValidGame(game)) {
-            game.setGamePublisher(this.gameService.getPublisher(game.getPublisherTitle()));
+            game.setGamePublisher(this.gamePublisherService.getPublisher(game.getPublisherTitle()));
             this.gameRepository.save(game);
-            game.setGenres(this.mediaService.getGenresSet(game.getGenreStrings()));
-            game.setLanguages(this.mediaService.getLanguageSet(game.getLanguageStrings()));
-            game.setPlatforms(this.gameService.getPlatformSet(game.getPlatformStrings()));
+            game.setGenres(this.genreService.getGenresSet(game.getGenreStrings()));
+            game.setLanguages(this.languageService.getLanguageSet(game.getLanguageStrings()));
+            game.setPlatforms(this.platformService.getPlatformSet(game.getPlatformStrings()));
             Game savedGame = this.gameRepository.save(game);
             return ResponseEntity.ok(gameService.convertToDto(savedGame));
         } else {

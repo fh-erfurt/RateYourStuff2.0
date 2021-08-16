@@ -11,7 +11,8 @@ import de.fourzerofournotfound.rateyourstuff.rays.services.FileUploadService;
 import de.fourzerofournotfound.rateyourstuff.rays.services.PageableService;
 import de.fourzerofournotfound.rateyourstuff.rays.services.errors.DuplicateMediumException;
 import de.fourzerofournotfound.rateyourstuff.rays.services.media.EpisodeService;
-import de.fourzerofournotfound.rateyourstuff.rays.services.media.MediaService;
+import de.fourzerofournotfound.rateyourstuff.rays.services.media.GenreService;
+import de.fourzerofournotfound.rateyourstuff.rays.services.media.LanguageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -42,7 +43,8 @@ public class EpisodeController {
     private final EpisodeService episodeService;
     private final SeasonRepository seasonRepository;
     private final EpisodeRepository episodeRepository;
-    private final MediaService mediaService;
+    private final LanguageService languageService;
+    private final GenreService genreService;
 
     @Autowired
     public EpisodeController(EpisodeRepository repository,
@@ -51,14 +53,16 @@ public class EpisodeController {
                              EpisodeService episodeService,
                              SeasonRepository seasonRepository,
                              EpisodeRepository episodeRepository,
-                             MediaService mediaService) {
+                             LanguageService languageService,
+                             GenreService genreService) {
         this.repository = repository;
         this.fileUploadService = fileUploadService;
         this.pageableService = pageableService;
         this.episodeService = episodeService;
         this.seasonRepository = seasonRepository;
         this.episodeRepository = episodeRepository;
-        this.mediaService = mediaService;
+        this.languageService = languageService;
+        this.genreService = genreService;
     }
 
     /**
@@ -114,8 +118,8 @@ public class EpisodeController {
             Optional<Season> targetSeason = seasonRepository.findById(episode.getSeasonMappingId());
             if(targetSeason.isPresent()) {
                 episode.setSeason(targetSeason.get());
-                episode.setGenres(mediaService.getGenresSet(episode.getGenreStrings()));
-                episode.setLanguages(mediaService.getLanguageSet(episode.getLanguageStrings()));
+                episode.setGenres(genreService.getGenresSet(episode.getGenreStrings()));
+                episode.setLanguages(languageService.getLanguageSet(episode.getLanguageStrings()));
                 Episode savedEpisode = this.episodeRepository.save(episode);
                 return ResponseEntity.ok(episodeService.convertToDto(savedEpisode));
             } else {
@@ -138,8 +142,8 @@ public class EpisodeController {
             Optional<Season> targetSeason = seasonRepository.findById(episode.getSeasonMappingId());
             if(targetSeason.isPresent()) {
                 episode.setSeason(targetSeason.get());
-                episode.setGenres(mediaService.getGenresSet(episode.getGenreStrings()));
-                episode.setLanguages(mediaService.getLanguageSet(episode.getLanguageStrings()));
+                episode.setGenres(genreService.getGenresSet(episode.getGenreStrings()));
+                episode.setLanguages(languageService.getLanguageSet(episode.getLanguageStrings()));
                 Episode savedEpisode = this.episodeRepository.save(episode);
                 return ResponseEntity.ok(episodeService.convertToDto(savedEpisode));
             } else {
