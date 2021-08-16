@@ -25,6 +25,7 @@ public class MediaService {
 
     private final GenreRepository genreRepository;
     private final LanguageRepository languageRepository;
+    private final MediaRepository mediaRepository;
     private final ModelMapper modelMapper;
 
     @Autowired
