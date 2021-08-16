@@ -53,9 +53,10 @@ public class CollectionController {
      * @throws UserNotFoundException    if the user that should be creator of the collection does not exist
      */
     @PostMapping(path = "/add", consumes = "application/json", produces = "application/json")
-    ResponseEntity<Collection> add(@RequestBody Collection collection) throws UserNotFoundException {
+    ResponseEntity<ReducedCollectionDto> add(@RequestBody Collection collection) throws UserNotFoundException {
         collection = this.collectionService.addReferencesToCollection(collection, collection.getUserMappingId());
-        return ResponseEntity.ok(this.collectionRepository.save(collection));
+        Collection savedCollection = this.collectionRepository.save(collection);
+        return ResponseEntity.ok(collectionService.convertToReducedDto(savedCollection));
     }
 
     /**

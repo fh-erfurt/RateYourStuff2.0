@@ -46,11 +46,14 @@ public class EpisodeController {
 
     @Autowired
     public EpisodeController(EpisodeRepository repository,
-                             FileUploadService fus,
+                             FileUploadService fileUploadService,
                              PageableService pageableService,
-                             EpisodeService episodeService, SeasonRepository seasonRepository, EpisodeRepository episodeRepository, MediaService mediaService) {
+                             EpisodeService episodeService,
+                             SeasonRepository seasonRepository,
+                             EpisodeRepository episodeRepository,
+                             MediaService mediaService) {
         this.repository = repository;
-        this.fileUploadService = fus;
+        this.fileUploadService = fileUploadService;
         this.pageableService = pageableService;
         this.episodeService = episodeService;
         this.seasonRepository = seasonRepository;
@@ -106,14 +109,15 @@ public class EpisodeController {
      * @throws SeasonNotFoundException  if there is no season with the given season number
      */
     @PostMapping(path = "/add", consumes = "application/json", produces = "application/json")
-    ResponseEntity<Episode> add(@RequestBody Episode episode) throws DuplicateMediumException, SeasonNotFoundException {
+    ResponseEntity<EpisodeDto> add(@RequestBody Episode episode) throws DuplicateMediumException, SeasonNotFoundException {
         if(episodeService.isValidEpisode(episode)) {
             Optional<Season> targetSeason = seasonRepository.findById(episode.getSeasonMappingId());
             if(targetSeason.isPresent()) {
                 episode.setSeason(targetSeason.get());
                 episode.setGenres(mediaService.getGenresSet(episode.getGenreStrings()));
                 episode.setLanguages(mediaService.getLanguageSet(episode.getLanguageStrings()));
-                return ResponseEntity.ok(this.episodeRepository.save(episode));
+                Episode savedEpisode = this.episodeRepository.save(episode);
+                return ResponseEntity.ok(episodeService.convertToDto(savedEpisode));
             } else {
                 throw new SeasonNotFoundException("There is no season with Id " + episode.getSeasonMappingId());
             }
@@ -129,14 +133,15 @@ public class EpisodeController {
      * @throws DuplicateMediumException if the update would match another existing episode
      */
     @PutMapping(consumes = "application/json", produces = "application/json")
-    ResponseEntity<Episode> update(@RequestBody Episode episode) throws SeasonNotFoundException, DuplicateMediumException {
+    ResponseEntity<EpisodeDto> update(@RequestBody Episode episode) throws SeasonNotFoundException, DuplicateMediumException {
         if(episodeService.isValidEpisode(episode)) {
             Optional<Season> targetSeason = seasonRepository.findById(episode.getSeasonMappingId());
             if(targetSeason.isPresent()) {
                 episode.setSeason(targetSeason.get());
                 episode.setGenres(mediaService.getGenresSet(episode.getGenreStrings()));
                 episode.setLanguages(mediaService.getLanguageSet(episode.getLanguageStrings()));
-                return ResponseEntity.ok(this.episodeRepository.save(episode));
+                Episode savedEpisode = this.episodeRepository.save(episode);
+                return ResponseEntity.ok(episodeService.convertToDto(savedEpisode));
             } else {
                 throw new SeasonNotFoundException("There is no season with Id " + episode.getSeasonMappingId());
             }
@@ -154,7 +159,7 @@ public class EpisodeController {
      * @throws EpisodeNotFoundException if there is no episode with the given id
      */
     @PostMapping("/images/{id}")
-    ResponseEntity<Episode> addImage(@RequestParam("image") MultipartFile multipartFile, @PathVariable Long id) throws IOException, EpisodeNotFoundException {
+    ResponseEntity<EpisodeDto> addImage(@RequestParam("image") MultipartFile multipartFile, @PathVariable Long id) throws IOException, EpisodeNotFoundException {
         String fileName = StringUtils.cleanPath("poster." + fileUploadService.getFileExtension(multipartFile));
         Optional<Episode> episode = this.repository.findById(id);
         //check if the given movie exists
@@ -164,7 +169,8 @@ public class EpisodeController {
             String uploadDir = Episode.IMAGE_PATH_PREFIX + id;
             //upload the file
             fileUploadService.saveFile(uploadDir, fileName, multipartFile);
-            return ResponseEntity.ok(this.repository.save(episode.get()));
+            Episode savedEpisode = this.repository.save(episode.get());
+            return ResponseEntity.ok(episodeService.convertToDto(savedEpisode));
         }
         throw new EpisodeNotFoundException("There is no episode with the id " + id);
     }

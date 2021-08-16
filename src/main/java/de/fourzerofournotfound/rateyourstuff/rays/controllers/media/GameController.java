@@ -99,14 +99,15 @@ public class GameController {
      * @throws DuplicateMediumException if there is already the same game in the database
      */
     @PostMapping(path="/add", consumes= "application/json", produces="application/json")
-    ResponseEntity<Game> add(@RequestBody Game game) throws DuplicateMediumException {
+    ResponseEntity<GameDto> add(@RequestBody Game game) throws DuplicateMediumException {
         if(this.gameService.isValidGame(game)) {
             this.gameRepository.save(game);
             game.setGenres(this.mediaService.getGenresSet(game.getGenreStrings()));
             game.setLanguages(this.mediaService.getLanguageSet(game.getLanguageStrings()));
             game.setGamePublisher(this.gameService.getPublisher(game.getPublisherTitle()));
             game.setPlatforms(this.gameService.getPlatformSet(game.getPlatformStrings()));
-            return ResponseEntity.ok(this.gameRepository.save(game));
+            Game savedGame = this.gameRepository.save(game);
+            return ResponseEntity.ok(gameService.convertToDto(savedGame));
         } else {
             throw new DuplicateMediumException("The Game " + game.getMediumName() + " already exists.");
         }
@@ -119,14 +120,15 @@ public class GameController {
      * @throws DuplicateMediumException if the change would conflict with another game
      */
     @PutMapping(consumes="application/json", produces="application/json")
-    ResponseEntity<Game> update(@RequestBody Game game) throws DuplicateMediumException {
+    ResponseEntity<GameDto> update(@RequestBody Game game) throws DuplicateMediumException {
         if(this.gameService.isValidGame(game)) {
             game.setGamePublisher(this.gameService.getPublisher(game.getPublisherTitle()));
             this.gameRepository.save(game);
             game.setGenres(this.mediaService.getGenresSet(game.getGenreStrings()));
             game.setLanguages(this.mediaService.getLanguageSet(game.getLanguageStrings()));
             game.setPlatforms(this.gameService.getPlatformSet(game.getPlatformStrings()));
-            return ResponseEntity.ok(this.gameRepository.save(game));
+            Game savedGame = this.gameRepository.save(game);
+            return ResponseEntity.ok(gameService.convertToDto(savedGame));
         } else {
             throw new DuplicateMediumException("The Game " + game.getMediumName() + " already exists.");
         }
@@ -142,7 +144,7 @@ public class GameController {
      * @throws GameNotFoundException if there is no game with the given id
      */
     @PostMapping("/images/{id}")
-    ResponseEntity<Game> addImage(@RequestParam("image") MultipartFile multipartFile, @PathVariable Long id) throws IOException, GameNotFoundException {
+    ResponseEntity<GameDto> addImage(@RequestParam("image") MultipartFile multipartFile, @PathVariable Long id) throws IOException, GameNotFoundException {
         String fileName = StringUtils.cleanPath("poster." + fileUploadService.getFileExtension(multipartFile));
 
         Optional<Game> game = this.gameRepository.findById(id);
@@ -153,7 +155,8 @@ public class GameController {
             String uploadDir = Game.IMAGE_PATH_PREFIX + id;
             //upload the file
             fileUploadService.saveFile(uploadDir, fileName, multipartFile);
-            return ResponseEntity.ok(this.gameRepository.save(game.get()));
+            Game savedGame = this.gameRepository.save(game.get());
+            return ResponseEntity.ok(gameService.convertToDto(savedGame));
         }
         throw new GameNotFoundException("There is no game with the id " + id);
     }
