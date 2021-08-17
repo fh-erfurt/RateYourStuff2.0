@@ -95,12 +95,24 @@ public class RatingController {
         }
     }
 
+//    @PreAuthorize("hasAuthority('User')")
+//    @PostMapping(path="/add", consumes= "application/json", produces="application/json")
+//    ResponseEntity<Rating> add(@RequestBody Rating rating) throws InvalidRatingException {
+//        rating = ratingService.addReferencesToRating(rating);
+//        rating = ratingService.validateRatingValue(rating);
+//        return ResponseEntity.ok(ratingRepository.save(rating));
+//    }
+
     @PreAuthorize("hasAuthority('User')")
     @PostMapping(path="/add", consumes= "application/json", produces="application/json")
-    ResponseEntity<Rating> add(@RequestBody Rating rating) throws InvalidRatingException {
-        rating = ratingService.addReferencesToRating(rating);
-        rating = ratingService.validateRatingValue(rating);
-        return ResponseEntity.ok(ratingRepository.save(rating));
+    ResponseEntity<Rating> add(@RequestBody Rating rating) throws RatingNotFoundException {
+        Optional<Rating> foundRating = ratingRepository.findById(rating.getId());
+        if(foundRating.isPresent()){
+            foundRating.get().setDescription(rating.getDescription());
+            foundRating.get().setGivenPoints(rating.getGivenPoints());
+            return ResponseEntity.ok(this.ratingRepository.save(foundRating.get()));
+        }
+        throw new RatingNotFoundException("No Rating");
     }
 
     @PreAuthorize("hasAuthority('User')")
