@@ -43,11 +43,5 @@ public class LoginService {
         } else  {                                                                                                                //eq  | eq
             throw new EmailAlreadyExistsException("Email currently exists");
         }
-
-        if(!login.getPasswordHash().equals("DUMMY")) {
-            potentialLogin.get().setPasswordHash(login.getPasswordHash());
-            userSecurityService.hashPasswordOfLogin(potentialLogin.get());
-        }
-
     }
 }

@@ -7,8 +7,10 @@ import de.fourzerofournotfound.rateyourstuff.rays.models.User;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.LoginRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.RoleRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.UserRepository;
+import de.fourzerofournotfound.rateyourstuff.rays.services.errors.EmailAlreadyExistsException;
 import de.fourzerofournotfound.rateyourstuff.rays.services.errors.InvalidLoginException;
 import de.fourzerofournotfound.rateyourstuff.rays.services.errors.InvalidUserException;
+import de.fourzerofournotfound.rateyourstuff.rays.services.errors.UserAlreadyExistsException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -75,6 +77,17 @@ public class UserService {
 
     public UserDto convertToDto(User user) {
         return modelMapper.map(user, UserDto.class);
+    }
+
+    public void manageUpdatePersistence(User user, Optional<User> potentialUser) throws UserAlreadyExistsException {
+        //Equal email addresses and not identical password
+        if(!user.getUserName().equals(potentialUser.get().getUserName()))               //ne | neq
+        {
+            potentialUser.get().setFirstName(user.getFirstName());
+            potentialUser.get().setLastName(user.getLastName());
+        } else {
+
+        }
     }
 
 }

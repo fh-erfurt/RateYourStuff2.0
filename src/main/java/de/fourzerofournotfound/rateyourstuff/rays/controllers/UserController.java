@@ -80,15 +80,12 @@ public class UserController {
 
     @PreAuthorize("hasAuthority('User')")
     @PutMapping(consumes = "application/json", produces = "application/json")
-    ResponseEntity<UserDto> update(@RequestBody User user) throws UserNotFoundException {
+    ResponseEntity<UserDto> update(@RequestBody User user) throws UserNotFoundException, UserAlreadyExistsException {
         //userService.addReferencesToUser(user);
         Optional<User> potentialUser = userRepository.findUserById(user.getId());
         if(potentialUser.isPresent()){
-            potentialUser.get().setUserName(user.getUserName());
-            potentialUser.get().setFirstName(user.getFirstName());
-            potentialUser.get().setLastName(user.getLastName());
+            userService.manageUpdatePersistence(user, potentialUser);
             User savedUser = userRepository.save(potentialUser.get());
-            //System.out.println("LastName: " + potentialUser.get().getLastName());
             return ResponseEntity.ok(this.userService.convertToDto(savedUser));
         }
         throw new UserNotFoundException("User not found");
