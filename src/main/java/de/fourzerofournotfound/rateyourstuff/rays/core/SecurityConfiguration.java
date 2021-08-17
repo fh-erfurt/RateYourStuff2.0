@@ -78,16 +78,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         } catch(Exception e) {
             throw new Exception("Cant ignore URL", e);
         }
-
     }
-
 
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
-
 }
 
 

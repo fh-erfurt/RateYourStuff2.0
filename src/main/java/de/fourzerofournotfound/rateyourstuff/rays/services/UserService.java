@@ -1,19 +1,18 @@
 package de.fourzerofournotfound.rateyourstuff.rays.services;
 
+import de.fourzerofournotfound.rateyourstuff.rays.dtos.UserDto;
 import de.fourzerofournotfound.rateyourstuff.rays.models.Login;
 import de.fourzerofournotfound.rateyourstuff.rays.models.Role;
 import de.fourzerofournotfound.rateyourstuff.rays.models.User;
-import de.fourzerofournotfound.rateyourstuff.rays.models.errors.UserNotFoundException;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.LoginRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.RoleRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.UserRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.services.errors.InvalidLoginException;
-import de.fourzerofournotfound.rateyourstuff.rays.services.errors.InvalidRoleException;
 import de.fourzerofournotfound.rateyourstuff.rays.services.errors.InvalidUserException;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.management.relation.RoleNotFoundException;
 import java.util.Optional;
 
 @Service("us")
@@ -21,12 +20,14 @@ public class UserService {
     private final UserRepository userRepository;
     private final LoginRepository loginRepository;
     private final RoleRepository roleRepository;
+    private final ModelMapper modelMapper;
 
     @Autowired
-    public UserService(UserRepository userRepository, LoginRepository loginRepository, RoleRepository roleRepository) {
+    public UserService(UserRepository userRepository, LoginRepository loginRepository, RoleRepository roleRepository, ModelMapper modelMapper) {
         this.userRepository = userRepository;
         this.loginRepository = loginRepository;
         this.roleRepository = roleRepository;
+        this.modelMapper = modelMapper;
     }
 
     /**
@@ -70,6 +71,10 @@ public class UserService {
         if(potentialRole.isPresent()){
             user.getRole().setId(potentialRole.get().getId());
         }
+    }
+
+    public UserDto convertToDto(User user) {
+        return modelMapper.map(user, UserDto.class);
     }
 
 }
