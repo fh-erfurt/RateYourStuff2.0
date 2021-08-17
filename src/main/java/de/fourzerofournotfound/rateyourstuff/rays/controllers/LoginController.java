@@ -1,9 +1,11 @@
 package de.fourzerofournotfound.rateyourstuff.rays.controllers;
 
+import de.fourzerofournotfound.rateyourstuff.rays.dtos.LoginDto;
 import de.fourzerofournotfound.rateyourstuff.rays.models.Login;
 import de.fourzerofournotfound.rateyourstuff.rays.models.User;
 import de.fourzerofournotfound.rateyourstuff.rays.models.errors.LoginNotFoundException;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.LoginRepository;
+import de.fourzerofournotfound.rateyourstuff.rays.services.LoginService;
 import de.fourzerofournotfound.rateyourstuff.rays.services.UserSecurityService;
 import de.fourzerofournotfound.rateyourstuff.rays.services.UserService;
 import de.fourzerofournotfound.rateyourstuff.rays.services.errors.EmailAlreadyExistsException;
@@ -21,14 +23,17 @@ public class LoginController {
     private final UserService userService;
     private final UserSecurityService userSecurityService;
     private final LoginRepository repository;
+    private final LoginService loginService;
 
     @Autowired
     public LoginController(UserService userService,
                            UserSecurityService userSecurityService,
-                           LoginRepository repository) {
+                           LoginRepository repository,
+                           LoginService loginService) {
         this.userService = userService;
         this.userSecurityService = userSecurityService;
         this.repository = repository;
+        this.loginService = loginService;
     }
 
     @GetMapping("/getMail")
@@ -38,10 +43,19 @@ public class LoginController {
 
     @CrossOrigin(origins = "http://localhost:3000")
     @PutMapping(consumes = "application/json", produces = "application/json")
-    ResponseEntity<Login> update(@RequestBody Login login) throws InvalidLoginException {
-        userSecurityService.hashPasswordOfLogin(login);
-        userService.addReferencesToLogin(login);
-        return ResponseEntity.ok(this.repository.save(login));
+    ResponseEntity<LoginDto> update(@RequestBody Login login) throws InvalidLoginException {
+        Optional<Login> potentialLogin = repository.findLoginById(login.getId());
+        if(potentialLogin.isPresent())
+        {
+            potentialLogin.get().setEmail(login.getEmail());
+            if(!login.getPasswordHash().equals("DUMMY")) {
+                potentialLogin.get().setPasswordHash(login.getPasswordHash());
+                userSecurityService.hashPasswordOfLogin(potentialLogin.get());
+            }
+            Login savedLogin = repository.save(potentialLogin.get());
+            return ResponseEntity.ok(this.loginService.convertToDto(savedLogin));
+        }
+        throw new InvalidLoginException("Login not found!");
     }
 
     @CrossOrigin(origins = "http://localhost:3000")

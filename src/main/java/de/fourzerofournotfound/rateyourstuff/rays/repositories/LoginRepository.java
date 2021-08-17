@@ -7,6 +7,7 @@ import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
+import java.util.OptionalInt;
 
 /**
  * This Interface will require methods for manipulating login storage
@@ -19,4 +20,5 @@ public interface LoginRepository extends JpaRepository<Login, Long> {
 
     public Optional<Login> findLoginByEmailNotIgnoreCase(String email);
     public Optional<Login> findLoginByEmailIgnoreCase(String email);
+    public Optional<Login> findLoginById(Long id);
 }

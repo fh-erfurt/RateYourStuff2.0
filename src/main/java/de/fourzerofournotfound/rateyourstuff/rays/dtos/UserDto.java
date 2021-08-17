@@ -13,4 +13,5 @@ public class UserDto {
     private Long loginId;
     private String loginEmail;
     private Boolean loginIsEnabled;
+    private Long roleId;
 }
