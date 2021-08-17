@@ -71,6 +71,7 @@ public class UserController {
         }
     }
 
+    @PreAuthorize("permitAll()")
     @PostMapping(path = "/add", consumes = "application/json", produces = "application/json")
     ResponseEntity<User> add(@RequestBody User user) {
         userService.setRoleId(user);
@@ -85,7 +86,7 @@ public class UserController {
         return ResponseEntity.ok(this.userRepository.save(user));
     }
 
-    @PreAuthorize("hasAnyAuthority()")
+    @PreAuthorize("hasAuthority('Admin')")
     @DeleteMapping("/{id}")
     void deleteUser(@PathVariable Long id) {this.userRepository.deleteById(id);}
 }
