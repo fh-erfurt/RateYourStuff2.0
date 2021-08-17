@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class DuplicateMediumAdvice {
     @ResponseBody
     @ExceptionHandler(DuplicateMediumException.class)
-    @ResponseStatus(HttpStatus.CONFLICT)
+    @ResponseStatus(HttpStatus.I_AM_A_TEAPOT)
     String duplicateMediumHandler(DuplicateMediumException ex) {
         return ex.getMessage();
     }
