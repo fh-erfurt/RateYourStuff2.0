@@ -10,6 +10,7 @@ public class UserDto {
     private String firstName;
     private String lastName;
     private String userName;
+    private Long loginId;
     private String loginEmail;
     private Boolean loginIsEnabled;
 }
