@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.Email;
 import java.util.Optional;
 
 @RestController
@@ -43,18 +44,14 @@ public class LoginController {
 
     @CrossOrigin(origins = "http://localhost:3000")
     @PutMapping(consumes = "application/json", produces = "application/json")
-    ResponseEntity<LoginDto> update(@RequestBody Login login) throws InvalidLoginException {
+    ResponseEntity<LoginDto> update(@RequestBody Login login) throws InvalidLoginException, EmailAlreadyExistsException {
         Optional<Login> potentialLogin = repository.findLoginById(login.getId());
-        if(potentialLogin.isPresent())
-        {
-            potentialLogin.get().setEmail(login.getEmail());
-            if(!login.getPasswordHash().equals("DUMMY")) {
-                potentialLogin.get().setPasswordHash(login.getPasswordHash());
-                userSecurityService.hashPasswordOfLogin(potentialLogin.get());
-            }
+        if(potentialLogin.isPresent()){
+            loginService.manageUpdatePersistence(login, potentialLogin);
             Login savedLogin = repository.save(potentialLogin.get());
             return ResponseEntity.ok(this.loginService.convertToDto(savedLogin));
         }
+
         throw new InvalidLoginException("Login not found!");
     }
 
