@@ -56,11 +56,7 @@ public class AppUserDetailService implements UserDetailsService {
         } else if(user.getRole().getRoleName().equals("User")){
             authenticationList.add("User");
         }
-       /*System.out.println("Current UserRole: " + user.getRole().getRoleName());
-       System.out.println("AuthorityList: ");
-        for(String role : authenticationList) {
-            System.out.println(role);
-        }*/
+
         String[] userRoles = authenticationList.toArray(new String[0]);
        return AuthorityUtils.createAuthorityList(userRoles);
    }
