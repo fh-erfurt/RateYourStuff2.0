@@ -13,6 +13,7 @@ import de.fourzerofournotfound.rateyourstuff.rays.services.PageableService;
 import de.fourzerofournotfound.rateyourstuff.rays.services.media.CollectionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -215,5 +216,17 @@ public class CollectionController {
             }
         }
         throw new CollectionNotFoundException("There is no collection with id " + collectionId);
+    }
+
+    /**
+     * This method is used to delete an existing collection from the database
+     * @param collectionId  the id of the collection that should be deleted
+     * @return              http status 200 after deleting
+     */
+    @PreAuthorize("hasAuthority('User')")
+    @DeleteMapping(path = "/{collectionId}")
+    HttpStatus delete(@PathVariable Long collectionId) {
+        collectionRepository.deleteById(collectionId);
+        return HttpStatus.OK;
     }
 }
