@@ -12,5 +12,5 @@ public class EmailExistsAdvice {
     @ResponseBody
     @ExceptionHandler(EmailAlreadyExistsException.class)
     @ResponseStatus(HttpStatus.I_AM_A_TEAPOT)
-    String emailExistsAdvice(EmailAlreadyExistsException existsException) {return existsException.getMessage();}
+    String emailExistsHandler(EmailAlreadyExistsException ex) {return ex.getMessage();}
 }
