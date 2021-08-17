@@ -4,7 +4,6 @@ package de.fourzerofournotfound.rateyourstuff.rays.repositories.media;
 import de.fourzerofournotfound.rateyourstuff.rays.models.media.Game;
 import de.fourzerofournotfound.rateyourstuff.rays.models.media.GamePublisher;
 import de.fourzerofournotfound.rateyourstuff.rays.models.media.Platform;
-import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.GameRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -57,7 +56,6 @@ public class GameRepositoryTest
         //Given
         Game given = new Game("Anthem", "Worst Game ever", LocalDate.now(), (float) 0.8,  1, 4, 12);
         Game saved = gameRepository.save(given);
-        String initialDescription = saved.getShortDescription();
 
         //When
         String updatedSortDescription = "It really sucks that I paid 60€ for this piece of crap";
@@ -97,19 +95,14 @@ public class GameRepositoryTest
         Assertions.assertThat(result.get().getMediumName()).isEqualTo("Anthem");
     }
 
+    //Todo: Finalize Test
     @Test
     void should_find_games_with_platform() {
         //Given
         Game given1 = new Game("Anthem", "Worst Game ever", LocalDate.now(), 0.8f,  1, 4, 12);
-        Platform platform1  = new Platform("PC");
 
-        //given1.setPlatform(platform1);
 
         Game given2 = new Game("Landwirtschaftssimulator", "Best Farmingsimulator", LocalDate.now(), 170.7f,  1, 1, 0);
-        Platform platform2  = new Platform("PC");
-
-        //given1.setPlatform(platform1);
-        //given2.setPlatform(platform2);
 
         List<Game> persisted = new ArrayList<>();
         persisted.add(gameRepository.save(given1));

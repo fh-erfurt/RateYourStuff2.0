@@ -25,8 +25,6 @@ import java.util.Optional;
 public class CollectionRepositoryTest {
 
     @Autowired
-    private CollectionService collectionService;
-    @Autowired
     private CollectionRepository collectionRepository;
 
     @Autowired

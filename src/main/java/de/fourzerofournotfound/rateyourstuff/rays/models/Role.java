@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.List;
 
 /**
  * Role

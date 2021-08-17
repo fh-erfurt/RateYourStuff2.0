@@ -7,8 +7,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-
 @SpringBootTest(properties = "spring.profiles.active = test")
 public class FileUploadServiceTest {
 

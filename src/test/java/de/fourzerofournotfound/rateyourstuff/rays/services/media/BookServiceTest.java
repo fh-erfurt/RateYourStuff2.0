@@ -2,8 +2,6 @@ package de.fourzerofournotfound.rateyourstuff.rays.services.media;
 
 import de.fourzerofournotfound.rateyourstuff.rays.dtos.media.BookDto;
 import de.fourzerofournotfound.rateyourstuff.rays.models.media.Book;
-import de.fourzerofournotfound.rateyourstuff.rays.models.media.BookPublisher;
-import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.BookPublisherRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.BookRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

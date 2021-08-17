@@ -1,7 +1,6 @@
 package de.fourzerofournotfound.rateyourstuff.rays.dtos.media;
 
 import de.fourzerofournotfound.rateyourstuff.rays.models.media.Season;
-import de.fourzerofournotfound.rateyourstuff.rays.models.media.Series;
 import lombok.Getter;
 import lombok.Setter;
 

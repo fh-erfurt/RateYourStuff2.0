@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * MediaService
@@ -61,7 +60,7 @@ public class MediaService {
      * @return              an ArrayList of matching Media
      */
     public ArrayList<Medium> getSearchResult(String givenInput){
-        ArrayList<String> separatedInput = new ArrayList<String>();
+        ArrayList<String> separatedInput = new ArrayList<>();
         Collections.addAll(separatedInput,givenInput.split(" "));
 
         int minLengthForValidWord = 4;

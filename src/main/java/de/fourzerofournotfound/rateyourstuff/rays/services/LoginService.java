@@ -1,14 +1,10 @@
 package de.fourzerofournotfound.rateyourstuff.rays.services;
 
 import de.fourzerofournotfound.rateyourstuff.rays.dtos.LoginDto;
-import de.fourzerofournotfound.rateyourstuff.rays.dtos.UserDto;
 import de.fourzerofournotfound.rateyourstuff.rays.models.Login;
-import de.fourzerofournotfound.rateyourstuff.rays.models.User;
 import de.fourzerofournotfound.rateyourstuff.rays.services.errors.EmailAlreadyExistsException;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 
 import java.util.Optional;
 

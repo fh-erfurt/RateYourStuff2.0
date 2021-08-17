@@ -2,7 +2,6 @@ package de.fourzerofournotfound.rateyourstuff.rays.services.media;
 
 import de.fourzerofournotfound.rateyourstuff.rays.dtos.media.MovieDto;
 import de.fourzerofournotfound.rateyourstuff.rays.models.media.Movie;
-import de.fourzerofournotfound.rateyourstuff.rays.models.media.Network;
 import de.fourzerofournotfound.rateyourstuff.rays.models.Rating;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.MovieRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.NetworkRepository;

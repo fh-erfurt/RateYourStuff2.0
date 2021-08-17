@@ -2,7 +2,6 @@ package de.fourzerofournotfound.rateyourstuff.rays.controllers;
 
 import de.fourzerofournotfound.rateyourstuff.rays.dtos.LoginDto;
 import de.fourzerofournotfound.rateyourstuff.rays.models.Login;
-import de.fourzerofournotfound.rateyourstuff.rays.models.User;
 import de.fourzerofournotfound.rateyourstuff.rays.models.errors.LoginNotFoundException;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.LoginRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.services.LoginService;
@@ -10,12 +9,10 @@ import de.fourzerofournotfound.rateyourstuff.rays.services.UserSecurityService;
 import de.fourzerofournotfound.rateyourstuff.rays.services.UserService;
 import de.fourzerofournotfound.rateyourstuff.rays.services.errors.EmailAlreadyExistsException;
 import de.fourzerofournotfound.rateyourstuff.rays.services.errors.InvalidLoginException;
-import de.fourzerofournotfound.rateyourstuff.rays.services.errors.UserAlreadyExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.constraints.Email;
 import java.util.Optional;
 
 @RestController

@@ -12,7 +12,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import javax.print.attribute.standard.Media;
 import java.time.LocalDate;
 
 @SpringBootTest(properties = "spring.profiles.active = test")

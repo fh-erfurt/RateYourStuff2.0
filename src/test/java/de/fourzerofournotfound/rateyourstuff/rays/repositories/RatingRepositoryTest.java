@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 @SpringBootTest(properties = "spring.profiles.active=test")
@@ -23,17 +22,6 @@ public class RatingRepositoryTest {
     @Test
     public void should_save_rating(){
         //Given
-
-        LocalDateTime localDate = LocalDateTime.now();
-
-
-//        Rating given = new Rating();
-//        given.setCreatedAt(localDate);
-//        given.setMinimumPoints(0);
-//        given.setMaximumPoints(10);
-//        given.setGivenPoints(7);
-//        given.setDesscription(description);
-
         Rating given = Rating.builder()
                         .givenPoints(5)
                         .description("Heute wird es nicht so lustig")
@@ -50,8 +38,6 @@ public class RatingRepositoryTest {
     public void should_find_rating_by_givenPoints(){
 
         //Given
-        LocalDateTime localDate = LocalDateTime.now();
-
         Rating.builder()
                 .givenPoints(5)
                 .description("Heute wird es nicht so lustig")

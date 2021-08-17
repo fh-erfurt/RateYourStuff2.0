@@ -3,7 +3,6 @@ package de.fourzerofournotfound.rateyourstuff.rays.controllers.media;
 
 import de.fourzerofournotfound.rateyourstuff.rays.dtos.media.BookPublisherDto;
 import de.fourzerofournotfound.rateyourstuff.rays.models.media.BookPublisher;
-import de.fourzerofournotfound.rateyourstuff.rays.models.errors.media.BookPublisherNotFoundException;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.BookPublisherRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.services.PageableService;
 import de.fourzerofournotfound.rateyourstuff.rays.services.media.BookPublisherService;

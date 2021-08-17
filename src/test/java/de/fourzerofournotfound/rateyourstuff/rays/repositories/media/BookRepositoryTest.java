@@ -2,7 +2,6 @@ package de.fourzerofournotfound.rateyourstuff.rays.repositories.media;
 
 import de.fourzerofournotfound.rateyourstuff.rays.models.media.Book;
 import de.fourzerofournotfound.rateyourstuff.rays.models.media.BookPublisher;
-import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.BookRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;

@@ -5,13 +5,11 @@ import de.fourzerofournotfound.rateyourstuff.rays.models.Role;
 import de.fourzerofournotfound.rateyourstuff.rays.models.User;
 import de.fourzerofournotfound.rateyourstuff.rays.services.UserService;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import javax.management.relation.RoleNotFoundException;
 import java.util.Optional;
 
 @SpringBootTest(properties = "spring.profiles.active=test")

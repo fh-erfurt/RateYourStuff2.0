@@ -1,11 +1,9 @@
 package de.fourzerofournotfound.rateyourstuff.rays.repositories.media;
 
 import de.fourzerofournotfound.rateyourstuff.rays.models.media.Genre;
-import de.fourzerofournotfound.rateyourstuff.rays.models.media.Medium;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 import java.util.Optional;
 
 /**

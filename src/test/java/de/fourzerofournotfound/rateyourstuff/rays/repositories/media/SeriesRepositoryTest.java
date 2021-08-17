@@ -2,8 +2,6 @@ package de.fourzerofournotfound.rateyourstuff.rays.repositories.media;
 
 import de.fourzerofournotfound.rateyourstuff.rays.models.media.Season;
 import de.fourzerofournotfound.rateyourstuff.rays.models.media.Series;
-import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.SeasonRepository;
-import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.SeriesRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;

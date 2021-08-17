@@ -1,7 +1,6 @@
 package de.fourzerofournotfound.rateyourstuff.rays.repositories.media;
 
 import de.fourzerofournotfound.rateyourstuff.rays.models.media.Network;
-import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.NetworkRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

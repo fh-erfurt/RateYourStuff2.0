@@ -7,7 +7,6 @@ import de.fourzerofournotfound.rateyourstuff.rays.models.User;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.LoginRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.RoleRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.UserRepository;
-import de.fourzerofournotfound.rateyourstuff.rays.services.errors.EmailAlreadyExistsException;
 import de.fourzerofournotfound.rateyourstuff.rays.services.errors.InvalidLoginException;
 import de.fourzerofournotfound.rateyourstuff.rays.services.errors.InvalidUserException;
 import de.fourzerofournotfound.rateyourstuff.rays.services.errors.UserAlreadyExistsException;

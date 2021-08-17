@@ -3,8 +3,6 @@ package de.fourzerofournotfound.rateyourstuff.rays.services.media;
 import de.fourzerofournotfound.rateyourstuff.rays.dtos.media.GameDto;
 import de.fourzerofournotfound.rateyourstuff.rays.models.*;
 import de.fourzerofournotfound.rateyourstuff.rays.models.media.Game;
-import de.fourzerofournotfound.rateyourstuff.rays.models.media.GamePublisher;
-import de.fourzerofournotfound.rateyourstuff.rays.models.media.Platform;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.GamePublisherRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.GameRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.PlatformRepository;
