@@ -46,7 +46,7 @@ public class CommentController {
             @RequestParam(defaultValue = "desc") String order
     ) {
         Pageable pageable = pageableService.createPageable(orderBy, order, page, size);
-        List<Comment> comments = commentRepository.findAll(pageable).getContent();
+        List<Comment> comments = commentRepository.findAllByCommentParentIsNull(pageable).getContent();
         return ResponseEntity.ok(
                 comments.stream()
                 .map(commentService::convertToDto)
@@ -117,9 +117,10 @@ public class CommentController {
 
     @PreAuthorize("hasAuthority('User')")
     @PostMapping(path="/add", consumes= "application/json", produces="application/json")
-    ResponseEntity<Comment> add(@RequestBody Comment comment) throws InvalidCommentException {
+    ResponseEntity<CommentDto> add(@RequestBody Comment comment) throws InvalidCommentException {
         comment = commentService.addReferencesToComment(comment);
-        return ResponseEntity.ok(this.commentRepository.save(comment));
+        Comment savedComment = this.commentRepository.save(comment);
+        return ResponseEntity.ok(commentService.convertToDto(savedComment));
     }
 
     @PreAuthorize("hasAuthority('User')")
