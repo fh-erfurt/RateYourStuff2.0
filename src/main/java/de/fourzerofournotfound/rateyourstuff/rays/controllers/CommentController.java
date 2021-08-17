@@ -114,6 +114,7 @@ public class CommentController {
             throw new CommentNotFoundException("No Comment found for id " + id);
         }
     }
+
     @PreAuthorize("hasAuthority('User')")
     @PostMapping(path="/add", consumes= "application/json", produces="application/json")
     ResponseEntity<Comment> add(@RequestBody Comment comment) throws InvalidCommentException {
@@ -121,6 +122,7 @@ public class CommentController {
         return ResponseEntity.ok(this.commentRepository.save(comment));
     }
 
+    @PreAuthorize("hasAuthority('User')")
     @PutMapping(consumes="application/json", produces="application/json")
     ResponseEntity<Comment> update(@RequestBody Comment comment) throws CommentNotFoundException {
         Optional<Comment> foundComment = commentRepository.findById(comment.getId());
@@ -131,6 +133,7 @@ public class CommentController {
         throw new CommentNotFoundException("There is no comment with id " + comment.getId());
     }
 
+    @PreAuthorize("hasAuthority('User')")
     @DeleteMapping("/{id}")
     void deleteSeason (@PathVariable Long id) {
         this.commentRepository.deleteById(id);
