@@ -71,7 +71,6 @@ public class UserController {
         }
     }
 
-    @PreAuthorize("permitAll()")
     @PostMapping(path = "/add", consumes = "application/json", produces = "application/json")
     ResponseEntity<User> add(@RequestBody User user) {
         userService.setRoleId(user);
