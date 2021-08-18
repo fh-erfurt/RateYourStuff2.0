@@ -23,13 +23,12 @@ import java.util.Optional;
 @Service("seriesService")
 public class SeriesService {
     private final ModelMapper modelMapper;
-    private final NetworkRepository networkRepository;
     private final SeriesRepository seriesRepository;
 
     @Autowired
-    public SeriesService(ModelMapper modelMapper, NetworkRepository networkRepository, SeriesRepository seriesRepository) {
+    public SeriesService(ModelMapper modelMapper,
+                         SeriesRepository seriesRepository) {
         this.modelMapper = modelMapper;
-        this.networkRepository = networkRepository;
         this.seriesRepository = seriesRepository;
     }
 

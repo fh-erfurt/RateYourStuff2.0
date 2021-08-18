@@ -21,19 +21,13 @@ import java.util.*;
 @Service("mediaService")
 public class MediaService {
 
-    private final GenreRepository genreRepository;
-    private final LanguageRepository languageRepository;
     private final MediaRepository mediaRepository;
     private final ModelMapper modelMapper;
 
     @Autowired
-    public MediaService(GenreRepository genreRepository,
-                        LanguageRepository languageRepository,
-                        MediaRepository mediaRepository,
+    public MediaService(MediaRepository mediaRepository,
                         ModelMapper modelMapper)
     {
-        this.genreRepository = genreRepository;
-        this.languageRepository = languageRepository;
         this.modelMapper = modelMapper;
         this.mediaRepository = mediaRepository;
     }

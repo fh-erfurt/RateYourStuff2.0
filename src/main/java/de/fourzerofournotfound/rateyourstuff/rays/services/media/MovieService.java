@@ -23,13 +23,12 @@ import java.util.Optional;
 @Service("movieService")
 public class MovieService {
     private final ModelMapper modelMapper;
-    private final NetworkRepository networkRepository;
     private final MovieRepository movieRepository;
 
     @Autowired
-    public MovieService(ModelMapper modelMapper, NetworkRepository networkRepository, MovieRepository movieRepository) {
+    public MovieService(ModelMapper modelMapper,
+                        MovieRepository movieRepository) {
         this.modelMapper = modelMapper;
-        this.networkRepository = networkRepository;
         this.movieRepository = movieRepository;
     }
 

@@ -23,15 +23,11 @@ import java.util.*;
 @Service("gameService")
 public class GameService {
     private final ModelMapper modelMapper;
-    private final PlatformRepository platformRepository;
-    private final GamePublisherRepository gamePublisherRepository;
     private final GameRepository gameRepository;
 
     @Autowired
     public GameService(ModelMapper modelMapper, PlatformRepository platformRepository, GamePublisherRepository gamePublisherRepository, GameRepository gameRepository) {
         this.modelMapper = modelMapper;
-        this.platformRepository = platformRepository;
-        this.gamePublisherRepository = gamePublisherRepository;
         this.gameRepository = gameRepository;
     }
 
