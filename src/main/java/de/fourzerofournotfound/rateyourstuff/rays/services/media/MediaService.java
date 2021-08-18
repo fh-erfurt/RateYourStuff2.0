@@ -14,7 +14,6 @@ import java.util.HashSet;
 import java.util.List;
 
 /**
- * MediaService
  * <p>This Service provides methods to the {@link de.fourzerofournotfound.rateyourstuff.rays.controllers.media.MediumController MediumController}</p>
  *
  * @author Christoph Frischmuth

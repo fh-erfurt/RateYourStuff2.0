@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 /**
- * LanguageRepository
  * <p>This Interface can be used to find Language entities in the database.</p>
  * <p>It also provides all functions of the {@link JpaRepository JpaRepository}</p>
  *

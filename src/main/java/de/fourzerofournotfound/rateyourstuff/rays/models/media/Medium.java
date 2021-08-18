@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import de.fourzerofournotfound.rateyourstuff.rays.models.BaseModel;
 import de.fourzerofournotfound.rateyourstuff.rays.models.Comment;
 import de.fourzerofournotfound.rateyourstuff.rays.models.Rating;
+import de.fourzerofournotfound.rateyourstuff.rays.models.media.collections.Collection;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +17,6 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Medium
  * <p>This Model represents a medium.
  * The medium contains all attributes that are important for books, games, series, episodes, movies.</p>
  *

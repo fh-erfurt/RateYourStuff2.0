@@ -14,7 +14,6 @@ import java.util.Set;
 import java.util.logging.Logger;
 
 /**
- * LanguageService
  * <p>This Service provides methods to the {@link de.fourzerofournotfound.rateyourstuff.rays.controllers.media.LanguageController LanguageController}</p>
  *
  * @author Christoph Frischmuth

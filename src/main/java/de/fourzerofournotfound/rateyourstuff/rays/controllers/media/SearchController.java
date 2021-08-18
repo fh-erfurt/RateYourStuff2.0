@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
 
 
 /**
- * SearchController
  * <p> This controller ensures that the input is passed on from the front end to the function in the back end and vice versa.</p>
  *
  * @author Christoph Frischmuth
@@ -31,7 +30,12 @@ public class SearchController {
         this.mediaService = mediaService;
     }
 
-    @CrossOrigin("*")
+    /**
+     * This Method returns all matching media from the database
+     *
+     * @param s   the given Input as String
+     * @return a list of MediaDTOs
+     */
     @GetMapping()
     ResponseEntity<List<MediumDto>> getMatchingMediaList(
             @RequestParam String s

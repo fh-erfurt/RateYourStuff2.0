@@ -3,7 +3,7 @@ package de.fourzerofournotfound.rateyourstuff.rays.models;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import de.fourzerofournotfound.rateyourstuff.rays.models.media.Collection;
+import de.fourzerofournotfound.rateyourstuff.rays.models.media.collections.Collection;
 import lombok.*;
 
 import javax.persistence.*;

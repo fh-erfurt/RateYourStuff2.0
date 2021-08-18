@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 /**
- * NetworkRepository
  * <p>This Interface can be used to find Network entities in the database.</p>
  * <p>It also provides all functions of the {@link JpaRepository JpaRepository}</p>
  *
