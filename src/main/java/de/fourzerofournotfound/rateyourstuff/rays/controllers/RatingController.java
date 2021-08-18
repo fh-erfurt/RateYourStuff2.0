@@ -7,7 +7,6 @@ import de.fourzerofournotfound.rateyourstuff.rays.repositories.RatingRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.services.PageableService;
 import de.fourzerofournotfound.rateyourstuff.rays.services.RatingService;
 import de.fourzerofournotfound.rateyourstuff.rays.services.errors.InvalidRatingException;
-import de.fourzerofournotfound.rateyourstuff.rays.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 @RestController
@@ -25,14 +25,13 @@ public class RatingController {
     private final RatingRepository ratingRepository;
     private final PageableService pageableService;
     private final RatingService ratingService;
-    private final JwtUtil jwtUtil;
+    private final Logger logger = Logger.getLogger(this.getClass().getName());
 
     @Autowired
-    public RatingController(RatingRepository ratingRepository, PageableService pageableService, RatingService ratingService, JwtUtil jwtUtil) {
+    public RatingController(RatingRepository ratingRepository, PageableService pageableService, RatingService ratingService) {
         this.ratingRepository = ratingRepository;
         this.pageableService = pageableService;
         this.ratingService = ratingService;
-        this.jwtUtil = jwtUtil;
     }
 
     @GetMapping("/all")
@@ -46,8 +45,8 @@ public class RatingController {
         List<Rating> ratings = ratingRepository.findAll(pageable).getContent();
         return ResponseEntity.ok(
                 ratings.stream()
-                .map(ratingService::convertToDto)
-                .collect(Collectors.toList())
+                        .map(ratingService::convertToDto)
+                        .collect(Collectors.toList())
         );
     }
 
@@ -86,46 +85,48 @@ public class RatingController {
     }
 
     @GetMapping("/{id}")
-    ResponseEntity<RatingDto> getById (@PathVariable Long id) throws RatingNotFoundException {
+    ResponseEntity<RatingDto> getById(@PathVariable Long id) throws RatingNotFoundException {
         Optional<Rating> rating = ratingRepository.findById(id);
-        if(rating.isPresent()) {
+        if (rating.isPresent()) {
             return ResponseEntity.ok(ratingService.convertToDto(rating.get()));
         } else {
-            throw new RatingNotFoundException("No Rating found for id " + id);
+            throw new RatingNotFoundException("No " + Rating.class.getSimpleName() + " found for id " + id);
         }
     }
 
     @PreAuthorize("hasAuthority('User')")
-    @PostMapping(path="/add", consumes= "application/json", produces="application/json")
+    @PostMapping(path = "/add", consumes = "application/json", produces = "application/json")
     ResponseEntity<Rating> add(@RequestBody Rating rating) throws InvalidRatingException {
         rating = ratingService.addReferencesToRating(rating);
         rating = ratingService.validateRatingValue(rating);
+        logger.info("Added " + Rating.class.getSimpleName() + " with id " + rating.getId());
         return ResponseEntity.ok(ratingRepository.save(rating));
     }
 
 
     @PreAuthorize("hasAuthority('User')")
-    @PutMapping(consumes="application/json", produces="application/json")
+    @PutMapping(consumes = "application/json", produces = "application/json")
     ResponseEntity<Rating> update(@RequestBody Rating rating) throws RatingNotFoundException {
         Optional<Rating> foundRating = ratingRepository.findById(rating.getId());
-        if(foundRating.isPresent()){
+        if (foundRating.isPresent()) {
             Rating ratingToSave = foundRating.get();
             ratingToSave.setDescription(rating.getDescription());
             ratingToSave.setGivenPoints(rating.getGivenPoints());
             ratingToSave = ratingService.validateRatingValue(ratingToSave);
+            logger.info("Updated " + Rating.class.getSimpleName() + " width id " + ratingToSave.getId());
             return ResponseEntity.ok(this.ratingRepository.save(ratingToSave));
         }
-        throw new  RatingNotFoundException("No Rating found ");
+        throw new RatingNotFoundException("No " + Rating.class.getSimpleName() + " found with id " + rating.getId());
     }
 
     @PreAuthorize("hasAuthority('User')")
     @DeleteMapping("/{id}")
-    void deleteRating (@PathVariable Long id) {
+    void deleteRating(@PathVariable Long id) {
         this.ratingRepository.deleteById(id);
     }
 
     @GetMapping("/count/{mediumId}")
-    ResponseEntity<Long> countRatings (@PathVariable Long mediumId){
+    ResponseEntity<Long> countRatings(@PathVariable Long mediumId) {
         return ResponseEntity.ok(this.ratingRepository.countAllByMediumId(mediumId));
     }
 

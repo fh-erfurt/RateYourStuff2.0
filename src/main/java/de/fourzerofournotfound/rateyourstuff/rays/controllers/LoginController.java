@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
+import java.util.logging.Logger;
 
 @RestController
 @RequestMapping("/login")
@@ -22,6 +23,7 @@ public class LoginController {
     private final UserSecurityService userSecurityService;
     private final LoginRepository repository;
     private final LoginService loginService;
+    private final Logger logger = Logger.getLogger(this.getClass().getName());
 
     @Autowired
     public LoginController(UserService userService,
@@ -46,10 +48,11 @@ public class LoginController {
         if(potentialLogin.isPresent()){
             loginService.manageUpdatePersistence(login, potentialLogin);
             Login savedLogin = repository.save(potentialLogin.get());
+            logger.info("Updated " +Login.class.getSimpleName()+ " with id " + savedLogin.getId());
             return ResponseEntity.ok(this.loginService.convertToDto(savedLogin));
         }
 
-        throw new InvalidLoginException("Login not found!");
+        throw new InvalidLoginException(Login.class.getSimpleName() + " not found!");
     }
 
     @CrossOrigin(origins = "http://localhost:3000")

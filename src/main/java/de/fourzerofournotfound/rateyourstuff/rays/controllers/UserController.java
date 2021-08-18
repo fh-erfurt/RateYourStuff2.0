@@ -5,18 +5,19 @@ import de.fourzerofournotfound.rateyourstuff.rays.models.User;
 import de.fourzerofournotfound.rateyourstuff.rays.models.errors.UserNotFoundException;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.UserRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.services.PageableService;
+import de.fourzerofournotfound.rateyourstuff.rays.services.UserSecurityService;
+import de.fourzerofournotfound.rateyourstuff.rays.services.UserService;
 import de.fourzerofournotfound.rateyourstuff.rays.services.errors.UserAlreadyExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
-
-import de.fourzerofournotfound.rateyourstuff.rays.services.UserSecurityService;
-import de.fourzerofournotfound.rateyourstuff.rays.services.UserService;
 
 
 @RestController
@@ -26,6 +27,7 @@ public class UserController {
     private final UserService userService;
     private final UserSecurityService userSecurityService;
     private final PageableService pageableService;
+    private final Logger logger = Logger.getLogger(this.getClass().getName());
 
     @Autowired
     public UserController(UserRepository repository, UserService userService, UserSecurityService userSecurityService, PageableService pageableService) {
@@ -57,17 +59,17 @@ public class UserController {
     @GetMapping("/id={id}")
     ResponseEntity<UserDto> getById(@PathVariable Long id) throws UserNotFoundException {
         Optional<User> user = userRepository.findById(id);
-        if(user.isPresent()) {
-            return( ResponseEntity.ok(userService.convertToDto(user.get())));
+        if (user.isPresent()) {
+            return (ResponseEntity.ok(userService.convertToDto(user.get())));
         }
-        throw new UserNotFoundException("No User found for id " + id);
+        throw new UserNotFoundException("No " + User.class.getSimpleName() + " found for id " + id);
     }
 
     @GetMapping("/check/is={userName}")
     ResponseEntity<Boolean> getUsername(@PathVariable String userName) throws UserAlreadyExistsException {
         Optional<User> user = userRepository.findByUserNameIgnoreCase(userName);
-        if(user.isPresent()){
-            throw new UserAlreadyExistsException("User tried to sign up with already taken userName: @" + userName);
+        if (user.isPresent()) {
+            throw new UserAlreadyExistsException(User.class.getSimpleName() + " tried to sign up with already taken userName: @" + userName);
         } else {
             return ResponseEntity.ok(true);
         }
@@ -78,6 +80,7 @@ public class UserController {
         userService.setRoleId(user);
         userSecurityService.hashPasswordOfSignUp(user);
         User savedUser = this.userRepository.save(user);
+        logger.info("Added " + User.class.getSimpleName() + " with id " + savedUser.getId());
         return ResponseEntity.ok(userService.convertToDto(savedUser));
     }
 
@@ -85,15 +88,18 @@ public class UserController {
     @PutMapping(consumes = "application/json", produces = "application/json")
     ResponseEntity<UserDto> update(@RequestBody User user) throws UserNotFoundException, UserAlreadyExistsException {
         Optional<User> potentialUser = userRepository.findUserById(user.getId());
-        if(potentialUser.isPresent()){
+        if (potentialUser.isPresent()) {
             userService.manageUpdatePersistence(user, potentialUser);
             User savedUser = userRepository.save(potentialUser.get());
+            logger.info("Updated " + User.class.getSimpleName() + " with id " + user.getId());
             return ResponseEntity.ok(this.userService.convertToDto(savedUser));
         }
-        throw new UserNotFoundException("User not found");
+        throw new UserNotFoundException(User.class.getSimpleName() + " not found");
     }
 
     @PreAuthorize("hasAuthority('Admin')")
     @DeleteMapping("/{id}")
-    void deleteUser(@PathVariable Long id) {this.userRepository.deleteById(id);}
+    void deleteUser(@PathVariable Long id) {
+        this.userRepository.deleteById(id);
+    }
 }
