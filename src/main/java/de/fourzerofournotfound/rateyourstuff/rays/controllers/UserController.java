@@ -120,6 +120,18 @@ public class UserController {
     }
 
     @PreAuthorize("hasAuthority('Admin')")
+    @PutMapping(path="/isEnabledUpdate", consumes = "application/json", produces = "application/json")
+    ResponseEntity<UserDto> isEnabledUpdate(@RequestBody User user) throws Exception {
+        Optional<User> potentialUser = userRepository.findUserById(user.getId());
+        if(potentialUser.isPresent()) {
+            potentialUser.get().getLogin().setIsEnabled(user.getLogin().getIsEnabled());
+            User savedUser = userRepository.save(potentialUser.get());
+            return ResponseEntity.ok(this.userService.convertToDto(savedUser));
+        }
+        throw new Exception();
+    }
+
+    @PreAuthorize("hasAuthority('Admin')")
     @DeleteMapping("/{id}")
     void deleteUser(@PathVariable Long id) {
         this.userRepository.deleteById(id);
