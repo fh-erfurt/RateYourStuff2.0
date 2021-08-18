@@ -3,9 +3,9 @@
 [![CodeQL](https://github.com/fh-erfurt/RateYourStuff2.0/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/fh-erfurt/RateYourStuff2.0/actions/workflows/codeql-analysis.yml)
 [![Docs](https://img.shields.io/badge/javadoc-see%20here-9cf.svg?style=flat&logo=java)](https://fh-erfurt.github.io/RateYourStuff2.0)
 
-Projekt, um verschiedene Arten von Multimedia zu bewerten und Ihre aktuellen Fortschritte zu teilen.
+Projekt, um verschiedene Medien zu Bewerten, darüber zu diskutieren und Fortschritte dazu anzulegen
 
-Und wer sind die Köpfe hinter dieser großartigen und überwältigend Idee?
+Das Projektteam:
 - Robin Beck
 - Christoph Frischmuth
 - Mickey Knop
@@ -21,7 +21,7 @@ Der Server ist konfiguriert, um mit einer mariaDB Datenbank zu kommunizieren. Hi
 - Nutzername: root
 - Passwort: (kein Passwort)
 
-Hinweis: Für das Durchlaufen der Testfälle, wird eine extra Datenbank namens "ratedatabasetest" angelegt.
+Hinweis: Für das Durchlaufen der Testfälle, wird eine H2 Datenbank namens "ratedatabasetest" angelegt. Somit ist für das Durchführen der Tests keine aktive MariaDB Datenbank erforderlich.
 
 #### REST-API
 Nachdem ein entsprechender Datenbankserver bereitgestellt wurde, kann die Spring-Anwendung gestartet werden.
