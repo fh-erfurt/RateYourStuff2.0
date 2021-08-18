@@ -19,7 +19,7 @@ public class CommentRepositoryTest {
     }
 
     @Test
-    public void should_save_comment() {
+    public void shouldSaveComment() {
 
         //Given
         Comment given = Comment.builder()

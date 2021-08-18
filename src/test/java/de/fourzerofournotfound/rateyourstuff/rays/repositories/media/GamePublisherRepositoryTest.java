@@ -29,7 +29,7 @@ public class GamePublisherRepositoryTest {
     }
 
     @Test
-    void should_save_gamePublisher() {
+    void shouldSaveGamePublisher() {
         //Given
 
         GamePublisher given = new GamePublisher("Nintendo");
@@ -42,7 +42,7 @@ public class GamePublisherRepositoryTest {
     }
 
     @Test
-    void should_find_gamePublisher_by_title() {
+    void shouldFindGamePublisherByTitle() {
         //Given
         GamePublisher given1 = new GamePublisher("Nintendo");
         GamePublisher given2 = new GamePublisher("Electronic Arts");
@@ -59,7 +59,7 @@ public class GamePublisherRepositoryTest {
     }
 
     @Test
-    void should_find_all_gamePublishers() {
+    void shouldFindAllGamePublishers() {
         //Given
         GamePublisher given1 = new GamePublisher("Nintendo");
         GamePublisher given2 = new GamePublisher("Electronic Arts");
@@ -77,7 +77,7 @@ public class GamePublisherRepositoryTest {
     }
 
     @Test
-    public void should_update_gamePublisher() {
+    public void shouldUpdateGamePublisher() {
         //Given
         GamePublisher given = new GamePublisher("Nintendo");
         GamePublisher saved = repository.save(given);
@@ -91,7 +91,7 @@ public class GamePublisherRepositoryTest {
     }
 
     @Test
-    public void should_delete_gamePublisher() {
+    public void shouldDeleteGamePublisher() {
         //Given
         GamePublisher given = new GamePublisher("Nintendo");
         GamePublisher saved = repository.save(given);

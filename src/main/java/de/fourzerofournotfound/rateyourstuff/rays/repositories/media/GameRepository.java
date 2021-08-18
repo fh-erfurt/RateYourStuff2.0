@@ -1,12 +1,13 @@
 package de.fourzerofournotfound.rateyourstuff.rays.repositories.media;
 
-import de.fourzerofournotfound.rateyourstuff.rays.models.media.Game;
+import de.fourzerofournotfound.rateyourstuff.rays.models.media.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -24,6 +25,10 @@ public interface GameRepository extends JpaRepository<Game, Long> {
     Page<Game> findAll(Pageable pageable);
 
     Optional<Game> findByMediumName(String gameName);
+
+    List<Game> findAllByGamePublisher(GamePublisher gamePublisher);
+
+    List<Game> findAllByPlatforms(Platform platform);
 
     Optional<Game> findGameByMediumNameIgnoreCaseAndReleaseDate(String mediumName, LocalDate releaseDate);
 

@@ -22,7 +22,7 @@ public class RatingRepositoryTest {
     }
 
     @Test
-    public void should_save_rating() {
+    public void shouldSaveRating() {
         //Given
         Rating given = Rating.builder()
                 .givenPoints(5)
@@ -37,7 +37,7 @@ public class RatingRepositoryTest {
     }
 
     @Test
-    public void should_find_rating_by_givenPoints() {
+    public void shouldFindRatingByGivenPoints() {
 
         //Given
         Rating.builder()

@@ -26,7 +26,7 @@ public class BookRepositoryTest {
     }
 
     @Test
-    void should_save_book() {
+    void shouldSaveBook() {
         //Given
         Book given = new Book("Harry Potter und der Orden des Phönix", "bestes Buch der Reihe", LocalDate.now(), "3551555559", true, true, 1021);
 
@@ -38,7 +38,7 @@ public class BookRepositoryTest {
     }
 
     @Test
-    void should_save_book_with_publisher() {
+    void shouldSaveBookWithPublisher() {
         //Given
         Book given = new Book("Harry Potter und der Orden des Phönix", "bestes Buch der Reihe", LocalDate.now(), "3551555559", true, true, 1021);
         BookPublisher publisher = new BookPublisher("Carlsen");
@@ -53,7 +53,7 @@ public class BookRepositoryTest {
     }
 
     @Test
-    void should_update_description_of_book() {
+    void shouldUpdateDescriptionOfBook() {
         //Given
         Book given = new Book("Harry Potter und der Orden des Phönix", "bestes Buch der Reihe", LocalDate.now(), "3551555559", true, true, 1021);
         Book saved = bookRepository.save(given);
@@ -70,7 +70,7 @@ public class BookRepositoryTest {
     }
 
     @Test
-    void should_find_book_by_title() {
+    void shouldFindBookByTitle() {
         //Given
         Book given1 = new Book("Harry Potter und der Orden des Phönix", "bestes Buch der Reihe", LocalDate.now(), "3551555559", true, true, 1021);
         Book given2 = new Book("Harry Potter und die Kammer des Schreckens", "schlechtestes Buch der Reihe", LocalDate.now(), "3551551685", true, true, 351);
@@ -88,7 +88,7 @@ public class BookRepositoryTest {
     }
 
     @Test
-    void should_find_book_by_isbn() {
+    void shouldFindBookByIsbn() {
         //Given
         Book given1 = new Book("Harry Potter und der Orden des Phönix", "bestes Buch der Reihe", LocalDate.now(), "3551555559", true, true, 1021);
         Book given2 = new Book("Harry Potter und die Kammer des Schreckens", "schlechtestes Buch der Reihe", LocalDate.now(), "3551551685", true, true, 351);
@@ -107,8 +107,7 @@ public class BookRepositoryTest {
 
 
     @Test
-    void should_find_book_with_publisher() {
-        //Given
+    void shouldFindBookWithPublisher() {
         //Given
         Book given1 = new Book("Harry Potter und der Orden des Phönix", "bestes Buch der Reihe", LocalDate.now(), "3551555559", true, true, 1021);
         BookPublisher publisher1 = new BookPublisher("Carlsen");
@@ -133,7 +132,7 @@ public class BookRepositoryTest {
     }
 
     @Test
-    void should_delete_book_from_database() {
+    void shouldDeleteBookFromDatabase() {
         //Given
         Book given = new Book("Harry Potter und der Orden des Phönix", "bestes Buch der Reihe", LocalDate.now(), "3551555559", true, true, 1021);
         Book saved = bookRepository.save(given);

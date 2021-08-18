@@ -29,7 +29,7 @@ public class BookPublisherRepositoryTest {
     }
 
     @Test
-    void should_save_bookPublisher() {
+    void shouldSaveBookPublisher() {
         //Given
         BookPublisher given = new BookPublisher("TOR");
 
@@ -41,7 +41,7 @@ public class BookPublisherRepositoryTest {
     }
 
     @Test
-    void should_find_bookPublisher_by_title() {
+    void shouldFindBookPublisherByTitle() {
         //Given
         BookPublisher given1 = new BookPublisher("TOR");
         BookPublisher given2 = new BookPublisher("HEYNE");
@@ -58,7 +58,7 @@ public class BookPublisherRepositoryTest {
     }
 
     @Test
-    void should_find_all_bookPublishers() {
+    void shouldFindAllBookPublishers() {
         //Given
         BookPublisher given1 = new BookPublisher("TOR");
         BookPublisher given2 = new BookPublisher("HEYNE");
@@ -76,7 +76,7 @@ public class BookPublisherRepositoryTest {
     }
 
     @Test
-    public void should_update_bookPublisher() {
+    public void shouldUpdateBookPublisher() {
         //Given
         BookPublisher given = new BookPublisher("TOR");
         BookPublisher saved = repository.save(given);
@@ -90,7 +90,7 @@ public class BookPublisherRepositoryTest {
     }
 
     @Test
-    public void should_delete_bookPublisher() {
+    public void shouldDeleteBookPublisher() {
         //Given
         BookPublisher given = new BookPublisher("TOR");
         BookPublisher saved = repository.save(given);

@@ -26,7 +26,7 @@ public class SeriesRepositoryTest {
     }
 
     @Test
-    void should_save_series() {
+    void shouldSaveSeries() {
         //Given
         Series given = Series.builder()
                 .mediumName("Ein Käfig voller Helden")
@@ -45,7 +45,7 @@ public class SeriesRepositoryTest {
     }
 
     @Test
-    void should_find_series_by_name() {
+    void shouldFindSeriesByName() {
         //Given
         Series given1 = Series.builder()
                 .mediumName("Ein Käfig voller Helden")
@@ -77,7 +77,7 @@ public class SeriesRepositoryTest {
     }
 
     @Test
-    void should_save_series_with_seasons() {
+    void shouldSaveSeriesWithSeasons() {
         //Given
         Series given = Series.builder()
                 .mediumName("Ein Käfig voller Helden")
@@ -103,7 +103,7 @@ public class SeriesRepositoryTest {
     }
 
     @Test
-    public void should_update_series() {
+    public void shouldUpdateSeries() {
         //Given
         Series given = Series.builder()
                 .mediumName("Ein Käfig voller Helden")
@@ -126,7 +126,7 @@ public class SeriesRepositoryTest {
     }
 
     @Test
-    public void should_delete_series() {
+    public void shouldDeleteSeries() {
         //Given
         Series given = Series.builder()
                 .mediumName("Ein Käfig voller Helden")

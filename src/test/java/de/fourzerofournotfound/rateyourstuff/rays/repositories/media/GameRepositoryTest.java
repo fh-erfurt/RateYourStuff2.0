@@ -1,8 +1,7 @@
 package de.fourzerofournotfound.rateyourstuff.rays.repositories.media;
 
 
-import de.fourzerofournotfound.rateyourstuff.rays.models.media.Game;
-import de.fourzerofournotfound.rateyourstuff.rays.models.media.GamePublisher;
+import de.fourzerofournotfound.rateyourstuff.rays.models.media.*;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -10,22 +9,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @SpringBootTest(properties = "spring.profiles.active=test")
 public class GameRepositoryTest {
     @Autowired
     GameRepository gameRepository;
 
+    @Autowired
+    PlatformRepository platformRepository;
+
     @AfterEach
     public void afterEach() {
         gameRepository.deleteAll();
+        platformRepository.deleteAll();
     }
 
     @Test
-    void should_save_game() {
+    void shouldSaveGame() {
         //Given
         Game given = new Game("Anthem", "Worst Game ever", LocalDate.now(), (float) 0.8, 1, 4, 12);
 
@@ -37,7 +38,7 @@ public class GameRepositoryTest {
     }
 
     @Test
-    void should_save_game_with_gamePublisher() {
+    void shouldSaveGameWithGamePublisher() {
         //Given
         Game given = new Game("Anthem", "Worst Game ever", LocalDate.now(), (float) 0.8, 1, 4, 12);
         GamePublisher gamePublisher = new GamePublisher("Electronic Arts");
@@ -52,7 +53,7 @@ public class GameRepositoryTest {
     }
 
     @Test
-    void should_update_game_shortDescription() {
+    void shouldUpdateGameShortDescription() {
         //Given
         Game given = new Game("Anthem", "Worst Game ever", LocalDate.now(), (float) 0.8, 1, 4, 12);
         Game saved = gameRepository.save(given);
@@ -68,7 +69,7 @@ public class GameRepositoryTest {
     }
 
     @Test
-    void should_delete_game_from_database() {
+    void shouldDeleteGameFromDatabase() {
         //Given
         Game given = new Game("Anthem", "Worst Game ever", LocalDate.now(), (float) 0.8, 1, 4, 12);
         Game saved = gameRepository.save(given);
@@ -82,7 +83,7 @@ public class GameRepositoryTest {
     }
 
     @Test
-    void should_find_Game_by_title() {
+    void shouldFindGameByTitle() {
         //Given
         Game given = new Game("Anthem", "Worst Game ever", LocalDate.now(), (float) 0.8, 1, 4, 12);
         gameRepository.save(given);
@@ -95,25 +96,71 @@ public class GameRepositoryTest {
         Assertions.assertThat(result.get().getMediumName()).isEqualTo("Anthem");
     }
 
-    //Todo: Finalize Test
     @Test
-    void should_find_games_with_platform() {
+    void shouldFindGameWithPublisher() {
         //Given
         Game given1 = new Game("Anthem", "Worst Game ever", LocalDate.now(), 0.8f, 1, 4, 12);
+        GamePublisher publisher1 = new GamePublisher("Electronic Arts");
+        given1.setGamePublisher(publisher1);
 
-
-        Game given2 = new Game("Landwirtschaftssimulator", "Best Farmingsimulator", LocalDate.now(), 170.7f, 1, 1, 0);
+        Game given2 = new Game("Pokemon Snap", "Boring", LocalDate.now(), 0.8f, 1, 1, 0);
+        GamePublisher publisher2 = new GamePublisher("Nintendo");
+        given1.setGamePublisher(publisher2);
 
         List<Game> persisted = new ArrayList<>();
         persisted.add(gameRepository.save(given1));
         persisted.add(gameRepository.save(given2));
 
         //When
-        //List<Game> results = gameRepository.findAllByPlatform(platform2);
+        List<Game> results = gameRepository.findAllByGamePublisher(publisher2);
 
         //Then
-        //Assertions.assertThat(results).isNotNull().isNotEmpty().allMatch(Objects::nonNull);
-        //Assertions.assertThat(persisted).isNotNull().isNotEmpty().allMatch(Objects::nonNull);
+        Assertions.assertThat(results).isNotNull().isNotEmpty().allMatch(Objects::nonNull);
+        Assertions.assertThat(persisted).isNotNull().isNotEmpty().allMatch(Objects::nonNull);
     }
 
+    @Test
+    void shouldFindGamesWithPlatform() {
+        //Given
+        Game given1 = new Game("Anthem", "Worst Game ever", LocalDate.now(), 0.8f, 1, 4, 12);
+
+        Game given2 = new Game("Pokemon Snap", "Boring", LocalDate.now(), 0.8f, 1, 1, 12);
+
+        HashSet<Platform> platformSet1 = new HashSet<>();
+        HashSet<Platform> platformSet2 = new HashSet<>();
+
+        Platform platform1 = Platform.builder()
+                .platformTitle("PC")
+                .build();
+        Platform platform2 = Platform.builder()
+                .platformTitle("Nintendo Switch")
+                .build();
+        Platform platform3 = Platform.builder()
+                .platformTitle("PS5")
+                .build();
+
+        platformRepository.save(platform1);
+        platformRepository.save(platform2);
+        platformRepository.save(platform3);
+
+        platformSet1.add(platform1);
+        platformSet1.add(platform2);
+
+        platformSet2.add(platform2);
+        platformSet2.add(platform3);
+
+        given1.setPlatforms(platformSet1);
+        given2.setPlatforms(platformSet2);
+
+        List<Game> persisted = new ArrayList<>();
+        persisted.add(gameRepository.save(given1));
+        persisted.add(gameRepository.save(given2));
+
+        //When
+        List<Game> results = gameRepository.findAllByPlatforms(platform2);
+
+        //Then
+        Assertions.assertThat(results).isNotNull().isNotEmpty().allMatch(Objects::nonNull);
+        Assertions.assertThat(persisted).isNotNull().isNotEmpty().allMatch(Objects::nonNull);
+    }
 }

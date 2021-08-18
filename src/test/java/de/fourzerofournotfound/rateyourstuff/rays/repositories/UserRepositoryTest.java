@@ -34,7 +34,7 @@ public class UserRepositoryTest {
     }
 
     @Test
-    public void should_add_new_user() {
+    public void shouldAddNewUser() {
         //Given
         Login givenLogin = Login.builder()
                 .email("siggi@rays.de")
@@ -66,7 +66,7 @@ public class UserRepositoryTest {
     }
 
     @Test
-    public void should_find_user_by_userName() {
+    public void shouldFindUserByUserName() {
         //Given
         Login givenLogin = Login.builder()
                 .email("siggi@rays.de")
@@ -98,7 +98,7 @@ public class UserRepositoryTest {
     }
 
     @Test
-    public void should_add_login() {
+    public void shouldAddLogin() {
         //Given
         Login givenLogin = Login.builder()
                 .email("siggi@rays.de")
@@ -131,7 +131,7 @@ public class UserRepositoryTest {
     }
 
     @Test
-    public void should_update_lastName() {
+    public void shouldUpdateLastName() {
         //Given
         Login givenLogin = Login.builder()
                 .email("siggi@rays.de")
@@ -167,7 +167,7 @@ public class UserRepositoryTest {
     }
 
     @Test
-    public void should_delete_user() {
+    public void shouldDeleteUser() {
         //Given
         Login givenLogin = Login.builder()
                 .email("siggi@rays.de")

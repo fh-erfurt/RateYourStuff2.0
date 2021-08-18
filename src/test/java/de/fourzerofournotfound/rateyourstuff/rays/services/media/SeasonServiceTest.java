@@ -55,7 +55,6 @@ public class SeasonServiceTest {
 
         // Then
         Assertions.assertTrue(seasonService.isValidSeason(givenSeason));
-
         Assertions.assertTrue(seasonService.isValidSeason(result));
     }
 }

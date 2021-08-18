@@ -29,12 +29,11 @@ public class NetworkRepositoryTest {
     }
 
     @Test
-    void should_save_network() {
+    void shouldSaveNetwork() {
         //Given
         Network given = Network.builder()
                 .networkTitle("CBS")
                 .build();
-
 
         //When
         Network result = repository.save(given);
@@ -44,7 +43,7 @@ public class NetworkRepositoryTest {
     }
 
     @Test
-    void should_find_network_by_title() {
+    void shouldFindNetworkByTitle() {
         //Given
         Network given1 = Network.builder()
                 .networkTitle("CBS")
@@ -65,7 +64,7 @@ public class NetworkRepositoryTest {
     }
 
     @Test
-    void should_find_all_networks() {
+    void shouldFindAllNetworks() {
         //Given
         Network given1 = Network.builder()
                 .networkTitle("CBS")
@@ -87,7 +86,7 @@ public class NetworkRepositoryTest {
     }
 
     @Test
-    public void should_update_network() {
+    public void shouldUpdateNetwork() {
         //Given
         Network given = Network.builder()
                 .networkTitle("CBS")
@@ -103,7 +102,7 @@ public class NetworkRepositoryTest {
     }
 
     @Test
-    public void should_delete_network() {
+    public void shouldDeleteNetwork() {
         //Given
         Network given = Network.builder()
                 .networkTitle("CBS")

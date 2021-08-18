@@ -25,7 +25,7 @@ public class MovieRepositoryTest {
     }
 
     @Test
-    void should_save_movie() {
+    void shouldSaveMovie() {
         //Given
         Movie given = Movie.builder()
                 .mediumName("Zurück in die Zukunft")
@@ -43,7 +43,7 @@ public class MovieRepositoryTest {
     }
 
     @Test
-    void should_save_movie_with_network() {
+    void shouldSaveMovieWithNetwork() {
         //Given
         Movie given = Movie.builder()
                 .mediumName("Zurück in die Zukunft")
@@ -66,7 +66,7 @@ public class MovieRepositoryTest {
     }
 
     @Test
-    void should_update_description_of_movie() {
+    void shouldUpdateDescriptionOfMovie() {
         //Given
         Movie given = Movie.builder()
                 .mediumName("Zurück in die Zukunft")
@@ -76,7 +76,6 @@ public class MovieRepositoryTest {
                 .ageRestriction(6)
                 .build();
         Movie saved = repository.save(given);
-        String initialDescription = saved.getShortDescription();
 
         //When
         String updatedShortDescription = "Great Scott!";
@@ -90,7 +89,7 @@ public class MovieRepositoryTest {
     }
 
     @Test
-    void should_find_movie_by_title() {
+    void shouldFindMovieByTitle() {
         //Given
         Movie given1 = Movie.builder()
                 .mediumName("Zurück in die Zukunft")
@@ -120,7 +119,7 @@ public class MovieRepositoryTest {
     }
 
     @Test
-    void should_find_movies_with_network() {
+    void shouldFindMoviesWithNetwork() {
         //Given
         Movie given1 = Movie.builder()
                 .mediumName("Zurück in die Zukunft")
@@ -163,7 +162,7 @@ public class MovieRepositoryTest {
     }
 
     @Test
-    void should_remove_movie_from_database() {
+    void shouldRemoveMovieFromDatabase() {
         //Given
         Movie given = Movie.builder()
                 .mediumName("Zurück in die Zukunft")

@@ -111,9 +111,7 @@ public class SeriesServiceTest {
 
         //Then
         org.junit.jupiter.api.Assertions.assertTrue(seriesService.isValidSeries(givenSeries));
-
         org.junit.jupiter.api.Assertions.assertTrue(seriesService.isValidSeries(result));
-
         org.junit.jupiter.api.Assertions.assertTrue(seriesService.isValidSeries(givenSeriesNotToStore));
         org.junit.jupiter.api.Assertions.assertFalse(seriesService.isValidSeries(givenSeries2));
     }

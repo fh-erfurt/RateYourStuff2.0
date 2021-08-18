@@ -21,7 +21,7 @@ public class EpisodeRepositoryTest {
     }
 
     @Test
-    public void should_save_episode() {
+    public void shouldSaveEpisode() {
         //Given
         Episode given = Episode.builder()
                 .mediumName("Fasse dich, Kurtz!")
@@ -39,7 +39,7 @@ public class EpisodeRepositoryTest {
     }
 
     @Test
-    public void should_find_episode_by_name() {
+    public void shouldFindEpisodeByName() {
         //Given
         Episode given1 = Episode.builder()
                 .mediumName("Fasse dich, Kurtz!")
@@ -69,7 +69,7 @@ public class EpisodeRepositoryTest {
     }
 
     @Test
-    public void should_update_episode() {
+    public void shouldUpdateEpisode() {
         //Given
         Episode given = Episode.builder()
                 .mediumName("Fasse dich, Kurtz!")
@@ -91,7 +91,7 @@ public class EpisodeRepositoryTest {
     }
 
     @Test
-    public void should_delete_episode() {
+    public void shouldDeleteEpisode() {
         //Given
         Episode given = Episode.builder()
                 .mediumName("Fasse dich, Kurtz!")

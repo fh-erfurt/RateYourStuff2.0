@@ -22,7 +22,7 @@ class LoginRepositoryTest {
     }
 
     @Test
-    public void should_add_new_login_profile() {
+    public void shouldAddNewLoginProfile() {
         //Given
         Login given = Login.builder()
                 .email("max.mustermann@rays.de")
@@ -38,7 +38,7 @@ class LoginRepositoryTest {
     }
 
     @Test
-    public void should_update_email_address() {
+    public void shouldUpdateEmailAddress() {
         //Given
         Login given = Login.builder()
                 .email("max.mustermann@rays.de")
@@ -57,7 +57,7 @@ class LoginRepositoryTest {
     }
 
     @Test
-    public void should_find_login_by_email() {
+    public void shouldFindLoginByEmail() {
         //Given
         Login given = Login.builder()
                 .email("max.mustermann@rays.de")
@@ -74,7 +74,7 @@ class LoginRepositoryTest {
     }
 
     @Test
-    public void should_not_found_login_by_email() {
+    public void shouldNotFoundLoginByEmail() {
         //Given
         Login given = Login.builder()
                 .email("max.mustermann@rays.de")
@@ -91,7 +91,7 @@ class LoginRepositoryTest {
     }
 
     @Test
-    public void should_delete_login_account() {
+    public void shouldDeleteLoginAccount() {
         //Given
         Login given = Login.builder()
                 .email("max.mustermann@rays.de")

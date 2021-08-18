@@ -27,7 +27,7 @@ public class SeasonRepositoryTest {
     }
 
     @Test
-    void should_save_season() {
+    void shouldSaveSeason() {
         //Given
         Season given = Season.builder().seasonNumber(1).seasonTitle("").build();
 
@@ -39,7 +39,7 @@ public class SeasonRepositoryTest {
     }
 
     @Test
-    public void should_save_season_and_episodes() {
+    public void shouldSaveSeasonAndEpisodes() {
         //Given
         Season given = Season.builder().seasonNumber(1).seasonTitle("").build();
         Episode episode1 = Episode.builder()
@@ -74,7 +74,7 @@ public class SeasonRepositoryTest {
     }
 
     @Test
-    public void should_update_season() {
+    public void shouldUpdateSeason() {
         //Given
         Season given = Season.builder().seasonNumber(1).seasonTitle("").build();
         Season saved = repository.save(given);
@@ -89,7 +89,7 @@ public class SeasonRepositoryTest {
     }
 
     @Test
-    public void should_delete_season() {
+    public void shouldDeleteSeason() {
         //Given
         Season given = Season.builder().seasonNumber(1).seasonTitle("").build();
         Season saved = repository.save(given);
