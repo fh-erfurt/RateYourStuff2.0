@@ -34,7 +34,4 @@ public class RatingDto {
 
     private String createdAt;
 
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = dateFormat.format(createdAt);
-    }
 }

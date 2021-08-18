@@ -96,17 +96,24 @@ public class RatingController {
 
     @PreAuthorize("hasAuthority('User')")
     @PostMapping(path = "/add", consumes = "application/json", produces = "application/json")
-    ResponseEntity<Rating> add(@RequestBody Rating rating) throws InvalidRatingException {
+    ResponseEntity<RatingDto> add(@RequestBody Rating rating) throws InvalidRatingException {
+        Optional<Rating> foundRating = ratingRepository.findByMediumIdAndUserId(rating.getMediumMappingId(), rating.getUserMappingId());
+        //check if there is already a rating from the same user for the same medium
+        if(foundRating.isPresent()) {
+            //set the id of the incoming rating to make sure that is gets overwritten
+            rating.setId(foundRating.get().getId());
+        }
         rating = ratingService.addReferencesToRating(rating);
         rating = ratingService.validateRatingValue(rating);
         logger.info("Added " + Rating.class.getSimpleName() + " with id " + rating.getId());
-        return ResponseEntity.ok(ratingRepository.save(rating));
+        Rating savedRating = ratingRepository.save(rating);
+        return ResponseEntity.ok(ratingService.convertToDto(savedRating));
     }
 
 
     @PreAuthorize("hasAuthority('User')")
     @PutMapping(consumes = "application/json", produces = "application/json")
-    ResponseEntity<Rating> update(@RequestBody Rating rating) throws RatingNotFoundException {
+    ResponseEntity<RatingDto> update(@RequestBody Rating rating) throws RatingNotFoundException {
         Optional<Rating> foundRating = ratingRepository.findById(rating.getId());
         if (foundRating.isPresent()) {
             Rating ratingToSave = foundRating.get();
@@ -114,7 +121,8 @@ public class RatingController {
             ratingToSave.setGivenPoints(rating.getGivenPoints());
             ratingToSave = ratingService.validateRatingValue(ratingToSave);
             logger.info("Updated " + Rating.class.getSimpleName() + " width id " + ratingToSave.getId());
-            return ResponseEntity.ok(this.ratingRepository.save(ratingToSave));
+            Rating savedRating = this.ratingRepository.save(ratingToSave);
+            return ResponseEntity.ok(ratingService.convertToDto(savedRating));
         }
         throw new RatingNotFoundException("No " + Rating.class.getSimpleName() + " found with id " + rating.getId());
     }
