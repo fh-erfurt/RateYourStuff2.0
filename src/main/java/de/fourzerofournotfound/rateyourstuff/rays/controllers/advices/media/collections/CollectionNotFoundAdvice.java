@@ -1,7 +1,7 @@
 package de.fourzerofournotfound.rateyourstuff.rays.controllers.advices.media.collections;
 
 import de.fourzerofournotfound.rateyourstuff.rays.controllers.media.collections.CollectionController;
-import de.fourzerofournotfound.rateyourstuff.rays.models.errors.media.collections.CollectionNotFoundException;
+import de.fourzerofournotfound.rateyourstuff.rays.errors.media.collections.CollectionNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;

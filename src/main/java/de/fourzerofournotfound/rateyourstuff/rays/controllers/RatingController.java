@@ -2,11 +2,11 @@ package de.fourzerofournotfound.rateyourstuff.rays.controllers;
 
 import de.fourzerofournotfound.rateyourstuff.rays.dtos.RatingDto;
 import de.fourzerofournotfound.rateyourstuff.rays.models.Rating;
-import de.fourzerofournotfound.rateyourstuff.rays.models.errors.RatingNotFoundException;
+import de.fourzerofournotfound.rateyourstuff.rays.errors.RatingNotFoundException;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.RatingRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.services.PageableService;
 import de.fourzerofournotfound.rateyourstuff.rays.services.RatingService;
-import de.fourzerofournotfound.rateyourstuff.rays.services.errors.InvalidRatingException;
+import de.fourzerofournotfound.rateyourstuff.rays.errors.InvalidRatingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -129,5 +129,4 @@ public class RatingController {
     ResponseEntity<Long> countRatings(@PathVariable Long mediumId) {
         return ResponseEntity.ok(this.ratingRepository.countAllByMediumId(mediumId));
     }
-
 }

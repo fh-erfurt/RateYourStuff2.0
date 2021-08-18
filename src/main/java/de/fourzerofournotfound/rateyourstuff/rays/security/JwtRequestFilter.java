@@ -1,6 +1,6 @@
 package de.fourzerofournotfound.rateyourstuff.rays.security;
 
-import de.fourzerofournotfound.rateyourstuff.rays.services.AppUserDetailService;
+import de.fourzerofournotfound.rateyourstuff.rays.services.users.AppUserDetailService;
 import de.fourzerofournotfound.rateyourstuff.rays.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

@@ -1,7 +1,7 @@
 package de.fourzerofournotfound.rateyourstuff.rays.controllers.advices.media.series;
 
 import de.fourzerofournotfound.rateyourstuff.rays.controllers.media.series.SeriesController;
-import de.fourzerofournotfound.rateyourstuff.rays.models.errors.media.series.EpisodeNotFoundException;
+import de.fourzerofournotfound.rateyourstuff.rays.errors.media.series.EpisodeNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;

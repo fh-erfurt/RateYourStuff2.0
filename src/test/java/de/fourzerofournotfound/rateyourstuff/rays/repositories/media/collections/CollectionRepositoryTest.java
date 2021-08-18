@@ -1,14 +1,13 @@
 package de.fourzerofournotfound.rateyourstuff.rays.repositories.media.collections;
 
-import de.fourzerofournotfound.rateyourstuff.rays.models.Login;
-import de.fourzerofournotfound.rateyourstuff.rays.models.Role;
-import de.fourzerofournotfound.rateyourstuff.rays.models.User;
+import de.fourzerofournotfound.rateyourstuff.rays.models.users.Login;
+import de.fourzerofournotfound.rateyourstuff.rays.models.users.Role;
+import de.fourzerofournotfound.rateyourstuff.rays.models.users.User;
 import de.fourzerofournotfound.rateyourstuff.rays.models.media.collections.Collection;
 import de.fourzerofournotfound.rateyourstuff.rays.models.media.movies.Movie;
-import de.fourzerofournotfound.rateyourstuff.rays.repositories.LoginRepository;
-import de.fourzerofournotfound.rateyourstuff.rays.repositories.RoleRepository;
-import de.fourzerofournotfound.rateyourstuff.rays.repositories.UserRepository;
-import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.collections.CollectionRepository;
+import de.fourzerofournotfound.rateyourstuff.rays.repositories.users.LoginRepository;
+import de.fourzerofournotfound.rateyourstuff.rays.repositories.users.RoleRepository;
+import de.fourzerofournotfound.rateyourstuff.rays.repositories.users.UserRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.movies.MovieRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

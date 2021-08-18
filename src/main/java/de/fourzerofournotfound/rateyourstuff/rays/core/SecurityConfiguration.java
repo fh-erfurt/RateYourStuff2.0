@@ -1,7 +1,7 @@
 package de.fourzerofournotfound.rateyourstuff.rays.core;
 
 import de.fourzerofournotfound.rateyourstuff.rays.security.JwtRequestFilter;
-import de.fourzerofournotfound.rateyourstuff.rays.services.AppUserDetailService;
+import de.fourzerofournotfound.rateyourstuff.rays.services.users.AppUserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -6,7 +6,7 @@ import de.fourzerofournotfound.rateyourstuff.rays.controllers.media.movies.Movie
 import de.fourzerofournotfound.rateyourstuff.rays.controllers.media.series.EpisodeController;
 import de.fourzerofournotfound.rateyourstuff.rays.controllers.media.series.SeasonController;
 import de.fourzerofournotfound.rateyourstuff.rays.controllers.media.series.SeriesController;
-import de.fourzerofournotfound.rateyourstuff.rays.services.errors.DuplicateMediumException;
+import de.fourzerofournotfound.rateyourstuff.rays.errors.media.DuplicateMediumException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;

@@ -1,12 +1,12 @@
 package de.fourzerofournotfound.rateyourstuff.rays.controllers.media.series;
 
 import de.fourzerofournotfound.rateyourstuff.rays.dtos.media.series.SeriesDto;
-import de.fourzerofournotfound.rateyourstuff.rays.models.errors.media.series.SeriesNotFoundException;
+import de.fourzerofournotfound.rateyourstuff.rays.errors.media.series.SeriesNotFoundException;
 import de.fourzerofournotfound.rateyourstuff.rays.models.media.series.Series;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.series.SeriesRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.services.FileUploadService;
 import de.fourzerofournotfound.rateyourstuff.rays.services.PageableService;
-import de.fourzerofournotfound.rateyourstuff.rays.services.errors.DuplicateMediumException;
+import de.fourzerofournotfound.rateyourstuff.rays.errors.media.DuplicateMediumException;
 import de.fourzerofournotfound.rateyourstuff.rays.services.media.GenreService;
 import de.fourzerofournotfound.rateyourstuff.rays.services.media.LanguageService;
 import de.fourzerofournotfound.rateyourstuff.rays.services.media.NetworkService;

@@ -1,14 +1,14 @@
 package de.fourzerofournotfound.rateyourstuff.rays.controllers.media.series;
 
 import de.fourzerofournotfound.rateyourstuff.rays.dtos.media.series.SeasonDto;
-import de.fourzerofournotfound.rateyourstuff.rays.models.errors.media.series.SeasonNotFoundException;
-import de.fourzerofournotfound.rateyourstuff.rays.models.errors.media.series.SeriesNotFoundException;
+import de.fourzerofournotfound.rateyourstuff.rays.errors.media.series.SeasonNotFoundException;
+import de.fourzerofournotfound.rateyourstuff.rays.errors.media.series.SeriesNotFoundException;
 import de.fourzerofournotfound.rateyourstuff.rays.models.media.series.Season;
 import de.fourzerofournotfound.rateyourstuff.rays.models.media.series.Series;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.series.SeasonRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.series.SeriesRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.services.PageableService;
-import de.fourzerofournotfound.rateyourstuff.rays.services.errors.DuplicateMediumException;
+import de.fourzerofournotfound.rateyourstuff.rays.errors.media.DuplicateMediumException;
 import de.fourzerofournotfound.rateyourstuff.rays.services.media.MediaService;
 import de.fourzerofournotfound.rateyourstuff.rays.services.media.series.SeasonService;
 import org.springframework.beans.factory.annotation.Autowired;

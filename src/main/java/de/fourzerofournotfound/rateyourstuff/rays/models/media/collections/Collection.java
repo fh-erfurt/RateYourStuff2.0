@@ -1,10 +1,8 @@
 package de.fourzerofournotfound.rateyourstuff.rays.models.media.collections;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import de.fourzerofournotfound.rateyourstuff.rays.models.BaseModel;
-import de.fourzerofournotfound.rateyourstuff.rays.models.User;
+import de.fourzerofournotfound.rateyourstuff.rays.models.users.User;
 import de.fourzerofournotfound.rateyourstuff.rays.models.media.Medium;
 import lombok.*;
 

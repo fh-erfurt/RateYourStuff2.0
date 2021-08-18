@@ -2,12 +2,12 @@ package de.fourzerofournotfound.rateyourstuff.rays.controllers.media.games;
 
 
 import de.fourzerofournotfound.rateyourstuff.rays.dtos.media.games.GameDto;
-import de.fourzerofournotfound.rateyourstuff.rays.models.errors.media.games.GameNotFoundException;
+import de.fourzerofournotfound.rateyourstuff.rays.errors.media.games.GameNotFoundException;
 import de.fourzerofournotfound.rateyourstuff.rays.models.media.games.Game;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.games.GameRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.services.FileUploadService;
 import de.fourzerofournotfound.rateyourstuff.rays.services.PageableService;
-import de.fourzerofournotfound.rateyourstuff.rays.services.errors.DuplicateMediumException;
+import de.fourzerofournotfound.rateyourstuff.rays.errors.media.DuplicateMediumException;
 import de.fourzerofournotfound.rateyourstuff.rays.services.media.*;
 import de.fourzerofournotfound.rateyourstuff.rays.services.media.games.GamePublisherService;
 import de.fourzerofournotfound.rateyourstuff.rays.services.media.games.GameService;

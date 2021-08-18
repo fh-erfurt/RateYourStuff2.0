@@ -2,12 +2,12 @@ package de.fourzerofournotfound.rateyourstuff.rays.controllers.media.movies;
 
 
 import de.fourzerofournotfound.rateyourstuff.rays.dtos.media.movies.MovieDto;
-import de.fourzerofournotfound.rateyourstuff.rays.models.errors.media.movies.MovieNotFoundException;
+import de.fourzerofournotfound.rateyourstuff.rays.errors.media.movies.MovieNotFoundException;
 import de.fourzerofournotfound.rateyourstuff.rays.models.media.movies.Movie;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.movies.MovieRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.services.FileUploadService;
 import de.fourzerofournotfound.rateyourstuff.rays.services.PageableService;
-import de.fourzerofournotfound.rateyourstuff.rays.services.errors.DuplicateMediumException;
+import de.fourzerofournotfound.rateyourstuff.rays.errors.media.DuplicateMediumException;
 import de.fourzerofournotfound.rateyourstuff.rays.services.media.GenreService;
 import de.fourzerofournotfound.rateyourstuff.rays.services.media.LanguageService;
 import de.fourzerofournotfound.rateyourstuff.rays.services.media.movies.MovieService;

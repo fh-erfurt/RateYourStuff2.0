@@ -2,7 +2,7 @@ package de.fourzerofournotfound.rateyourstuff.rays.controllers.media.games;
 
 
 import de.fourzerofournotfound.rateyourstuff.rays.dtos.media.games.GamePublisherDto;
-import de.fourzerofournotfound.rateyourstuff.rays.models.errors.media.games.GamePublisherNotFoundException;
+import de.fourzerofournotfound.rateyourstuff.rays.errors.media.games.GamePublisherNotFoundException;
 import de.fourzerofournotfound.rateyourstuff.rays.models.media.games.GamePublisher;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.games.GamePublisherRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.services.PageableService;

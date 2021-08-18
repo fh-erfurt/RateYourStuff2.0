@@ -1,7 +1,7 @@
 package de.fourzerofournotfound.rateyourstuff.rays.controllers.advices.media.books;
 
 import de.fourzerofournotfound.rateyourstuff.rays.controllers.media.books.BookController;
-import de.fourzerofournotfound.rateyourstuff.rays.models.errors.media.books.BookNotFoundException;
+import de.fourzerofournotfound.rateyourstuff.rays.errors.media.books.BookNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;

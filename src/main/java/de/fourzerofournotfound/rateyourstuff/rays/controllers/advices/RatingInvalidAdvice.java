@@ -1,6 +1,6 @@
 package de.fourzerofournotfound.rateyourstuff.rays.controllers.advices;
 
-import de.fourzerofournotfound.rateyourstuff.rays.services.errors.InvalidRatingException;
+import de.fourzerofournotfound.rateyourstuff.rays.errors.InvalidRatingException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;

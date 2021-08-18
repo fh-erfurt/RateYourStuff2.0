@@ -1,15 +1,15 @@
 package de.fourzerofournotfound.rateyourstuff.rays.controllers.media.series;
 
 import de.fourzerofournotfound.rateyourstuff.rays.dtos.media.series.EpisodeDto;
-import de.fourzerofournotfound.rateyourstuff.rays.models.errors.media.series.EpisodeNotFoundException;
-import de.fourzerofournotfound.rateyourstuff.rays.models.errors.media.series.SeasonNotFoundException;
+import de.fourzerofournotfound.rateyourstuff.rays.errors.media.series.EpisodeNotFoundException;
+import de.fourzerofournotfound.rateyourstuff.rays.errors.media.series.SeasonNotFoundException;
 import de.fourzerofournotfound.rateyourstuff.rays.models.media.series.Episode;
 import de.fourzerofournotfound.rateyourstuff.rays.models.media.series.Season;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.series.EpisodeRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.series.SeasonRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.services.FileUploadService;
 import de.fourzerofournotfound.rateyourstuff.rays.services.PageableService;
-import de.fourzerofournotfound.rateyourstuff.rays.services.errors.DuplicateMediumException;
+import de.fourzerofournotfound.rateyourstuff.rays.errors.media.DuplicateMediumException;
 import de.fourzerofournotfound.rateyourstuff.rays.services.media.series.EpisodeService;
 import de.fourzerofournotfound.rateyourstuff.rays.services.media.GenreService;
 import de.fourzerofournotfound.rateyourstuff.rays.services.media.LanguageService;

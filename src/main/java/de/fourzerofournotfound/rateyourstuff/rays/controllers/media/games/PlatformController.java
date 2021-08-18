@@ -1,7 +1,7 @@
 package de.fourzerofournotfound.rateyourstuff.rays.controllers.media.games;
 
 import de.fourzerofournotfound.rateyourstuff.rays.dtos.media.games.PlatformDto;
-import de.fourzerofournotfound.rateyourstuff.rays.models.errors.media.games.PlatformNotFoundException;
+import de.fourzerofournotfound.rateyourstuff.rays.errors.media.games.PlatformNotFoundException;
 import de.fourzerofournotfound.rateyourstuff.rays.models.media.games.Platform;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.games.PlatformRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.services.PageableService;

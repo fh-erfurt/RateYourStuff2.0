@@ -2,7 +2,7 @@ package de.fourzerofournotfound.rateyourstuff.rays.controllers.advices.media.ser
 
 import de.fourzerofournotfound.rateyourstuff.rays.controllers.media.series.SeasonController;
 import de.fourzerofournotfound.rateyourstuff.rays.controllers.media.series.SeriesController;
-import de.fourzerofournotfound.rateyourstuff.rays.models.errors.media.series.SeriesNotFoundException;
+import de.fourzerofournotfound.rateyourstuff.rays.errors.media.series.SeriesNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
