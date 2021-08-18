@@ -20,9 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @SpringBootTest(properties = "spring.profiles.active = test")
 public class CollectionServiceTest {
@@ -229,12 +227,12 @@ public class CollectionServiceTest {
         collection1.getMedia().add(movie2);
         collection2.getMedia().add(movie1);
 
-        HashSet<Collection> given = new HashSet<>();
+        List<Collection> given = new ArrayList<>();
         given.add(collection1);
         given.add(collection2);
 
         //When
-        Set<Collection> result = collectionService.removeCollectionsWithMediaId(given, movie2.getId());
+        List<Collection> result = collectionService.removeCollectionsWithMediaId(given, movie2.getId());
 
         //Then
         Assertions.assertThat(result).isNotNull();

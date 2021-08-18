@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 /**
@@ -39,6 +39,7 @@ public class CollectionController {
     private final CollectionService collectionService;
     private final PageableService pageableService;
     private final MediaRepository mediaRepository;
+    private final Logger logger = Logger.getLogger(this.getClass().getName());
 
     @Autowired
     public CollectionController(CollectionRepository collectionRepository,
@@ -61,6 +62,7 @@ public class CollectionController {
     ResponseEntity<ReducedCollectionDto> add(@RequestBody Collection collection) throws UserNotFoundException {
         collection = this.collectionService.addReferencesToCollection(collection, collection.getUserMappingId());
         Collection savedCollection = this.collectionRepository.save(collection);
+        logger.info("Added " + Collection.class.getSimpleName() + " with id " + savedCollection.getId());
         return ResponseEntity.ok(collectionService.convertToReducedDto(savedCollection));
     }
 
@@ -133,7 +135,7 @@ public class CollectionController {
         Optional<Medium> medium = mediaRepository.findById(mediumId);
 
         if (medium.isPresent()) {
-            Set<Collection> collections = collectionService.removeCollectionsWithMediaId(collectionRepository.findAllByUserId(userId), mediumId);
+            List<Collection> collections = collectionService.removeCollectionsWithMediaId(collectionRepository.findAllByUserId(userId, Pageable.unpaged()).getContent(), mediumId);
 
             return ResponseEntity.ok(
                     collections.stream()
@@ -141,7 +143,7 @@ public class CollectionController {
                             .collect(Collectors.toList())
             );
         }
-        throw new MediumNotFoundException("There is no medium with id " + mediumId);
+        throw new MediumNotFoundException("There is no " + Medium.class.getSimpleName() + " with id " + mediumId);
 
     }
 
@@ -159,7 +161,7 @@ public class CollectionController {
             CollectionDto collectionDto = collectionService.convertToDto(collection.get());
             return ResponseEntity.ok(collectionDto);
         } else {
-            throw new CollectionNotFoundException("No Collection found for id " + id);
+            throw new CollectionNotFoundException("No " + Collection.class.getSimpleName() + " found for id " + id);
         }
     }
 
@@ -169,7 +171,7 @@ public class CollectionController {
      *
      * @param collection the collection that should be updated
      * @return the updated collection
-     * @throws CollectionNotFoundException if there is no colelction that matches the given id
+     * @throws CollectionNotFoundException if there is no collection that matches the given id
      */
     @PreAuthorize("hasAuthority('User')")
     @PutMapping(consumes = "application/json", produces = "application/json")
@@ -178,9 +180,10 @@ public class CollectionController {
         if (targetCollection.isPresent()) {
             targetCollection.get().setTitle(collection.getTitle());
             Collection savedCollection = collectionRepository.save(targetCollection.get());
+            logger.info("Updated " + Collection.class.getSimpleName() + " with id " + savedCollection.getId());
             return ResponseEntity.ok(collectionService.convertToReducedDto(savedCollection));
         }
-        throw new CollectionNotFoundException("There is not collection with id " + collection.getId());
+        throw new CollectionNotFoundException("There is not " + Collection.class.getSimpleName() + " with id " + collection.getId());
     }
 
     /**
@@ -198,9 +201,10 @@ public class CollectionController {
         if (targetCollection.isPresent()) {
             targetCollection.get().getMedia().removeIf(e -> e.getId().equals(mediumId));
             Collection savedCollection = collectionRepository.save(targetCollection.get());
+            logger.info("Removed " + Medium.class.getSimpleName() + " with id " + mediumId + "from " + Collection.class.getSimpleName() + " with id " + savedCollection.getId());
             return ResponseEntity.ok(collectionService.convertToDto(savedCollection));
         }
-        throw new CollectionNotFoundException("There is no collection with id " + collectionId);
+        throw new CollectionNotFoundException("There is no " + Collection.class.getSimpleName() + " with id " + collectionId);
     }
 
     /**
@@ -221,10 +225,11 @@ public class CollectionController {
             if (medium.isPresent()) {
                 collection.get().getMedia().add(medium.get());
                 Collection savedCollection = collectionRepository.save(collection.get());
+                logger.info("Added " + Medium.class.getSimpleName() + " with id " + mediumId + " to " + Collection.class.getSimpleName() + " with id " + savedCollection.getId());
                 return ResponseEntity.ok(collectionService.convertToDto(savedCollection));
             }
         }
-        throw new CollectionNotFoundException("There is no collection with id " + collectionId);
+        throw new CollectionNotFoundException("There is no " + Collection.class.getSimpleName() + " with id " + collectionId);
     }
 
     /**
@@ -235,8 +240,13 @@ public class CollectionController {
      */
     @PreAuthorize("hasAuthority('User')")
     @DeleteMapping(path = "/{collectionId}")
-    HttpStatus delete(@PathVariable Long collectionId) {
-        collectionRepository.deleteById(collectionId);
-        return HttpStatus.OK;
+    HttpStatus delete(@PathVariable Long collectionId) throws CollectionNotFoundException {
+        Optional<Collection> collection = collectionRepository.findById(collectionId);
+        if (collection.isPresent()) {
+            collectionRepository.deleteById(collectionId);
+            logger.info("Removed " + Collection.class.getSimpleName() + " with id " + collectionId);
+            return HttpStatus.OK;
+        }
+        throw new CollectionNotFoundException("There is no " + Collection.class.getSimpleName() + " with id " + collectionId);
     }
 }

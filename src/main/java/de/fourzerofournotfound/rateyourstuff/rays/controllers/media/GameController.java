@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 /**
@@ -43,6 +44,7 @@ public class GameController {
     private final LanguageService languageService;
     private final GenreService genreService;
     private final GamePublisherService gamePublisherService;
+    private final Logger logger = Logger.getLogger(this.getClass().getName());
 
     @Autowired
     public GameController(GameRepository gameRepository,
@@ -98,7 +100,7 @@ public class GameController {
             GameDto gameDto = gameService.convertToDto(game.get());
             return ResponseEntity.ok(gameDto);
         } else {
-            throw new GameNotFoundException("No Game found for id " + id);
+            throw new GameNotFoundException("No " + Game.class.getSimpleName() + " found for id " + id);
         }
     }
 
@@ -120,9 +122,10 @@ public class GameController {
             game.setGamePublisher(this.gamePublisherService.getPublisher(game.getPublisherTitle()));
             game.setPlatforms(this.platformService.getPlatformSet(game.getPlatformStrings()));
             Game savedGame = this.gameRepository.save(game);
+            logger.info("Added " + Game.class.getSimpleName() + " with id " + savedGame.getId());
             return ResponseEntity.ok(gameService.convertToDto(savedGame));
         } else {
-            throw new DuplicateMediumException("The Game " + game.getMediumName() + " already exists.");
+            throw new DuplicateMediumException("The " + Game.class.getSimpleName() + " " + game.getMediumName() + " already exists.");
         }
     }
 
@@ -135,18 +138,22 @@ public class GameController {
      */
     @PreAuthorize("hasAuthority('User')")
     @PutMapping(consumes = "application/json", produces = "application/json")
-    ResponseEntity<GameDto> update(@RequestBody Game game) throws DuplicateMediumException {
-        if (this.gameService.isValidGame(game)) {
-            game.setGamePublisher(this.gamePublisherService.getPublisher(game.getPublisherTitle()));
-            this.gameRepository.save(game);
-            game.setGenres(this.genreService.getGenresSet(game.getGenreStrings()));
-            game.setLanguages(this.languageService.getLanguageSet(game.getLanguageStrings()));
-            game.setPlatforms(this.platformService.getPlatformSet(game.getPlatformStrings()));
-            Game savedGame = this.gameRepository.save(game);
-            return ResponseEntity.ok(gameService.convertToDto(savedGame));
-        } else {
-            throw new DuplicateMediumException("The Game " + game.getMediumName() + " already exists.");
+    ResponseEntity<GameDto> update(@RequestBody Game game) throws DuplicateMediumException, GameNotFoundException {
+        Optional<Game> targetGame = gameRepository.findById(game.getId());
+        if (targetGame.isPresent()) {
+            if (this.gameService.isValidGame(game)) {
+                game.setGamePublisher(this.gamePublisherService.getPublisher(game.getPublisherTitle()));
+                this.gameRepository.save(game);
+                game.setGenres(this.genreService.getGenresSet(game.getGenreStrings()));
+                game.setLanguages(this.languageService.getLanguageSet(game.getLanguageStrings()));
+                game.setPlatforms(this.platformService.getPlatformSet(game.getPlatformStrings()));
+                Game savedGame = this.gameRepository.save(game);
+                logger.info("Updated " + Game.class.getSimpleName() + " with id " + savedGame.getId());
+                return ResponseEntity.ok(gameService.convertToDto(savedGame));
+            }
+            throw new DuplicateMediumException("The " + Game.class.getSimpleName() + " " + game.getMediumName() + " already exists.");
         }
+        throw new GameNotFoundException("There is no " + Game.class.getSimpleName() + " with the id " + game.getId());
     }
 
 
@@ -173,8 +180,9 @@ public class GameController {
             //upload the file
             fileUploadService.saveFile(uploadDir, fileName, multipartFile);
             Game savedGame = this.gameRepository.save(game.get());
+            logger.info("Added image \"" + savedGame.getPicturePath() + "\" for " + Game.class.getSimpleName() + " with id " + savedGame.getId());
             return ResponseEntity.ok(gameService.convertToDto(savedGame));
         }
-        throw new GameNotFoundException("There is no game with the id " + id);
+        throw new GameNotFoundException("There is no " + Game.class.getSimpleName() + " with the id " + id);
     }
 }

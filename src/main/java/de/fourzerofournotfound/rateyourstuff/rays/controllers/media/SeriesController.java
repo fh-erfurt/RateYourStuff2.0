@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 /**
@@ -44,6 +45,7 @@ public class SeriesController {
     private final LanguageService languageService;
     private final GenreService genreService;
     private final NetworkService networkService;
+    private final Logger logger = Logger.getLogger(this.getClass().getName());
 
     @Autowired
     public SeriesController(SeriesRepository seriesRepository,
@@ -98,7 +100,7 @@ public class SeriesController {
             SeriesDto seriesDto = seriesService.convertToDto(series.get());
             return ResponseEntity.ok(seriesDto);
         } else {
-            throw new SeriesNotFoundException("No Series found for id " + id);
+            throw new SeriesNotFoundException("No " + Series.class.getSimpleName() + " found for id " + id);
         }
     }
 
@@ -118,9 +120,10 @@ public class SeriesController {
             series.setLanguages(this.languageService.getLanguageSet(series.getLanguageStrings()));
             series.setNetwork(this.networkService.getNetwork(series.getNetworkTitle()));
             Series savedSeries = this.seriesRepository.save(series);
+            logger.info("Added " + Series.class.getSimpleName() + " with id " + series.getId());
             return ResponseEntity.ok(seriesService.convertToDto(savedSeries));
         } else {
-            throw new DuplicateMediumException("The Series " + series.getMediumName() + " already exists.");
+            throw new DuplicateMediumException("The " + Series.class.getSimpleName() + " " + series.getMediumName() + " already exists.");
         }
     }
 
@@ -133,17 +136,22 @@ public class SeriesController {
      */
     @PreAuthorize("hasAuthority('User')")
     @PutMapping(consumes = "application/json", produces = "application/json")
-    ResponseEntity<SeriesDto> update(@RequestBody Series series) throws DuplicateMediumException {
-        if (this.seriesService.isValidSeries(series)) {
-            series.setNetwork(this.networkService.getNetwork(series.getNetworkTitle()));
-            this.seriesRepository.save(series);
-            series.setGenres(this.genreService.getGenresSet(series.getGenreStrings()));
-            series.setLanguages(this.languageService.getLanguageSet(series.getLanguageStrings()));
-            Series savedSeries = this.seriesRepository.save(series);
-            return ResponseEntity.ok(seriesService.convertToDto(savedSeries));
-        } else {
-            throw new DuplicateMediumException("The Series " + series.getMediumName() + " already exists.");
+    ResponseEntity<SeriesDto> update(@RequestBody Series series) throws DuplicateMediumException, SeriesNotFoundException {
+        Optional<Series> targetSeries = seriesRepository.findById(series.getId());
+
+        if (targetSeries.isPresent()) {
+            if (this.seriesService.isValidSeries(series)) {
+                series.setNetwork(this.networkService.getNetwork(series.getNetworkTitle()));
+                this.seriesRepository.save(series);
+                series.setGenres(this.genreService.getGenresSet(series.getGenreStrings()));
+                series.setLanguages(this.languageService.getLanguageSet(series.getLanguageStrings()));
+                Series savedSeries = this.seriesRepository.save(series);
+                logger.info("Updated " + Series.class.getSimpleName() + " with id " + series.getId());
+                return ResponseEntity.ok(seriesService.convertToDto(savedSeries));
+            }
+            throw new DuplicateMediumException("The " + Series.class.getSimpleName() + " " + series.getMediumName() + " already exists.");
         }
+        throw new SeriesNotFoundException("There is no " + Series.class.getSimpleName() + " with id " + series.getId());
     }
 
     /**
@@ -168,9 +176,10 @@ public class SeriesController {
             //upload the file
             fileUploadService.saveFile(uploadDir, fileName, multipartFile);
             Series savedSeries = this.seriesRepository.save(series.get());
+            logger.info("Added image \"" + savedSeries.getPicturePath() + "\" for " + Series.class.getSimpleName() + " with id " + savedSeries.getId());
             return ResponseEntity.ok(seriesService.convertToDto(savedSeries));
         }
-        throw new SeriesNotFoundException("There is no series with the id " + id);
+        throw new SeriesNotFoundException("There is no " + Series.class.getSimpleName() + " with id " + id);
     }
 
 }

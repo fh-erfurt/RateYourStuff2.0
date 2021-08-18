@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 /**
@@ -44,6 +45,7 @@ public class MovieController {
     private final NetworkService networkService;
     private final LanguageService languageService;
     private final GenreService genreService;
+    private final Logger logger = Logger.getLogger(this.getClass().getName());
 
     @Autowired
     public MovieController(MovieRepository repository,
@@ -102,7 +104,7 @@ public class MovieController {
             MovieDto movieDto = movieService.convertToDto(movie.get());
             return ResponseEntity.ok(movieDto);
         } else {
-            throw new MovieNotFoundException("No Movie found for id " + id);
+            throw new MovieNotFoundException("No " + Movie.class.getSimpleName() + " found for id " + id);
         }
     }
 
@@ -122,9 +124,10 @@ public class MovieController {
             movie.setLanguages(this.languageService.getLanguageSet(movie.getLanguageStrings()));
             movie.setNetwork(this.networkService.getNetwork(movie.getNetworkTitle()));
             Movie savedMovie = this.movieRepository.save(movie);
+            logger.info("Added " + Movie.class.getSimpleName() + " with id " + savedMovie.getId());
             return ResponseEntity.ok(movieService.convertToDto(savedMovie));
         } else {
-            throw new DuplicateMediumException("The Movie " + movie.getMediumName() + " already exists.");
+            throw new DuplicateMediumException("The " + Movie.class.getSimpleName() + " " + movie.getMediumName() + " already exists.");
         }
     }
 
@@ -137,17 +140,21 @@ public class MovieController {
      */
     @PreAuthorize("hasAuthority('User')")
     @PutMapping(consumes = "application/json", produces = "application/json")
-    ResponseEntity<MovieDto> update(@RequestBody Movie movie) throws DuplicateMediumException {
-        if (this.movieService.isValidMovie(movie)) {
-            movie.setNetwork(this.networkService.getNetwork(movie.getNetworkTitle()));
-            this.movieRepository.save(movie);
-            movie.setGenres(this.genreService.getGenresSet(movie.getGenreStrings()));
-            movie.setLanguages(this.languageService.getLanguageSet(movie.getLanguageStrings()));
-            Movie savedMovie = this.movieRepository.save(movie);
-            return ResponseEntity.ok(movieService.convertToDto(savedMovie));
-        } else {
-            throw new DuplicateMediumException("The Movie " + movie.getMediumName() + " already exists.");
+    ResponseEntity<MovieDto> update(@RequestBody Movie movie) throws DuplicateMediumException, MovieNotFoundException {
+        Optional<Movie> targetMovie = movieRepository.findById(movie.getId());
+        if (targetMovie.isPresent()) {
+            if (this.movieService.isValidMovie(movie)) {
+                movie.setNetwork(this.networkService.getNetwork(movie.getNetworkTitle()));
+                this.movieRepository.save(movie);
+                movie.setGenres(this.genreService.getGenresSet(movie.getGenreStrings()));
+                movie.setLanguages(this.languageService.getLanguageSet(movie.getLanguageStrings()));
+                Movie savedMovie = this.movieRepository.save(movie);
+                logger.info("Updated " + Movie.class.getSimpleName() + " with id " + movie.getId());
+                return ResponseEntity.ok(movieService.convertToDto(savedMovie));
+            }
+            throw new DuplicateMediumException("The " + Movie.class.getSimpleName() + " " + movie.getMediumName() + " already exists.");
         }
+        throw new MovieNotFoundException("There is no " + Movie.class.getSimpleName() + " with id " + movie.getId());
     }
 
 
@@ -174,9 +181,10 @@ public class MovieController {
             fileUploadService.saveFile(uploadDir, fileName, multipartFile);
 
             Movie savedMovie = this.movieRepository.save(movie.get());
+            logger.info("Added image \"" + savedMovie.getPicturePath() + "\" for " + Movie.class.getSimpleName() + " with id " + savedMovie.getId());
             return ResponseEntity.ok(movieService.convertToDto(savedMovie));
         }
-        throw new MovieNotFoundException("There is no movie with id " + id);
+        throw new MovieNotFoundException("There is no " + Movie.class.getSimpleName() + " with id " + id);
     }
 
 }

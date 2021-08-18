@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 /**
@@ -39,6 +40,7 @@ public class SeasonController {
     private final SeriesRepository seriesRepository;
     private final PageableService pageableService;
     private final SeasonService seasonService;
+    private final Logger logger = Logger.getLogger(this.getClass().getName());
 
     @Autowired
     public SeasonController(SeasonRepository seasonRepository,
@@ -111,12 +113,13 @@ public class SeasonController {
             if (targetSeries.isPresent()) {
                 season.setMedium(targetSeries.get());
                 Season savedSeason = this.seasonRepository.save(season);
+                logger.info("Saved " + Season.class.getSimpleName() + " with id " + savedSeason.getId());
                 return ResponseEntity.ok(seasonService.convertToDto(savedSeason));
             } else {
-                throw new SeriesNotFoundException("There is no series with Id " + season.getSeriesMappingId());
+                throw new SeriesNotFoundException("There is no " + Series.class.getSimpleName() + " with Id " + season.getSeriesMappingId());
             }
         }
-        throw new DuplicateMediumException("The Season " + season.getSeasonTitle() + " with number " + season.getSeasonNumber() + " already exists!");
+        throw new DuplicateMediumException("The " + Season.class.getSimpleName() + " " + season.getSeasonTitle() + " with number " + season.getSeasonNumber() + " already exists!");
     }
 
     /**
@@ -129,17 +132,21 @@ public class SeasonController {
      */
     @PreAuthorize("hasAuthority('User')")
     @PutMapping(consumes = "application/json", produces = "application/json")
-    ResponseEntity<SeasonDto> update(@RequestBody Season season) throws SeriesNotFoundException, DuplicateMediumException {
-        if (seasonService.isValidSeason(season)) {
-            Optional<Series> targetSeries = seriesRepository.findById(season.getSeriesMappingId());
-            if (targetSeries.isPresent()) {
-                season.setMedium(targetSeries.get());
-                Season savedSeason = this.seasonRepository.save(season);
-                return ResponseEntity.ok(seasonService.convertToDto(savedSeason));
-            } else {
-                throw new SeriesNotFoundException("There is no series with Id " + season.getSeriesMappingId());
+    ResponseEntity<SeasonDto> update(@RequestBody Season season) throws SeriesNotFoundException, DuplicateMediumException, SeasonNotFoundException {
+        Optional<Season> targetSeason = seasonRepository.findById(season.getId());
+        if (targetSeason.isPresent()) {
+            if (seasonService.isValidSeason(season)) {
+                Optional<Series> targetSeries = seriesRepository.findById(season.getSeriesMappingId());
+                if (targetSeries.isPresent()) {
+                    season.setMedium(targetSeries.get());
+                    Season savedSeason = this.seasonRepository.save(season);
+                    logger.info("Updated " + Season.class.getSimpleName() + " with id " + season.getId());
+                    return ResponseEntity.ok(seasonService.convertToDto(savedSeason));
+                }
+                throw new SeriesNotFoundException("There is no " + Series.class.getSimpleName() + " with Id " + season.getSeriesMappingId());
             }
+            throw new DuplicateMediumException("The " + Season.class.getSimpleName() + " " + season.getSeasonTitle() + " with number " + season.getSeasonNumber() + " already exists!");
         }
-        throw new DuplicateMediumException("The Season " + season.getSeasonTitle() + " with number " + season.getSeasonNumber() + " already exists!");
+        throw new SeasonNotFoundException("There is no " + Season.class.getSimpleName() + " with id " + season.getId());
     }
 }

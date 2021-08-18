@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.logging.Logger;
 
 /**
  * GamePublisherService
@@ -22,6 +23,7 @@ import java.util.Optional;
 public class GamePublisherService {
     private final ModelMapper modelMapper;
     private final GamePublisherRepository gamePublisherRepository;
+    private final Logger logger = Logger.getLogger(this.getClass().getName());
 
     @Autowired
     public GamePublisherService(ModelMapper modelMapper,
@@ -53,7 +55,9 @@ public class GamePublisherService {
         } else {
             GamePublisher newPublisher = new GamePublisher();
             newPublisher.setGamePublisherTitle(publisherTitle);
-            return gamePublisherRepository.save(newPublisher);
+            GamePublisher savedPublisher = gamePublisherRepository.save(newPublisher);
+            logger.info("Added " + GamePublisher.class.getSimpleName() + "with id " + savedPublisher.getId());
+            return savedPublisher;
         }
     }
 }

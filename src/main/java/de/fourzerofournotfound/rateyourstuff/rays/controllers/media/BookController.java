@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 /**
@@ -47,6 +48,7 @@ public class BookController {
     private final GenreService genreService;
     private final LanguageService languageService;
     private final BookPublisherService bookPublisherService;
+    private final Logger logger = Logger.getLogger(this.getClass().getName());
 
     @Autowired
     public BookController(BookRepository bookRepository,
@@ -102,7 +104,7 @@ public class BookController {
             BookDto bookDto = bookService.convertToDto(book.get());
             return ResponseEntity.ok(bookDto);
         } else {
-            throw new BookNotFoundException("No Book found for id " + id);
+            throw new BookNotFoundException("No " + Book.class.getSimpleName() + " found for id " + id);
         }
     }
 
@@ -124,9 +126,10 @@ public class BookController {
                 book.setLanguages(this.languageService.getLanguageSet(book.getLanguageStrings()));
                 book.setBookPublisher(this.bookPublisherService.getPublisher(book.getPublisherString()));
                 Book savedBook = this.bookRepository.save(book);
+                logger.info("Added new " + Book.class.getSimpleName() + " with id " + savedBook.getId());
                 return ResponseEntity.ok(bookService.convertToDto(savedBook));
             }
-            throw new DuplicateMediumException("There is already a book with the ISBN" + book.getIsbn());
+            throw new DuplicateMediumException("There is already a " + Book.class.getSimpleName() + " with the ISBN" + book.getIsbn());
         } else {
             throw new InvalidISBNException("The ISBN " + book.getIsbn() + " is not valid");
         }
@@ -150,9 +153,10 @@ public class BookController {
                 book.setGenres(this.genreService.getGenresSet(book.getGenreStrings()));
                 book.setLanguages(this.languageService.getLanguageSet(book.getLanguageStrings()));
                 Book savedBook = this.bookRepository.save(book);
+                logger.info("Updated " + Book.class.getSimpleName() + " with id " + savedBook.getId());
                 return ResponseEntity.ok(bookService.convertToDto(savedBook));
             }
-            throw new DuplicateMediumException("There is already a book with the ISBN" + book.getIsbn());
+            throw new DuplicateMediumException("There is already a " + Book.class.getSimpleName() + " with the ISBN" + book.getIsbn());
         } else {
             throw new InvalidISBNException("The ISBN " + book.getIsbn() + " is not valid");
         }
@@ -181,8 +185,9 @@ public class BookController {
             //upload the file
             fileUploadService.saveFile(uploadDir, fileName, multipartFile);
             Book savedBook = this.bookRepository.save(book.get());
+            logger.info("Added image \"" + savedBook.getPicturePath() + "\" for " + Book.class.getSimpleName() + " with id " + savedBook.getId());
             return ResponseEntity.ok(bookService.convertToDto(savedBook));
         }
-        throw new BookNotFoundException("There is no book with id " + id);
+        throw new BookNotFoundException("There is no " + Book.class.getSimpleName() + "with id " + id);
     }
 }

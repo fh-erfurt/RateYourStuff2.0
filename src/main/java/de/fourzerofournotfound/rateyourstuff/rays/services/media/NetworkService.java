@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.logging.Logger;
 
 /**
  * NetworkService
@@ -22,6 +23,7 @@ import java.util.Optional;
 public class NetworkService {
     private final ModelMapper modelMapper;
     private final NetworkRepository networkRepository;
+    private final Logger logger = Logger.getLogger(this.getClass().getName());
 
     @Autowired
     public NetworkService(ModelMapper modelMapper, NetworkRepository networkRepository) {
@@ -52,7 +54,9 @@ public class NetworkService {
         } else {
             Network newNetwork = new Network();
             newNetwork.setNetworkTitle(networkTitle);
-            return networkRepository.save(newNetwork);
+            Network savedNetwork = networkRepository.save(newNetwork);
+            logger.info("Added " + Network.class.getSimpleName() + " with id " + savedNetwork.getId());
+            return savedNetwork;
         }
     }
 }

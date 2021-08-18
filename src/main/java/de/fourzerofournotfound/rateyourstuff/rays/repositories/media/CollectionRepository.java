@@ -21,8 +21,5 @@ import java.util.Set;
 @Repository
 public interface CollectionRepository extends JpaRepository<Collection, Long> {
     Page<Collection> findAllByUserId(Long id, Pageable pageable);
-
-    Set<Collection> findAllByUserId(Long id);
-
     Page<Collection> findAllByMediaId(Long id, Pageable pageable);
 }
