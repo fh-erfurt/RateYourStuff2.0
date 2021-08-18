@@ -1,15 +1,16 @@
-package de.fourzerofournotfound.rateyourstuff.rays.services;
+package de.fourzerofournotfound.rateyourstuff.rays.services.users;
 
-import de.fourzerofournotfound.rateyourstuff.rays.dtos.UserDto;
-import de.fourzerofournotfound.rateyourstuff.rays.models.Login;
-import de.fourzerofournotfound.rateyourstuff.rays.models.Role;
-import de.fourzerofournotfound.rateyourstuff.rays.models.User;
-import de.fourzerofournotfound.rateyourstuff.rays.repositories.LoginRepository;
-import de.fourzerofournotfound.rateyourstuff.rays.repositories.RoleRepository;
-import de.fourzerofournotfound.rateyourstuff.rays.repositories.UserRepository;
-import de.fourzerofournotfound.rateyourstuff.rays.services.errors.InvalidLoginException;
-import de.fourzerofournotfound.rateyourstuff.rays.services.errors.InvalidUserException;
-import de.fourzerofournotfound.rateyourstuff.rays.services.errors.UserAlreadyExistsException;
+import de.fourzerofournotfound.rateyourstuff.rays.dtos.users.UserDto;
+import de.fourzerofournotfound.rateyourstuff.rays.models.users.Login;
+import de.fourzerofournotfound.rateyourstuff.rays.models.users.Role;
+import de.fourzerofournotfound.rateyourstuff.rays.models.users.User;
+import de.fourzerofournotfound.rateyourstuff.rays.repositories.users.LoginRepository;
+import de.fourzerofournotfound.rateyourstuff.rays.repositories.users.RoleRepository;
+import de.fourzerofournotfound.rateyourstuff.rays.repositories.users.UserRepository;
+import de.fourzerofournotfound.rateyourstuff.rays.repositories.users.RoleRepository;
+import de.fourzerofournotfound.rateyourstuff.rays.errors.users.InvalidLoginException;
+import de.fourzerofournotfound.rateyourstuff.rays.errors.users.InvalidUserException;
+import de.fourzerofournotfound.rateyourstuff.rays.errors.users.UserAlreadyExistsException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
