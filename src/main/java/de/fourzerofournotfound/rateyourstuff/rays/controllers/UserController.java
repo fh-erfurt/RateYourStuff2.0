@@ -1,8 +1,10 @@
 package de.fourzerofournotfound.rateyourstuff.rays.controllers;
 
 import de.fourzerofournotfound.rateyourstuff.rays.dtos.UserDto;
+import de.fourzerofournotfound.rateyourstuff.rays.models.Role;
 import de.fourzerofournotfound.rateyourstuff.rays.models.User;
 import de.fourzerofournotfound.rateyourstuff.rays.models.errors.UserNotFoundException;
+import de.fourzerofournotfound.rateyourstuff.rays.repositories.RoleRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.UserRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.services.PageableService;
 import de.fourzerofournotfound.rateyourstuff.rays.services.UserSecurityService;
@@ -14,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.management.relation.RoleNotFoundException;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -28,13 +31,15 @@ public class UserController {
     private final UserSecurityService userSecurityService;
     private final PageableService pageableService;
     private final Logger logger = Logger.getLogger(this.getClass().getName());
+    private final RoleRepository roleRepository;
 
     @Autowired
-    public UserController(UserRepository repository, UserService userService, UserSecurityService userSecurityService, PageableService pageableService) {
+    public UserController(UserRepository repository, UserService userService, UserSecurityService userSecurityService, PageableService pageableService, RoleRepository roleRepository) {
         this.userRepository = repository;
         this.userService = userService;
         this.userSecurityService = userSecurityService;
         this.pageableService = pageableService;
+        this.roleRepository = roleRepository;
     }
 
 
@@ -95,6 +100,23 @@ public class UserController {
             return ResponseEntity.ok(this.userService.convertToDto(savedUser));
         }
         throw new UserNotFoundException(User.class.getSimpleName() + " not found");
+    }
+
+    @PreAuthorize("hasAuthority('Admin')")
+    @PutMapping(path="/customUpdate", consumes = "application/json", produces = "application/json")
+    ResponseEntity<UserDto> customUpdate(@RequestBody User user) throws Exception {
+        Optional<User> potentialUser = userRepository.findUserById(user.getId());
+        if(potentialUser.isPresent()) {
+            Optional<Role> role = roleRepository.findById(user.getRoleMappingId());
+            if(role.isPresent()){
+                potentialUser.get().setRole(role.get());
+                User savedUser = userRepository.save(potentialUser.get());
+                logger.info("Updated " + User.class.getSimpleName() + " with id " + savedUser.getId());
+                return ResponseEntity.ok(this.userService.convertToDto(savedUser));
+            }
+            throw new Exception();
+        }
+        throw new Exception();
     }
 
     @PreAuthorize("hasAuthority('Admin')")

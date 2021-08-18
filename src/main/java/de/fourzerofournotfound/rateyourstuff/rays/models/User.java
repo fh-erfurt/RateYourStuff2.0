@@ -1,6 +1,7 @@
 package de.fourzerofournotfound.rateyourstuff.rays.models;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import de.fourzerofournotfound.rateyourstuff.rays.models.media.Collection;
 import lombok.*;
@@ -61,6 +62,10 @@ public class User extends BaseModel {
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name="roleId", referencedColumnName = "id", nullable = false)
     private Role role;
+
+    @JsonInclude
+    @Transient
+    private Long roleMappingId;
 
     public void setProfilePicturePath(String profilePicturePath) {
         this.profilePicturePath = profilePicturePath.replace(IMAGE_PATH_PREFIX, "");
