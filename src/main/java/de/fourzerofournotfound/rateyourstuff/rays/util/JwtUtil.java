@@ -1,6 +1,6 @@
 package de.fourzerofournotfound.rateyourstuff.rays.util;
 
-import de.fourzerofournotfound.rateyourstuff.rays.models.User;
+import de.fourzerofournotfound.rateyourstuff.rays.models.users.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

@@ -1,7 +1,7 @@
 package de.fourzerofournotfound.rateyourstuff.rays.controllers.advices.media;
 
 import de.fourzerofournotfound.rateyourstuff.rays.controllers.media.collections.CollectionController;
-import de.fourzerofournotfound.rateyourstuff.rays.models.errors.media.MediumNotFoundException;
+import de.fourzerofournotfound.rateyourstuff.rays.errors.media.MediumNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;

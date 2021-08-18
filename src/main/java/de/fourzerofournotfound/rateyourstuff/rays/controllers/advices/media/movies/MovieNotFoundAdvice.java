@@ -1,7 +1,7 @@
 package de.fourzerofournotfound.rateyourstuff.rays.controllers.advices.media.movies;
 
 import de.fourzerofournotfound.rateyourstuff.rays.controllers.media.movies.MovieController;
-import de.fourzerofournotfound.rateyourstuff.rays.models.errors.media.movies.MovieNotFoundException;
+import de.fourzerofournotfound.rateyourstuff.rays.errors.media.movies.MovieNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;

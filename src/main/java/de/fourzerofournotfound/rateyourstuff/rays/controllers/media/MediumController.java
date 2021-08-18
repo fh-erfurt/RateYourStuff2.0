@@ -1,7 +1,7 @@
 package de.fourzerofournotfound.rateyourstuff.rays.controllers.media;
 
 import de.fourzerofournotfound.rateyourstuff.rays.dtos.media.MediumDto;
-import de.fourzerofournotfound.rateyourstuff.rays.models.errors.media.MediumNotFoundException;
+import de.fourzerofournotfound.rateyourstuff.rays.errors.media.MediumNotFoundException;
 import de.fourzerofournotfound.rateyourstuff.rays.models.media.Medium;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.MediaRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.services.PageableService;

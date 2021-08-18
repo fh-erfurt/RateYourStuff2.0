@@ -2,9 +2,9 @@ package de.fourzerofournotfound.rateyourstuff.rays.controllers.media.collections
 
 import de.fourzerofournotfound.rateyourstuff.rays.dtos.media.collections.CollectionDto;
 import de.fourzerofournotfound.rateyourstuff.rays.dtos.media.collections.ReducedCollectionDto;
-import de.fourzerofournotfound.rateyourstuff.rays.models.errors.UserNotFoundException;
-import de.fourzerofournotfound.rateyourstuff.rays.models.errors.media.collections.CollectionNotFoundException;
-import de.fourzerofournotfound.rateyourstuff.rays.models.errors.media.MediumNotFoundException;
+import de.fourzerofournotfound.rateyourstuff.rays.errors.users.UserNotFoundException;
+import de.fourzerofournotfound.rateyourstuff.rays.errors.media.collections.CollectionNotFoundException;
+import de.fourzerofournotfound.rateyourstuff.rays.errors.media.MediumNotFoundException;
 import de.fourzerofournotfound.rateyourstuff.rays.models.media.collections.Collection;
 import de.fourzerofournotfound.rateyourstuff.rays.models.media.Medium;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.collections.CollectionRepository;

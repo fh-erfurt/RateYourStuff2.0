@@ -1,7 +1,7 @@
 package de.fourzerofournotfound.rateyourstuff.rays.controllers.advices.media;
 
 import de.fourzerofournotfound.rateyourstuff.rays.controllers.media.games.GameController;
-import de.fourzerofournotfound.rateyourstuff.rays.models.errors.media.games.GamePublisherNotFoundException;
+import de.fourzerofournotfound.rateyourstuff.rays.errors.media.games.GamePublisherNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;

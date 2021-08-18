@@ -2,6 +2,7 @@ package de.fourzerofournotfound.rateyourstuff.rays.models;
 
 import com.fasterxml.jackson.annotation.*;
 import de.fourzerofournotfound.rateyourstuff.rays.models.media.Medium;
+import de.fourzerofournotfound.rateyourstuff.rays.models.users.User;
 import lombok.*;
 
 import javax.persistence.*;

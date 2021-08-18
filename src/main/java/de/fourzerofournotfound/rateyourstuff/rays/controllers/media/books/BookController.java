@@ -1,12 +1,12 @@
 package de.fourzerofournotfound.rateyourstuff.rays.controllers.media.books;
 
 import de.fourzerofournotfound.rateyourstuff.rays.dtos.media.books.BookDto;
-import de.fourzerofournotfound.rateyourstuff.rays.models.errors.media.books.BookNotFoundException;
+import de.fourzerofournotfound.rateyourstuff.rays.errors.media.books.BookNotFoundException;
 import de.fourzerofournotfound.rateyourstuff.rays.models.media.books.Book;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.books.BookRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.services.FileUploadService;
 import de.fourzerofournotfound.rateyourstuff.rays.services.PageableService;
-import de.fourzerofournotfound.rateyourstuff.rays.services.errors.DuplicateMediumException;
+import de.fourzerofournotfound.rateyourstuff.rays.errors.media.DuplicateMediumException;
 import de.fourzerofournotfound.rateyourstuff.rays.services.media.books.isbn.ISBNCheckService;
 import de.fourzerofournotfound.rateyourstuff.rays.services.isbn.InvalidISBNException;
 import de.fourzerofournotfound.rateyourstuff.rays.services.media.books.BookPublisherService;

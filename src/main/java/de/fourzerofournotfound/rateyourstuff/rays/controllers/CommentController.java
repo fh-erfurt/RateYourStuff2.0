@@ -2,12 +2,11 @@ package de.fourzerofournotfound.rateyourstuff.rays.controllers;
 
 import de.fourzerofournotfound.rateyourstuff.rays.dtos.CommentDto;
 import de.fourzerofournotfound.rateyourstuff.rays.models.Comment;
-import de.fourzerofournotfound.rateyourstuff.rays.models.errors.CommentNotFoundException;
+import de.fourzerofournotfound.rateyourstuff.rays.errors.CommentNotFoundException;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.CommentRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.services.CommentService;
 import de.fourzerofournotfound.rateyourstuff.rays.services.PageableService;
-import de.fourzerofournotfound.rateyourstuff.rays.services.errors.InvalidCommentException;
-import org.modelmapper.ModelMapper;
+import de.fourzerofournotfound.rateyourstuff.rays.errors.InvalidCommentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
