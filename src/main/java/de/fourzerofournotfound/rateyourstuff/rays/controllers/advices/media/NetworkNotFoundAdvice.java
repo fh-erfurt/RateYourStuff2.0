@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 /**
  * NetworkNotFoundAdvice
  * <p>This Advice is used by the {@link de.fourzerofournotfound.rateyourstuff.rays.controllers.media.NetworkController NetworkController}
+ *
  * @author Christoph Frischmuth
  * @author John Klippstein
  * @author Mickey Knop

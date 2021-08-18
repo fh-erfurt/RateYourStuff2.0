@@ -3,13 +3,16 @@ package de.fourzerofournotfound.rateyourstuff.rays.repositories.media;
 import de.fourzerofournotfound.rateyourstuff.rays.models.media.Movie;
 import de.fourzerofournotfound.rateyourstuff.rays.models.media.Network;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.junit.jupiter.api.AfterEach;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @SpringBootTest(properties = "spring.profiles.active=test")
 public class MovieRepositoryTest {
@@ -18,7 +21,7 @@ public class MovieRepositoryTest {
 
     @AfterEach
     public void afterEach() {
-       repository.deleteAll();
+        repository.deleteAll();
     }
 
     @Test
@@ -87,7 +90,7 @@ public class MovieRepositoryTest {
     }
 
     @Test
-    void should_find_movie_by_title () {
+    void should_find_movie_by_title() {
         //Given
         Movie given1 = Movie.builder()
                 .mediumName("Zurück in die Zukunft")

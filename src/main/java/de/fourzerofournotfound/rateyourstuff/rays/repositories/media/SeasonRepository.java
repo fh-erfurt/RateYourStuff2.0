@@ -12,6 +12,7 @@ import java.util.Optional;
  * SeasonRepository
  * <p>This Interface can be used to find Season entities in the database.</p>
  * <p>It also provides all functions of the {@link JpaRepository JpaRepository}</p>
+ *
  * @author Christoph Frischmuth
  * @author John Klippstein
  * @author Mickey Knop
@@ -22,5 +23,6 @@ public interface SeasonRepository extends JpaRepository<Season, Long> {
     Page<Season> findAllByMediumId(Long id, Pageable pageable);
 
     Optional<Season> findSeasonByIdNotAndSeasonNumberAndMediumId(Long id, Integer seasonNumber, Long mediumId);
+
     Optional<Season> findSeasonBySeasonNumberAndMediumId(Integer seasonNumber, Long mediumId);
 }

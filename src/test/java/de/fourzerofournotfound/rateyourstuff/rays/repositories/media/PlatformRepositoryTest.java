@@ -44,7 +44,7 @@ public class PlatformRepositoryTest {
     }
 
     @Test
-    void should_find_platform_by_title () {
+    void should_find_platform_by_title() {
         //Given
         Platform given1 = Platform.builder()
                 .platformTitle("Nintendo Switch")
@@ -103,7 +103,7 @@ public class PlatformRepositoryTest {
     }
 
     @Test
-    public void should_delete_platform () {
+    public void should_delete_platform() {
         //Given
         Platform given = Platform.builder()
                 .platformTitle("Nintendo Switch")

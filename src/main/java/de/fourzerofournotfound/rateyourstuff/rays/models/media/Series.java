@@ -2,10 +2,6 @@ package de.fourzerofournotfound.rateyourstuff.rays.models.media;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -14,6 +10,7 @@ import java.util.Set;
 
 /**
  * Series
+ *
  * @author Christoph Frischmuth
  * @author John Klippstein
  * @author Mickey Knop
@@ -28,26 +25,20 @@ import java.util.Set;
 public class Series extends Medium {
 
     public final static String IMAGE_PATH_PREFIX = "images/media/series/";
-
-    @Column
-    private Integer averageLength;
-
-    @ManyToOne (cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "networkId", referencedColumnName = "id")
-    private Network network;
-
-    @Column(nullable = false)
-    private Integer ageRestriction;
-
-    @Column(nullable = false)
-    private Boolean isCompleted;
-
-    @OneToMany (mappedBy = "medium", cascade = CascadeType.ALL)
-    private Set<Season> seasons = new HashSet<>();
-
     @JsonInclude
     @Transient
     String networkTitle;
+    @Column
+    private Integer averageLength;
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "networkId", referencedColumnName = "id")
+    private Network network;
+    @Column(nullable = false)
+    private Integer ageRestriction;
+    @Column(nullable = false)
+    private Boolean isCompleted;
+    @OneToMany(mappedBy = "medium", cascade = CascadeType.ALL)
+    private Set<Season> seasons = new HashSet<>();
 
     @Builder
     public Series(String mediumName, String shortDescription, LocalDate releaseDate, Integer averageLength, Integer ageRestriction, Boolean isCompleted) {
@@ -60,7 +51,7 @@ public class Series extends Medium {
     }
 
     public String getPicturePath() {
-        if(super.getPicturePath() != null) {
+        if (super.getPicturePath() != null) {
             return IMAGE_PATH_PREFIX + super.getPicturePath();
         }
         return null;

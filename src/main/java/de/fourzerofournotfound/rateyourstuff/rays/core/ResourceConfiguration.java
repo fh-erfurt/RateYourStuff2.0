@@ -9,6 +9,7 @@ import java.nio.file.Paths;
 
 /**
  * <p>This configuration is used to set the path of accessible image files</p>
+ *
  * @author Christoph Frischmuth
  * @author John Klippstein
  * @author Mickey Knop
@@ -23,14 +24,15 @@ public class ResourceConfiguration implements WebMvcConfigurer {
 
     /**
      * This method is used to make the passed directory publicly available
-     * @param dirName    the name of the directory where the file should be uploaded
-     * @param registry   the resource handler
+     *
+     * @param dirName  the name of the directory where the file should be uploaded
+     * @param registry the resource handler
      */
     public void exposeDirectory(String dirName, ResourceHandlerRegistry registry) {
         Path uploadDir = Paths.get(dirName);
         String uploadPath = uploadDir.toFile().getAbsolutePath();
 
-        if(dirName.startsWith("../")) {
+        if (dirName.startsWith("../")) {
             dirName = dirName.replace("../", "");
         }
 

@@ -9,7 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
-import java.util.*;
+import java.util.Objects;
+import java.util.Optional;
 
 @SpringBootTest(properties = "spring.profiles.active=test")
 public class SeriesRepositoryTest {
@@ -30,7 +31,7 @@ public class SeriesRepositoryTest {
         Series given = Series.builder()
                 .mediumName("Ein Käfig voller Helden")
                 .shortDescription("[...]")
-                .releaseDate(LocalDate.of(1965,9,17))
+                .releaseDate(LocalDate.of(1965, 9, 17))
                 .averageLength(20)
                 .ageRestriction(12)
                 .isCompleted(true)
@@ -49,7 +50,7 @@ public class SeriesRepositoryTest {
         Series given1 = Series.builder()
                 .mediumName("Ein Käfig voller Helden")
                 .shortDescription("[...]")
-                .releaseDate(LocalDate.of(1965,9,17))
+                .releaseDate(LocalDate.of(1965, 9, 17))
                 .averageLength(20)
                 .ageRestriction(12)
                 .isCompleted(true)
@@ -58,7 +59,7 @@ public class SeriesRepositoryTest {
         Series given2 = Series.builder()
                 .mediumName("M*A*S*H")
                 .shortDescription("[...]")
-                .releaseDate(LocalDate.of(1965,9,17))
+                .releaseDate(LocalDate.of(1965, 9, 17))
                 .averageLength(20)
                 .ageRestriction(12)
                 .isCompleted(true)
@@ -81,7 +82,7 @@ public class SeriesRepositoryTest {
         Series given = Series.builder()
                 .mediumName("Ein Käfig voller Helden")
                 .shortDescription("[...]")
-                .releaseDate(LocalDate.of(1965,9,17))
+                .releaseDate(LocalDate.of(1965, 9, 17))
                 .averageLength(20)
                 .ageRestriction(12)
                 .isCompleted(true)
@@ -107,7 +108,7 @@ public class SeriesRepositoryTest {
         Series given = Series.builder()
                 .mediumName("Ein Käfig voller Helden")
                 .shortDescription("[...]")
-                .releaseDate(LocalDate.of(1965,9,17))
+                .releaseDate(LocalDate.of(1965, 9, 17))
                 .averageLength(20)
                 .ageRestriction(12)
                 .isCompleted(true)
@@ -130,7 +131,7 @@ public class SeriesRepositoryTest {
         Series given = Series.builder()
                 .mediumName("Ein Käfig voller Helden")
                 .shortDescription("[...]")
-                .releaseDate(LocalDate.of(1965,9,17))
+                .releaseDate(LocalDate.of(1965, 9, 17))
                 .averageLength(20)
                 .ageRestriction(12)
                 .isCompleted(true)

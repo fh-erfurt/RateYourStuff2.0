@@ -23,17 +23,17 @@ public class SeriesServiceTest {
     SeriesService seriesService;
 
     @BeforeEach
-    void beforeEach()
-    {
+    void beforeEach() {
         seriesRepository.deleteAll();
     }
+
     @Test
     public void seriesDtoShouldMatchSeries() {
         //Given
         Series series = Series.builder()
                 .mediumName("Ein Käfig voller Helden")
                 .shortDescription("[...]")
-                .releaseDate(LocalDate.of(1965,9,17))
+                .releaseDate(LocalDate.of(1965, 9, 17))
                 .averageLength(20)
                 .ageRestriction(12)
                 .isCompleted(true)
@@ -56,8 +56,7 @@ public class SeriesServiceTest {
     }
 
     @Test
-    void shouldDetectDuplicatesOfGivenSeries()
-    {
+    void shouldDetectDuplicatesOfGivenSeries() {
         //Given
         LocalDate releaseDate0 = LocalDate.of(2017, 9, 24);
 
@@ -81,7 +80,7 @@ public class SeriesServiceTest {
 
         Series givenSeriesNotToStore = Series.builder()
                 .mediumName("How i met your Mother")
-                .releaseDate(LocalDate.of(2005,9,19))
+                .releaseDate(LocalDate.of(2005, 9, 19))
                 .shortDescription("[...]")
                 .ageRestriction(0)
                 .isCompleted(true)

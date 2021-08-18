@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 /**
  * PlatformNotFoundAdvice
  * <p>This Advice is used by the {@link de.fourzerofournotfound.rateyourstuff.rays.controllers.media.PlatformController PlatformController}
+ *
  * @author Christoph Frischmuth
  * @author John Klippstein
  * @author Mickey Knop

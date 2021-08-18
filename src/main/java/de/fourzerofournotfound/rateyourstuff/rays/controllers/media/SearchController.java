@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 /**
  * SearchController
  * <p> This controller ensures that the input is passed on from the front end to the function in the back end and vice versa.</p>
+ *
  * @author Christoph Frischmuth
  * @author John Klippstein
  * @author Mickey Knop
@@ -35,7 +36,6 @@ public class SearchController {
     ResponseEntity<List<MediumDto>> getMatchingMediaList(
             @RequestParam String s
     ) {
-        //System.out.println(s);
         List<Medium> searchResults = mediaService.getSearchResult(s);
         return ResponseEntity.ok(searchResults.stream().map(mediaService::convertToDto).collect(Collectors.toList()));
     }

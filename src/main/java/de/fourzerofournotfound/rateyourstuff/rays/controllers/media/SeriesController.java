@@ -1,13 +1,16 @@
 package de.fourzerofournotfound.rateyourstuff.rays.controllers.media;
 
 import de.fourzerofournotfound.rateyourstuff.rays.dtos.media.SeriesDto;
-import de.fourzerofournotfound.rateyourstuff.rays.models.media.Series;
 import de.fourzerofournotfound.rateyourstuff.rays.models.errors.media.SeriesNotFoundException;
+import de.fourzerofournotfound.rateyourstuff.rays.models.media.Series;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.SeriesRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.services.FileUploadService;
-import de.fourzerofournotfound.rateyourstuff.rays.services.media.*;
 import de.fourzerofournotfound.rateyourstuff.rays.services.PageableService;
 import de.fourzerofournotfound.rateyourstuff.rays.services.errors.DuplicateMediumException;
+import de.fourzerofournotfound.rateyourstuff.rays.services.media.GenreService;
+import de.fourzerofournotfound.rateyourstuff.rays.services.media.LanguageService;
+import de.fourzerofournotfound.rateyourstuff.rays.services.media.NetworkService;
+import de.fourzerofournotfound.rateyourstuff.rays.services.media.SeriesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +27,7 @@ import java.util.stream.Collectors;
 /**
  * Comment Controller
  * <p>This Controller provides basic REST Interfaces to interact with Comment entities from the database</p>
+ *
  * @author Christoph Frischmuth
  * @author John Klippstein
  * @author Mickey Knop
@@ -60,11 +64,12 @@ public class SeriesController {
 
     /**
      * This Method returns all series from the database
-     * @param page      the current page (optional)
-     * @param size      the number of items per page
-     * @param orderBy   the attributed that should be ordered
-     * @param order     the order (asc, desc)
-     * @return          a list of SeriesDTOs
+     *
+     * @param page    the current page (optional)
+     * @param size    the number of items per page
+     * @param orderBy the attributed that should be ordered
+     * @param order   the order (asc, desc)
+     * @return a list of SeriesDTOs
      */
     @GetMapping("/all")
     ResponseEntity<List<SeriesDto>> getAll(
@@ -81,14 +86,15 @@ public class SeriesController {
 
     /**
      * This method is used to get a single series by its id
-     * @param id    the id of the series
-     * @return      the found SeriesDto
+     *
+     * @param id the id of the series
+     * @return the found SeriesDto
      * @throws SeriesNotFoundException if there is no series with the given id
      */
     @GetMapping("/{id}")
-    ResponseEntity<SeriesDto> getById (@PathVariable Long id) throws SeriesNotFoundException {
+    ResponseEntity<SeriesDto> getById(@PathVariable Long id) throws SeriesNotFoundException {
         Optional<Series> series = this.seriesRepository.findById(id);
-        if(series.isPresent()) {
+        if (series.isPresent()) {
             SeriesDto seriesDto = seriesService.convertToDto(series.get());
             return ResponseEntity.ok(seriesDto);
         } else {
@@ -98,14 +104,15 @@ public class SeriesController {
 
     /**
      * This method is used to add a new series to the database
-     * @param series    the series that should be added
-     * @return          the newly added series
+     *
+     * @param series the series that should be added
+     * @return the newly added series
      * @throws DuplicateMediumException if there is already the same series in the database
      */
     @PreAuthorize("hasAuthority('User')")
-    @PostMapping(path="/add", consumes= "application/json", produces="application/json")
+    @PostMapping(path = "/add", consumes = "application/json", produces = "application/json")
     ResponseEntity<SeriesDto> add(@RequestBody Series series) throws DuplicateMediumException {
-        if(this.seriesService.isValidSeries(series)) {
+        if (this.seriesService.isValidSeries(series)) {
             this.seriesRepository.save(series);
             series.setGenres(this.genreService.getGenresSet(series.getGenreStrings()));
             series.setLanguages(this.languageService.getLanguageSet(series.getLanguageStrings()));
@@ -119,14 +126,15 @@ public class SeriesController {
 
     /**
      * This method is used to update an existing series
-     * @param series    the series that should be updated
-     * @return          the updated series
+     *
+     * @param series the series that should be updated
+     * @return the updated series
      * @throws DuplicateMediumException if there is already the same series in the database
      */
     @PreAuthorize("hasAuthority('User')")
-    @PutMapping(consumes="application/json", produces="application/json")
+    @PutMapping(consumes = "application/json", produces = "application/json")
     ResponseEntity<SeriesDto> update(@RequestBody Series series) throws DuplicateMediumException {
-        if(this.seriesService.isValidSeries(series)) {
+        if (this.seriesService.isValidSeries(series)) {
             series.setNetwork(this.networkService.getNetwork(series.getNetworkTitle()));
             this.seriesRepository.save(series);
             series.setGenres(this.genreService.getGenresSet(series.getGenreStrings()));
@@ -140,10 +148,11 @@ public class SeriesController {
 
     /**
      * This method is used to attach a poster to an existing series
+     *
      * @param multipartFile the image file that should be uploaded
      * @param id            the id of the series
-     * @return              the updated Series
-     * @throws IOException  if the upload fails
+     * @return the updated Series
+     * @throws IOException             if the upload fails
      * @throws SeriesNotFoundException if there is no series with the given id
      */
     @PreAuthorize("hasAuthority('User')")
@@ -152,7 +161,7 @@ public class SeriesController {
         String fileName = StringUtils.cleanPath("poster." + fileUploadService.getFileExtension(multipartFile));
         Optional<Series> series = this.seriesRepository.findById(id);
         //check if the given series exists
-        if(series.isPresent()) {
+        if (series.isPresent()) {
             series.get().setPicturePath(series.get().getId() + "/" + fileName);
             //define the target path
             String uploadDir = Series.IMAGE_PATH_PREFIX + id;

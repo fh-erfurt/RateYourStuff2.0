@@ -1,9 +1,8 @@
 package de.fourzerofournotfound.rateyourstuff.rays.services.media;
 
 import de.fourzerofournotfound.rateyourstuff.rays.dtos.media.BookDto;
-import de.fourzerofournotfound.rateyourstuff.rays.models.media.Book;
 import de.fourzerofournotfound.rateyourstuff.rays.models.Rating;
-import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.BookPublisherRepository;
+import de.fourzerofournotfound.rateyourstuff.rays.models.media.Book;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.BookRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +14,7 @@ import java.util.Optional;
 /**
  * BookService
  * <p>This Service is used to provide different book-handling methods to the {@link de.fourzerofournotfound.rateyourstuff.rays.controllers.media.BookController BookController}</p>
+ *
  * @author Christoph Frischmuth
  * @author John Klippstein
  * @author Mickey Knop
@@ -33,14 +33,13 @@ public class BookService {
 
     /**
      * Checks if a book can be stored within the database without causing duplicates
+     *
      * @param book the book that should be checked
      * @return true if the book is not already stored in the database
      */
-    public boolean isValidBook(Book book)
-    {
+    public boolean isValidBook(Book book) {
         Optional<Book> optionalBook;
-        if(Objects.nonNull(book.getId()))
-        {
+        if (Objects.nonNull(book.getId())) {
             optionalBook = bookRepository.findBookByIdNotAndIsbn(book.getId(), book.getIsbn());
         } else {
             optionalBook = bookRepository.findBookByMediumNameIgnoreCaseAndReleaseDateOrIsbn(book.getMediumName(), book.getReleaseDate(), book.getIsbn());
@@ -50,11 +49,12 @@ public class BookService {
 
     /**
      * Converts a given book to a bookDTO object to limit the data that gets sent to the client
-     * @param book   the book that should be converted
-     * @return          the corresponding dtoObject
+     *
+     * @param book the book that should be converted
+     * @return the corresponding dtoObject
      */
     public BookDto convertToDto(Book book) {
-        BookDto bookDto= modelMapper.map(book, BookDto.class);
+        BookDto bookDto = modelMapper.map(book, BookDto.class);
         bookDto.setAverageRating(book.getMediumRatings());
         bookDto.setNumberOfRatings(book.getMediumRatings());
         bookDto.setMIN_RATING_POINTS(Rating.MIN_POINTS);

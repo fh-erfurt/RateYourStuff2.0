@@ -6,6 +6,7 @@ import lombok.Setter;
 /**
  * LanguageDTO
  * <p>The Language DTO is used to provide reduced information to the client.</p>
+ *
  * @author Christoph Frischmuth
  * @author John Klippstein
  * @author Mickey Knop

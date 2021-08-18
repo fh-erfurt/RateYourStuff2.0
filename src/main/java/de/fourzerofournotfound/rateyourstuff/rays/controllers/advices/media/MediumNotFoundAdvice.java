@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 /**
  * MediumNotFound Advice
  * <p>This Advice is used by the {@link de.fourzerofournotfound.rateyourstuff.rays.controllers.media.CollectionController CollectionController}</p>
+ *
  * @author Christoph Frischmuth
  * @author John Klippstein
  * @author Mickey Knop

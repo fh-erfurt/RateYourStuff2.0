@@ -8,6 +8,7 @@ import java.time.LocalDate;
 
 /**
  * Movie
+ *
  * @author Christoph Frischmuth
  * @author John Klippstein
  * @author Mickey Knop
@@ -22,21 +23,16 @@ import java.time.LocalDate;
 public class Movie extends Medium {
 
     public final static String IMAGE_PATH_PREFIX = "images/media/movies/";
-
-    @Column
-    private Integer length;
-
-    @Column
-    private Integer ageRestriction;
-
-    //@JsonManagedReference(value="movies-networks")
-    @ManyToOne (cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "networkId", referencedColumnName = "id")
-    private Network network;
-
     @JsonInclude
     @Transient
     String networkTitle;
+    @Column
+    private Integer length;
+    @Column
+    private Integer ageRestriction;
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "networkId", referencedColumnName = "id")
+    private Network network;
 
     @Builder
     public Movie(String mediumName, String shortDescription, LocalDate releaseDate, Integer length, Integer ageRestriction) {
@@ -48,7 +44,7 @@ public class Movie extends Medium {
     }
 
     public String getPicturePath() {
-        if(super.getPicturePath() != null) {
+        if (super.getPicturePath() != null) {
             return IMAGE_PATH_PREFIX + super.getPicturePath();
         }
         return null;

@@ -14,7 +14,7 @@ public class ISBNCheckServiceTest {
     ISBNCheckService isbnCheckService;
 
     @Test
-    public void shouldAcceptGivenBookWithISBN10 () {
+    public void shouldAcceptGivenBookWithISBN10() {
         //Given
         Book given = new Book("Harry Potter und der Orden des Phönix", "bestes Buch der Reihe", LocalDate.now(), "3-551-35405-7", true, true, 1021);
 
@@ -26,7 +26,7 @@ public class ISBNCheckServiceTest {
     }
 
     @Test
-    public void shouldAcceptGivenBookWithISBN13 () {
+    public void shouldAcceptGivenBookWithISBN13() {
         //Given
         Book given = new Book("Harry Potter und der Orden des Phönix", "bestes Buch der Reihe", LocalDate.now(), "978-3-5513-5405-1", true, true, 1021);
 

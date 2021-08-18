@@ -1,7 +1,7 @@
 package de.fourzerofournotfound.rateyourstuff.rays.services.media;
 
 import de.fourzerofournotfound.rateyourstuff.rays.dtos.media.GameDto;
-import de.fourzerofournotfound.rateyourstuff.rays.models.*;
+import de.fourzerofournotfound.rateyourstuff.rays.models.Rating;
 import de.fourzerofournotfound.rateyourstuff.rays.models.media.Game;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.GamePublisherRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.GameRepository;
@@ -10,11 +10,13 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Game Service
  * <p>This Service provides methods to the {@link de.fourzerofournotfound.rateyourstuff.rays.controllers.media.GameController GameController}</p>
+ *
  * @author Christoph Frischmuth
  * @author John Klippstein
  * @author Mickey Knop
@@ -33,14 +35,13 @@ public class GameService {
 
     /**
      * Checks if a game can be stored within the database without causing duplicates
+     *
      * @param game the game that should be checked
      * @return true if the game is not already stored in the database
      */
-    public boolean isValidGame(Game game)
-    {
+    public boolean isValidGame(Game game) {
         Optional<Game> optionalGame;
-        if(Objects.nonNull(game.getId()))
-        {
+        if (Objects.nonNull(game.getId())) {
             optionalGame = gameRepository.findGameByIdNotAndMediumNameIgnoreCaseAndReleaseDate(game.getId(), game.getMediumName(), game.getReleaseDate());
         } else {
             optionalGame = gameRepository.findGameByMediumNameIgnoreCaseAndReleaseDate(game.getMediumName(), game.getReleaseDate());
@@ -64,8 +65,6 @@ public class GameService {
         gameDto.setNumberOfCollections(game.getCollections());
         return gameDto;
     }
-
-
 
 
 }

@@ -31,8 +31,7 @@ public class SeasonServiceTest {
     }
 
     @Test
-    void shouldDetectDuplicationOfGivenSeason()
-    {
+    void shouldDetectDuplicationOfGivenSeason() {
         // Given
         LocalDate releaseDate0 = LocalDate.of(2017, 9, 26);
 

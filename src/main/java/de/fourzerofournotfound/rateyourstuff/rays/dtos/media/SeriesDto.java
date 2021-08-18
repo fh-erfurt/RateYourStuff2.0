@@ -6,6 +6,7 @@ import lombok.Setter;
 /**
  * Series DTO
  * <p>The Series DTO is used to provide reduced information to the client.</p>
+ *
  * @author Christoph Frischmuth
  * @author John Klippstein
  * @author Mickey Knop

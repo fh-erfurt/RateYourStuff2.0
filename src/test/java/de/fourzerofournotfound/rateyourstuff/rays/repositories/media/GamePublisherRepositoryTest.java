@@ -42,7 +42,7 @@ public class GamePublisherRepositoryTest {
     }
 
     @Test
-    void should_find_gamePublisher_by_title () {
+    void should_find_gamePublisher_by_title() {
         //Given
         GamePublisher given1 = new GamePublisher("Nintendo");
         GamePublisher given2 = new GamePublisher("Electronic Arts");
@@ -91,7 +91,7 @@ public class GamePublisherRepositoryTest {
     }
 
     @Test
-    public void should_delete_gamePublisher () {
+    public void should_delete_gamePublisher() {
         //Given
         GamePublisher given = new GamePublisher("Nintendo");
         GamePublisher saved = repository.save(given);

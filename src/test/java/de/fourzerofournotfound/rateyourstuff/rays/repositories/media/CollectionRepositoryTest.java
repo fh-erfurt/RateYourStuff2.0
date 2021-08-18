@@ -8,7 +8,6 @@ import de.fourzerofournotfound.rateyourstuff.rays.models.media.Movie;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.LoginRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.RoleRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.UserRepository;
-import de.fourzerofournotfound.rateyourstuff.rays.services.media.CollectionService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -42,8 +41,7 @@ public class CollectionRepositoryTest {
     private User testUser;
 
     @BeforeEach
-    void beforeEach()
-    {
+    void beforeEach() {
         collectionRepository.deleteAll();
         movieRepository.deleteAll();
         createTestUser();
@@ -132,7 +130,7 @@ public class CollectionRepositoryTest {
     }
 
     @Test
-    void shouldUpdateCollectionTitle () {
+    void shouldUpdateCollectionTitle() {
         //Given
         Collection given = Collection.builder().title("TestCollection").media(new HashSet<>()).user(testUser).build();
         collectionRepository.save(given);
@@ -149,7 +147,7 @@ public class CollectionRepositoryTest {
     }
 
     @Test
-    void shouldRemoveCollection () {
+    void shouldRemoveCollection() {
         //Given
         Collection given = Collection.builder().title("TestCollection").media(new HashSet<>()).user(testUser).build();
         Movie movie1 = Movie.builder()

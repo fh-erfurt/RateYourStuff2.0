@@ -1,10 +1,6 @@
 package de.fourzerofournotfound.rateyourstuff.rays.models.media;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import lombok.*;
 
 import javax.persistence.*;
@@ -12,6 +8,7 @@ import java.time.LocalDate;
 
 /**
  * Book
+ *
  * @author Christoph Frischmuth
  * @author John Klippstein
  * @author Mickey Knop
@@ -23,7 +20,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Table(name = "Books")
-public class Book extends Medium{
+public class Book extends Medium {
 
     public final static String IMAGE_PATH_PREFIX = "images/media/books/";
 
@@ -39,7 +36,7 @@ public class Book extends Medium{
     @Column(nullable = false)
     private Integer numberOfPages;
 
-    @ManyToOne (cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "bookPublisherId", referencedColumnName = "id")
     private BookPublisher bookPublisher;
 
@@ -54,8 +51,7 @@ public class Book extends Medium{
                 String isbn,
                 Boolean isEBook,
                 Boolean isPrint,
-                int numberOfPages)
-    {
+                int numberOfPages) {
         this.setMediumName(mediumName);
         this.setShortDescription(shortDescription);
         this.setReleaseDate(releaseDate);
@@ -66,7 +62,7 @@ public class Book extends Medium{
     }
 
     public String getPicturePath() {
-        if(super.getPicturePath() != null) {
+        if (super.getPicturePath() != null) {
             return IMAGE_PATH_PREFIX + super.getPicturePath();
         }
         return null;

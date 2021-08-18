@@ -18,8 +18,7 @@ public class BookPublisherServiceTest {
     private BookPublisherRepository bookPublisherRepository;
 
     @BeforeEach
-    void beforeEach()
-    {
+    void beforeEach() {
         bookPublisherRepository.deleteAll();
     }
 
@@ -27,9 +26,9 @@ public class BookPublisherServiceTest {
     void bookPublisherDtoShouldMatchBookPublisher() {
         //Given
         BookPublisher given = BookPublisher
-                                    .builder()
-                                    .bookPublisherTitle("Hanser")
-                                    .build();
+                .builder()
+                .bookPublisherTitle("Hanser")
+                .build();
         bookPublisherRepository.save(given);
 
         //When
@@ -43,7 +42,7 @@ public class BookPublisherServiceTest {
     }
 
     @Test
-    void shouldGetPublisherEntitiesFromDatabaseWithoutCreatingNewPublisher () {
+    void shouldGetPublisherEntitiesFromDatabaseWithoutCreatingNewPublisher() {
         //Given
         BookPublisher publisher1 = BookPublisher
                 .builder()

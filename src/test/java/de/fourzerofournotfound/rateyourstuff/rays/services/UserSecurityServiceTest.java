@@ -12,7 +12,8 @@ import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest(properties = "spring.profiles.active = test")
 class UserSecurityServiceTest {
@@ -36,8 +37,7 @@ class UserSecurityServiceTest {
     }
 
     @Test
-    public void shouldEncryptPassword()
-    {
+    public void shouldEncryptPassword() {
         //Given
         Login givenLogin = Login.builder()
                 .email("mickey.knop@fh-erfurt.de")
@@ -59,7 +59,6 @@ class UserSecurityServiceTest {
                 .build();
 
 
-
         //When
         String unhashedPassword = givenLogin.getPasswordHash();
         service.hashPasswordOfSignUp(givenUser);
@@ -72,8 +71,7 @@ class UserSecurityServiceTest {
     }
 
     @Test
-    public void shouldChangePassword()
-    {
+    public void shouldChangePassword() {
         //Given
         UserSecurityService service = new UserSecurityService();
 

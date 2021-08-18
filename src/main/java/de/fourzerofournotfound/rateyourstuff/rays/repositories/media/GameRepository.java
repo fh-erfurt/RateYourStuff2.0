@@ -13,6 +13,7 @@ import java.util.Optional;
  * GameRepository
  * <p>This Interface can be used to find Game entities in the database.</p>
  * <p>It also provides all functions of the {@link JpaRepository JpaRepository}</p>
+ *
  * @author Christoph Frischmuth
  * @author John Klippstein
  * @author Mickey Knop
@@ -21,8 +22,11 @@ import java.util.Optional;
 @Repository
 public interface GameRepository extends JpaRepository<Game, Long> {
     Page<Game> findAll(Pageable pageable);
+
     Optional<Game> findByMediumName(String gameName);
+
     Optional<Game> findGameByMediumNameIgnoreCaseAndReleaseDate(String mediumName, LocalDate releaseDate);
+
     Optional<Game> findGameByIdNotAndMediumNameIgnoreCaseAndReleaseDate(Long id, String mediumName, LocalDate releaseDate);
 }
 

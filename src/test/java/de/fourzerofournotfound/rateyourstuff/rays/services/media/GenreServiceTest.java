@@ -18,8 +18,7 @@ public class GenreServiceTest {
     private GenreRepository genreRepository;
 
     @BeforeEach
-    void beforeEach()
-    {
+    void beforeEach() {
         genreRepository.deleteAll();
     }
 

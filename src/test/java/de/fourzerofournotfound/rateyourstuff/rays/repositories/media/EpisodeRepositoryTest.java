@@ -26,7 +26,7 @@ public class EpisodeRepositoryTest {
         Episode given = Episode.builder()
                 .mediumName("Fasse dich, Kurtz!")
                 .shortDescription("[...]")
-                .releaseDate(LocalDate.of(1965,9,17))
+                .releaseDate(LocalDate.of(1965, 9, 17))
                 .episodeNumber(23)
                 .length(20)
                 .build();
@@ -44,7 +44,7 @@ public class EpisodeRepositoryTest {
         Episode given1 = Episode.builder()
                 .mediumName("Fasse dich, Kurtz!")
                 .shortDescription("[...]")
-                .releaseDate(LocalDate.of(1965,9,17))
+                .releaseDate(LocalDate.of(1965, 9, 17))
                 .episodeNumber(23)
                 .length(20)
                 .build();
@@ -52,7 +52,7 @@ public class EpisodeRepositoryTest {
         Episode given2 = Episode.builder()
                 .mediumName("Operation Tiger")
                 .shortDescription("[...]")
-                .releaseDate(LocalDate.of(1965,9,24))
+                .releaseDate(LocalDate.of(1965, 9, 24))
                 .episodeNumber(2)
                 .length(20)
                 .build();
@@ -74,7 +74,7 @@ public class EpisodeRepositoryTest {
         Episode given = Episode.builder()
                 .mediumName("Fasse dich, Kurtz!")
                 .shortDescription("[...]")
-                .releaseDate(LocalDate.of(1965,9,17))
+                .releaseDate(LocalDate.of(1965, 9, 17))
                 .episodeNumber(23)
                 .length(20)
                 .build();
@@ -96,7 +96,7 @@ public class EpisodeRepositoryTest {
         Episode given = Episode.builder()
                 .mediumName("Fasse dich, Kurtz!")
                 .shortDescription("[...]")
-                .releaseDate(LocalDate.of(1965,9,17))
+                .releaseDate(LocalDate.of(1965, 9, 17))
                 .episodeNumber(23)
                 .length(20)
                 .build();

@@ -12,6 +12,7 @@ import java.util.Optional;
 /**
  * BookPublisherService
  * <p>This service is provides methods for the {@link de.fourzerofournotfound.rateyourstuff.rays.controllers.media.BookPublisherController BookPublisherController}</p>
+ *
  * @author Christoph Frischmuth
  * @author John Klippstein
  * @author Mickey Knop
@@ -30,8 +31,9 @@ public class BookPublisherService {
 
     /**
      * Converts a given Book Publisher to a BookPublisher DTO
+     *
      * @param publisher the publisher that should be converted
-     * @return  the converted publisher
+     * @return the converted publisher
      */
     public BookPublisherDto convertToDto(BookPublisher publisher) {
         return modelMapper.map(publisher, BookPublisherDto.class);
@@ -40,12 +42,13 @@ public class BookPublisherService {
     /**
      * Returns the entity of a book publisher from the database. Creates a new Book publisher, if there is no
      * publisher with the given string as title
-     * @param publisherString   the publisher title that should be searched within the database
-     * @return  the valid book publisher entity from the database
+     *
+     * @param publisherString the publisher title that should be searched within the database
+     * @return the valid book publisher entity from the database
      */
     public BookPublisher getPublisher(String publisherString) {
         Optional<BookPublisher> publisher = publisherRepository.findByBookPublisherTitle(publisherString);
-        if(publisher.isPresent()) {
+        if (publisher.isPresent()) {
             return publisher.get();
         } else {
             BookPublisher newPublisher = new BookPublisher();

@@ -44,7 +44,7 @@ public class NetworkRepositoryTest {
     }
 
     @Test
-    void should_find_network_by_title () {
+    void should_find_network_by_title() {
         //Given
         Network given1 = Network.builder()
                 .networkTitle("CBS")
@@ -103,7 +103,7 @@ public class NetworkRepositoryTest {
     }
 
     @Test
-    public void should_delete_network () {
+    public void should_delete_network() {
         //Given
         Network given = Network.builder()
                 .networkTitle("CBS")

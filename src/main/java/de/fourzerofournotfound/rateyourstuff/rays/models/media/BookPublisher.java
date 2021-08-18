@@ -6,13 +6,17 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * BookPublisher
  * <p>This Model represents a book publisher. Each book can have one publisher</p>
+ *
  * @author Christoph Frischmuth
  * @author John Klippstein
  * @author Mickey Knop
@@ -22,14 +26,14 @@ import java.util.List;
 @Getter
 @Setter
 @RequiredArgsConstructor
-@Table(name="bookPublishers")
+@Table(name = "bookPublishers")
 public class BookPublisher extends BaseModel {
 
     @Column
     private String bookPublisherTitle;
 
     //@JsonBackReference
-    @OneToMany (mappedBy = "bookPublisher")
+    @OneToMany(mappedBy = "bookPublisher")
     private List<Book> books = new ArrayList<>();
 
     @Builder

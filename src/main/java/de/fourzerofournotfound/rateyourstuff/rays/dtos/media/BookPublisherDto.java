@@ -6,6 +6,7 @@ import lombok.Setter;
 /**
  * Book Publisher DTO
  * <p>The Book Publisher DTO is used to provide only the name and the id of a publisher to the client.</p>
+ *
  * @author Christoph Frischmuth
  * @author John Klippstein
  * @author Mickey Knop

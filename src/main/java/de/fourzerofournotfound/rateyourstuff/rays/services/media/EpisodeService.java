@@ -1,8 +1,8 @@
 package de.fourzerofournotfound.rateyourstuff.rays.services.media;
 
 import de.fourzerofournotfound.rateyourstuff.rays.dtos.media.EpisodeDto;
-import de.fourzerofournotfound.rateyourstuff.rays.models.media.Episode;
 import de.fourzerofournotfound.rateyourstuff.rays.models.Rating;
+import de.fourzerofournotfound.rateyourstuff.rays.models.media.Episode;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.EpisodeRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +14,7 @@ import java.util.Optional;
 /**
  * Episode Service
  * <p>This Service is used to provide methods for the {@link de.fourzerofournotfound.rateyourstuff.rays.controllers.media.EpisodeController EpisodeController}</p>
+ *
  * @author Christoph Frischmuth
  * @author John Klippstein
  * @author Mickey Knop
@@ -32,11 +33,12 @@ public class EpisodeService {
 
     /**
      * Converts a given episode to a episodeDTO object to limit the data that gets sent to the client
-     * @param episode   the episode that should be converted
-     * @return          the corresponding dtoObject
+     *
+     * @param episode the episode that should be converted
+     * @return the corresponding dtoObject
      */
     public EpisodeDto convertToDto(Episode episode) {
-        EpisodeDto episodeDto= modelMapper.map(episode, EpisodeDto.class);
+        EpisodeDto episodeDto = modelMapper.map(episode, EpisodeDto.class);
         episodeDto.setAverageRating(episode.getMediumRatings());
         episodeDto.setNumberOfRatings(episode.getMediumRatings());
         episodeDto.setMIN_RATING_POINTS(Rating.MIN_POINTS);
@@ -50,12 +52,13 @@ public class EpisodeService {
 
     /**
      * Checks if a episode can be stored within the database without causing duplicates
+     *
      * @param episode the episode that should be checked
      * @return true if the episode is not already stored in the database
      */
     public boolean isValidEpisode(Episode episode) {
         Optional<Episode> optionalEpisode;
-        if(Objects.nonNull(episode.getId()) && Objects.nonNull(episode.getSeasonMappingId())) {
+        if (Objects.nonNull(episode.getId()) && Objects.nonNull(episode.getSeasonMappingId())) {
             optionalEpisode = episodeRepository.findEpisodeByIdNotAndEpisodeNumberAndSeasonId(episode.getId(), episode.getEpisodeNumber(), episode.getSeasonMappingId());
         } else {
             optionalEpisode = episodeRepository.findEpisodeByEpisodeNumberAndSeasonId(episode.getEpisodeNumber(), episode.getSeasonMappingId());

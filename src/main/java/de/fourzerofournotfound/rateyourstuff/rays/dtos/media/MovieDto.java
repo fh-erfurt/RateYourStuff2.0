@@ -6,6 +6,7 @@ import lombok.Setter;
 /**
  * Movie DTO
  * <p>The Movie DTO is used to provide reduced information to the client.</p>
+ *
  * @author Christoph Frischmuth
  * @author John Klippstein
  * @author Mickey Knop
@@ -13,7 +14,7 @@ import lombok.Setter;
  */
 @Setter
 @Getter
-public class MovieDto extends MediumDto{
+public class MovieDto extends MediumDto {
     //length of the movie in full minutes
     private Integer length;
 

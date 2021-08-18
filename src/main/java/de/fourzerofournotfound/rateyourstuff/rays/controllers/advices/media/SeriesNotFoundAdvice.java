@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  * SeriesNotFoundAdvice
  * <p>This Advice is used by the {@link de.fourzerofournotfound.rateyourstuff.rays.controllers.media.SeriesController SeriesController} and
  * the {@link de.fourzerofournotfound.rateyourstuff.rays.controllers.media.SeasonController SeasonController}
+ *
  * @author Christoph Frischmuth
  * @author John Klippstein
  * @author Mickey Knop

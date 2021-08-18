@@ -41,7 +41,7 @@ public class BookPublisherRepositoryTest {
     }
 
     @Test
-    void should_find_bookPublisher_by_title () {
+    void should_find_bookPublisher_by_title() {
         //Given
         BookPublisher given1 = new BookPublisher("TOR");
         BookPublisher given2 = new BookPublisher("HEYNE");
@@ -90,7 +90,7 @@ public class BookPublisherRepositoryTest {
     }
 
     @Test
-    public void should_delete_bookPublisher () {
+    public void should_delete_bookPublisher() {
         //Given
         BookPublisher given = new BookPublisher("TOR");
         BookPublisher saved = repository.save(given);

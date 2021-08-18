@@ -14,10 +14,12 @@ public class CommentRepositoryTest {
     CommentRepository commentRepository;
 
     @AfterEach
-    public void afterEach(){commentRepository.deleteAll();}
+    public void afterEach() {
+        commentRepository.deleteAll();
+    }
 
     @Test
-    public void should_save_comment(){
+    public void should_save_comment() {
 
         //Given
         Comment given = Comment.builder()

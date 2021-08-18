@@ -47,8 +47,7 @@ public class CollectionServiceTest {
     private User testUser;
 
     @BeforeEach
-    void beforeEach()
-    {
+    void beforeEach() {
         collectionRepository.deleteAll();
         movieRepository.deleteAll();
         createTestUser();
@@ -93,7 +92,7 @@ public class CollectionServiceTest {
         //When
         Throwable thrown = Assertions.catchThrowable(() -> collectionService.addReferencesToCollection(given, testUser.getId()));
         Collection result = null;
-        if(Objects.isNull(thrown)) {
+        if (Objects.isNull(thrown)) {
             result = collectionService.addReferencesToCollection(given, testUser.getId());
         }
 
@@ -112,10 +111,10 @@ public class CollectionServiceTest {
                 .build();
 
         //When
-        Long nonExistingUserId = testUser.getId()+1;
+        Long nonExistingUserId = testUser.getId() + 1;
         Throwable thrown = Assertions.catchThrowable(() -> collectionService.addReferencesToCollection(given, nonExistingUserId));
         Collection result = null;
-        if(Objects.isNull(thrown)) {
+        if (Objects.isNull(thrown)) {
             result = collectionService.addReferencesToCollection(given, nonExistingUserId);
         }
 

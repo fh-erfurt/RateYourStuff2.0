@@ -6,6 +6,7 @@ import lombok.Setter;
 /**
  * Book DTO
  * <p>The Book DTO is used to send book entities with less information to the client.</p>
+ *
  * @author Christoph Frischmuth
  * @author John Klippstein
  * @author Mickey Knop
@@ -13,7 +14,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class BookDto extends MediumDto{
+public class BookDto extends MediumDto {
 
     private String isbn;
     //used to check if the book is available as ebook

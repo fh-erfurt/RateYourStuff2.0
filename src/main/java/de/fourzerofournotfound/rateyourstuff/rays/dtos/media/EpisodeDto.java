@@ -9,6 +9,7 @@ import java.util.Objects;
 /**
  * Series DTO
  * <p>The Series DTO is used to provide less information to the client.</p>
+ *
  * @author Christoph Frischmuth
  * @author John Klippstein
  * @author Mickey Knop
@@ -17,7 +18,7 @@ import java.util.Objects;
 @Getter
 @Setter
 
-public class EpisodeDto extends MediumDto{
+public class EpisodeDto extends MediumDto {
 
     private Integer episodeNumber;
 
@@ -33,13 +34,13 @@ public class EpisodeDto extends MediumDto{
     private String seriesTitle;
 
     public void setSeriesId(Season season) {
-        if(Objects.nonNull(season) && Objects.nonNull(season.getMedium())) {
+        if (Objects.nonNull(season) && Objects.nonNull(season.getMedium())) {
             this.seriesId = season.getMedium().getId();
         }
     }
 
     public void setSeriesTitle(Season season) {
-        if(Objects.nonNull(season) && Objects.nonNull(season.getMedium())) {
+        if (Objects.nonNull(season) && Objects.nonNull(season.getMedium())) {
             this.seriesTitle = season.getMedium().getMediumName();
         }
     }

@@ -13,6 +13,7 @@ import java.util.Optional;
 /**
  * SeasonService
  * <p>This Service provides methods to the {@link de.fourzerofournotfound.rateyourstuff.rays.controllers.media.SeasonController SeasonController}</p>
+ *
  * @author Christoph Frischmuth
  * @author John Klippstein
  * @author Mickey Knop
@@ -36,18 +37,15 @@ public class SeasonService {
 
     /**
      * Checks if a given season can be stored within the database without causing duplicates
+     *
      * @param season the season that should be checked
      * @return true if there is not a similar season in the database
      */
-    public boolean isValidSeason(Season season)
-    {
+    public boolean isValidSeason(Season season) {
         Optional<Season> optionalSeason;
-        if(Objects.nonNull(season.getId()))
-        {
+        if (Objects.nonNull(season.getId())) {
             optionalSeason = seasonRepository.findSeasonByIdNotAndSeasonNumberAndMediumId(season.getId(), season.getSeasonNumber(), season.getSeriesMappingId());
-        }
-        else
-        {
+        } else {
             optionalSeason = seasonRepository.findSeasonBySeasonNumberAndMediumId(season.getSeasonNumber(), season.getSeriesMappingId());
         }
         return optionalSeason.isEmpty();

@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 /**
  * Game DTO
  * <p>The GameDTO is used to provide less information to the client</p>
+ *
  * @author Christoph Frischmuth
  * @author John Klippstein
  * @author Mickey Knop
@@ -19,7 +20,7 @@ import java.util.stream.Collectors;
  */
 @Getter
 @Setter
-public class GameDto extends MediumDto{
+public class GameDto extends MediumDto {
     //average time that is needed to finish the game (in hours)
     private Float averagePlaytime;
     //minimum number of players that are needed in order to play the game
@@ -34,7 +35,7 @@ public class GameDto extends MediumDto{
     private Integer ageRestriction;
 
     public void setPlatforms(Set<Platform> platforms) {
-        if(platforms != null) {
+        if (platforms != null) {
             this.platforms = platforms.stream().map(Platform::getPlatformTitle).collect(Collectors.toList());
         } else {
             this.platforms = new ArrayList<>();

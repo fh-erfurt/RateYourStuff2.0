@@ -53,8 +53,7 @@ public class MovieServiceTest {
     }
 
     @Test
-    void shouldDetectDuplicationOfGivenMovie()
-    {
+    void shouldDetectDuplicationOfGivenMovie() {
         // Given
         LocalDate releaseDate = LocalDate.of(2009, 12, 17);
         Movie testMovie = Movie.builder()
@@ -73,7 +72,6 @@ public class MovieServiceTest {
 
         org.junit.jupiter.api.Assertions.assertTrue(movieService.isValidMovie(result));
     }
-
 
 
 }

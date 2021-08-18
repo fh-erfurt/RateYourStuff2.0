@@ -22,8 +22,7 @@ public class PlatformServiceTest {
     private PlatformRepository platformRepository;
 
     @BeforeEach
-    void beforeEach()
-    {
+    void beforeEach() {
         platformRepository.deleteAll();
     }
 

@@ -1,17 +1,19 @@
 package de.fourzerofournotfound.rateyourstuff.rays.models.media;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import de.fourzerofournotfound.rateyourstuff.rays.models.BaseModel;
 import lombok.*;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.util.List;
 
 /**
  * Network
  * <p>This Model represents a network.
  * A network is the publisher of a series. (e.g. CBS, CWS, ABC, BBC...)</p>
+ *
  * @author Christoph Frischmuth
  * @author John Klippstein
  * @author Mickey Knop
@@ -23,18 +25,15 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @RequiredArgsConstructor
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-@Table(name="networks")
+@Table(name = "networks")
 public class Network extends BaseModel {
 
     @Column
     private String networkTitle;
 
-    //@JsonBackReference(value="series-networks")
-    @OneToMany (mappedBy = "network")
+    @OneToMany(mappedBy = "network")
     private List<Series> series;
 
-    //@JsonBackReference(value="movies-networks")
-    @OneToMany (mappedBy = "network")
+    @OneToMany(mappedBy = "network")
     private List<Movie> movies;
 }

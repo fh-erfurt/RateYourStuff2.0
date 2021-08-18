@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 /**
  * Language Controller
  * <p>This Controller provides basic REST Interfaces to interact with Language entities from the database</p>
+ *
  * @author Christoph Frischmuth
  * @author John Klippstein
  * @author Mickey Knop
@@ -42,11 +43,12 @@ public class LanguageController {
 
     /**
      * This Method returns all languages from the database
-     * @param page      the current page (optional)
-     * @param size      the number of items per page
-     * @param orderBy   the attributed that should be ordered
-     * @param order     the order (asc, desc)
-     * @return          a list of LanguageDTOs
+     *
+     * @param page    the current page (optional)
+     * @param size    the number of items per page
+     * @param orderBy the attributed that should be ordered
+     * @param order   the order (asc, desc)
+     * @return a list of LanguageDTOs
      */
     @GetMapping("/all")
     ResponseEntity<List<LanguageDto>> getAll(

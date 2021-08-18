@@ -25,7 +25,6 @@ import java.util.Set;
 @Builder
 @AllArgsConstructor
 @RequiredArgsConstructor
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Table(name = "Languages")
 
 public class Language extends BaseModel {
@@ -33,7 +32,6 @@ public class Language extends BaseModel {
     @Column(length = 200)
     private String language;
 
-    //@JsonManagedReference(value="media-languages")
     @ManyToMany(mappedBy="languages")
     Set<Medium> media = new HashSet<>();
 }

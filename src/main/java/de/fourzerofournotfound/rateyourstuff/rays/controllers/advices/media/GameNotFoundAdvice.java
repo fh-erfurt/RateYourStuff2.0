@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 /**
  * GameNotFoundAdvice
  * <p>This Advice is used by the {@link de.fourzerofournotfound.rateyourstuff.rays.controllers.media.GameController GameController}
+ *
  * @author Christoph Frischmuth
  * @author John Klippstein
  * @author Mickey Knop

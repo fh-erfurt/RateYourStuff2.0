@@ -8,13 +8,17 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * GamePublisher
  * <p>This Model represents a game publisher. Each game can have one publisher</p>
+ *
  * @author Christoph Frischmuth
  * @author John Klippstein
  * @author Mickey Knop
@@ -24,15 +28,13 @@ import java.util.List;
 @Getter
 @Setter
 @RequiredArgsConstructor
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-@Table(name="gamePublishers")
+@Table(name = "gamePublishers")
 public class GamePublisher extends BaseModel {
 
     @Column
     private String gamePublisherTitle;
 
-    //@JsonBackReference
-    @OneToMany (mappedBy = "gamePublisher")
+    @OneToMany(mappedBy = "gamePublisher")
     private List<Game> games = new ArrayList<>();
 
     @Builder

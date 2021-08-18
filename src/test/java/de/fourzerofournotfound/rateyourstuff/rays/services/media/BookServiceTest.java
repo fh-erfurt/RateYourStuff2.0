@@ -20,8 +20,7 @@ public class BookServiceTest {
     private BookService bookService;
 
     @BeforeEach
-    void beforeEach()
-    {
+    void beforeEach() {
 
         bookRepository.deleteAll();
     }
@@ -31,7 +30,7 @@ public class BookServiceTest {
         //Given
         Book book = Book.builder()
                 .mediumName("Halo - The fall of reach")
-                .releaseDate(LocalDate.of(2005,2,7))
+                .releaseDate(LocalDate.of(2005, 2, 7))
                 .shortDescription("The official prequel to the award-winning Xbox(TM) game, one of the bestselling computer games of recent years.")
                 .isEBook(false)
                 .isPrint(true)
@@ -54,10 +53,9 @@ public class BookServiceTest {
     }
 
     @Test
-    void shouldFindDuplicatesOfGivenBook()
-    {
+    void shouldFindDuplicatesOfGivenBook() {
         //Given
-        LocalDate release = LocalDate.of(2005,2,7);
+        LocalDate release = LocalDate.of(2005, 2, 7);
 
         Book testMedia = Book.builder()
                 .mediumName("Halo - The fall of reach")
@@ -81,7 +79,6 @@ public class BookServiceTest {
         //false if media is already existent
         org.junit.jupiter.api.Assertions.assertTrue(bookService.isValidBook(saved));
     }
-
 
 
 }

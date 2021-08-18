@@ -9,13 +9,14 @@ package de.fourzerofournotfound.rateyourstuff.rays.services.isbn;
  *     <li>{@link ISBN10 ISBN10}</li>
  *     <li>{@link ISBN13 ISBN13}</li>
  * <ul>
+ *
  * @author Christoph Frischmuth
  * @author John Klippstein
  * @author Mickey Knop
  * @author Robin Beck
  */
 
-public class InvalidISBNException extends Exception{
+public class InvalidISBNException extends Exception {
     public InvalidISBNException() {
         super();
     }

@@ -1,9 +1,6 @@
 package de.fourzerofournotfound.rateyourstuff.rays.models.media;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import de.fourzerofournotfound.rateyourstuff.rays.models.BaseModel;
 import lombok.*;
 
@@ -14,6 +11,7 @@ import java.util.Set;
 /**
  * Season
  * <p>This Model represents a season. A season can ionclue multiple episodes.</p>
+ *
  * @author Christoph Frischmuth
  * @author John Klippstein
  * @author Mickey Knop
@@ -25,32 +23,28 @@ import java.util.Set;
 @Entity
 @RequiredArgsConstructor
 @AllArgsConstructor
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-@Table(name="seasons")
+@Table(name = "seasons")
 public class Season extends BaseModel {
 
     @Column
     private Integer seasonNumber;
 
-    @Column(length=250)
+    @Column(length = 250)
     private String seasonTitle;
 
     @JsonInclude
     @Transient
     private Long seriesMappingId;
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "seriesId", referencedColumnName = "id")
+    private Medium medium;
+    @Builder.Default
+    @OneToMany(mappedBy = "season", cascade = CascadeType.ALL)
+    private Set<Episode> episodes = new HashSet<>();
 
     public Season(Integer seasonNumber, String seasonTitle) {
         this.seasonNumber = seasonNumber;
         this.seasonTitle = seasonTitle;
     }
-
-    @ManyToOne (cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "seriesId", referencedColumnName = "id")
-    private Medium medium;
-
-    @JsonBackReference
-    @Builder.Default
-    @OneToMany (mappedBy = "season", cascade = CascadeType.ALL)
-    private Set<Episode> episodes = new HashSet<>();
 
 }

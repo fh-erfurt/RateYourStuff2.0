@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 /**
  * Genre Controller
  * <p>This Controller provides basic REST Interfaces to interact with genre entities from the database</p>
+ *
  * @author Christoph Frischmuth
  * @author John Klippstein
  * @author Mickey Knop
@@ -38,11 +39,12 @@ public class GenreController {
 
     /**
      * This Method returns all genres from the database
-     * @param page      the current page (optional)
-     * @param size      the number of items per page
-     * @param orderBy   the attributed that should be ordered
-     * @param order     the order (asc, desc)
-     * @return          a list of GenreDTOs
+     *
+     * @param page    the current page (optional)
+     * @param size    the number of items per page
+     * @param orderBy the attributed that should be ordered
+     * @param order   the order (asc, desc)
+     * @return a list of GenreDTOs
      */
     @GetMapping("/all")
     ResponseEntity<List<GenreDto>> getAll(

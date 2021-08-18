@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 /**
  * ISBNInvalidAdvice
  * <p>This Advice is used by the {@link de.fourzerofournotfound.rateyourstuff.rays.controllers.media.BookController BookController}
+ *
  * @author Christoph Frischmuth
  * @author John Klippstein
  * @author Mickey Knop
@@ -17,11 +18,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  */
 @ControllerAdvice
 public class ISBNInvalidAdvice {
-        @ResponseBody
-        @ExceptionHandler(InvalidISBNException.class)
-        @ResponseStatus(HttpStatus.EXPECTATION_FAILED)
-        String isbnInvalidHandler(InvalidISBNException ex) {
-            return ex.getMessage();
-        }
+    @ResponseBody
+    @ExceptionHandler(InvalidISBNException.class)
+    @ResponseStatus(HttpStatus.EXPECTATION_FAILED)
+    String isbnInvalidHandler(InvalidISBNException ex) {
+        return ex.getMessage();
     }
+}
 

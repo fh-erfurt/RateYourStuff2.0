@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 /**
  * Collection Service
  * <p>This Service is used to provide methods to the {@link de.fourzerofournotfound.rateyourstuff.rays.controllers.media.CollectionController CollectionController}</p>
+ *
  * @author Christoph Frischmuth
  * @author John Klippstein
  * @author Mickey Knop
@@ -41,14 +42,15 @@ public class CollectionService {
 
     /**
      * Adds a reference to the user that should be marked as creator to the collection
+     *
      * @param collection    The collection that should be modified
      * @param userMappingId The id of the user that should be added to the colelction
-     * @return              the modified collection with the valid user reference
+     * @return the modified collection with the valid user reference
      * @throws UserNotFoundException if the user has not been found
      */
     public Collection addReferencesToCollection(Collection collection, Long userMappingId) throws UserNotFoundException {
         Optional<User> user = userRepository.findById(userMappingId);
-        if(user.isPresent()) {
+        if (user.isPresent()) {
             collection.setUser(user.get());
             return collection;
         }
@@ -57,8 +59,9 @@ public class CollectionService {
 
     /**
      * Converts a single collection entity to a collection DTO
-     * @param collection    the collection that should be converted
-     * @return              the converted collection
+     *
+     * @param collection the collection that should be converted
+     * @return the converted collection
      */
     public CollectionDto convertToDto(Collection collection) {
         CollectionDto collectionDto = modelMapper.map(collection, CollectionDto.class);
@@ -69,8 +72,9 @@ public class CollectionService {
 
     /**
      * Converts a single collection to a reduced collection DTO
-     * @param collection    the collection that should be converted
-     * @return              the converted collection
+     *
+     * @param collection the collection that should be converted
+     * @return the converted collection
      */
     public ReducedCollectionDto convertToReducedDto(Collection collection) {
         return modelMapper.map(collection, ReducedCollectionDto.class);
@@ -78,11 +82,12 @@ public class CollectionService {
 
     /**
      * Removes all collections from a given list that include a certain medium
-     * @param collections   the list of collections that should be checked
-     * @param mediumId      the id of the medium which should be searched
-     * @return              the filtered collection list
+     *
+     * @param collections the list of collections that should be checked
+     * @param mediumId    the id of the medium which should be searched
+     * @return the filtered collection list
      */
-    public Set<Collection> removeCollectionsWithMediaId(Set<Collection> collections, Long mediumId){
+    public Set<Collection> removeCollectionsWithMediaId(Set<Collection> collections, Long mediumId) {
         return collections
                 .stream().filter(collection -> !checkIfMediaIdIsInMediaList(collection.getMedia(), mediumId))
                 .collect(Collectors.toSet());
@@ -90,11 +95,12 @@ public class CollectionService {
 
     /**
      * Checks if the given medium is inside a given medium list
-     * @param media     the list of media that should be searched for the medium
-     * @param mediumId  the id of the medium that should be searched
-     * @return  true, if the collection contains the medium
+     *
+     * @param media    the list of media that should be searched for the medium
+     * @param mediumId the id of the medium that should be searched
+     * @return true, if the collection contains the medium
      */
-    private boolean checkIfMediaIdIsInMediaList (Set<Medium> media, Long mediumId) {
-       return media.stream().anyMatch(medium -> medium.getId().equals(mediumId));
+    private boolean checkIfMediaIdIsInMediaList(Set<Medium> media, Long mediumId) {
+        return media.stream().anyMatch(medium -> medium.getId().equals(mediumId));
     }
 }

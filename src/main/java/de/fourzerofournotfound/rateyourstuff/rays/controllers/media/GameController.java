@@ -2,13 +2,13 @@ package de.fourzerofournotfound.rateyourstuff.rays.controllers.media;
 
 
 import de.fourzerofournotfound.rateyourstuff.rays.dtos.media.GameDto;
-import de.fourzerofournotfound.rateyourstuff.rays.models.media.Game;
 import de.fourzerofournotfound.rateyourstuff.rays.models.errors.media.GameNotFoundException;
+import de.fourzerofournotfound.rateyourstuff.rays.models.media.Game;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.GameRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.services.FileUploadService;
-import de.fourzerofournotfound.rateyourstuff.rays.services.media.*;
 import de.fourzerofournotfound.rateyourstuff.rays.services.PageableService;
 import de.fourzerofournotfound.rateyourstuff.rays.services.errors.DuplicateMediumException;
+import de.fourzerofournotfound.rateyourstuff.rays.services.media.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +25,7 @@ import java.util.stream.Collectors;
 /**
  * Game Controller
  * <p>This Controller provides basic REST Interfaces to interact with Game entities from the database</p>
+ *
  * @author Christoph Frischmuth
  * @author John Klippstein
  * @author Mickey Knop
@@ -63,11 +64,12 @@ public class GameController {
 
     /**
      * This Method returns all games from the database
-     * @param page      the current page (optional)
-     * @param size      the number of items per page
-     * @param orderBy   the attributed that should be ordered
-     * @param order     the order (asc, desc)
-     * @return          a list of GameDTOs
+     *
+     * @param page    the current page (optional)
+     * @param size    the number of items per page
+     * @param orderBy the attributed that should be ordered
+     * @param order   the order (asc, desc)
+     * @return a list of GameDTOs
      */
     @GetMapping("/all")
     ResponseEntity<List<GameDto>> getAll(
@@ -84,9 +86,10 @@ public class GameController {
 
     /**
      * This method is used to get a single Game DTO by its id
-     * @param id    the id of the game
-     * @return      the found GameDTO
-     * @throws GameNotFoundException    if there is no game with the given id
+     *
+     * @param id the id of the game
+     * @return the found GameDTO
+     * @throws GameNotFoundException if there is no game with the given id
      */
     @GetMapping("/{id}")
     ResponseEntity<GameDto> getById(@PathVariable Long id) throws GameNotFoundException {
@@ -102,14 +105,15 @@ public class GameController {
 
     /**
      * This method is used to add a game to the database.
-     * @param game  the game that should be added
-     * @return      the GameDTO of the new game
+     *
+     * @param game the game that should be added
+     * @return the GameDTO of the new game
      * @throws DuplicateMediumException if there is already the same game in the database
      */
     @PreAuthorize("hasAuthority('User')")
-    @PostMapping(path="/add", consumes= "application/json", produces="application/json")
+    @PostMapping(path = "/add", consumes = "application/json", produces = "application/json")
     ResponseEntity<GameDto> add(@RequestBody Game game) throws DuplicateMediumException {
-        if(this.gameService.isValidGame(game)) {
+        if (this.gameService.isValidGame(game)) {
             this.gameRepository.save(game);
             game.setGenres(this.genreService.getGenresSet(game.getGenreStrings()));
             game.setLanguages(this.languageService.getLanguageSet(game.getLanguageStrings()));
@@ -124,14 +128,15 @@ public class GameController {
 
     /**
      * This method is used to update a given game
-     * @param game  the game that should be updated
-     * @return      the GameDTO of the updated game
+     *
+     * @param game the game that should be updated
+     * @return the GameDTO of the updated game
      * @throws DuplicateMediumException if the change would conflict with another game
      */
     @PreAuthorize("hasAuthority('User')")
-    @PutMapping(consumes="application/json", produces="application/json")
+    @PutMapping(consumes = "application/json", produces = "application/json")
     ResponseEntity<GameDto> update(@RequestBody Game game) throws DuplicateMediumException {
-        if(this.gameService.isValidGame(game)) {
+        if (this.gameService.isValidGame(game)) {
             game.setGamePublisher(this.gamePublisherService.getPublisher(game.getPublisherTitle()));
             this.gameRepository.save(game);
             game.setGenres(this.genreService.getGenresSet(game.getGenreStrings()));
@@ -147,10 +152,11 @@ public class GameController {
 
     /**
      * This method is used to attach a poster to a game
+     *
      * @param multipartFile the image file that should be attached
-     * @param id    the id of the game that needs to be updated
-     * @return      the updated game
-     * @throws IOException  if the upload fails
+     * @param id            the id of the game that needs to be updated
+     * @return the updated game
+     * @throws IOException           if the upload fails
      * @throws GameNotFoundException if there is no game with the given id
      */
     @PreAuthorize("hasAuthority('User')")
@@ -160,7 +166,7 @@ public class GameController {
 
         Optional<Game> game = this.gameRepository.findById(id);
         //check if the given movie exists
-        if(game.isPresent()) {
+        if (game.isPresent()) {
             game.get().setPicturePath(game.get().getId() + "/" + fileName);
             //define the target path
             String uploadDir = Game.IMAGE_PATH_PREFIX + id;

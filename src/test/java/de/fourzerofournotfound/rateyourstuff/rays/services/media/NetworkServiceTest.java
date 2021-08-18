@@ -18,8 +18,7 @@ public class NetworkServiceTest {
     private NetworkRepository networkRepository;
 
     @BeforeEach
-    void beforeEach()
-    {
+    void beforeEach() {
         networkRepository.deleteAll();
     }
 

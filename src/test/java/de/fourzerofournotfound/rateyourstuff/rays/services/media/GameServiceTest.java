@@ -29,14 +29,14 @@ public class GameServiceTest {
     void gameDtoShouldMatchGame() {
         //Given
         Game game = Game.builder()
-                        .mediumName("Anthem")
-                        .shortDescription("Worst Game ever")
-                        .releaseDate(LocalDate.now())
-                        .averagePlaytime(0.8f)
-                        .minNumberOfGamers(1)
-                        .maxNumberOfGamers(4)
-                        .ageRestriction(12)
-                        .build();
+                .mediumName("Anthem")
+                .shortDescription("Worst Game ever")
+                .releaseDate(LocalDate.now())
+                .averagePlaytime(0.8f)
+                .minNumberOfGamers(1)
+                .maxNumberOfGamers(4)
+                .ageRestriction(12)
+                .build();
         Game given = gameRepository.save(game);
         //When
         GameDto result = gameService.convertToDto(given);
@@ -55,8 +55,7 @@ public class GameServiceTest {
     }
 
     @Test
-    void shouldDetectDuplicatesOfGames()
-    {
+    void shouldDetectDuplicatesOfGames() {
         // Given
         LocalDate releaseDate = LocalDate.of(2001, 11, 15);
         Game testGame = Game.builder()
@@ -76,8 +75,6 @@ public class GameServiceTest {
 
         org.junit.jupiter.api.Assertions.assertTrue(gameService.isValidGame(result));
     }
-
-
 
 
 }

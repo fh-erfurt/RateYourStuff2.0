@@ -2,17 +2,21 @@ package de.fourzerofournotfound.rateyourstuff.rays.services.media;
 
 import de.fourzerofournotfound.rateyourstuff.rays.dtos.media.MediumDto;
 import de.fourzerofournotfound.rateyourstuff.rays.models.Rating;
-import de.fourzerofournotfound.rateyourstuff.rays.models.media.*;
-import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.*;
+import de.fourzerofournotfound.rateyourstuff.rays.models.media.Medium;
+import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.MediaRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
 
 /**
  * MediaService
  * <p>This Service provides methods to the {@link de.fourzerofournotfound.rateyourstuff.rays.controllers.media.MediumController MediumController}</p>
+ *
  * @author Christoph Frischmuth
  * @author John Klippstein
  * @author Mickey Knop
@@ -26,16 +30,16 @@ public class MediaService {
 
     @Autowired
     public MediaService(MediaRepository mediaRepository,
-                        ModelMapper modelMapper)
-    {
+                        ModelMapper modelMapper) {
         this.modelMapper = modelMapper;
         this.mediaRepository = mediaRepository;
     }
 
     /**
      * Converts a given Medium to a MediumDTO. It also adds various needed information such the average rating of the medium
-     * @param medium    the Medium that should be converted
-     * @return          the converted MediumDTO
+     *
+     * @param medium the Medium that should be converted
+     * @return the converted MediumDTO
      */
     public MediumDto convertToDto(Medium medium) {
         MediumDto mediumDto = modelMapper.map(medium, MediumDto.class);
@@ -48,14 +52,16 @@ public class MediaService {
         mediumDto.setNumberOfCollections(medium.getCollections());
         return mediumDto;
     }
+
     /**
      * Returns a list containing all media that match the input by ignoring the Case and except also almost matching words(like)
+     *
      * @param givenInput taken from the SearchBar call altered through dividing and sorting out short words followed by adjusting to the "likefuntion" aspect with '%...%'
-     * @return              an ArrayList of matching Media
+     * @return an ArrayList of matching Media
      */
-    public ArrayList<Medium> getSearchResult(String givenInput){
+    public ArrayList<Medium> getSearchResult(String givenInput) {
         ArrayList<String> separatedInput = new ArrayList<>();
-        Collections.addAll(separatedInput,givenInput.split(" "));
+        Collections.addAll(separatedInput, givenInput.split(" "));
 
         int minLengthForValidWord = 4;
         separatedInput.removeIf(s -> s.length() < minLengthForValidWord);
@@ -65,8 +71,7 @@ public class MediaService {
         ArrayList<Medium> foundMedia = new ArrayList<>();
         HashSet<Long> foundIds = new HashSet<>();
 
-        for(String a: separatedInput)
-        {
+        for (String a : separatedInput) {
             List<Medium> results = mediaRepository.findByMediumNameLikeIgnoreCase(a);
             results.removeIf(r -> !foundIds.add(r.getId()));
             foundMedia.addAll(results);

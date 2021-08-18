@@ -18,8 +18,7 @@ public class GamePublisherServiceTest {
     private GamePublisherRepository gamePublisherRepository;
 
     @BeforeEach
-    void beforeEach()
-    {
+    void beforeEach() {
         gamePublisherRepository.deleteAll();
     }
 
@@ -42,7 +41,7 @@ public class GamePublisherServiceTest {
     }
 
     @Test
-    void shouldGetPublisherEntityFromDatabaseWithoutCreatingNewPublisher () {
+    void shouldGetPublisherEntityFromDatabaseWithoutCreatingNewPublisher() {
         //Given
         GamePublisher publisher1 = GamePublisher
                 .builder()

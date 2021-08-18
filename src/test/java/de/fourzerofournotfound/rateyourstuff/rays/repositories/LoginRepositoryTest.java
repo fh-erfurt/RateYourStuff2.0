@@ -9,19 +9,20 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
-@SpringBootTest(properties = "spring.profiles.active = test")
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
+@SpringBootTest(properties = "spring.profiles.active = test")
 class LoginRepositoryTest {
     @Autowired
     LoginRepository loginRepository;
 
     @BeforeEach
-    public void beforeEach() {loginRepository.deleteAll();}
+    public void beforeEach() {
+        loginRepository.deleteAll();
+    }
 
     @Test
-    public void should_add_new_login_profile()
-    {
+    public void should_add_new_login_profile() {
         //Given
         Login given = Login.builder()
                 .email("max.mustermann@rays.de")
@@ -37,8 +38,7 @@ class LoginRepositoryTest {
     }
 
     @Test
-    public void should_update_email_address()
-    {
+    public void should_update_email_address() {
         //Given
         Login given = Login.builder()
                 .email("max.mustermann@rays.de")
@@ -57,8 +57,7 @@ class LoginRepositoryTest {
     }
 
     @Test
-    public void should_find_login_by_email()
-    {
+    public void should_find_login_by_email() {
         //Given
         Login given = Login.builder()
                 .email("max.mustermann@rays.de")
@@ -75,8 +74,7 @@ class LoginRepositoryTest {
     }
 
     @Test
-    public void should_not_found_login_by_email()
-    {
+    public void should_not_found_login_by_email() {
         //Given
         Login given = Login.builder()
                 .email("max.mustermann@rays.de")
@@ -93,8 +91,7 @@ class LoginRepositoryTest {
     }
 
     @Test
-    public void should_delete_login_account()
-    {
+    public void should_delete_login_account() {
         //Given
         Login given = Login.builder()
                 .email("max.mustermann@rays.de")

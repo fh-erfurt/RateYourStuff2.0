@@ -15,6 +15,7 @@ import java.util.Set;
 /**
  * PlatformService
  * <p>This Service provides methods for the {@link de.fourzerofournotfound.rateyourstuff.rays.controllers.media.PlatformController PlatformController}</p>
+ *
  * @author Christoph Frischmuth
  * @author John Klippstein
  * @author Mickey Knop
@@ -34,8 +35,9 @@ public class PlatformService {
 
     /**
      * Converts a given Platform to a PlatformDTO
-     * @param platform  the platform that should be converted
-     * @return          the converted PlatformDTO
+     *
+     * @param platform the platform that should be converted
+     * @return the converted PlatformDTO
      */
     public PlatformDto convertToDto(Platform platform) {
         return modelMapper.map(platform, PlatformDto.class);
@@ -43,8 +45,9 @@ public class PlatformService {
 
     /**
      * Returns references to the given platform names. Creates the platforms, if they do not exist
-     * @param platformStrings   the names of the platforms that should be references
-     * @return                  the entities of the platforms
+     *
+     * @param platformStrings the names of the platforms that should be references
+     * @return the entities of the platforms
      */
     public Set<Platform> getPlatformSet(List<String> platformStrings) {
         Set<Platform> platforms = new HashSet<>();

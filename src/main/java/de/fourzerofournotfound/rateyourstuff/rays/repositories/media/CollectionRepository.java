@@ -12,6 +12,7 @@ import java.util.Set;
  * CollectionRepository
  * <p>This Interface can be used to find colelction entities in the database.</p>
  * <p>It also provides all functions of the {@link JpaRepository JpaRepository}</p>
+ *
  * @author Christoph Frischmuth
  * @author John Klippstein
  * @author Mickey Knop
@@ -20,6 +21,8 @@ import java.util.Set;
 @Repository
 public interface CollectionRepository extends JpaRepository<Collection, Long> {
     Page<Collection> findAllByUserId(Long id, Pageable pageable);
+
     Set<Collection> findAllByUserId(Long id);
+
     Page<Collection> findAllByMediaId(Long id, Pageable pageable);
 }

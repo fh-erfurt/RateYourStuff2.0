@@ -8,6 +8,7 @@ import java.time.LocalDate;
 
 /**
  * Episode
+ *
  * @author Christoph Frischmuth
  * @author John Klippstein
  * @author Mickey Knop
@@ -47,7 +48,7 @@ public class Episode extends Medium {
     }
 
     public String getPicturePath() {
-        if(super.getPicturePath() != null) {
+        if (super.getPicturePath() != null) {
             return IMAGE_PATH_PREFIX + super.getPicturePath();
         }
         return null;

@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
  * Base Model
  * <p>This Model represents the base of all Models.
  * It provides an id and attributes for created-at and updated-at timestamps</p>
+ *
  * @author Christoph Frischmuth
  * @author John Klippstein
  * @author Mickey Knop

@@ -1,10 +1,9 @@
 package de.fourzerofournotfound.rateyourstuff.rays.services.media;
 
 import de.fourzerofournotfound.rateyourstuff.rays.dtos.media.MovieDto;
-import de.fourzerofournotfound.rateyourstuff.rays.models.media.Movie;
 import de.fourzerofournotfound.rateyourstuff.rays.models.Rating;
+import de.fourzerofournotfound.rateyourstuff.rays.models.media.Movie;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.MovieRepository;
-import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.NetworkRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +14,7 @@ import java.util.Optional;
 /**
  * MovieService
  * <p>This service provides methods to the {@link de.fourzerofournotfound.rateyourstuff.rays.controllers.media.MovieController MovieController}</p>
+ *
  * @author Christoph Frischmuth
  * @author John Klippstein
  * @author Mickey Knop
@@ -34,13 +34,13 @@ public class MovieService {
 
     /**
      * Checks if a movie can be stored within the database without causing duplicates
+     *
      * @param movie the movie that should be checked
      * @return true if the movie is not already stored in the database
      */
-    public boolean isValidMovie(Movie movie)
-    {
+    public boolean isValidMovie(Movie movie) {
         Optional<Movie> optionalMovie;
-        if(Objects.nonNull(movie.getId())) {
+        if (Objects.nonNull(movie.getId())) {
             optionalMovie = movieRepository.findMovieByIdNotAndMediumNameIgnoreCaseAndReleaseDate(movie.getId(), movie.getMediumName(), movie.getReleaseDate());
         } else {
             optionalMovie = movieRepository.findMovieByMediumNameIgnoreCaseAndReleaseDate(movie.getMediumName(), movie.getReleaseDate());
@@ -50,11 +50,12 @@ public class MovieService {
 
     /**
      * Converts a given movie to a movieDTO object to limit the data that gets sent to the client
-     * @param movie   the movie that should be converted
-     * @return          the corresponding dtoObject
+     *
+     * @param movie the movie that should be converted
+     * @return the corresponding dtoObject
      */
     public MovieDto convertToDto(Movie movie) {
-        MovieDto movieDto= modelMapper.map(movie, MovieDto.class);
+        MovieDto movieDto = modelMapper.map(movie, MovieDto.class);
         movieDto.setAverageRating(movie.getMediumRatings());
         movieDto.setNumberOfRatings(movie.getMediumRatings());
         movieDto.setMIN_RATING_POINTS(Rating.MIN_POINTS);

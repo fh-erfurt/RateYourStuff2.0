@@ -17,15 +17,17 @@ public class RatingRepositoryTest {
     RatingRepository ratingRepository;
 
     @AfterEach
-    public void afterEach(){ratingRepository.deleteAll();}
+    public void afterEach() {
+        ratingRepository.deleteAll();
+    }
 
     @Test
-    public void should_save_rating(){
+    public void should_save_rating() {
         //Given
         Rating given = Rating.builder()
-                        .givenPoints(5)
-                        .description("Heute wird es nicht so lustig")
-                        .build();
+                .givenPoints(5)
+                .description("Heute wird es nicht so lustig")
+                .build();
 
         //When
         Rating result = ratingRepository.save(given);
@@ -35,7 +37,7 @@ public class RatingRepositoryTest {
     }
 
     @Test
-    public void should_find_rating_by_givenPoints(){
+    public void should_find_rating_by_givenPoints() {
 
         //Given
         Rating.builder()

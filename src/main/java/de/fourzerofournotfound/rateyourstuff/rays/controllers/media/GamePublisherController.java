@@ -2,8 +2,8 @@ package de.fourzerofournotfound.rateyourstuff.rays.controllers.media;
 
 
 import de.fourzerofournotfound.rateyourstuff.rays.dtos.media.GamePublisherDto;
-import de.fourzerofournotfound.rateyourstuff.rays.models.media.GamePublisher;
 import de.fourzerofournotfound.rateyourstuff.rays.models.errors.media.GamePublisherNotFoundException;
+import de.fourzerofournotfound.rateyourstuff.rays.models.media.GamePublisher;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.GamePublisherRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.services.PageableService;
 import de.fourzerofournotfound.rateyourstuff.rays.services.media.GamePublisherService;
@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 /**
  * GamePublisher Controller
  * <p>This Controller provides basic REST Interfaces to interact with GamePublisher entities from the database</p>
+ *
  * @author Christoph Frischmuth
  * @author John Klippstein
  * @author Mickey Knop
@@ -41,11 +42,12 @@ public class GamePublisherController {
 
     /**
      * This Method returns all GamePublishers from the database
-     * @param page      the current page (optional)
-     * @param size      the number of items per page
-     * @param orderBy   the attributed that should be ordered
-     * @param order     the order (asc, desc)
-     * @return          a list of GamePublisherDTOs
+     *
+     * @param page    the current page (optional)
+     * @param size    the number of items per page
+     * @param orderBy the attributed that should be ordered
+     * @param order   the order (asc, desc)
+     * @return a list of GamePublisherDTOs
      */
     @GetMapping("/all")
     ResponseEntity<List<GamePublisherDto>> getAll(
@@ -64,8 +66,9 @@ public class GamePublisherController {
 
     /**
      * This method is used to return a single GamePublisher by its id
-     * @param id    the id of the gamePublisher
-     * @return      the found GamePublisherDTO
+     *
+     * @param id the id of the gamePublisher
+     * @return the found GamePublisherDTO
      * @throws GamePublisherNotFoundException if there is no GamePublisher with the given id
      */
     @GetMapping("/{id}")

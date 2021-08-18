@@ -18,8 +18,7 @@ public class LanguageServiceTest {
     private LanguageRepository languageRepository;
 
     @BeforeEach
-    void beforeEach()
-    {
+    void beforeEach() {
         languageRepository.deleteAll();
     }
 

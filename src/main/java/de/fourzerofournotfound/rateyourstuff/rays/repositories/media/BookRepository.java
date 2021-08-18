@@ -13,6 +13,7 @@ import java.util.Optional;
  * BookRepository
  * <p>This Interface can be used to find Book entities in the database.</p>
  * <p>It also provides all functions of the {@link JpaRepository JpaRepository}</p>
+ *
  * @author Christoph Frischmuth
  * @author John Klippstein
  * @author Mickey Knop
@@ -21,6 +22,7 @@ import java.util.Optional;
 @Repository
 public interface BookRepository extends JpaRepository<Book, Long> {
     Optional<Book> findByMediumName(String bookName);
+
     Optional<Book> findByIsbn(String bookIsbn);
 
     List<Book> findAllByBookPublisher(BookPublisher bookPublisher);

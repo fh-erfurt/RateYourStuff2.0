@@ -3,7 +3,6 @@ package de.fourzerofournotfound.rateyourstuff.rays.services.media;
 import de.fourzerofournotfound.rateyourstuff.rays.dtos.media.SeriesDto;
 import de.fourzerofournotfound.rateyourstuff.rays.models.Rating;
 import de.fourzerofournotfound.rateyourstuff.rays.models.media.Series;
-import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.NetworkRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.SeriesRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +14,7 @@ import java.util.Optional;
 /**
  * SeriesService
  * <p>This service provides methods to the {@link de.fourzerofournotfound.rateyourstuff.rays.controllers.media.SeriesController SeriesController}</p>
+ *
  * @author Christoph Frischmuth
  * @author John Klippstein
  * @author Mickey Knop
@@ -34,14 +34,13 @@ public class SeriesService {
 
     /**
      * Checks if a series can be stored within the database without causing duplicates
+     *
      * @param series the series that should be checked
      * @return true if the series is not already stored in the database
      */
-    public boolean isValidSeries(Series series)
-    {
+    public boolean isValidSeries(Series series) {
         Optional<Series> optionalSeries;
-        if(Objects.nonNull(series.getId()))
-        {
+        if (Objects.nonNull(series.getId())) {
             optionalSeries = seriesRepository.findSeriesByIdNotAndMediumNameIgnoreCaseAndReleaseDate(series.getId(), series.getMediumName(), series.getReleaseDate());
         } else {
             optionalSeries = seriesRepository.findSeriesByMediumNameIgnoreCaseAndReleaseDate(series.getMediumName(), series.getReleaseDate());
@@ -51,11 +50,12 @@ public class SeriesService {
 
     /**
      * Converts a given movie to a movieDTO object to limit the data that gets sent to the client
-     * @param series   the series that should be converted
-     * @return          the corresponding dtoObject
+     *
+     * @param series the series that should be converted
+     * @return the corresponding dtoObject
      */
     public SeriesDto convertToDto(Series series) {
-        SeriesDto seriesDto= modelMapper.map(series, SeriesDto.class);
+        SeriesDto seriesDto = modelMapper.map(series, SeriesDto.class);
         seriesDto.setAverageRating(series.getMediumRatings());
         seriesDto.setNumberOfRatings(series.getMediumRatings());
         seriesDto.setMIN_RATING_POINTS(Rating.MIN_POINTS);

@@ -15,6 +15,7 @@ import java.util.Set;
 /**
  * GenreService
  * <p>This Service provides methods to the {@link de.fourzerofournotfound.rateyourstuff.rays.controllers.media.GenreController GenreController}</p>
+ *
  * @author Christoph Frischmuth
  * @author John Klippstein
  * @author Mickey Knop
@@ -35,8 +36,9 @@ public class GenreService {
 
     /**
      * Converts the given Genre to a GenreDTO
+     *
      * @param genre the Genre that should be converted
-     * @return      the converted GenreDTO
+     * @return the converted GenreDTO
      */
     public GenreDto convertToDto(Genre genre) {
         return modelMapper.map(genre, GenreDto.class);
@@ -44,15 +46,16 @@ public class GenreService {
 
     /**
      * Returns references to the given genres. Creates genres that do not exist
-     * @param genreStrings  the list of genre names that should be searched within the database
-     * @return              the list of genre entities
+     *
+     * @param genreStrings the list of genre names that should be searched within the database
+     * @return the list of genre entities
      */
     public Set<Genre> getGenresSet(List<String> genreStrings) {
         Set<Genre> genres = new HashSet<>();
 
-        for(String genre : genreStrings) {
+        for (String genre : genreStrings) {
             Optional<Genre> foundGenre = genreRepository.findGenreByGenreName(genre);
-            if(foundGenre.isPresent()) {
+            if (foundGenre.isPresent()) {
                 genres.add(foundGenre.get());
             } else {
                 Genre newGenre = new Genre();

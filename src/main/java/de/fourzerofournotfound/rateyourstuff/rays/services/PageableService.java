@@ -13,17 +13,18 @@ import org.springframework.stereotype.Service;
 public class PageableService {
     /**
      * Returns a pageable object with the given settings
-     * @param orderBy   string of the attributed that should be ordered
-     * @param order     the order, can be asc for ascending or desc for descending
-     * @param page      the current page
-     * @param size      the number of objects per page
-     * @return          the configured Pageable
+     *
+     * @param orderBy string of the attributed that should be ordered
+     * @param order   the order, can be asc for ascending or desc for descending
+     * @param page    the current page
+     * @param size    the number of objects per page
+     * @return the configured Pageable
      */
-    public Pageable createPageable (String orderBy, String order, int page, int size) {
+    public Pageable createPageable(String orderBy, String order, int page, int size) {
         Pageable pageable;
-        if(!orderBy.equals("")) {
+        if (!orderBy.equals("")) {
             Sort sort;
-            if(order.equalsIgnoreCase("asc")) {
+            if (order.equalsIgnoreCase("asc")) {
                 sort = Sort.by(Sort.Direction.ASC, orderBy);
             } else {
                 sort = Sort.by(Sort.Direction.DESC, orderBy);

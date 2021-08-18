@@ -13,6 +13,7 @@ import java.util.Set;
 /**
  * Collection
  * <p>This Model represents a Collection. A Collection is a set of different media (e. g. books, games, series)</p>
+ *
  * @author Christoph Frischmuth
  * @author John Klippstein
  * @author Mickey Knop
@@ -24,20 +25,16 @@ import java.util.Set;
 @Builder
 @AllArgsConstructor
 @RequiredArgsConstructor
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Table(name = "Collections")
 public class Collection extends BaseModel {
 
+    @ManyToMany
+    Set<Medium> media;
     @Column
     private String title;
-
     @ManyToOne
     @JoinColumn(name = "userId", referencedColumnName = "id")
     private User user;
-
-    @ManyToMany
-    Set<Medium> media;
-
     @Transient
     @JsonInclude
     private Long userMappingId;

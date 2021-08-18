@@ -31,8 +31,7 @@ public class EpisodeServiceTest {
     private SeasonRepository seasonRepository;
 
     @BeforeEach
-    void beforeEach()
-    {
+    void beforeEach() {
 
         episodeRepository.deleteAll();
         seasonRepository.deleteAll();
@@ -45,7 +44,7 @@ public class EpisodeServiceTest {
         Episode episode = Episode.builder()
                 .mediumName("Fasse dich, Kurtz!")
                 .shortDescription("[...]")
-                .releaseDate(LocalDate.of(1965,9,17))
+                .releaseDate(LocalDate.of(1965, 9, 17))
                 .episodeNumber(23)
                 .length(20)
                 .build();
@@ -65,8 +64,7 @@ public class EpisodeServiceTest {
     }
 
     @Test
-    void shouldDetectDuplicatesOfGivenEpisode()
-    {
+    void shouldDetectDuplicatesOfGivenEpisode() {
         //Given
         LocalDate releaseDate = LocalDate.of(2017, 9, 26);
 

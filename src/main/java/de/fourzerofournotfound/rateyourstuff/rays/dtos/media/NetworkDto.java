@@ -7,6 +7,7 @@ import lombok.Setter;
  * Network DTO
  * <p>The Network DTO is used to provide reduced information to the client</p>
  * <p>A network can be either a tv channel or a studio that released a movie</p>
+ *
  * @author Christoph Frischmuth
  * @author John Klippstein
  * @author Mickey Knop

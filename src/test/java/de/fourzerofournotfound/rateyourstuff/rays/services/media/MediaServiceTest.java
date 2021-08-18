@@ -1,8 +1,6 @@
 package de.fourzerofournotfound.rateyourstuff.rays.services.media;
 
 import de.fourzerofournotfound.rateyourstuff.rays.dtos.media.MediumDto;
-
-
 import de.fourzerofournotfound.rateyourstuff.rays.models.media.Movie;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.MediaRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.MovieRepository;
@@ -27,13 +25,12 @@ class MediaServiceTest {
     private MediaService mediaService;
 
     @BeforeEach
-    void beforeEach()
-    {
+    void beforeEach() {
         movieRepository.deleteAll();
     }
 
     @Test
-    void mediumDtoShouldMatchMedium () {
+    void mediumDtoShouldMatchMedium() {
         //Given
         Movie given = Movie.builder()
                 .mediumName("Zurück in die Zukunft")
