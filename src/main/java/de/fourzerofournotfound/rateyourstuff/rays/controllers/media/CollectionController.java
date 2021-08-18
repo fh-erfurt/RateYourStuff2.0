@@ -133,7 +133,7 @@ public class CollectionController {
         Optional<Medium> medium = mediaRepository.findById(mediumId);
 
         if (medium.isPresent()) {
-            Set<Collection> collections = collectionService.removeCollectionsWithMediaId(collectionRepository.findAllByUserId(userId), mediumId);
+            List<Collection> collections = collectionService.removeCollectionsWithMediaId(collectionRepository.findAllByUserId(userId, Pageable.unpaged()).getContent(), mediumId);
 
             return ResponseEntity.ok(
                     collections.stream()

@@ -11,6 +11,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -87,10 +88,10 @@ public class CollectionService {
      * @param mediumId    the id of the medium which should be searched
      * @return the filtered collection list
      */
-    public Set<Collection> removeCollectionsWithMediaId(Set<Collection> collections, Long mediumId) {
+    public List<Collection> removeCollectionsWithMediaId(List<Collection> collections, Long mediumId) {
         return collections
                 .stream().filter(collection -> !checkIfMediaIdIsInMediaList(collection.getMedia(), mediumId))
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
     }
 
     /**
