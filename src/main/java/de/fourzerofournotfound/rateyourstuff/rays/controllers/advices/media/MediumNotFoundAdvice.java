@@ -1,5 +1,6 @@
 package de.fourzerofournotfound.rateyourstuff.rays.controllers.advices.media;
 
+import de.fourzerofournotfound.rateyourstuff.rays.controllers.media.collections.CollectionController;
 import de.fourzerofournotfound.rateyourstuff.rays.models.errors.media.MediumNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -9,7 +10,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
  * MediumNotFound Advice
- * <p>This Advice is used by the {@link de.fourzerofournotfound.rateyourstuff.rays.controllers.media.CollectionController CollectionController}</p>
+ * <p>This Advice is used by the {@link CollectionController CollectionController}</p>
  *
  * @author Christoph Frischmuth
  * @author John Klippstein

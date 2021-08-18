@@ -1,6 +1,8 @@
 package de.fourzerofournotfound.rateyourstuff.rays.models.media;
 
 import de.fourzerofournotfound.rateyourstuff.rays.models.BaseModel;
+import de.fourzerofournotfound.rateyourstuff.rays.models.media.movies.Movie;
+import de.fourzerofournotfound.rateyourstuff.rays.models.media.series.Series;
 import lombok.*;
 
 import javax.persistence.Column;

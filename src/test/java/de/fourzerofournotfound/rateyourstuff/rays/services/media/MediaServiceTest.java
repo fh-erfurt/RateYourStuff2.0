@@ -1,9 +1,9 @@
 package de.fourzerofournotfound.rateyourstuff.rays.services.media;
 
 import de.fourzerofournotfound.rateyourstuff.rays.dtos.media.MediumDto;
-import de.fourzerofournotfound.rateyourstuff.rays.models.media.Movie;
+import de.fourzerofournotfound.rateyourstuff.rays.models.media.movies.Movie;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.MediaRepository;
-import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.MovieRepository;
+import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.movies.MovieRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import de.fourzerofournotfound.rateyourstuff.rays.models.BaseModel;
 import de.fourzerofournotfound.rateyourstuff.rays.models.Comment;
 import de.fourzerofournotfound.rateyourstuff.rays.models.Rating;
+import de.fourzerofournotfound.rateyourstuff.rays.models.media.collections.Collection;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
