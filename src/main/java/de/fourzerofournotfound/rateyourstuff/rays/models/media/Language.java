@@ -1,19 +1,20 @@
 package de.fourzerofournotfound.rateyourstuff.rays.models.media;
 
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import de.fourzerofournotfound.rateyourstuff.rays.models.BaseModel;
 import lombok.*;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Language
  * <p>This Model represents a language. The language described in which languages a medium is available in.
  * A medium can have multiple languages.</p>
+ *
  * @author Christoph Frischmuth
  * @author John Klippstein
  * @author Mickey Knop
@@ -29,9 +30,8 @@ import java.util.Set;
 
 public class Language extends BaseModel {
 
+    @ManyToMany(mappedBy = "languages")
+    Set<Medium> media = new HashSet<>();
     @Column(length = 200)
     private String language;
-
-    @ManyToMany(mappedBy="languages")
-    Set<Medium> media = new HashSet<>();
 }

@@ -1,6 +1,8 @@
 package de.fourzerofournotfound.rateyourstuff.rays.models.media;
 
 import de.fourzerofournotfound.rateyourstuff.rays.models.BaseModel;
+import de.fourzerofournotfound.rateyourstuff.rays.models.media.movies.Movie;
+import de.fourzerofournotfound.rateyourstuff.rays.models.media.series.Series;
 import lombok.*;
 
 import javax.persistence.Column;
@@ -10,7 +12,6 @@ import javax.persistence.Table;
 import java.util.List;
 
 /**
- * Network
  * <p>This Model represents a network.
  * A network is the publisher of a series. (e.g. CBS, CWS, ABC, BBC...)</p>
  *

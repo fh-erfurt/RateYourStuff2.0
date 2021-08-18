@@ -14,7 +14,6 @@ import java.util.Set;
 import java.util.logging.Logger;
 
 /**
- * GenreService
  * <p>This Service provides methods to the {@link de.fourzerofournotfound.rateyourstuff.rays.controllers.media.GenreController GenreController}</p>
  *
  * @author Christoph Frischmuth

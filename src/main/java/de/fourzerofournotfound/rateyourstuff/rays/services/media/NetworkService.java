@@ -11,7 +11,6 @@ import java.util.Optional;
 import java.util.logging.Logger;
 
 /**
- * NetworkService
  * <p>This service provides methods to the {@link de.fourzerofournotfound.rateyourstuff.rays.controllers.media.NetworkController NetworkController}</p>
  *
  * @author Christoph Frischmuth

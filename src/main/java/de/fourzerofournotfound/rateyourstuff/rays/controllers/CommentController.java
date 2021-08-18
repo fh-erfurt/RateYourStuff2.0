@@ -16,24 +16,24 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/rest/comments")
 public class CommentController {
 
-    final CommentRepository commentRepository;
-    final ModelMapper modelMapper;
-    final PageableService pageableService;
-    final CommentService commentService;
+    private final CommentRepository commentRepository;
+    private final PageableService pageableService;
+    private final CommentService commentService;
+    private final Logger logger = Logger.getLogger(this.getClass().getName());
+
 
     @Autowired
     public CommentController(CommentRepository commentRepository,
-                             ModelMapper modelMapper,
                              PageableService pageableService,
                              CommentService commentService) {
         this.commentRepository = commentRepository;
-        this.modelMapper = modelMapper;
         this.pageableService = pageableService;
         this.commentService = commentService;
     }
@@ -111,7 +111,7 @@ public class CommentController {
         if(comment.isPresent()) {
             return ResponseEntity.ok(commentService.convertToDto(comment.get()));
         } else {
-            throw new CommentNotFoundException("No Comment found for id " + id);
+            throw new CommentNotFoundException("No "+Comment.class.getSimpleName()+" found for id " + id);
         }
     }
 
@@ -120,6 +120,7 @@ public class CommentController {
     ResponseEntity<CommentDto> add(@RequestBody Comment comment) throws InvalidCommentException {
         comment = commentService.addReferencesToComment(comment);
         Comment savedComment = this.commentRepository.save(comment);
+        logger.info("Added " + Comment.class.getSimpleName() + " with id " + savedComment.getId());
         return ResponseEntity.ok(commentService.convertToDto(savedComment));
     }
 
@@ -129,9 +130,11 @@ public class CommentController {
         Optional<Comment> foundComment = commentRepository.findById(comment.getId());
         if(foundComment.isPresent()) {
             foundComment.get().setTextOfComment(comment.getTextOfComment());
-            return ResponseEntity.ok(this.commentRepository.save(foundComment.get()));
+            Comment savedComment = this.commentRepository.save(foundComment.get());
+            logger.info("Updated " +Comment.class.getSimpleName()+ " with id " + savedComment.getId());
+            return ResponseEntity.ok(savedComment);
         }
-        throw new CommentNotFoundException("There is no comment with id " + comment.getId());
+        throw new CommentNotFoundException("There is no "+Comment.class.getSimpleName()+" with id " + comment.getId());
     }
 
     @PreAuthorize("hasAuthority('User')")

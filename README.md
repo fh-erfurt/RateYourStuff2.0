@@ -3,9 +3,9 @@
 [![CodeQL](https://github.com/fh-erfurt/RateYourStuff2.0/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/fh-erfurt/RateYourStuff2.0/actions/workflows/codeql-analysis.yml)
 [![Docs](https://img.shields.io/badge/javadoc-see%20here-9cf.svg?style=flat&logo=java)](https://fh-erfurt.github.io/RateYourStuff2.0)
 
-Projekt, um verschiedene Arten von Multimedia zu bewerten und Ihre aktuellen Fortschritte zu teilen.
+Projekt, um verschiedene Medien zu Bewerten, darüber zu diskutieren und Fortschritte dazu anzulegen
 
-Und wer sind die Köpfe hinter dieser großartigen und überwältigend Idee?
+Das Projektteam:
 - Robin Beck
 - Christoph Frischmuth
 - Mickey Knop
@@ -21,7 +21,7 @@ Der Server ist konfiguriert, um mit einer mariaDB Datenbank zu kommunizieren. Hi
 - Nutzername: root
 - Passwort: (kein Passwort)
 
-Hinweis: Für das Durchlaufen der Testfälle, wird eine extra Datenbank namens "ratedatabasetest" angelegt.
+Hinweis: Für das Durchlaufen der Testfälle, wird eine H2 Datenbank namens "ratedatabasetest" angelegt. Somit ist für das Durchführen der Tests keine aktive MariaDB Datenbank erforderlich.
 
 #### REST-API
 Nachdem ein entsprechender Datenbankserver bereitgestellt wurde, kann die Spring-Anwendung gestartet werden.
@@ -30,15 +30,16 @@ Sobald die Tabellen angelegt wurden, kann das Script "data.sql", welches sich im
 
 Der Server ist anschließend unter dem Port 5000 erreichbar.
 
-Über http://localhost:5000/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config können die zur Verfügung stehenden Schnittstellen eingesehen werden.
+Über [Swagger](http://localhost:5000/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config) können die zur Verfügung stehenden Schnittstellen eingesehen werden.
 
 #### Frontend:
 Um das Frontend zu nutzen, gibt es zwei Varianten:
 ##### Deployte Version
-Über https://avartos.github.io/rateyourstufffrontendwebapp/ ist eine fertig deployte Version des Frontends verfügbar. Hierbei müssen keine zusätzlichen Installationen von nodejs und diversen modulen vorgenommen werden. Es gilt jedoch zu beachten, dass ggf. Verlinkungen, die die Seite neu laden auf eine 404 Seite von Github verweisen.
+Über [Github-Pages](https://avartos.github.io/rateyourstufffrontendwebapp/) ist eine fertig deployte Version des Frontends verfügbar. 
+Die Nutzung des deployten Frontends hat den Vorteil, dass weder nodejs noch andere zusätzliche Module installiert werden müssen. Wichtig ist lediglich, dass das Backend sowie die Datenbank aktiv sind.
 
 ##### Manuelle Installation
-Das Frontend kann über das Repository https://github.com/Avartos/rateyourstufffrontendwebapp heruntergeladen werden.
+Das Frontend kann über das [Frontend-Repository](https://github.com/Avartos/rateyourstufffrontendwebapp)  heruntergeladen werden.
 Bitte beachten Sie, dass zum Ausführen des Frontends nodejs benötigt wird. Sobald das Frontend heruntergeladen wurde, müssen mithilfe des Befehls 
 ```
 npm install
@@ -83,7 +84,6 @@ Nun existiert schone eine größere Menge an Portalen, die sich mit der Bewertun
 - Filme
 - Serien
 - Videospiele
-- "Magazine"
 
 Benutzer können Medien mit unterschiedlichen Kriterien bewerten. 
 Für jedes Medium gibt es eine allgemeine Bewertung, die durch die Bewertungskriterien bestimmt wird. Benutzer können ihren Fortschritt auf verschiedenen Medientypen teilen. Jedes Medium hat einen eigenen Kommentarbereich. Darüber hinaus ist eine Art Mediensammlung geplant, um Medien logisch zu gruppieren.
@@ -101,13 +101,14 @@ Das System soll in mehreren Etappen entwickelt werden: <br>
     - Datenbankanbindung <br>
     - Webfrontend <br>
 
-Für das Modul Java 01 wird vorerst jedoch nur das Grundsystem umgesetzt und implementiert. 
+Für das Modul Java 02 wird auf dem aus Java 01 entnommenen Grundsystem aufgebaut. Dieses soll so erweitert werden, dass eine Datenbankpersistierung sowie eine Nutzung des Systems über ein Frontend möglich gemacht werden.
 
 
 <details>
   <summary>Muss-Kriterien</summary>
   
   <details>
+    Die Nachfolgenden Musskriterien wurden im Vergleich zu Java 01 leicht abgeändert. Entfallene Musskriterien werden mit (Java01) gekennzeichnet. Grund für die Abwandlung waren Zeit und Aufwand des Projekts.
   <summary>Verwaltung von Medien</summary>
       Das System muss den Nutzern die Möglichkeit bieten: 
         - Medien anzulegen <br>
@@ -117,12 +118,12 @@ Für das Modul Java 01 wird vorerst jedoch nur das Grundsystem umgesetzt und imp
       </details>
       
   <details>
-  <summary>Verwaltung von Fortschritten</summary>
+  <summary>Verwaltung von Fortschritten (Java01)</summary>
       Das System muss den Nutzern die Möglichkeit bieten: 
-        - eigene Fortschritte für Medien anzulegen <br>
-        - den aktuellen Fortschritt prozentual oder Medienspezifisch (Buchseite, Episode, Filmminute, Spielzeit) anzuzeigen <br>
-        - bereits angelegte Fortschritte zu ändern <br>
-        - bereits angelegte Fortschritte zu löschen <br>
+        - eigene Fortschritte für Medien anzulegen (Java01)<br>
+        - den aktuellen Fortschritt prozentual oder Medienspezifisch (Buchseite, Episode, Filmminute, Spielzeit) anzuzeigen (Java01) <br>
+        - bereits angelegte Fortschritte zu ändern (Java01)<br>
+        - bereits angelegte Fortschritte zu löschen (Java01)<br>
       </details>
       
   <details>
@@ -130,10 +131,10 @@ Für das Modul Java 01 wird vorerst jedoch nur das Grundsystem umgesetzt und imp
       Das System muss den Nutzern die Möglichkeit bieten: 
         - Kommentare zu einem Medium zu schreiben <br>
         - auf die Kommentare von anderen Nutzern zu antworten <br>
-        - Kommentare mit potenziellen Spoilern auszublenden <br>
+        - Kommentare mit potenziellen Spoilern auszublenden (Java01) <br>
         - Kommentare zu löschen <br>
-        - Kommentare zu deaktivieren  <br>
-        - Kommentare wieder zu öffnen <br>
+        - Kommentare zu deaktivieren (Java01) <br>
+        - Kommentare wieder zu öffnen (Java01)<br>
   </details>
   
   <details>
@@ -141,6 +142,8 @@ Für das Modul Java 01 wird vorerst jedoch nur das Grundsystem umgesetzt und imp
       Das System muss den Nutzern die Möglichkeit bieten: 
       - Kollektionen anzulegen <br>
       - Medien zu Kollektionen zuzuweisen <br>
+      - Medien aus Kollektionen entfernen <br>
+      - Kollektionen entfernen
   </details>
       
       
@@ -156,7 +159,7 @@ Für das Modul Java 01 wird vorerst jedoch nur das Grundsystem umgesetzt und imp
   <details>
   <summary>Verwalten von Benutzern</summary>
       Das System muss den Nutzern und Moderatoren die Möglichkeit bieten: 
-        - andere Nutzer anhand ihres Nutzernamens zu suchen <br>
+        - andere Nutzer anhand ihres Nutzernamens zu suchen (Java01)<br>
         - die eigenen Nutzerdaten einzusehen <br>
         - die eigenen Nutzerdaten zu ändern <br>
         - sich am System zu registrieren     <br>
@@ -179,6 +182,7 @@ Für das Modul Java 01 wird vorerst jedoch nur das Grundsystem umgesetzt und imp
     - Filtern und Suchen nach Fortschritten, die Nutzer zu Medien angelegt haben <br>
     - Eigene Videos, die Ausschnitte des Mediums zeigen, im Rahmen des Zitatrechts, sollen als Kommentar beziehungsweise als Meinung möglich sein. So können, zum Beispiel,     Spielabschnitte zitiert und kommentiert werden, um seinen Freunden oder Interessierten eine Möglichkeit zu bieten die Bildung der Meinung nachvollziehen zu können. <br>
     - Ein weiteres Wunschkriterium ist eine Merkliste, in der Medien hinterlegt werden können, welche man sich später ansieht/liest/spielt.<br>
+    - Verwalten von Fortschritten sowie das Teilen von Fortschritten mit anderen Nutzern
 </details>
 
 <details>
@@ -193,9 +197,9 @@ Nicht realisiert werden, sollen: <br>
 </details>
 
 ## UML-Diagramme
-Unter diesem Punkt befinden sich unsere UML-Diagramme die wir im Vorfeld erstellt haben um unsere Idee von der Applikation grafisch darzustellen und um eine bessere Vorstellung des Ganzen zu bekommen.
+Unter diesem Punkt befinden sich unsere UML-Diagramme die wir im Vorfeld im Modul Java01 erstellt haben um unsere Idee von der Applikation grafisch darzustellen und um eine bessere Vorstellung des Ganzen zu bekommen.
 <details>
-  <summary>UML-Klassen Diagramm</summary>
+  <summary>UML-Klassen Diagramm (Java01)</summary>
   https://lucid.app/documents/view/c6c65f1a-d09a-422a-ade8-80eab27f8dcb
 </details>
 
@@ -221,17 +225,17 @@ Unter diesem Punkt befinden sich unsere UML-Diagramme die wir im Vorfeld erstell
 </details>
 
 <details>
-  <summary>neues Film anlegen</summary>  
+  <summary>neuen Film anlegen</summary>  
   <img src="https://user-images.githubusercontent.com/71118367/105817356-c98b4900-5fb5-11eb-8606-891ce5ab54f8.png">
 </details>
 
 <details>
-  <summary>neues Serie anlegen</summary>  
+  <summary>neue Serie anlegen</summary>  
   <img src="https://user-images.githubusercontent.com/71118367/105817359-ca23df80-5fb5-11eb-8515-c8fe32300565.png">
 </details>
 
 <details>
-  <summary>neues Episode anlegen</summary>  
+  <summary>neue Episode anlegen</summary>  
   <img src="https://user-images.githubusercontent.com/71118367/105817360-cabc7600-5fb5-11eb-8612-bd4592c584ff.png">
 </details>
 
@@ -257,11 +261,11 @@ Unter diesem Punkt befinden sich unsere UML-Diagramme die wir im Vorfeld erstell
 </details>
 
 <details>
-  <summary>Fortschritte verwalten</summary>
+  <summary>Fortschritte verwalten (Java01)</summary>
   <img src="https://user-images.githubusercontent.com/71118367/105817337-c6905880-5fb5-11eb-820f-2ba352946ed8.png">
 </details>
 <details>
-  <summary>Neuen Fortschritt anlegen</summary>  
+  <summary>Neuen Fortschritt anlegen (Java01)</summary>  
   <img src="https://user-images.githubusercontent.com/71118367/102483413-ff5b1a80-4064-11eb-9eaa-b8abf8dcde3a.png">
   <img src="https://user-images.githubusercontent.com/71118367/102485076-6aa5ec00-4067-11eb-8d7d-a04649e59a4d.png">
 </details>
@@ -340,8 +344,3 @@ Dennoch soll dieses Kapitel nicht gänzlich leer bleiben. <br>
 
    - Listen die in einer Klasse immer wieder benutzt werden, sollten als Attribut dieser Klasse verwendet werden! <br>
    - Keep simple stupid --> Kleine Funktionen schreiben, die in Komplexeren Methoden zusammen verwendet werden können! <br>
-
-
-## Schlusswort
-Nobody can touch this *Mic drop*
-

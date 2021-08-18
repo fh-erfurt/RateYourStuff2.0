@@ -2,7 +2,7 @@ package de.fourzerofournotfound.rateyourstuff.rays.dtos.media;
 
 import de.fourzerofournotfound.rateyourstuff.rays.models.Comment;
 import de.fourzerofournotfound.rateyourstuff.rays.models.Rating;
-import de.fourzerofournotfound.rateyourstuff.rays.models.media.Collection;
+import de.fourzerofournotfound.rateyourstuff.rays.models.media.collections.Collection;
 import de.fourzerofournotfound.rateyourstuff.rays.models.media.Genre;
 import de.fourzerofournotfound.rateyourstuff.rays.models.media.Language;
 import lombok.Getter;
@@ -14,7 +14,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * Medium DTO
  * <p>The Medium DTO is used to provide reduced information to the client</p>
  *
  * @author Christoph Frischmuth
