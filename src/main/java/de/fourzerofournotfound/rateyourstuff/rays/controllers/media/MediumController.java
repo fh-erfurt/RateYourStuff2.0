@@ -1,6 +1,7 @@
 package de.fourzerofournotfound.rateyourstuff.rays.controllers.media;
 
 import de.fourzerofournotfound.rateyourstuff.rays.dtos.media.MediumDto;
+import de.fourzerofournotfound.rateyourstuff.rays.models.errors.media.MediumNotFoundException;
 import de.fourzerofournotfound.rateyourstuff.rays.models.media.Medium;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.MediaRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.services.PageableService;
@@ -11,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -62,5 +64,21 @@ public class MediumController {
                         .map(mediaService::convertToDto)
                         .collect(Collectors.toList())
         );
+    }
+
+    /**
+     * This method is used to return a single medium
+     *
+     * @param id the id of the medium that should be returned
+     * @return the found medium
+     * @throws MediumNotFoundException if no medium was found
+     */
+    @GetMapping(path = "/{id}")
+    ResponseEntity<MediumDto> getOne(@PathVariable Long id) throws MediumNotFoundException {
+        Optional<Medium> medium = mediaRepository.findById(id);
+        if (medium.isPresent()) {
+            return ResponseEntity.ok(mediaService.convertToDto(medium.get()));
+        }
+        throw new MediumNotFoundException("There is no Medium for id " + id);
     }
 }

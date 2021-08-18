@@ -55,8 +55,12 @@ public class UserController {
 
     @PreAuthorize("hasAuthority('User')")
     @GetMapping("/id={id}")
-    ResponseEntity<User> getById(@PathVariable Long id) throws UserNotFoundException {
-        return ResponseEntity.ok((this.userRepository.findById(id).orElseThrow(()-> new UserNotFoundException("No User found for given id"))));
+    ResponseEntity<UserDto> getById(@PathVariable Long id) throws UserNotFoundException {
+        Optional<User> user = userRepository.findById(id);
+        if(user.isPresent()) {
+            return( ResponseEntity.ok(userService.convertToDto(user.get())));
+        }
+        throw new UserNotFoundException("No User found for id " + id);
     }
 
     @GetMapping("/check/is={userName}")
@@ -70,16 +74,16 @@ public class UserController {
     }
 
     @PostMapping(path = "/add", consumes = "application/json", produces = "application/json")
-    ResponseEntity<User> add(@RequestBody User user) {
+    ResponseEntity<UserDto> add(@RequestBody User user) {
         userService.setRoleId(user);
         userSecurityService.hashPasswordOfSignUp(user);
-        return ResponseEntity.ok(this.userRepository.save(user));
+        User savedUser = this.userRepository.save(user);
+        return ResponseEntity.ok(userService.convertToDto(savedUser));
     }
 
     @PreAuthorize("hasAuthority('User')")
     @PutMapping(consumes = "application/json", produces = "application/json")
     ResponseEntity<UserDto> update(@RequestBody User user) throws UserNotFoundException, UserAlreadyExistsException {
-        //userService.addReferencesToUser(user);
         Optional<User> potentialUser = userRepository.findUserById(user.getId());
         if(potentialUser.isPresent()){
             userService.manageUpdatePersistence(user, potentialUser);
