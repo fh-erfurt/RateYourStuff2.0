@@ -8,7 +8,8 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 /**
- * Episode
+ * <p>This model represents an episode</p>
+ * <p>An episode is always part of a season, which is part of a series </p>
  *
  * @author Christoph Frischmuth
  * @author John Klippstein

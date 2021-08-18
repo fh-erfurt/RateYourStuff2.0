@@ -27,7 +27,6 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 /**
- * Movie Controller
  * <p>This Controller provides basic REST Interfaces to interact with Movie entities from the database</p>
  *
  * @author Christoph Frischmuth

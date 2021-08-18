@@ -23,7 +23,6 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 /**
- * Season Controller
  * <p>This Controller provides basic REST Interfaces to interact with Season entities from the database</p>
  *
  * @author Christoph Frischmuth

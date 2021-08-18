@@ -24,7 +24,6 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 /**
- * CollectionController
  * <p>This Controller provides basic REST Interfaces to interact with Collection entities from the database</p>
  *
  * @author Christoph Frischmuth

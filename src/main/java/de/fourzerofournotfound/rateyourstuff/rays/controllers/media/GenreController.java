@@ -16,7 +16,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Genre Controller
  * <p>This Controller provides basic REST Interfaces to interact with genre entities from the database</p>
  *
  * @author Christoph Frischmuth

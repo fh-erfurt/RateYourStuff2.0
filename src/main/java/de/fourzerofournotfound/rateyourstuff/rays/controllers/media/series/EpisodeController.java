@@ -28,7 +28,6 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 /**
- * EpisodeController
  * <p>This Controller provides basic REST Interfaces to interact with Episode entities from the database</p>
  *
  * @author Christoph Frischmuth

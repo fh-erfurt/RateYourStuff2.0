@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
- * ISBNInvalidAdvice
  * <p>This Advice is used by the {@link BookController BookController}
  *
  * @author Christoph Frischmuth

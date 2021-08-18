@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
- * BookPublisherNotFoundAdvice
  * <p>This Advice is used by the {@link BookPublisherController BookPublisherController}</p>
  *
  * @author Christoph Frischmuth

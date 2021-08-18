@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
- * SeriesNotFoundAdvice
  * <p>This Advice is used by the {@link SeriesController SeriesController} and
  * the {@link SeasonController SeasonController}
  *

@@ -16,7 +16,6 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
- * Platform Controller
  * <p>This Controller provides basic REST Interfaces to interact with Platform entities from the database</p>
  *
  * @author Christoph Frischmuth

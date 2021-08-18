@@ -12,7 +12,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Series
+ * <p>This model represents a series.</p>
+ * <p>A Series can include multiple seasons.</p>
  *
  * @author Christoph Frischmuth
  * @author John Klippstein

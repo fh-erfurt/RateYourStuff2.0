@@ -19,7 +19,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * Collection Service
  * <p>This Service is used to provide methods to the {@link CollectionController CollectionController}</p>
  *
  * @author Christoph Frischmuth

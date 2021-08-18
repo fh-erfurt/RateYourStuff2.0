@@ -10,7 +10,6 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 /**
- * SeriesRepository
  * <p>This Interface can be used to find Series entities in the database.</p>
  * <p>It also provides all functions of the {@link JpaRepository JpaRepository}</p>
  *

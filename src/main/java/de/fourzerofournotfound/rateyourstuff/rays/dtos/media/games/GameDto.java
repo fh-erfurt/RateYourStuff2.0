@@ -11,7 +11,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * Game DTO
  * <p>The GameDTO is used to provide less information to the client</p>
  *
  * @author Christoph Frischmuth

@@ -15,7 +15,6 @@ import java.util.Set;
 import java.util.logging.Logger;
 
 /**
- * PlatformService
  * <p>This Service provides methods for the {@link PlatformController PlatformController}</p>
  *
  * @author Christoph Frischmuth

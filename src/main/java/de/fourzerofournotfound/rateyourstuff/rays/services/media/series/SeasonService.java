@@ -12,7 +12,6 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * SeasonService
  * <p>This Service provides methods to the {@link SeasonController SeasonController}</p>
  *
  * @author Christoph Frischmuth

@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * Movie DTO
  * <p>The Movie DTO is used to provide reduced information to the client.</p>
  *
  * @author Christoph Frischmuth

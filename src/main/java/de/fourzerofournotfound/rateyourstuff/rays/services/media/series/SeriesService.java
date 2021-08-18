@@ -13,7 +13,6 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * SeriesService
  * <p>This service provides methods to the {@link SeriesController SeriesController}</p>
  *
  * @author Christoph Frischmuth

@@ -11,8 +11,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Season
- * <p>This Model represents a season. A season can ionclue multiple episodes.</p>
+ * <p>This Model represents a season. A season can inclue multiple episodes.</p>
  *
  * @author Christoph Frischmuth
  * @author John Klippstein

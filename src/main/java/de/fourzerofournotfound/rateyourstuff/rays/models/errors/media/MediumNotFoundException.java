@@ -3,7 +3,6 @@ package de.fourzerofournotfound.rateyourstuff.rays.models.errors.media;
 import de.fourzerofournotfound.rateyourstuff.rays.controllers.media.collections.CollectionController;
 
 /**
- * MediumNotFoundException
  * <p>Signals that an attempt to get a certain medium from the database has failed.</p>
  * <p>This Exception will be thrown by the {@link CollectionController CollectionController}</p>
  *

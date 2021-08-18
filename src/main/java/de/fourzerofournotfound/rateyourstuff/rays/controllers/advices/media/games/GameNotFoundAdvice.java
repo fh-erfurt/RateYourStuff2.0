@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
- * GameNotFoundAdvice
  * <p>This Advice is used by the {@link GameController GameController}
  *
  * @author Christoph Frischmuth

@@ -9,7 +9,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 /**
- * Movie
+ * <p>This model represents a single movie</p>
  *
  * @author Christoph Frischmuth
  * @author John Klippstein

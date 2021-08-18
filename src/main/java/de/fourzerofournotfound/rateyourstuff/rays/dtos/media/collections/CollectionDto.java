@@ -7,7 +7,6 @@ import lombok.Setter;
 import java.util.List;
 
 /**
- * Collection DTO
  * <p>The Collection DTO is used to provide less information to the client. It also contains a list of all media within the collection.</p>
  *
  * @author Christoph Frischmuth

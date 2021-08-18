@@ -16,7 +16,6 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
- * Medium Controller
  * <p>This Controller provides basic REST Interfaces to interact with Medium entities from the database</p>
  *
  * @author Christoph Frischmuth

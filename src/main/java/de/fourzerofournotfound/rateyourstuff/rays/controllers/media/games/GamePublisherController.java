@@ -17,7 +17,6 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
- * GamePublisher Controller
  * <p>This Controller provides basic REST Interfaces to interact with GamePublisher entities from the database</p>
  *
  * @author Christoph Frischmuth

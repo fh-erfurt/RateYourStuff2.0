@@ -8,7 +8,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 /**
- * Book
+ * <p>This model represents a book</p>>
  *
  * @author Christoph Frischmuth
  * @author John Klippstein

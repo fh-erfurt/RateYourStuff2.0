@@ -17,7 +17,6 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Medium
  * <p>This Model represents a medium.
  * The medium contains all attributes that are important for books, games, series, episodes, movies.</p>
  *

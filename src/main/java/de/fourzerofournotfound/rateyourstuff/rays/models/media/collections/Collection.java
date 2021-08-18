@@ -12,7 +12,6 @@ import javax.persistence.*;
 import java.util.Set;
 
 /**
- * Collection
  * <p>This Model represents a Collection. A Collection is a set of different media (e. g. books, games, series)</p>
  *
  * @author Christoph Frischmuth

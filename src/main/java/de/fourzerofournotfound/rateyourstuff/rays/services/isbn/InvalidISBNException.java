@@ -5,8 +5,7 @@ import de.fourzerofournotfound.rateyourstuff.rays.services.media.books.isbn.ISBN
 import de.fourzerofournotfound.rateyourstuff.rays.services.media.books.isbn.ISBN13;
 
 /**
- * DuplicateMediumException
- * <p>Signals that an attempt to create a medium that already exists.</p>
+ * <p>Signals that a given isbn was not valid.</p>
  * <p>This Exception will be thrown by:</p>
  * <ul>
  *     <li>{@link BookController BookController}</li>

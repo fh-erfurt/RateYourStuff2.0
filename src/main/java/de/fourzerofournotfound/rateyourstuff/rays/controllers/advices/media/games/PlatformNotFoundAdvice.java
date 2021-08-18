@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
- * PlatformNotFoundAdvice
  * <p>This Advice is used by the {@link PlatformController PlatformController}
  *
  * @author Christoph Frischmuth

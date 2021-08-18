@@ -7,7 +7,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * ISBN10
  * <p>This class represents the old ISBN10 standard</p>
  *
  * @author Christoph Frischmuth

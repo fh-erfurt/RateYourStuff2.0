@@ -6,7 +6,6 @@ import de.fourzerofournotfound.rateyourstuff.rays.services.media.books.isbn.ISBN
 import org.springframework.stereotype.Service;
 
 /**
- * ISBN CheckService
  * <p>This service is used to check if an given isbn is valid and can be saved in the database</p>
  *
  * @author Christoph Frischmuth

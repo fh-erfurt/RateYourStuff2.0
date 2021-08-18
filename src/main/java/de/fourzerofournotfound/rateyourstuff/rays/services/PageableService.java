@@ -6,7 +6,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 /**
- * Pageable Service
  * <p>This Services provides a method to create a pageable which is used by almost all controllers</p>
  */
 @Service("pageableService")

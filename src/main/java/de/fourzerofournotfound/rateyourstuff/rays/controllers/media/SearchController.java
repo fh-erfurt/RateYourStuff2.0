@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
 
 
 /**
- * SearchController
  * <p> This controller ensures that the input is passed on from the front end to the function in the back end and vice versa.</p>
  *
  * @author Christoph Frischmuth

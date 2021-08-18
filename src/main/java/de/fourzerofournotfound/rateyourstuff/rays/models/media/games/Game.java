@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Game
+ * <p>This model represents a game</p>
  *
  * @author Christoph Frischmuth
  * @author John Klippstein

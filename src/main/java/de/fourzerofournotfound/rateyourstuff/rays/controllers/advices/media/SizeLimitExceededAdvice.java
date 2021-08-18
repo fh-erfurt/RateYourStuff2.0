@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
- * SizeLimitExceededAdvice
  * <p>This Advice is used by the</p> <ul>
  * <li>{@link MovieController MovieController}</li>
  * <li>{@link GameController GameController}</li>

@@ -26,7 +26,6 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 /**
- * Comment Controller
  * <p>This Controller provides basic REST Interfaces to interact with Comment entities from the database</p>
  *
  * @author Christoph Frischmuth

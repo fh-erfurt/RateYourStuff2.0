@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * GameRepository
  * <p>This Interface can be used to find Game entities in the database.</p>
  * <p>It also provides all functions of the {@link JpaRepository JpaRepository}</p>
  *

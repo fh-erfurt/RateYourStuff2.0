@@ -4,7 +4,6 @@ import de.fourzerofournotfound.rateyourstuff.rays.controllers.media.games.GameCo
 import de.fourzerofournotfound.rateyourstuff.rays.models.errors.media.MediumNotFoundException;
 
 /**
- * GameNotFoundException
  * <p>Signals that an attempt to get a certain game from the database has failed.</p>
  * <p>This Exception will be thrown by the {@link GameController GameController}</p>
  *

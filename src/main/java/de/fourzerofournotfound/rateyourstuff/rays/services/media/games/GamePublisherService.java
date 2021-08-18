@@ -12,7 +12,6 @@ import java.util.Optional;
 import java.util.logging.Logger;
 
 /**
- * GamePublisherService
  * <p>This Service is used to provide methods to the {@link GamePublisherController GamePublisherController}</p>
  *
  * @author Christoph Frischmuth

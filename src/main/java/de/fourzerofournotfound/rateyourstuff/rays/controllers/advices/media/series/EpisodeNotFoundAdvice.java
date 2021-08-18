@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
- * EpisodeNotFoundAdvice
  * <p>This Advice is used by the {@link SeriesController SeriesController}</p>
  *
  * @author Christoph Frischmuth

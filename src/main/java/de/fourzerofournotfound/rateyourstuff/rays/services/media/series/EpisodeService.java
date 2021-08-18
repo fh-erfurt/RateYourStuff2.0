@@ -13,7 +13,6 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * Episode Service
  * <p>This Service is used to provide methods for the {@link EpisodeController EpisodeController}</p>
  *
  * @author Christoph Frischmuth

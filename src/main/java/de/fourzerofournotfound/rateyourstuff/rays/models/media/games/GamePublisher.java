@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * GamePublisher
  * <p>This Model represents a game publisher. Each game can have one publisher</p>
  *
  * @author Christoph Frischmuth

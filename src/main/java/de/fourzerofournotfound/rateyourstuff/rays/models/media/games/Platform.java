@@ -11,7 +11,6 @@ import javax.persistence.Table;
 import java.util.Set;
 
 /**
- * Platform
  * <p>This Model represents a platform. A platform defines the device on which a game can be played.</p>
  *
  * @author Christoph Frischmuth

@@ -4,7 +4,6 @@ import de.fourzerofournotfound.rateyourstuff.rays.controllers.media.movies.Movie
 import de.fourzerofournotfound.rateyourstuff.rays.models.errors.media.MediumNotFoundException;
 
 /**
- * MovieNotFoundException
  * <p>Signals that an attempt to get a certain movie from the database has failed.</p>
  * <p>This Exception will be thrown by the {@link MovieController MovieController}</p>
  *

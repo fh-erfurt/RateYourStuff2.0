@@ -15,7 +15,6 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * Game Service
  * <p>This Service provides methods to the {@link GameController GameController}</p>
  *
  * @author Christoph Frischmuth

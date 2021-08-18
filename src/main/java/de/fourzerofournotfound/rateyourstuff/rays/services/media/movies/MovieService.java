@@ -13,7 +13,6 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * MovieService
  * <p>This service provides methods to the {@link MovieController MovieController}</p>
  *
  * @author Christoph Frischmuth

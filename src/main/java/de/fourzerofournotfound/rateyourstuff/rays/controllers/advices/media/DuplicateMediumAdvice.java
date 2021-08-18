@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
- * DuplicateMediumAdvice
  * <p>This Advice is used by the </p><ul>
  * <li>{@link BookController BookController}</li>
  * <li>{@link EpisodeController EpisodeController}</li>

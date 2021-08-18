@@ -12,7 +12,6 @@ import java.util.Optional;
 import java.util.logging.Logger;
 
 /**
- * BookPublisherService
  * <p>This service is provides methods for the {@link BookPublisherController BookPublisherController}</p>
  *
  * @author Christoph Frischmuth

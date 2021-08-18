@@ -14,7 +14,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * Medium DTO
  * <p>The Medium DTO is used to provide reduced information to the client</p>
  *
  * @author Christoph Frischmuth
