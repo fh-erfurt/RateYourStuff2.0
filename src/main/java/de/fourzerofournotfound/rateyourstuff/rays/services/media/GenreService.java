@@ -11,6 +11,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.logging.Logger;
 
 /**
  * GenreService
@@ -26,6 +27,7 @@ public class GenreService {
 
     private final ModelMapper modelMapper;
     private final GenreRepository genreRepository;
+    private final Logger logger = Logger.getLogger(this.getClass().getName());
 
     @Autowired
     public GenreService(ModelMapper modelMapper,
@@ -60,7 +62,9 @@ public class GenreService {
             } else {
                 Genre newGenre = new Genre();
                 newGenre.setGenreName(genre);
-                genres.add(genreRepository.save(newGenre));
+                Genre savedGenre = genreRepository.save(newGenre);
+                logger.info("Added " + Genre.class.getSimpleName() + " with id " + savedGenre.getId());
+                genres.add(savedGenre);
             }
         }
         return genres;

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.logging.Logger;
 
 /**
  * BookPublisherService
@@ -22,6 +23,7 @@ import java.util.Optional;
 public class BookPublisherService {
     private final ModelMapper modelMapper;
     private final BookPublisherRepository publisherRepository;
+    private final Logger logger = Logger.getLogger(this.getClass().getName());
 
     @Autowired
     public BookPublisherService(ModelMapper modelMapper, BookPublisherRepository publisherRepository) {
@@ -53,7 +55,9 @@ public class BookPublisherService {
         } else {
             BookPublisher newPublisher = new BookPublisher();
             newPublisher.setBookPublisherTitle(publisherString);
-            return publisherRepository.save(newPublisher);
+            BookPublisher savedPublisher = publisherRepository.save(newPublisher);
+            logger.info("Added " + BookPublisher.class.getSimpleName() + " with id " + savedPublisher.getId());
+            return savedPublisher;
         }
     }
 }

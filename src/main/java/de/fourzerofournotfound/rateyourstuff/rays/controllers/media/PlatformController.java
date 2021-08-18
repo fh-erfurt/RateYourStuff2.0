@@ -76,6 +76,6 @@ public class PlatformController {
         if (foundPlatform.isPresent()) {
             return ResponseEntity.ok(platformService.convertToDto(foundPlatform.get()));
         }
-        throw new PlatformNotFoundException("There is no platform with id " + id);
+        throw new PlatformNotFoundException("There is no " + Platform.class.getSimpleName() + " with id " + id);
     }
 }

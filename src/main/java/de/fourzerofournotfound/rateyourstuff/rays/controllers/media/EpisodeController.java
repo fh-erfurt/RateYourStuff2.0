@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 /**
@@ -47,6 +48,7 @@ public class EpisodeController {
     private final EpisodeRepository episodeRepository;
     private final LanguageService languageService;
     private final GenreService genreService;
+    private final Logger logger = Logger.getLogger(this.getClass().getName());
 
     @Autowired
     public EpisodeController(EpisodeRepository repository,
@@ -105,7 +107,7 @@ public class EpisodeController {
             EpisodeDto episodeDto = episodeService.convertToDto(episode.get());
             return ResponseEntity.ok(episodeDto);
         } else {
-            throw new EpisodeNotFoundException("No Episode found for id " + id);
+            throw new EpisodeNotFoundException("No " + Episode.class.getSimpleName() + " found for id " + id);
         }
     }
 
@@ -127,12 +129,13 @@ public class EpisodeController {
                 episode.setGenres(genreService.getGenresSet(episode.getGenreStrings()));
                 episode.setLanguages(languageService.getLanguageSet(episode.getLanguageStrings()));
                 Episode savedEpisode = this.episodeRepository.save(episode);
+                logger.info("Added " + Episode.class.getSimpleName() + " with id " + savedEpisode.getId());
                 return ResponseEntity.ok(episodeService.convertToDto(savedEpisode));
             } else {
-                throw new SeasonNotFoundException("There is no season with Id " + episode.getSeasonMappingId());
+                throw new SeasonNotFoundException("There is no " + Season.class.getSimpleName() + " with Id " + episode.getSeasonMappingId());
             }
         }
-        throw new DuplicateMediumException("The Episode " + episode.getMediumName() + " with number " + episode.getEpisodeNumber() + " already exists!");
+        throw new DuplicateMediumException("The " + Episode.class.getSimpleName() + " " + episode.getMediumName() + " with number " + episode.getEpisodeNumber() + " already exists!");
     }
 
     /**
@@ -145,20 +148,24 @@ public class EpisodeController {
      */
     @PreAuthorize("hasAuthority('User')")
     @PutMapping(consumes = "application/json", produces = "application/json")
-    ResponseEntity<EpisodeDto> update(@RequestBody Episode episode) throws SeasonNotFoundException, DuplicateMediumException {
+    ResponseEntity<EpisodeDto> update(@RequestBody Episode episode) throws SeasonNotFoundException, DuplicateMediumException, EpisodeNotFoundException {
         if (episodeService.isValidEpisode(episode)) {
-            Optional<Season> targetSeason = seasonRepository.findById(episode.getSeasonMappingId());
-            if (targetSeason.isPresent()) {
-                episode.setSeason(targetSeason.get());
-                episode.setGenres(genreService.getGenresSet(episode.getGenreStrings()));
-                episode.setLanguages(languageService.getLanguageSet(episode.getLanguageStrings()));
-                Episode savedEpisode = this.episodeRepository.save(episode);
-                return ResponseEntity.ok(episodeService.convertToDto(savedEpisode));
-            } else {
-                throw new SeasonNotFoundException("There is no season with Id " + episode.getSeasonMappingId());
+            Optional<Episode> targetEpisode = episodeRepository.findById(episode.getId());
+            if (targetEpisode.isPresent()) {
+                Optional<Season> targetSeason = seasonRepository.findById(episode.getSeasonMappingId());
+                if (targetSeason.isPresent()) {
+                    episode.setSeason(targetSeason.get());
+                    episode.setGenres(genreService.getGenresSet(episode.getGenreStrings()));
+                    episode.setLanguages(languageService.getLanguageSet(episode.getLanguageStrings()));
+                    Episode savedEpisode = this.episodeRepository.save(episode);
+                    logger.info("Updated " + Episode.class.getSimpleName() + " with id " + episode.getId());
+                    return ResponseEntity.ok(episodeService.convertToDto(savedEpisode));
+                }
+                throw new SeasonNotFoundException("There is no " + Season.class.getSimpleName() + " with Id " + episode.getSeasonMappingId());
             }
+            throw new EpisodeNotFoundException("There is no " + Episode.class.getSimpleName() + " with Id " + episode.getId());
         }
-        throw new DuplicateMediumException("The Episode " + episode.getMediumName() + " with number " + episode.getEpisodeNumber() + " already exists!");
+        throw new DuplicateMediumException("The " + Episode.class.getSimpleName() + " " + episode.getMediumName() + " with number " + episode.getEpisodeNumber() + " already exists!");
     }
 
 
@@ -184,6 +191,7 @@ public class EpisodeController {
             //upload the file
             fileUploadService.saveFile(uploadDir, fileName, multipartFile);
             Episode savedEpisode = this.repository.save(episode.get());
+            logger.info("Added image \"" + savedEpisode.getPicturePath() + "\" for " + Episode.class.getSimpleName() + " with id " + savedEpisode.getId());
             return ResponseEntity.ok(episodeService.convertToDto(savedEpisode));
         }
         throw new EpisodeNotFoundException("There is no episode with the id " + id);

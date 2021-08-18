@@ -11,6 +11,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.logging.Logger;
 
 /**
  * PlatformService
@@ -25,6 +26,7 @@ import java.util.Set;
 public class PlatformService {
     private final ModelMapper modelMapper;
     private final PlatformRepository platformRepository;
+    private final Logger logger = Logger.getLogger(this.getClass().getName());
 
     @Autowired
     public PlatformService(ModelMapper modelMapper,
@@ -58,7 +60,9 @@ public class PlatformService {
             } else {
                 Platform newPlatform = new Platform();
                 newPlatform.setPlatformTitle(platform);
-                platforms.add(platformRepository.save(newPlatform));
+                Platform savedPlatform = platformRepository.save(newPlatform);
+                logger.info("Added " + Platform.class.getSimpleName() + " with id " + savedPlatform.getId());
+                platforms.add(savedPlatform);
             }
         }
         return platforms;

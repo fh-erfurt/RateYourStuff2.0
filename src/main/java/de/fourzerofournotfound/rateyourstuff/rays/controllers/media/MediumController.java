@@ -79,6 +79,6 @@ public class MediumController {
         if (medium.isPresent()) {
             return ResponseEntity.ok(mediaService.convertToDto(medium.get()));
         }
-        throw new MediumNotFoundException("There is no Medium for id " + id);
+        throw new MediumNotFoundException("There is no " + Medium.class.getSimpleName() + " for id " + id);
     }
 }

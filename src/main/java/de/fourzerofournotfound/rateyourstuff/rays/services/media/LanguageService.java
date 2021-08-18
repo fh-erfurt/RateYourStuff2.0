@@ -11,6 +11,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.logging.Logger;
 
 /**
  * LanguageService
@@ -25,6 +26,7 @@ import java.util.Set;
 public class LanguageService {
     private final ModelMapper modelMapper;
     private final LanguageRepository languageRepository;
+    private final Logger logger = Logger.getLogger(this.getClass().getName());
 
     @Autowired
     public LanguageService(ModelMapper modelMapper,
@@ -59,7 +61,9 @@ public class LanguageService {
             } else {
                 Language newLanguage = new Language();
                 newLanguage.setLanguage(language);
-                languages.add(languageRepository.save(newLanguage));
+                Language savedLanguage = languageRepository.save(newLanguage);
+                logger.info("Added " + Language.class.getSimpleName() + " with id " + savedLanguage.getId());
+                languages.add(savedLanguage);
             }
         }
         return languages;
