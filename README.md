@@ -15,6 +15,14 @@ Das Projektteam:
 
 ---
 
+## Nutzerdaten zur Anmeldung im Frontend
+
+| Nutzername | Passwort | Rolle |
+|:------------:|:----------:|:-------:|
+| mikmin     | admin    | Admin | 
+| avartos    | admin    | Admin | 
+| Rolf_Kruse | user     | User  | 
+
 ## Installation
 
 ### Backend
