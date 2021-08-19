@@ -18,10 +18,10 @@ import java.util.logging.Logger;
 /**
  * <p>This Controller provides basic REST Interfaces to interact with Login entities from the database</p>
  *
- *  * @author Christoph Frischmuth
- *  * @author John Klippstein
- *  * @author Mickey Knop
- *  * @author Robin Beck
+ * @author Christoph Frischmuth
+ * @author John Klippstein
+ * @author Mickey Knop
+ * @author Robin Beck
  */
 
 @RestController
