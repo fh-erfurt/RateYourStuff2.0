@@ -474,4 +474,4 @@ Wie schon im vorhergehenden Part erwähnt hatten wir keine wirklichen Probleme i
 Dennoch soll dieses Kapitel nicht gänzlich leer bleiben. <br>
 
 - Listen die in einer Klasse immer wieder benutzt werden, sollten als Attribut dieser Klasse verwendet werden! <br>
-- Keep simple stupid --> Kleine Funktionen schreiben, die in Komplexeren Methoden zusammen verwendet werden können! <br>
+- Keep it simple / stupid --> Kleine Funktionen schreiben, die in Komplexeren Methoden zusammen verwendet werden können! <br>
