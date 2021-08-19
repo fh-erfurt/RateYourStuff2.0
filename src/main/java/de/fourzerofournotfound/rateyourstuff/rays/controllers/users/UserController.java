@@ -93,7 +93,8 @@ public class UserController {
     ResponseEntity<UserDto> update(@RequestBody User user) throws UserNotFoundException, UserAlreadyExistsException {
         Optional<User> potentialUser = userRepository.findUserById(user.getId());
         if (potentialUser.isPresent()) {
-            userService.manageUpdatePersistence(user, potentialUser);
+            potentialUser.get().setFirstName(user.getFirstName());
+            potentialUser.get().setLastName(user.getLastName());
             User savedUser = userRepository.save(potentialUser.get());
             logger.info("Updated " + User.class.getSimpleName() + " with id " + user.getId());
             return ResponseEntity.ok(this.userService.convertToDto(savedUser));

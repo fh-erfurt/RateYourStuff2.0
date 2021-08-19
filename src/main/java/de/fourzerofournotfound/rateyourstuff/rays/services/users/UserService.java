@@ -11,6 +11,7 @@ import de.fourzerofournotfound.rateyourstuff.rays.repositories.users.RoleReposit
 import de.fourzerofournotfound.rateyourstuff.rays.errors.users.InvalidLoginException;
 import de.fourzerofournotfound.rateyourstuff.rays.errors.users.InvalidUserException;
 import de.fourzerofournotfound.rateyourstuff.rays.errors.users.UserAlreadyExistsException;
+import org.jboss.logging.Logger;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,7 @@ import java.util.Optional;
 public class UserService {
     private final RoleRepository roleRepository;
     private final ModelMapper modelMapper;
+    private final Logger logger = Logger.getLogger(this.getClass().getName());
 
     @Autowired
     public UserService(RoleRepository roleRepository, ModelMapper modelMapper) {
@@ -44,17 +46,6 @@ public class UserService {
 
     public UserDto convertToDto(User user) {
         return modelMapper.map(user, UserDto.class);
-    }
-
-    public void manageUpdatePersistence(User user, Optional<User> potentialUser) throws UserAlreadyExistsException {
-        //Equal email addresses and not identical password
-        if (!user.getUserName().equals(potentialUser.get().getUserName()))               //ne | neq
-        {
-            potentialUser.get().setFirstName(user.getFirstName());
-            potentialUser.get().setLastName(user.getLastName());
-        } else {
-
-        }
     }
 
 }
