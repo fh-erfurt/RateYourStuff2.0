@@ -13,38 +13,43 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Optional;
 
 @RestController
 public class SecurityController {
 
+    User validUser;
     @Autowired
     private AuthenticationManager authenticationManager;
-
     @Autowired
     private AppUserDetailService appUserDetailService;
-
     @Autowired
     private JwtUtil jwtTokenUtil;
-
     @Autowired
     private UserRepository userRepository;
-
     @Autowired
     private UserService userService;
 
-    User validUser;
-
+    /**
+     * Method is used for authenticate users and generates a java web token (JWT)
+     *
+     * @param authenticationRequest given data to authenticate User
+     * @return {@link AuthenticationResponse authenticationResponse } included the generated JWT
+     * @throws BadCredentialsException in case of bad login data inputs
+     */
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
-    public ResponseEntity<AuthenticationResponse> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
+    public ResponseEntity<AuthenticationResponse> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws BadCredentialsException {
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword())
             );
-        } catch(BadCredentialsException e) {
-            throw new Exception("Incorrect username or password", e);
+        } catch (BadCredentialsException e) {
+            throw new BadCredentialsException("Incorrect username or password", e);
         }
         final UserDetails userDetails = appUserDetailService
                 .loadUserByUsername(authenticationRequest.getUsername());
@@ -52,7 +57,6 @@ public class SecurityController {
         Optional<User> user = userRepository.findByUserName(authenticationRequest.getUsername());
         //Save Optional User in User Object validUser
         user.ifPresent(value -> validUser = value);
-
 
         final String jwt = jwtTokenUtil.generateToken(userDetails, validUser);
 
