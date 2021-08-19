@@ -9,6 +9,7 @@ import de.fourzerofournotfound.rateyourstuff.rays.services.users.UserService;
 import de.fourzerofournotfound.rateyourstuff.rays.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -70,6 +71,17 @@ public class SecurityController {
 
         final String jwt = jwtTokenUtil.generateToken(userDetails, validUser);
 
-        return ResponseEntity.ok(new AuthenticationResponse(jwt));
+        /**
+         * Condition is checking if the to authenticated user is enabled;
+         * @throws AccessDeniedException if the user isn´t enabled
+         * @return JWT-Token
+         */
+        Optional<User> potentialUser = userRepository.findByUserName(authenticationRequest.getUsername());
+        if(potentialUser.isPresent() && potentialUser.get().getLogin().getIsEnabled()){
+            return ResponseEntity.ok(new AuthenticationResponse(jwt));
+        } else {
+            throw new AccessDeniedException("User isn´t enabled");
+        }
+
     }
 }
