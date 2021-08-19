@@ -1,3 +1,4 @@
+
 # RateYourStuff
 
 [![Java CI with Maven](https://github.com/fh-erfurt/RateYourStuff2.0/actions/workflows/maven.yml/badge.svg)](https://github.com/fh-erfurt/RateYourStuff2.0/actions/workflows/maven.yml)
@@ -247,7 +248,7 @@ Alle UML-Diagramme, welche in Java02 nicht mehr verwendet wurden, haben als Kenn
 
 <details>
 <summary>UML-Klassen Diagramm (Java02)</summary>
-  ![Package models](https://user-images.githubusercontent.com/71118367/130062814-ba1afffa-59a8-464a-b311-245929dfaa48.png)
+  <img src="https://user-images.githubusercontent.com/71118367/130103922-4018329b-98f7-425c-ba1d-1951f29d1452.png">
 </details>
 
 <details>
