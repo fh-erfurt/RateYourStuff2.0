@@ -41,6 +41,7 @@ public class Book extends Medium {
     @JoinColumn(name = "bookPublisherId", referencedColumnName = "id")
     private BookPublisher bookPublisher;
 
+    //used to pass only the title of the publisher from client to backend
     @Transient
     @JsonInclude
     private String publisherString;

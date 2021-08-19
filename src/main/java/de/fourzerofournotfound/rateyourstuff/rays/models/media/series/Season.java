@@ -33,12 +33,15 @@ public class Season extends BaseModel {
     @Column(length = 250)
     private String seasonTitle;
 
+    //used to pass only the series id from client to backend
     @JsonInclude
     @Transient
     private Long seriesMappingId;
+
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "seriesId", referencedColumnName = "id")
     private Medium medium;
+
     @Builder.Default
     @OneToMany(mappedBy = "season", cascade = CascadeType.ALL)
     private Set<Episode> episodes = new HashSet<>();

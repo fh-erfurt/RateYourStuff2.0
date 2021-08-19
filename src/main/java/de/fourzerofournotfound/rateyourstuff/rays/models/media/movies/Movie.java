@@ -26,12 +26,17 @@ public class Movie extends Medium {
 
     public final static String IMAGE_PATH_PREFIX = "images/media/movies/";
     @JsonInclude
+
+    //used to pass only the network title from client to backend
     @Transient
     String networkTitle;
+
     @Column
     private Integer length;
+
     @Column
     private Integer ageRestriction;
+
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "networkId", referencedColumnName = "id")
     private Network network;

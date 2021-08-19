@@ -10,7 +10,6 @@ import lombok.*;
 import javax.persistence.*;
 
 /**
- * Rating
  * <p>This Model represents a Rating.</p>
  *
  * @author Christoph Frischmuth
@@ -24,7 +23,6 @@ import javax.persistence.*;
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Builder
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Table(name = "Ratings")
 public class Rating extends BaseModel {
 
@@ -46,10 +44,12 @@ public class Rating extends BaseModel {
     @JoinColumn(name = "mediumId", referencedColumnName = "id")
     private Medium medium;
 
+    //used to pass only the medium id from client to backend
     @JsonInclude()
     @Transient
     private Long mediumMappingId;
 
+    //used to pass only the user id from client to backend
     @JsonInclude()
     @Transient
     private Long userMappingId;

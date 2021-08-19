@@ -32,15 +32,20 @@ public class Series extends Medium {
     @JsonInclude
     @Transient
     String networkTitle;
+
     @Column
     private Integer averageLength;
+
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "networkId", referencedColumnName = "id")
     private Network network;
+
     @Column(nullable = false)
     private Integer ageRestriction;
+
     @Column(nullable = false)
     private Boolean isCompleted;
+
     @OneToMany(mappedBy = "medium", cascade = CascadeType.ALL)
     private Set<Season> seasons = new HashSet<>();
 
