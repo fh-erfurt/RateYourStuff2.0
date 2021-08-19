@@ -224,7 +224,7 @@ Für das Modul Java 02 wird auf dem aus Java 01 entnommenen Grundsystem aufgebau
 
 Nicht realisiert werden, sollen: <br> - Möglichkeit zur Wiedergabe der Medien auf der Seite <br> - Ermitteln von Bewertungen für Medien auf anderen Seiten <br> - Trennung von Benutzerbewertungen und Journalistischen Rezensionen <br>
 
-## </details>
+</details>
 
 ## Er - Diagramm
 
@@ -238,6 +238,7 @@ Die Datenbank wurde anhand der in Java definierten Klassen generiert. Nachfolgen
 ## UML-Diagramme
 
 Unter diesem Punkt befinden sich unsere UML-Diagramme die wir im Vorfeld im Modul Java01 erstellt haben um unsere Idee von der Applikation grafisch darzustellen und um eine bessere Vorstellung des Ganzen zu bekommen.
+Alle UML-Diagramme, welche in Java02 nicht mehr verwendet wurden, haben als Kennzeichnung ein Java01 am Ende.
 
 <details>
   <summary>UML-Klassen Diagramm (Java01)</summary>
@@ -417,6 +418,29 @@ Nachfolgend ist aufgelistet, welche Funktionen das im Rahmen von Java 02 fertigg
 
 Das Frontend wurde mithilfe von ReactJS realisiert.
 
+## Genutze Tools
+
+### IDEs
+- IntelliJ
+- VSCode
+- WebStorm
+
+### Wisseneserwerb
+- YouTube
+- StackoverFlow
+- Baeldung
+
+### Sonstiges
+- Spring Boot
+- Spring Boot Security
+- React.js
+- SpringFox / Swagger
+- @Material-UI
+- Xampp (Apache / mariaDB)
+- Discord
+- JUnit
+- GitHub
+
 ## Zusammenarbeit
 
 Im Rahmen des Projektes haben wir auf gewissen Elemente von Scrum und Kanban zurückgegriffen.
@@ -427,7 +451,7 @@ Diese gesetzten Ziele wurden in einem Kanban-Board festgehalten.
 
 <details>
   <summary>Kanban-Board des Teams</summary>
-  https://github.com/fh-erfurt/RateYourStuff/projects/1
+  https://github.com/fh-erfurt/RateYourStuff2.0/projects/1
 </details>
 
 Das Board wurde unterteilt in <br>
