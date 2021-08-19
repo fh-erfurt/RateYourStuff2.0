@@ -35,16 +35,18 @@ import java.util.Optional;
 public class SecurityController {
 
     User validUser;
-    @Autowired
-    private AuthenticationManager authenticationManager;
-    @Autowired
-    private AppUserDetailService appUserDetailService;
-    @Autowired
-    private JwtUtil jwtTokenUtil;
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private UserService userService;
+    private final AuthenticationManager authenticationManager;
+    private final AppUserDetailService appUserDetailService;
+    private final JwtUtil jwtTokenUtil;
+    private final UserRepository userRepository;
+
+
+    public SecurityController(AuthenticationManager authenticationManager, AppUserDetailService appUserDetailService, JwtUtil jwtTokenUtil, UserRepository userRepository) {
+        this.authenticationManager = authenticationManager;
+        this.appUserDetailService = appUserDetailService;
+        this.jwtTokenUtil = jwtTokenUtil;
+        this.userRepository = userRepository;
+    }
 
     /**
      * Method is used for authenticate users and generates a java web token (JWT)
@@ -55,11 +57,20 @@ public class SecurityController {
      */
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
     public ResponseEntity<AuthenticationResponse> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws BadCredentialsException {
+        Optional<User> potentialUser = userRepository.findByUserName(authenticationRequest.getUsername());
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword())
             );
         } catch (BadCredentialsException e) {
+            /**
+             * Following Code is increasing the passwordFailedCounter is a user type a wrong password.
+             */
+            if(potentialUser.isPresent()){
+                int oldFailedCount = potentialUser.get().getLogin().getFailedLoginCount();
+                potentialUser.get().getLogin().setFailedLoginCount(oldFailedCount+1);
+                userRepository.save(potentialUser.get());
+            }
             throw new BadCredentialsException("Incorrect username or password", e);
         }
         final UserDetails userDetails = appUserDetailService
@@ -76,8 +87,9 @@ public class SecurityController {
          * @throws AccessDeniedException if the user isn´t enabled
          * @return JWT-Token
          */
-        Optional<User> potentialUser = userRepository.findByUserName(authenticationRequest.getUsername());
+
         if(potentialUser.isPresent() && potentialUser.get().getLogin().getIsEnabled()){
+
             return ResponseEntity.ok(new AuthenticationResponse(jwt));
         } else {
             throw new AccessDeniedException("User isn´t enabled");
