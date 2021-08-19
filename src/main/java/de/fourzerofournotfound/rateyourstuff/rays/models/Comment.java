@@ -1,6 +1,8 @@
 package de.fourzerofournotfound.rateyourstuff.rays.models;
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import de.fourzerofournotfound.rateyourstuff.rays.models.media.Medium;
 import de.fourzerofournotfound.rateyourstuff.rays.models.users.User;
 import lombok.*;
@@ -12,6 +14,7 @@ import java.util.Set;
  * Comment
  * <p>This Model represents a Comment. A Comment is assigned to a medium.
  * A comment can also have a parent comment.</p>
+ *
  * @author Christoph Frischmuth
  * @author John Klippstein
  * @author Mickey Knop
@@ -38,8 +41,9 @@ public class Comment extends BaseModel {
     @JoinColumn(name = "mediumId", referencedColumnName = "id")
     private Medium medium;
 
-    @OneToMany(mappedBy = "commentParent", fetch= FetchType.LAZY)
+    @OneToMany(mappedBy = "commentParent", cascade = CascadeType.REMOVE)
     private Set<Comment> commentChildren;
+
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "commentParent")

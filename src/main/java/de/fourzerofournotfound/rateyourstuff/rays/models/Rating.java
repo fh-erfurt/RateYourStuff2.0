@@ -12,6 +12,7 @@ import javax.persistence.*;
 /**
  * Rating
  * <p>This Model represents a Rating.</p>
+ *
  * @author Christoph Frischmuth
  * @author John Klippstein
  * @author Mickey Knop
@@ -27,7 +28,7 @@ import javax.persistence.*;
 @Table(name = "Ratings")
 public class Rating extends BaseModel {
 
-    public final static  int MIN_POINTS = 0;
+    public final static int MIN_POINTS = 0;
 
     public final static int MAX_POINTS = 10;
 

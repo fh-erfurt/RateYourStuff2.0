@@ -1,19 +1,28 @@
 package de.fourzerofournotfound.rateyourstuff.rays.services;
 
+import de.fourzerofournotfound.rateyourstuff.rays.controllers.RatingController;
 import de.fourzerofournotfound.rateyourstuff.rays.dtos.RatingDto;
-import de.fourzerofournotfound.rateyourstuff.rays.models.media.Medium;
+import de.fourzerofournotfound.rateyourstuff.rays.errors.InvalidRatingException;
 import de.fourzerofournotfound.rateyourstuff.rays.models.Rating;
+import de.fourzerofournotfound.rateyourstuff.rays.models.media.Medium;
 import de.fourzerofournotfound.rateyourstuff.rays.models.users.User;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.media.MediaRepository;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.users.UserRepository;
-import de.fourzerofournotfound.rateyourstuff.rays.errors.InvalidRatingException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-@Service("rs")
+/**
+ * <p>This Service provides methods to the {@link RatingController RatingController}</p>
+ *
+ * @author Christoph Frischmuth
+ * @author John Klippstein
+ * @author Mickey Knop
+ * @author Robin Beck
+ */
+@Service("ratingService")
 public class RatingService {
     private final UserRepository userRepository;
     private final MediaRepository mediaRepository;
@@ -31,10 +40,11 @@ public class RatingService {
 
     /**
      * Limits the given Points of a given Rating to the defined minimum and maximum
-     * @param rating    the rating object that should be corrected
-     * @return          the rating object with a "givenPoints" value between the minimum and the maximum of points that can be given
+     *
+     * @param rating the rating object that should be corrected
+     * @return the rating object with a "givenPoints" value between the minimum and the maximum of points that can be given
      */
-    public Rating validateRatingValue (Rating rating) {
+    public Rating validateRatingValue(Rating rating) {
         Integer givenPoints = rating.getGivenPoints();
         givenPoints = Math.min(givenPoints, Rating.MAX_POINTS);
         givenPoints = Math.max(givenPoints, Rating.MIN_POINTS);
@@ -44,14 +54,15 @@ public class RatingService {
 
     /**
      * Ads references to the responding medium and to the user to the rating object
-     * @param rating    the rating object that should be given references
-     * @return          the rating object with valid references to medium and user
-     * @throws InvalidRatingException   if  mediumId or userId are invalid
+     *
+     * @param rating the rating object that should be given references
+     * @return the rating object with valid references to medium and user
+     * @throws InvalidRatingException if  mediumId or userId are invalid
      */
     public Rating addReferencesToRating(Rating rating) throws InvalidRatingException {
         Optional<Medium> medium = mediaRepository.findById(rating.getMediumMappingId());
         Optional<User> user = userRepository.findById(rating.getUserMappingId());
-        if(medium.isPresent() && user.isPresent()) {
+        if (medium.isPresent() && user.isPresent()) {
             rating.setMedium(medium.get());
             rating.setUser(user.get());
             return rating;
@@ -62,13 +73,14 @@ public class RatingService {
 
     /**
      * Converts a given rating to a ratingDTO object to limit the data that gets sent to the client
-     * @param rating    the rating that should be converted
-     * @return          the corresponding dtoObject
+     *
+     * @param rating the rating that should be converted
+     * @return the corresponding dtoObject
      */
     public RatingDto convertToDto(Rating rating) {
-                RatingDto ratingDto = modelMapper.map(rating, RatingDto.class);
-                ratingDto.setMIN_POINTS(Rating.MIN_POINTS);
-                ratingDto.setMAX_POINTS(Rating.MAX_POINTS);
-                return ratingDto;
+        RatingDto ratingDto = modelMapper.map(rating, RatingDto.class);
+        ratingDto.setMIN_POINTS(Rating.MIN_POINTS);
+        ratingDto.setMAX_POINTS(Rating.MAX_POINTS);
+        return ratingDto;
     }
 }
