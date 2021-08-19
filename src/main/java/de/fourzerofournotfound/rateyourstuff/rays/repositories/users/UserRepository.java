@@ -7,15 +7,19 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 /**
- * This Interface will require methods for manipulating user storage
+ * <p>This Interface can be used to find user entities in the database.</p>
+ * <p>It also provides all functions of the {@link JpaRepository JpaRepository}</p>
+ *
+ * @author Christoph Frischmuth
+ * @author John Klippstein
+ * @author Mickey Knop
+ * @author Robin Beck
  */
+
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-
-    Optional<User> findByLastName(String lastName);
     Optional<User> findByUserName(String username);
     Optional<User> findByUserNameIgnoreCase(String username);
-    Optional<User> findUserByUserName(String userName);
     Optional<User> findUserById(Long id);
 
 }

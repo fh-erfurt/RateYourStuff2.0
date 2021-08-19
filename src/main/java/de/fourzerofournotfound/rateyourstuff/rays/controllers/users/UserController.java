@@ -25,10 +25,10 @@ import java.util.stream.Collectors;
 /**
  * <p>This Controller provides basic REST Interfaces to interact with User entities from the database</p>
  *
- *  * @author Christoph Frischmuth
- *  * @author John Klippstein
- *  * @author Mickey Knop
- *  * @author Robin Beck
+ * @author Christoph Frischmuth
+ * @author John Klippstein
+ * @author Mickey Knop
+ * @author Robin Beck
  */
 
 @RestController
@@ -42,7 +42,8 @@ public class UserController {
     private final RoleRepository roleRepository;
 
     @Autowired
-    public UserController(UserRepository repository, UserService userService, UserSecurityService userSecurityService, PageableService pageableService, RoleRepository roleRepository) {
+    public UserController(UserRepository repository, UserService userService, UserSecurityService userSecurityService
+            , PageableService pageableService, RoleRepository roleRepository) {
         this.userRepository = repository;
         this.userService = userService;
         this.userSecurityService = userSecurityService;

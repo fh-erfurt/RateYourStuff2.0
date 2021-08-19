@@ -7,17 +7,22 @@ import de.fourzerofournotfound.rateyourstuff.rays.models.BaseModel;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import java.time.LocalDateTime;
 
 /**
  * Login
  * <p>This Model represents a Login. A login contains the login information for a specific user, such as the password</p>
+ *
  * @author Christoph Frischmuth
  * @author John Klippstein
  * @author Mickey Knop
  * @author Robin Beck
  */
+
 @Entity
 @Builder
 @AllArgsConstructor

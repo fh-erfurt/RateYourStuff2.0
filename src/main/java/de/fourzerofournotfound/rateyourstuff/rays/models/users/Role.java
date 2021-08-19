@@ -6,11 +6,14 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import de.fourzerofournotfound.rateyourstuff.rays.models.BaseModel;
 import lombok.*;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 /**
  * Role
  * <p>This Model represents a role. A role defines the "group" of an user. e. g. administrator, moderator, user,...</p>
+ *
  * @author Christoph Frischmuth
  * @author John Klippstein
  * @author Mickey Knop

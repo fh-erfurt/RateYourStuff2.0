@@ -7,13 +7,18 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 /**
- * This Interface will require methods for manipulating login storage
+ * <p>This Interface can be used to find Login entities in the database.</p>
+ * <p>It also provides all functions of the {@link JpaRepository JpaRepository}</p>
+ *
+ * @author Christoph Frischmuth
+ * @author John Klippstein
+ * @author Mickey Knop
+ * @author Robin Beck
  */
 
 @Repository
 public interface LoginRepository extends JpaRepository<Login, Long> {
     Optional<Login> findByEmail(String Email);
-    Optional<Login> findByEmailIgnoreCase(String Email);
 
     Optional<Login> findLoginByEmailNotIgnoreCase(String email);
     Optional<Login> findLoginByEmailIgnoreCase(String email);

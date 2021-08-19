@@ -43,6 +43,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     /**
      * Bean which returns authentication manager bean
+     *
      * @return bean of authentication manager
      * @throws Exception if super class isn´t valid
      */

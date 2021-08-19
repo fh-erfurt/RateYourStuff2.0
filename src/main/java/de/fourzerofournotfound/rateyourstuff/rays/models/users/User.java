@@ -14,11 +14,14 @@ import java.util.Set;
 
 /**
  * User
+ * <p>This Model represents a Login. A user contains the user information such as username, role etc.</p>
+ *
  * @author Christoph Frischmuth
  * @author John Klippstein
  * @author Mickey Knop
  * @author Robin Beck
  */
+
 @Builder
 @Getter
 @Setter
@@ -63,21 +66,21 @@ public class User extends BaseModel {
     private Set<Collection> collections;
 
     @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name="roleId", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "roleId", referencedColumnName = "id", nullable = false)
     private Role role;
 
     @JsonInclude
     @Transient
     private Long roleMappingId;
 
-    public void setProfilePicturePath(String profilePicturePath) {
-        this.profilePicturePath = profilePicturePath.replace(IMAGE_PATH_PREFIX, "");
-    }
-
     public String getProfilePicturePath() {
-        if(profilePicturePath != null) {
+        if (profilePicturePath != null) {
             return IMAGE_PATH_PREFIX + this.profilePicturePath;
         }
         return null;
+    }
+
+    public void setProfilePicturePath(String profilePicturePath) {
+        this.profilePicturePath = profilePicturePath.replace(IMAGE_PATH_PREFIX, "");
     }
 }

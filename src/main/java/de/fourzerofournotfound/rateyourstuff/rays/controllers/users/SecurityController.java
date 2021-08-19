@@ -1,9 +1,9 @@
 package de.fourzerofournotfound.rateyourstuff.rays.controllers.users;
 
-import de.fourzerofournotfound.rateyourstuff.rays.models.users.AuthenticationRequest;
-import de.fourzerofournotfound.rateyourstuff.rays.models.users.AuthenticationResponse;
 import de.fourzerofournotfound.rateyourstuff.rays.models.users.User;
 import de.fourzerofournotfound.rateyourstuff.rays.repositories.users.UserRepository;
+import de.fourzerofournotfound.rateyourstuff.rays.security.AuthenticationRequest;
+import de.fourzerofournotfound.rateyourstuff.rays.security.AuthenticationResponse;
 import de.fourzerofournotfound.rateyourstuff.rays.services.users.AppUserDetailService;
 import de.fourzerofournotfound.rateyourstuff.rays.services.users.UserService;
 import de.fourzerofournotfound.rateyourstuff.rays.util.JwtUtil;

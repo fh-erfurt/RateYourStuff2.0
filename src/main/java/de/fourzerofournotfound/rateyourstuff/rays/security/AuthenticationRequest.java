@@ -1,6 +1,15 @@
-package de.fourzerofournotfound.rateyourstuff.rays.models.users;
+package de.fourzerofournotfound.rateyourstuff.rays.security;
 
-//TODO: to be commented
+/**
+ * <p>This Class represents a Authentication Request. A Authentication Request used provides all data for
+ * the authentication in the Security Controller and Security Filters</p>
+ *
+ * @author Christoph Frischmuth
+ * @author John Klippstein
+ * @author Mickey Knop
+ * @author Robin Beck
+ */
+
 public class AuthenticationRequest {
 
     private String username;
