@@ -35,7 +35,7 @@ Hinweis: Für das Durchlaufen der Testfälle, wird eine H2 Datenbank namens "rat
 
 Nachdem ein entsprechender Datenbankserver bereitgestellt wurde, kann die Spring-Anwendung gestartet werden.
 Beim Start der Anwendung werden die Tabellen, sofern noch nicht vorhanden, automatisch angelegt.
-Sobald die Tabellen angelegt wurden, kann das Script "data.sql", welches sich im src-Ordner befindet, über z. B. phpmyadmin importiert werden. (in dem Skript befinden sich die Testdaten. Die Testdaten bitte nur in die Datenbank "ratedatabase" importieren.
+Sobald die Tabellen angelegt wurden, kann das Script ["data.sql"](./data.sql), welches sich im src-Ordner befindet, über z. B. phpmyadmin importiert werden. (in dem Skript befinden sich die Testdaten. Die Testdaten bitte nur in die Datenbank "ratedatabase" importieren.
 
 Der Server ist anschließend unter dem Port 5000 erreichbar.
 
