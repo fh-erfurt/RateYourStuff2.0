@@ -1,4 +1,5 @@
 # RateYourStuff
+
 [![Java CI with Maven](https://github.com/fh-erfurt/RateYourStuff2.0/actions/workflows/maven.yml/badge.svg)](https://github.com/fh-erfurt/RateYourStuff2.0/actions/workflows/maven.yml)
 [![CodeQL](https://github.com/fh-erfurt/RateYourStuff2.0/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/fh-erfurt/RateYourStuff2.0/actions/workflows/codeql-analysis.yml)
 [![Docs](https://img.shields.io/badge/javadoc-see%20here-9cf.svg?style=flat&logo=java)](https://fh-erfurt.github.io/RateYourStuff2.0)
@@ -6,15 +7,22 @@
 Projekt, um verschiedene Medien zu Bewerten, darüber zu diskutieren und Fortschritte dazu anzulegen
 
 Das Projektteam:
+
 - Robin Beck
 - Christoph Frischmuth
 - Mickey Knop
 - John Klippstein
 
+---
+
 ## Installation
+
 ### Backend
+
 #### Datenbank
+
 Der Server ist konfiguriert, um mit einer mariaDB Datenbank zu kommunizieren. Hierbei sind folgende Eckpunkte wichtig:
+
 - Datenbankname: ratedatabase (wird automatisch angelegt)
 - Serveradresse: localhost
 - Serverport: 3603
@@ -24,6 +32,7 @@ Der Server ist konfiguriert, um mit einer mariaDB Datenbank zu kommunizieren. Hi
 Hinweis: Für das Durchlaufen der Testfälle, wird eine H2 Datenbank namens "ratedatabasetest" angelegt. Somit ist für das Durchführen der Tests keine aktive MariaDB Datenbank erforderlich.
 
 #### REST-API
+
 Nachdem ein entsprechender Datenbankserver bereitgestellt wurde, kann die Spring-Anwendung gestartet werden.
 Beim Start der Anwendung werden die Tabellen, sofern noch nicht vorhanden, automatisch angelegt.
 Sobald die Tabellen angelegt wurden, kann das Script "data.sql", welches sich im src-Ordner befindet, über z. B. phpmyadmin importiert werden. (in dem Skript befinden sich die Testdaten. Die Testdaten bitte nur in die Datenbank "ratedatabase" importieren.
@@ -32,51 +41,68 @@ Der Server ist anschließend unter dem Port 5000 erreichbar.
 
 Über [Swagger](http://localhost:5000/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config) können die zur Verfügung stehenden Schnittstellen eingesehen werden.
 
-#### Frontend:
+---
+
+#### Frontend
+
 Um das Frontend zu nutzen, gibt es zwei Varianten:
+
 ##### Deployte Version
-Über [Github-Pages](https://avartos.github.io/rateyourstufffrontendwebapp/) ist eine fertig deployte Version des Frontends verfügbar. 
+
+Über [Github-Pages](https://avartos.github.io/rateyourstufffrontendwebapp/) ist eine fertig deployte Version des Frontends verfügbar.
 Die Nutzung des deployten Frontends hat den Vorteil, dass weder nodejs noch andere zusätzliche Module installiert werden müssen. Wichtig ist lediglich, dass das Backend sowie die Datenbank aktiv sind.
 
 ##### Manuelle Installation
-Das Frontend kann über das [Frontend-Repository](https://github.com/Avartos/rateyourstufffrontendwebapp)  heruntergeladen werden.
-Bitte beachten Sie, dass zum Ausführen des Frontends nodejs benötigt wird. Sobald das Frontend heruntergeladen wurde, müssen mithilfe des Befehls 
-```
+
+Das Frontend kann über das [Frontend-Repository](https://github.com/Avartos/rateyourstufffrontendwebapp) heruntergeladen werden.
+Bitte beachten Sie, dass zum Ausführen des Frontends nodejs benötigt wird. Sobald das Frontend heruntergeladen wurde, müssen mithilfe des Befehls
+
+```bash
 npm install
 ```
+
 fehlende Abhängigkeiten nachinstalliert werden. (Die Abhängigkeiten werden automatisch geladen und installiert, sobald der Befehl eingegeben wurde.)
-Sobald alle Pakete nachinstalliert wurden, kann das Frontend mithilfe von 
-```
+Sobald alle Pakete nachinstalliert wurden, kann das Frontend mithilfe von
+
+```bash
 npm start
 ```
+
 gestartet werden. Für gewöhnlich sollte sich ein Browserfenster mit der Startseite der Anwendung öffnen. Sollte dies nicht der Fall sein, so ist das Frontend über:
-http://localhost:3000 erreichbar.
+<http://localhost:3000> erreichbar.
 
 Da sowohl Front- als auch Backend auf dem selben Server betrieben werden, kann es zu Problemen durch CORS kommen. CORS ist zwar im Backend für diesen Fall deaktiviert worden, kann aber ggf. dennoch Probleme verursachen. In diesem Fall sollte eine entsprechende Browsererweiterung nachinstalliert werden, um CORS Fehle rzu vermeiden.
 
-
-
 ## Einleitung
+
 <details>
   <summary>Die Welt dreht sich immer mehr um ...</summary>
-Die Welt dreht sich immer mehr um die verschiedensten Unterhaltungsmedien und es fällt dem Konsumenten immer schwerer sich vorab eine Meinung zu bilden. Vor allem im Jahre 2020, wo das Wort „Fakenews“ nicht nur die Wortneuschöpfung eines sehr verrückten und geistig labilen Politikers ist. 
+Die Welt dreht sich immer mehr um die verschiedensten Unterhaltungsmedien und es fällt dem Konsumenten immer schwerer sich vorab eine Meinung zu bilden. Vor allem im Jahre 2020, wo das Wort „Fakenews“ nicht nur die Wortneuschöpfung eines sehr verrückten und geistig labilen Politikers ist.
 
-Die meisten veröffentlichten Meinung sind von Kritikern, die evtl. nicht den eigenen Geschmack vertreten und wenn andere Konsumenten ihre Bewertung auf einer Plattform veröffentlichen können, ist diese Plattform meist nur für ein bestimmtes Medium.  
+Die meisten veröffentlichten Meinung sind von Kritikern, die evtl. nicht den eigenen Geschmack vertreten und wenn andere Konsumenten ihre Bewertung auf einer Plattform veröffentlichen können, ist diese Plattform meist nur für ein bestimmtes Medium.
 
-Auf unserer Plattform RateYourStuff werden alle Unterhaltungsmedien vertreten, von Büchern bis hin zu Videospielen, können sie zu allem und jedem ihre eigene freie Meinung äußern. (Vorausgesetzt sie gefällt uns und wir löschen sie nicht). 
+Auf unserer Plattform RateYourStuff werden alle Unterhaltungsmedien vertreten, von Büchern bis hin zu Videospielen, können sie zu allem und jedem ihre eigene freie Meinung äußern. (Vorausgesetzt sie gefällt uns und wir löschen sie nicht).
 
-Mit RateYourStuff soll ein persönliches Bewertungssystem für Unterhaltungsmedien verschiedener Art entwickelt werden. Diese werden von den Benutzern des Systems nach verschiedenen Kriterien bewertet und daraus wird ein Finaler Punktewert generiert, der die Qualität bzw. den Unterhaltungswert des Mediums wiedergibt. Darüber hinaus kann der Benutzer seinen Fortschritt zu dem Produkt angeben was beispielsweise die Seite eines Buches oder die Folge einer Serie beinhaltet, anhand dessen wird er in den dazugehörigen Diskussionsforen vor Spoilern automatisch gewarnt. Des Weiteren kann man sich dazugehörige Werke anzeigen und nach Erscheinungsdatum, oder diese auch in einer chronologischen Reihenfolge, filtern. 
+Mit RateYourStuff soll ein persönliches Bewertungssystem für Unterhaltungsmedien verschiedener Art entwickelt werden. Diese werden von den Benutzern des Systems nach verschiedenen Kriterien bewertet und daraus wird ein Finaler Punktewert generiert, der die Qualität bzw. den Unterhaltungswert des Mediums wiedergibt. Darüber hinaus kann der Benutzer seinen Fortschritt zu dem Produkt angeben was beispielsweise die Seite eines Buches oder die Folge einer Serie beinhaltet, anhand dessen wird er in den dazugehörigen Diskussionsforen vor Spoilern automatisch gewarnt. Des Weiteren kann man sich dazugehörige Werke anzeigen und nach Erscheinungsdatum, oder diese auch in einer chronologischen Reihenfolge, filtern.
+
 </details>
+
+---
 
 ## Ausgangssituation
+
 <details>
   <summary>Im Rahmen der Pandemie, im Jahre 2020 n.Chr. ...</summary>
-Im Rahmen der Pandemie, im Jahre 2020 n.Chr., wurden, gefühlt, unendlich viele Medien konsumiert. Der gewohnte Austausch auf der Arbeit, in der Schule, an der Universität oder in den Kreisen der Freunde viel jedoch aus. Nun hat der Mensch das dringende Bedürfnis sich mitzuteilen und viele Menschen tun ihre Meinung kund, ohne gefragt zu werden.  
+Im Rahmen der Pandemie, im Jahre 2020 n.Chr., wurden, gefühlt, unendlich viele Medien konsumiert. Der gewohnte Austausch auf der Arbeit, in der Schule, an der Universität oder in den Kreisen der Freunde viel jedoch aus. Nun hat der Mensch das dringende Bedürfnis sich mitzuteilen und viele Menschen tun ihre Meinung kund, ohne gefragt zu werden.
 
 Nun existiert schone eine größere Menge an Portalen, die sich mit der Bewertung von Medien beschäftigen, aber auch hier zeigen sich Probleme. Andere Portale sind oft nur für ein Medium ausgelegt und, oder sind einfach unübersichtlich, nicht gut organisiert oder bieten nicht die gewünschten Funktionen. An dieser Stelle soll das Konzept von „Rate Your Stuff“ greifen. „RYS“ bietet die Möglichkeit für die populärsten Medien Meinungen abzugeben und Wertungen. Die Meinungen und Wertungen können von anderen Usern/Freunden kommentiert werden und so kann ein Austausch über unterschiedliche Medien, auf einer Plattform stattfinden
+
 </details>
 
+---
+
 ## Was ist RateYourStuff?
+
 <details>
   <summary>RateYourStuff soll eine Bewertungsplattform für verschiedene Arten von Medien sein. Es ist geplant, folgende Medientypen vorerst zu unterstützen:</summary>
 
@@ -85,24 +111,23 @@ Nun existiert schone eine größere Menge an Portalen, die sich mit der Bewertun
 - Serien
 - Videospiele
 
-Benutzer können Medien mit unterschiedlichen Kriterien bewerten. 
+Benutzer können Medien mit unterschiedlichen Kriterien bewerten.
 Für jedes Medium gibt es eine allgemeine Bewertung, die durch die Bewertungskriterien bestimmt wird. Benutzer können ihren Fortschritt auf verschiedenen Medientypen teilen. Jedes Medium hat einen eigenen Kommentarbereich. Darüber hinaus ist eine Art Mediensammlung geplant, um Medien logisch zu gruppieren.
-</details>
 
+## </details>
+
+---
 
 ## Zielbestimmungen
-Das System soll eine Plattform zum Bewerten von diversen Mediatypen darstellen. Zu den zu bewertenden Media-Typen zählen Bücher, Filme, Serien – inklusive Episoden – sowie Videospiele. 
-Nutzer sollen Ihre Medien-Fortschritte für ihr Profil verwalten und anzeigen lassen können. 
-Für jedes Medium sollen Kommentare geschrieben und diese auch entsprechend kommentiert werden können. 
-Den Nutzern soll es möglich sein untereinander die eigenen Fortschritte zu teilen.  
 
-Das System soll in mehreren Etappen entwickelt werden: <br>
-    - Grundsystem <br>
-    - Datenbankanbindung <br>
-    - Webfrontend <br>
+Das System soll eine Plattform zum Bewerten von diversen Mediatypen darstellen. Zu den zu bewertenden Media-Typen zählen Bücher, Filme, Serien – inklusive Episoden – sowie Videospiele.
+Nutzer sollen Ihre Medien-Fortschritte für ihr Profil verwalten und anzeigen lassen können.
+Für jedes Medium sollen Kommentare geschrieben und diese auch entsprechend kommentiert werden können.
+Den Nutzern soll es möglich sein untereinander die eigenen Fortschritte zu teilen.
+
+Das System soll in mehreren Etappen entwickelt werden: <br> - Grundsystem <br> - Datenbankanbindung <br> - Webfrontend <br>
 
 Für das Modul Java 02 wird auf dem aus Java 01 entnommenen Grundsystem aufgebaut. Dieses soll so erweitert werden, dass eine Datenbankpersistierung sowie eine Nutzung des Systems über ein Frontend möglich gemacht werden.
-
 
 <details>
   <summary>Muss-Kriterien</summary>
@@ -110,25 +135,25 @@ Für das Modul Java 02 wird auf dem aus Java 01 entnommenen Grundsystem aufgebau
   <details>
     Die Nachfolgenden Musskriterien wurden im Vergleich zu Java 01 leicht abgeändert. Entfallene Musskriterien werden mit (Java01) gekennzeichnet. Grund für die Abwandlung waren Zeit und Aufwand des Projekts.
   <summary>Verwaltung von Medien</summary>
-      Das System muss den Nutzern die Möglichkeit bieten: 
+      Das System muss den Nutzern die Möglichkeit bieten:
         - Medien anzulegen <br>
         - Medien zu suchen <br>
         - Medien zu bearbeiten <br>
         - Medien in Kollektionen einzuteilen <br>
       </details>
-      
+
   <details>
   <summary>Verwaltung von Fortschritten (Java01)</summary>
-      Das System muss den Nutzern die Möglichkeit bieten: 
+      Das System muss den Nutzern die Möglichkeit bieten:
         - eigene Fortschritte für Medien anzulegen (Java01)<br>
         - den aktuellen Fortschritt prozentual oder Medienspezifisch (Buchseite, Episode, Filmminute, Spielzeit) anzuzeigen (Java01) <br>
         - bereits angelegte Fortschritte zu ändern (Java01)<br>
         - bereits angelegte Fortschritte zu löschen (Java01)<br>
       </details>
-      
+
   <details>
   <summary>Verwaltung von Kommentaren</summary>
-      Das System muss den Nutzern die Möglichkeit bieten: 
+      Das System muss den Nutzern die Möglichkeit bieten:
         - Kommentare zu einem Medium zu schreiben <br>
         - auf die Kommentare von anderen Nutzern zu antworten <br>
         - Kommentare mit potenziellen Spoilern auszublenden (Java01) <br>
@@ -139,17 +164,16 @@ Für das Modul Java 02 wird auf dem aus Java 01 entnommenen Grundsystem aufgebau
   
   <details>
   <summary>Verwaltung von Kollektionen</summary>
-      Das System muss den Nutzern die Möglichkeit bieten: 
+      Das System muss den Nutzern die Möglichkeit bieten:
       - Kollektionen anzulegen <br>
       - Medien zu Kollektionen zuzuweisen <br>
       - Medien aus Kollektionen entfernen <br>
       - Kollektionen entfernen
   </details>
-      
-      
+
   <details>
   <summary>Bewerten von Medien</summary>
-      Das System muss den Nutzern und Moderatoren die Möglichkeit bieten: 
+      Das System muss den Nutzern und Moderatoren die Möglichkeit bieten:
         - eine Bewertung für ein Medium abzugeben <br>
         - die eigene Bewertung zu editieren <br>
         - die eigene Bewertung zu löschen <br>
@@ -158,7 +182,7 @@ Für das Modul Java 02 wird auf dem aus Java 01 entnommenen Grundsystem aufgebau
   
   <details>
   <summary>Verwalten von Benutzern</summary>
-      Das System muss den Nutzern und Moderatoren die Möglichkeit bieten: 
+      Das System muss den Nutzern und Moderatoren die Möglichkeit bieten:
         - andere Nutzer anhand ihres Nutzernamens zu suchen (Java01)<br>
         - die eigenen Nutzerdaten einzusehen <br>
         - die eigenen Nutzerdaten zu ändern <br>
@@ -173,7 +197,7 @@ Für das Modul Java 02 wird auf dem aus Java 01 entnommenen Grundsystem aufgebau
 <details>
   <summary>Wunsch-Kriterien</summary>  
   
-  Es ist wünschenswert, das System zu einem späteren Zeitpunkt um folgende Kriterien zu erweitern: 
+  Es ist wünschenswert, das System zu einem späteren Zeitpunkt um folgende Kriterien zu erweitern:
     - Anzeigen von empfohlenen Medien auf Basis der bereits genutzten / bewerteten Medien <br>
     - gezieltes Ausblenden von Medien, die man nicht sehen möchte (z. B.: Anhand des Genres) <br>
     - Private Nachrichten an andere Nutzer senden <br>
@@ -189,18 +213,29 @@ Für das Modul Java 02 wird auf dem aus Java 01 entnommenen Grundsystem aufgebau
   <summary>Abgrenzungskriterien</summary>
   „Rate Your Stuff“ soll keine herkömmliche Produktbewertung sein. Die Plattform gibt verschiedene Kriterien vor, die sich mit den Inhalten beschäftigen und nicht mit dem Auslieferungszustand oder der Qualität des Papieres. <br>
 
- 
-Nicht realisiert werden, sollen: <br>
-    - Möglichkeit zur Wiedergabe der Medien auf der Seite <br>
-    - Ermitteln von Bewertungen für Medien auf anderen Seiten <br>
-    - Trennung von Benutzerbewertungen und Journalistischen Rezensionen <br> 
-</details>
+Nicht realisiert werden, sollen: <br> - Möglichkeit zur Wiedergabe der Medien auf der Seite <br> - Ermitteln von Bewertungen für Medien auf anderen Seiten <br> - Trennung von Benutzerbewertungen und Journalistischen Rezensionen <br>
 
+## </details>
+
+## Er - Diagramm
+
+Die Datenbank wurde anhand der in Java definierten Klassen generiert. Nachfolgend befindet sich das resultierende ER-Diagramm:
+
+<details>
+<summary>ER-Diagramm</summary>
+
+</details>
 ## UML-Diagramme
+
 Unter diesem Punkt befinden sich unsere UML-Diagramme die wir im Vorfeld im Modul Java01 erstellt haben um unsere Idee von der Applikation grafisch darzustellen und um eine bessere Vorstellung des Ganzen zu bekommen.
+
 <details>
   <summary>UML-Klassen Diagramm (Java01)</summary>
   https://lucid.app/documents/view/c6c65f1a-d09a-422a-ade8-80eab27f8dcb
+</details>
+
+<details>
+<summary>UML-Klassen Diagramm (Java02)</summary>
 </details>
 
 <details>
@@ -313,11 +348,70 @@ Unter diesem Punkt befinden sich unsere UML-Diagramme die wir im Vorfeld im Modu
   <img src="https://user-images.githubusercontent.com/56631092/105870785-e7c66880-5ff8-11eb-909f-0cb18b2e83b5.png">
 </details>
 
+---
+
+## Projektstruktur
+
+Das Projekt ist grundlegend in folgende Packages untergliedert:
+
+- controllers (beinhaltet die REST Controller sowie die Advices für geworfene Exceptions)
+- core (beinhaltet grundlegende Konfigurationsdateien für z. B. Spring Security, CORS, Swagger, Madelmapper)
+- dtos (Beinhaltet die Definitionen der Data Transfer Objects, die von den Rest Controllern an den Client gesandt werden)
+- errors (beinhaltet alle Esceptions, die für das Projekt angelegt wurden)
+- models (beinhaltet die Definitionen der Entitäten, die in die Datenbank gespeichert werden)
+- respositories (beinhaltet die Interfaces zum Zugriff auf die Datenbank)
+- security (beinhaltet für Spring Security erforderliche Dateien)
+- services (beinhaltet verschiedene Hilfsfunktionen für die Controller)
+- util (beinhaltet einen speziellen Service für Json Web Token)
+
+In jedem der Packages wurde darauf geachtet eine gleiche Strukturierung für die enthaltenen Klassen vorzunehmen, um diese thematisch besser zu untergliedern. Im Grunde genommen ist folgende strukturierung enthalten:
+
+- media
+  - books
+    - isbn (nur vorhanden, wenn isbn dateien vorliegen)
+  - collections
+  - games
+  - movies
+  - series
+- users
+- comments (nur vorhanden, wenn mehr als eine Datei zu Kommentaren gehört)
+- ratings (nur vorhanden, wenn mehr als eine Datei zu den Kommentaren gehört)
+
+---
+
+## Umgesetzte Funktionalitäten
+
+Nachfolgend ist aufgelistet, welche Funktionen das im Rahmen von Java 02 fertiggestellte Projekt bietet:
+
+- Nutzerverwaltung
+  - Nutzer anlegen
+  - Nutzer bearbeiten
+  - Nutzer verwalten (Admin)
+  - Anmeldung mithilfe von Spring Security
+- Kommentarverwaltung
+  - Anlegen von Kommentaren
+  - Bearbeiten von Kommentaren
+  - Löschen von Kommentaren
+  - Antworten auf Kommentare
+- Medienverwaltung
+  - Anlegen von verschiedenen Medien (Buch, Film, Spiel, Serie, Episode)
+  - Bearbeiten von Medien
+  - Suchen nach Medien
+  - Hinzufügen von Medien zu einer Sammlung/ Collection (Hierfür muss unter "Meine Sammlungen" eine Sammlung erstellt werden. Anschließend kann in der Detailansicht eines Mediums ein Medium einer Sammlung hinzugefügt werden)
+  - Anzeigen von Medien eines bestimmten Medientypes
+- Bewertungsverwaltung
+  - Hinzufügen von Bewertungen (Jeder Nutzer darf nur eine einzige Bewertung pro Medium abgeben, kann diese aber ggf. noch bearbeiten)
+  - Bearbeiten von Bewertungen
+  - Löschen von Bewertungen
+
+Das Frontend wurde mithilfe von ReactJS realisiert.
+
 ## Zusammenarbeit
+
 Im Rahmen des Projektes haben wir auf gewissen Elemente von Scrum und Kanban zurückgegriffen.
 
-Das Team um "RateYourStuff" haben sich alle 7 Tage zusammengefunden. 
-Zu diesen Treffen hat jeder seinen PPP (Progress, Planned, Problems) der Runde mitgeteilt und es wurden die Ziele für die nächsten 7 Tage gesetzt. 
+Das Team um "RateYourStuff" haben sich alle 7 Tage zusammengefunden.
+Zu diesen Treffen hat jeder seinen PPP (Progress, Planned, Problems) der Runde mitgeteilt und es wurden die Ziele für die nächsten 7 Tage gesetzt.
 Diese gesetzten Ziele wurden in einem Kanban-Board festgehalten.
 
 <details>
@@ -339,8 +433,9 @@ Die Aufgaben wurden somit fair untereinander aufgeteilt, jeder hat meistens das 
 Alles in allem lief das Projekt nahezu problemlos ab. Was auf unsere gute Planung und unser sehr gut harmonisierendes Team zurückzuführen ist
 
 ## Lessons Learned
-Wie schon im vorhergehenden Part erwähnt hatten wir keine wirklichen Probleme in unserem Projekt. Die meisten Probleme existierten durch Unwissheit und mit einem geringen Aufwand an Selbststudium konnten diese auch behoben werden. Spätestens durch gegenseitige Hilfe waren Probleme schnell vom Tisch. <br> <br>
-Dennoch soll dieses Kapitel nicht gänzlich leer bleiben. <br> 
 
-   - Listen die in einer Klasse immer wieder benutzt werden, sollten als Attribut dieser Klasse verwendet werden! <br>
-   - Keep simple stupid --> Kleine Funktionen schreiben, die in Komplexeren Methoden zusammen verwendet werden können! <br>
+Wie schon im vorhergehenden Part erwähnt hatten wir keine wirklichen Probleme in unserem Projekt. Die meisten Probleme existierten durch Unwissheit und mit einem geringen Aufwand an Selbststudium konnten diese auch behoben werden. Spätestens durch gegenseitige Hilfe waren Probleme schnell vom Tisch. <br> <br>
+Dennoch soll dieses Kapitel nicht gänzlich leer bleiben. <br>
+
+- Listen die in einer Klasse immer wieder benutzt werden, sollten als Attribut dieser Klasse verwendet werden! <br>
+- Keep simple stupid --> Kleine Funktionen schreiben, die in Komplexeren Methoden zusammen verwendet werden können! <br>
