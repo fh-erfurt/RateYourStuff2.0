@@ -47,7 +47,7 @@ public class LoginService {
 
     public boolean isValidEmail(String email) throws EmailAlreadyExistsException {
         Optional<Login> potentialLogin = loginRepository.findLoginByEmailIgnoreCase(email);
-        if(potentialLogin.isPresent()){
+        if (potentialLogin.isPresent()) {
             throw new EmailAlreadyExistsException("Email already exists");
         } else {
             return true;
@@ -63,18 +63,28 @@ public class LoginService {
      * @throws EmailAlreadyExistsException if the user want to change the email but the email is already existing
      */
     public void manageUpdatePersistence(Login login, Optional<Login> potentialLogin) throws EmailAlreadyExistsException {
-        if(isValidEmail(login.getEmail())) {
-            if (!login.getEmail().equals(potentialLogin.get().getEmail()) && !login.getPasswordHash().equals("DUMMY"))               //ne | neq
-            {
+        if (!login.getEmail().equals(potentialLogin.get().getEmail()) && !login.getPasswordHash().equals("DUMMY"))               //ne | neq
+        {
+            if(isValidEmail(login.getEmail())){
                 potentialLogin.get().setEmail(login.getEmail());
                 potentialLogin.get().setPasswordHash(login.getPasswordHash());
                 userSecurityService.hashPasswordOfLogin(potentialLogin.get());
-            } else if (!login.getEmail().equals(potentialLogin.get().getEmail()) && login.getPasswordHash().equals("DUMMY")) {      //neq | eq
-                potentialLogin.get().setEmail(login.getEmail());
-            } else if (login.getEmail().equals(potentialLogin.get().getEmail()) && !login.getPasswordHash().equals("DUMMY")) {      //eq  | neq
+            } else {
                 potentialLogin.get().setPasswordHash(login.getPasswordHash());
                 userSecurityService.hashPasswordOfLogin(potentialLogin.get());
+                throw new EmailAlreadyExistsException("Email already exists");
             }
+
+        } else if (!login.getEmail().equals(potentialLogin.get().getEmail()) && login.getPasswordHash().equals("DUMMY")) {      //neq | eq
+            if(isValidEmail(login.getEmail())){
+                potentialLogin.get().setEmail(login.getEmail());
+            } else {
+                throw new EmailAlreadyExistsException("Email already exists");
+            }
+        } else if (login.getEmail().equals(potentialLogin.get().getEmail()) && !login.getPasswordHash().equals("DUMMY")) {      //eq  | neq
+            potentialLogin.get().setPasswordHash(login.getPasswordHash());
+            userSecurityService.hashPasswordOfLogin(potentialLogin.get());
         }
+
     }
 }

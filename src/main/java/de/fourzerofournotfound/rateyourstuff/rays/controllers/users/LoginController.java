@@ -60,7 +60,6 @@ public class LoginController {
      * @throws EmailAlreadyExistsException if email address of given login object already exists
      */
     @PreAuthorize("hasAuthority('User')")
-    @CrossOrigin(origins = "http://localhost:3000")
     @PutMapping(consumes = "application/json", produces = "application/json")
     ResponseEntity<LoginDto> update(@RequestBody Login login) throws InvalidLoginException, EmailAlreadyExistsException {
         Optional<Login> potentialLogin = repository.findLoginById(login.getId());
@@ -81,7 +80,7 @@ public class LoginController {
      * @return true if the given email address isn´t already used of any other user
      * @throws EmailAlreadyExistsException if the given email address is already used
      */
-    @CrossOrigin(origins = "http://localhost:3000")
+
     @PostMapping("/check")
     ResponseEntity<Boolean> isValidMail(@RequestBody String email) throws EmailAlreadyExistsException {
         Optional<Login> login = repository.findLoginByEmailIgnoreCase(email);
