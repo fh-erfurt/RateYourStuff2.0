@@ -4,7 +4,9 @@ import de.fourzerofournotfound.rateyourstuff.rays.controllers.users.LoginControl
 import de.fourzerofournotfound.rateyourstuff.rays.dtos.users.LoginDto;
 import de.fourzerofournotfound.rateyourstuff.rays.errors.users.EmailAlreadyExistsException;
 import de.fourzerofournotfound.rateyourstuff.rays.models.users.Login;
+import de.fourzerofournotfound.rateyourstuff.rays.repositories.users.LoginRepository;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -25,6 +27,9 @@ public class LoginService {
     private final ModelMapper modelMapper;
     private final UserSecurityService userSecurityService;
 
+    @Autowired
+    private LoginRepository loginRepository;
+
     LoginService(ModelMapper mapper, UserSecurityService secService) {
         modelMapper = mapper;
         userSecurityService = secService;
@@ -40,6 +45,15 @@ public class LoginService {
         return modelMapper.map(login, LoginDto.class);
     }
 
+    public boolean isValidEmail(String email) throws EmailAlreadyExistsException {
+        Optional<Login> potentialLogin = loginRepository.findLoginByEmailIgnoreCase(email);
+        if(potentialLogin.isPresent()){
+            throw new EmailAlreadyExistsException("Email already exists");
+        } else {
+            return true;
+        }
+    }
+
     /**
      * Method manages 4 different situations of the account update to save the persistence of the Login entity
      * By changing separate data instead of all data, the Controller needs this method to handle the Update
@@ -49,19 +63,18 @@ public class LoginService {
      * @throws EmailAlreadyExistsException if the user want to change the email but the email is already existing
      */
     public void manageUpdatePersistence(Login login, Optional<Login> potentialLogin) throws EmailAlreadyExistsException {
-        //Equal email addresses and not identical password
-        if (!login.getEmail().equals(potentialLogin.get().getEmail()) && !login.getPasswordHash().equals("DUMMY"))               //ne | neq
-        {
-            potentialLogin.get().setEmail(login.getEmail());
-            potentialLogin.get().setPasswordHash(login.getPasswordHash());
-            userSecurityService.hashPasswordOfLogin(potentialLogin.get());
-        } else if (!login.getEmail().equals(potentialLogin.get().getEmail()) && login.getPasswordHash().equals("DUMMY")) {      //neq | eq
-            potentialLogin.get().setEmail(login.getEmail());
-        } else if (login.getEmail().equals(potentialLogin.get().getEmail()) && !login.getPasswordHash().equals("DUMMY")) {      //eq  | neq
-            potentialLogin.get().setPasswordHash(login.getPasswordHash());
-            userSecurityService.hashPasswordOfLogin(potentialLogin.get());
-        } else {                                                                                                                //eq  | eq
-            throw new EmailAlreadyExistsException("Email currently exists");
+        if(isValidEmail(login.getEmail())) {
+            if (!login.getEmail().equals(potentialLogin.get().getEmail()) && !login.getPasswordHash().equals("DUMMY"))               //ne | neq
+            {
+                potentialLogin.get().setEmail(login.getEmail());
+                potentialLogin.get().setPasswordHash(login.getPasswordHash());
+                userSecurityService.hashPasswordOfLogin(potentialLogin.get());
+            } else if (!login.getEmail().equals(potentialLogin.get().getEmail()) && login.getPasswordHash().equals("DUMMY")) {      //neq | eq
+                potentialLogin.get().setEmail(login.getEmail());
+            } else if (login.getEmail().equals(potentialLogin.get().getEmail()) && !login.getPasswordHash().equals("DUMMY")) {      //eq  | neq
+                potentialLogin.get().setPasswordHash(login.getPasswordHash());
+                userSecurityService.hashPasswordOfLogin(potentialLogin.get());
+            }
         }
     }
 }
