@@ -9,6 +9,7 @@ import de.fourzerofournotfound.rateyourstuff.rays.services.RatingService;
 import de.fourzerofournotfound.rateyourstuff.rays.errors.InvalidRatingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -139,8 +140,14 @@ public class RatingController {
 
     @PreAuthorize("hasAuthority('User')")
     @DeleteMapping("/{id}")
-    void deleteRating(@PathVariable Long id) {
-        this.ratingRepository.deleteById(id);
+    HttpStatus deleteRating(@PathVariable Long id) throws RatingNotFoundException {
+        Optional<Rating> rating = ratingRepository.findById(id);
+        if(rating.isPresent()) {
+            this.ratingRepository.deleteById(id);
+            logger.info("Removed " + Rating.class.getSimpleName() + " with id " + id);
+            return HttpStatus.OK;
+        }
+        throw new RatingNotFoundException("There is no " + Rating.class.getSimpleName() + " with id " + id);
     }
 
     @GetMapping("/count/{mediumId}")

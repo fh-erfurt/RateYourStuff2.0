@@ -45,7 +45,7 @@ public class CommentController {
             @RequestParam(defaultValue = "desc") String order
     ) {
         Pageable pageable = pageableService.createPageable(orderBy, order, page, size);
-        List<Comment> comments = commentRepository.findAllByCommentParentIsNull(pageable).getContent();
+        List<Comment> comments = commentRepository.findAll(pageable).getContent();
         return ResponseEntity.ok(
                 comments.stream()
                 .map(commentService::convertToDto)
@@ -62,7 +62,7 @@ public class CommentController {
             @PathVariable Long mediumId
     ) {
         Pageable pageable = pageableService.createPageable(orderBy, order, page, size);
-        List<Comment> comments = commentRepository.findAllByMediumId(mediumId, pageable).getContent();
+        List<Comment> comments = commentRepository.findAllByCommentParentIsNullAndMediumId(mediumId, pageable).getContent();
         return ResponseEntity.ok(
                 comments.stream()
                         .map(commentService::convertToDto)
@@ -125,13 +125,13 @@ public class CommentController {
 
     @PreAuthorize("hasAuthority('User')")
     @PutMapping(consumes="application/json", produces="application/json")
-    ResponseEntity<Comment> update(@RequestBody Comment comment) throws CommentNotFoundException {
+    ResponseEntity<CommentDto> update(@RequestBody Comment comment) throws CommentNotFoundException {
         Optional<Comment> foundComment = commentRepository.findById(comment.getId());
         if(foundComment.isPresent()) {
             foundComment.get().setTextOfComment(comment.getTextOfComment());
             Comment savedComment = this.commentRepository.save(foundComment.get());
             logger.info("Updated " +Comment.class.getSimpleName()+ " with id " + savedComment.getId());
-            return ResponseEntity.ok(savedComment);
+            return ResponseEntity.ok(commentService.convertToDto(savedComment));
         }
         throw new CommentNotFoundException("There is no "+Comment.class.getSimpleName()+" with id " + comment.getId());
     }

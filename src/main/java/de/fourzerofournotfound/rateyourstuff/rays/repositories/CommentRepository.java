@@ -11,7 +11,7 @@ public interface CommentRepository  extends JpaRepository<Comment, Long> {
     Page<Comment> findAll(Pageable pageable);
     Page<Comment> findAllByMediumId(Long mediumId, Pageable pageable);
     Page<Comment> findAllByUserId(Long userId, Pageable pageable);
-    Page<Comment> findAllByCommentParentIsNull(Pageable pageable);
+    Page<Comment> findAllByCommentParentIsNullAndMediumId(Long mediumId, Pageable pageable);
     Long countAllByMediumId(Long mediumId );
 
     Page<Comment> findAllByCommentParentId(Long id, Pageable pageable);
