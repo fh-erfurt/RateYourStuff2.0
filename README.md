@@ -71,7 +71,7 @@ npm start
 gestartet werden. Für gewöhnlich sollte sich ein Browserfenster mit der Startseite der Anwendung öffnen. Sollte dies nicht der Fall sein, so ist das Frontend über:
 <http://localhost:3000> erreichbar.
 
-Da sowohl Front- als auch Backend auf dem selben Server betrieben werden, kann es zu Problemen durch CORS kommen. CORS ist zwar im Backend für diesen Fall deaktiviert worden, kann aber ggf. dennoch Probleme verursachen. In diesem Fall sollte eine entsprechende Browsererweiterung nachinstalliert werden, um CORS Fehle rzu vermeiden.
+Da sowohl Front- als auch Backend auf dem selben Server betrieben werden, kann es zu Problemen durch CORS kommen. CORS ist zwar im Backend für diesen Fall deaktiviert worden, kann aber ggf. dennoch Probleme verursachen. In diesem Fall sollte eine entsprechende Browsererweiterung nachinstalliert werden, um CORS Fehler zu vermeiden.
 
 ## Einleitung
 
