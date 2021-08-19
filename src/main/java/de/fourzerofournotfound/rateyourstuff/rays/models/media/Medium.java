@@ -36,26 +36,39 @@ public abstract class Medium extends BaseModel {
 
     @ManyToMany(mappedBy = "media")
     Set<Collection> collections;
+
     @ManyToMany
     Set<Genre> genres = new HashSet<>();
+
+    //used to pass only the genre Strings from client to backend
     @JsonInclude
     @Transient
     List<String> genreStrings;
+
+
     @ManyToMany
     Set<Language> languages = new HashSet<>();
+
+    //used to pass only the language Strings from client to backend
     @JsonInclude
     @Transient
     List<String> languageStrings;
+
     @Column(nullable = false, length = 200)
     private String mediumName;
+
     @Column(nullable = false)
     private LocalDate releaseDate;
+
     @Column(nullable = false, length = 10000)
     private String shortDescription;
+
     @Column(length = 256)
     private String picturePath;
+
     @OneToMany(mappedBy = "medium")
     private Set<Rating> mediumRatings;
+
     @OneToMany(mappedBy = "medium")
     private Set<Comment> comments;
 }

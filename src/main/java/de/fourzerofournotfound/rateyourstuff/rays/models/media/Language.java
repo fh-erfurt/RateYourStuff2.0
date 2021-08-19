@@ -32,6 +32,7 @@ public class Language extends BaseModel {
 
     @ManyToMany(mappedBy = "languages")
     Set<Medium> media = new HashSet<>();
+
     @Column(length = 200)
     private String language;
 }

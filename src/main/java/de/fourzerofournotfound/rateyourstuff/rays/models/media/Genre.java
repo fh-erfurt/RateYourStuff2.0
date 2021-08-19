@@ -28,9 +28,9 @@ import java.util.Set;
 @Table(name = "Genres")
 public class Genre extends BaseModel {
 
-    @JsonBackReference(value = "media-genres")
     @ManyToMany(mappedBy = "genres")
     Set<Medium> media = new HashSet<>();
+
     @Column(nullable = false, length = 45)
     private String genreName;
 }

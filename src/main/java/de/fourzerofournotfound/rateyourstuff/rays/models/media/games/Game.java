@@ -26,23 +26,33 @@ import java.util.Set;
 public class Game extends Medium {
 
     public final static String IMAGE_PATH_PREFIX = "images/media/games/";
+
     @ManyToMany
     Set<Platform> platforms;
+
+    //used to pass only the title of the publisher from client to backend
     @JsonInclude
     @Transient
     String publisherTitle;
+
+    //used to pass only the titles of the platforms from client to backend
     @JsonInclude
     @Transient
     List<String> platformStrings;
+
     @Column
     private Float averagePlaytime;
+
     @Column(nullable = false)
     private Integer minNumberOfGamers;
+
     @Column
     private Integer maxNumberOfGamers;
+
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "gamePublisherId", referencedColumnName = "id")
     private GamePublisher gamePublisher;
+
     @Column(nullable = false)
     private Integer ageRestriction;
 

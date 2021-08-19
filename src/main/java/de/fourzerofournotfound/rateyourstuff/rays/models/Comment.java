@@ -11,7 +11,6 @@ import javax.persistence.*;
 import java.util.Set;
 
 /**
- * Comment
  * <p>This Model represents a Comment. A Comment is assigned to a medium.
  * A comment can also have a parent comment.</p>
  *
@@ -27,7 +26,6 @@ import java.util.Set;
 @RequiredArgsConstructor
 @Builder
 @Table(name = "Comments")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Comment extends BaseModel {
 
     @Column(nullable = false, length = 10000)
@@ -49,14 +47,17 @@ public class Comment extends BaseModel {
     @JoinColumn(name = "commentParent")
     private Comment commentParent;
 
+    //used to pass only the medium id from client to backend
     @JsonInclude()
     @Transient
     private Long mediumMappingId;
 
+    //used to pass only the user id from client to backend
     @JsonInclude()
     @Transient
     private Long userMappingId;
 
+    //used to pass only the parent comment id from client to backend
     @JsonInclude()
     @Transient
     private Long parentMappingId;

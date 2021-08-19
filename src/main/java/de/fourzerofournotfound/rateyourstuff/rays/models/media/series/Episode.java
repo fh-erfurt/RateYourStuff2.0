@@ -36,6 +36,7 @@ public class Episode extends Medium {
     @JoinColumn(name = "seasonId", referencedColumnName = "id")
     private Season season;
 
+    //used to pass only the season id from client to backend
     @Transient
     @JsonInclude
     private Long seasonMappingId;

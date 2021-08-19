@@ -56,7 +56,7 @@ class MediaServiceTest {
 
 
     @Test
-    public void givenPartialTitle_WhenFindByMediumNameLikeIgnoreCase_ThenMoviesShouldReturn() {
+    public void shouldReturnSearchResultsWhenTitleHasBeenGivenPartially() {
 
         //Given
         Movie given1 = Movie.builder()
