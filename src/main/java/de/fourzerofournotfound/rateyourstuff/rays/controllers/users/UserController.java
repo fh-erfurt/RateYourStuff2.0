@@ -22,6 +22,14 @@ import java.util.Optional;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+/**
+ * <p>This Controller provides basic REST Interfaces to interact with User entities from the database</p>
+ *
+ *  * @author Christoph Frischmuth
+ *  * @author John Klippstein
+ *  * @author Mickey Knop
+ *  * @author Robin Beck
+ */
 
 @RestController
 @RequestMapping("/user")

@@ -20,6 +20,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Optional;
 
+/**
+ * <p>This Controller provides basic REST Interfaces to interact with User and Login entities from the database and
+ * some Methods of spring security to provide a functional security.</p>
+ *
+ *  * @author Christoph Frischmuth
+ *  * @author John Klippstein
+ *  * @author Mickey Knop
+ *  * @author Robin Beck
+ */
+
 @RestController
 public class SecurityController {
 
