@@ -224,6 +224,7 @@ Die Datenbank wurde anhand der in Java definierten Klassen generiert. Nachfolgen
 <details>
 <summary>ER-Diagramm</summary>
 
+![datenbank](https://user-images.githubusercontent.com/71118367/130062497-e93f9f5c-4d4d-45c3-a823-4eabcd5287e9.png)
 </details>
 ## UML-Diagramme
 
@@ -236,6 +237,7 @@ Unter diesem Punkt befinden sich unsere UML-Diagramme die wir im Vorfeld im Modu
 
 <details>
 <summary>UML-Klassen Diagramm (Java02)</summary>
+  ![Package models](https://user-images.githubusercontent.com/71118367/130062814-ba1afffa-59a8-464a-b311-245929dfaa48.png)
 </details>
 
 <details>
