@@ -20,7 +20,8 @@ Das Projektteam:
 | Nutzername | Passwort | Rolle |
 |:------------:|:----------:|:-------:|
 | mikmin     | admin    | Admin | 
-| avartos    | admin    | Admin | 
+| avartos    | admin    | Admin |
+| m_rhöse    | user     | User  |
 | Rolf_Kruse | user     | User  | 
 
 ## Installation
