@@ -94,6 +94,16 @@ public class RatingController {
         }
     }
 
+    @GetMapping("/user/{userId}/medium/{mediumId}")
+    ResponseEntity<RatingDto> getByUserIdAndByMediumId(@PathVariable Long userId, @PathVariable Long mediumId) throws RatingNotFoundException {
+        Optional<Rating> rating = ratingRepository.findByMediumIdAndUserId(mediumId, userId);
+        if(rating.isPresent()) {
+            return ResponseEntity.ok(ratingService.convertToDto(rating.get()));
+        }
+        throw new RatingNotFoundException("There is no " + Rating.class.getSimpleName() + " for userId " + userId + " and mediumId " + mediumId);
+    }
+
+
     @PreAuthorize("hasAuthority('User')")
     @PostMapping(path = "/add", consumes = "application/json", produces = "application/json")
     ResponseEntity<RatingDto> add(@RequestBody Rating rating) throws InvalidRatingException {
